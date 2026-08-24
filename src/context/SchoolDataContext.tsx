@@ -52,62 +52,65 @@ interface SchoolDataContextType {
   users: User[];
   sections: PageSectionConfig[];
   logs: ActivityLog[];
+  
+  isLoading: boolean;
+  error: string | null;
 
   // Actions
-  updateProfile: (data: Partial<SchoolProfile>) => void;
-  updateBrandingColors: (primary: string, accent: string) => void;
+  updateProfile: (data: Partial<SchoolProfile>) => Promise<void>;
+  updateBrandingColors: (primary: string, accent: string) => Promise<void>;
   
   // Programs
-  addProgram: (program: Omit<Program, "id">) => void;
-  updateProgram: (id: string, program: Partial<Program>) => void;
-  deleteProgram: (id: string) => void;
+  addProgram: (program: Omit<Program, "id">) => Promise<void>;
+  updateProgram: (id: string, program: Partial<Program>) => Promise<void>;
+  deleteProgram: (id: string) => Promise<void>;
 
   // Facilities
-  addFacility: (facility: Omit<Facility, "id">) => void;
-  updateFacility: (id: string, facility: Partial<Facility>) => void;
-  deleteFacility: (id: string) => void;
+  addFacility: (facility: Omit<Facility, "id">) => Promise<void>;
+  updateFacility: (id: string, facility: Partial<Facility>) => Promise<void>;
+  deleteFacility: (id: string) => Promise<void>;
 
   // Achievements
-  addAchievement: (achievement: Omit<Achievement, "id">) => void;
-  updateAchievement: (id: string, achievement: Partial<Achievement>) => void;
-  deleteAchievement: (id: string) => void;
+  addAchievement: (achievement: Omit<Achievement, "id">) => Promise<void>;
+  updateAchievement: (id: string, achievement: Partial<Achievement>) => Promise<void>;
+  deleteAchievement: (id: string) => Promise<void>;
 
   // Articles
-  addArticle: (article: Omit<Article, "id">) => void;
-  updateArticle: (id: string, article: Partial<Article>) => void;
-  deleteArticle: (id: string) => void;
+  addArticle: (article: Omit<Article, "id">) => Promise<void>;
+  updateArticle: (id: string, article: Partial<Article>) => Promise<void>;
+  deleteArticle: (id: string) => Promise<void>;
 
   // Events
-  addEvent: (event: Omit<SchoolEvent, "id">) => void;
-  updateEvent: (id: string, event: Partial<SchoolEvent>) => void;
-  deleteEvent: (id: string) => void;
+  addEvent: (event: Omit<SchoolEvent, "id">) => Promise<void>;
+  updateEvent: (id: string, event: Partial<SchoolEvent>) => Promise<void>;
+  deleteEvent: (id: string) => Promise<void>;
 
   // Media
-  addMedia: (mediaItem: Omit<MediaItem, "id" | "uploadedAt">) => void;
-  deleteMedia: (id: string) => void;
+  addMedia: (mediaItem: Omit<MediaItem, "id" | "uploadedAt">) => Promise<void>;
+  deleteMedia: (id: string) => Promise<void>;
 
   // Organization
-  addMember: (member: Omit<OrganizationMember, "id">) => void;
-  updateMember: (id: string, member: Partial<OrganizationMember>) => void;
-  deleteMember: (id: string) => void;
+  addMember: (member: Omit<OrganizationMember, "id">) => Promise<void>;
+  updateMember: (id: string, member: Partial<OrganizationMember>) => Promise<void>;
+  deleteMember: (id: string) => Promise<void>;
 
   // Testimonials
-  addTestimonial: (testimonial: Omit<Testimonial, "id">) => void;
-  updateTestimonial: (id: string, testimonial: Partial<Testimonial>) => void;
-  deleteTestimonial: (id: string) => void;
+  addTestimonial: (testimonial: Omit<Testimonial, "id">) => Promise<void>;
+  updateTestimonial: (id: string, testimonial: Partial<Testimonial>) => Promise<void>;
+  deleteTestimonial: (id: string) => Promise<void>;
 
   // Admission & Settings
-  updateAdmission: (data: Partial<AdmissionInfo>) => void;
-  updateSettings: (data: Partial<WebsiteSettings>) => void;
+  updateAdmission: (data: Partial<AdmissionInfo>) => Promise<void>;
+  updateSettings: (data: Partial<WebsiteSettings>) => Promise<void>;
 
   // Messages
-  addContactMessage: (msg: Omit<ContactMessage, "id" | "submittedAt" | "status">) => void;
-  updateMessageStatus: (id: string, status: ContactMessage["status"]) => void;
-  deleteMessage: (id: string) => void;
+  addContactMessage: (msg: Omit<ContactMessage, "id" | "submittedAt" | "status">) => Promise<void>;
+  updateMessageStatus: (id: string, status: ContactMessage["status"]) => Promise<void>;
+  deleteMessage: (id: string) => Promise<void>;
 
   // Homepage Sections
-  toggleSection: (id: string) => void;
-  reorderSections: (newSections: PageSectionConfig[]) => void;
+  toggleSection: (id: string) => Promise<void>;
+  reorderSections: (newSections: PageSectionConfig[]) => Promise<void>;
 
   // Reset to initial
   resetToDefault: () => void;
@@ -115,9 +118,8 @@ interface SchoolDataContextType {
 
 const SchoolDataContext = createContext<SchoolDataContextType | undefined>(undefined);
 
-const STORAGE_KEY = "yazzaka_school_data_v1";
-
 export function SchoolDataProvider({ children }: { children: React.ReactNode }) {
+  // Gunakan initialData sebagai fallback sementara loading
   const [profile, setProfile] = useState<SchoolProfile>(initialSchoolProfile);
   const [programs, setPrograms] = useState<Program[]>(initialPrograms);
   const [facilities, setFacilities] = useState<Facility[]>(initialFacilities);
@@ -132,92 +134,64 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
   const [settings, setSettings] = useState<WebsiteSettings>(initialWebsiteSettings);
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [sections, setSections] = useState<PageSectionConfig[]>(initialSections);
-  const [logs, setLogs] = useState<ActivityLog[]>([
-    {
-      id: "log-1",
-      user: "Super Admin",
-      action: "Inisialisasi Sistem",
-      target: "Portal Sekolah Yazzaka",
-      timestamp: "2026-08-24 20:00",
-    },
-  ]);
+  
+  const [logs, setLogs] = useState<ActivityLog[]>([{
+    id: "log-1",
+    user: "System",
+    action: "Inisialisasi",
+    target: "Koneksi Database",
+    timestamp: new Date().toLocaleString("id-ID"),
+  }]);
 
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Load from localStorage on mount
-  useEffect(() => {
-    queueMicrotask(() => {
-      try {
-        const savedData = localStorage.getItem(STORAGE_KEY);
-        if (savedData) {
-          const parsed = JSON.parse(savedData);
-          if (parsed.profile) setProfile(parsed.profile);
-          if (parsed.programs) setPrograms(parsed.programs);
-          if (parsed.facilities) setFacilities(parsed.facilities);
-          if (parsed.achievements) setAchievements(parsed.achievements);
-          if (parsed.articles) setArticles(parsed.articles);
-          if (parsed.events) setEvents(parsed.events);
-          if (parsed.media) setMedia(parsed.media);
-          if (parsed.organization) setOrganization(parsed.organization);
-          if (parsed.testimonials) setTestimonials(parsed.testimonials);
-          if (parsed.admission) setAdmission(parsed.admission);
-          if (parsed.messages) setMessages(parsed.messages);
-          if (parsed.settings) setSettings(parsed.settings);
-          if (parsed.users) setUsers(parsed.users);
-          if (parsed.sections) setSections(parsed.sections);
-          if (parsed.logs) setLogs(parsed.logs);
-        }
-      } catch (e) {
-        console.warn("Failed to load local data:", e);
-      } finally {
-        setIsLoaded(true);
-      }
-    });
+  const addLog = useCallback((action: string, target: string) => {
+    const newLog: ActivityLog = {
+      id: generateId("log"),
+      user: "Admin",
+      action,
+      target,
+      timestamp: new Date().toLocaleString("id-ID", {
+        day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit",
+      }),
+    };
+    setLogs((prev) => [newLog, ...prev.slice(0, 49)]);
   }, []);
 
-  // Save to localStorage when state changes
+  // Fetch dari API saat mount
   useEffect(() => {
-    if (!isLoaded) return;
-    try {
-      const dataToSave = {
-        profile,
-        programs,
-        facilities,
-        achievements,
-        articles,
-        events,
-        media,
-        organization,
-        testimonials,
-        admission,
-        messages,
-        settings,
-        users,
-        sections,
-        logs,
-      };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
-    } catch (e) {
-      console.error("Failed to save local data:", e);
+    async function fetchData() {
+      try {
+        const res = await fetch('/api/school-data');
+        if (!res.ok) throw new Error("Gagal load data");
+        const data = await res.json();
+        
+        if (data.profile) setProfile(data.profile);
+        if (data.programs) setPrograms(data.programs);
+        if (data.facilities) setFacilities(data.facilities);
+        if (data.achievements) setAchievements(data.achievements);
+        if (data.articles) setArticles(data.articles);
+        if (data.events) setEvents(data.events);
+        if (data.testimonials) setTestimonials(data.testimonials);
+        if (data.admission) setAdmission(data.admission);
+        if (data.messages) setMessages(data.messages);
+        if (data.settings) setSettings(data.settings);
+        if (data.organization) setOrganization(data.organization);
+        if (data.users) setUsers(data.users);
+        if (data.sections) setSections(data.sections);
+        if (data.media) setMedia(data.media);
+        
+        addLog("Sync", "Berhasil mengambil data dari Neon Database");
+      } catch (err) {
+        console.error(err);
+        setError("Gagal sinkronisasi dengan database. Menggunakan data lokal (fallback).");
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }, [
-    isLoaded,
-    profile,
-    programs,
-    facilities,
-    achievements,
-    articles,
-    events,
-    media,
-    organization,
-    testimonials,
-    admission,
-    messages,
-    settings,
-    users,
-    sections,
-    logs,
-  ]);
+    fetchData();
+  }, [addLog]);
 
   // Apply Live Brand CSS Variables
   const applyBrandingStyles = useCallback((primary: string, accent: string) => {
@@ -236,306 +210,203 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
     }
   }, [profile.branding, applyBrandingStyles]);
 
-  const addLog = (action: string, target: string) => {
-    const newLog: ActivityLog = {
-      id: generateId("log"),
-      user: "Admin",
-      action,
-      target,
-      timestamp: new Date().toLocaleString("id-ID", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    };
-    setLogs((prev) => [newLog, ...prev.slice(0, 49)]);
+  const apiCall = async (endpoint: string, method: string, body?: unknown) => {
+    const res = await fetch(endpoint, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    if (!res.ok) throw new Error(`API Error: ${res.status}`);
+    return res.json();
   };
 
-  const updateProfile = (data: Partial<SchoolProfile>) => {
-    setProfile((prev) => ({ ...prev, ...data }));
-    addLog("Memperbarui", "Profil Sekolah");
+  // --- ACTIONS (API + Optimistic Update) ---
+
+  const updateProfile = async (data: Partial<SchoolProfile>) => {
+    const old = profile;
+    setProfile({ ...old, ...data }); // optimistic
+    try {
+      const updated = await apiCall('/api/profile', 'PUT', data);
+      setProfile(updated);
+      addLog("Memperbarui", "Profil Sekolah");
+    } catch (e) {
+      setProfile(old); // revert
+      console.error(e);
+    }
   };
 
-  const updateBrandingColors = (primary: string, accent: string) => {
-    setProfile((prev) => ({
-      ...prev,
-      branding: {
-        ...prev.branding,
-        primaryColor: primary,
-        accentColor: accent,
-      },
-    }));
-    applyBrandingStyles(primary, accent);
-    addLog("Mengubah Warna Tema Branding", `${primary} & ${accent}`);
+  const updateBrandingColors = async (primary: string, accent: string) => {
+    await updateProfile({
+      branding: { ...profile.branding, primaryColor: primary, accentColor: accent }
+    });
   };
 
   // Programs
-  const addProgram = (program: Omit<Program, "id">) => {
-    const newProg: Program = { ...program, id: generateId("prog") };
-    setPrograms((prev) => [...prev, newProg]);
+  const addProgram = async (program: Omit<Program, "id">) => {
+    const created = await apiCall('/api/programs', 'POST', program);
+    setPrograms(prev => [...prev, created]);
     addLog("Menambahkan Program Baru", program.title);
   };
-  const updateProgram = (id: string, program: Partial<Program>) => {
-    setPrograms((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, ...program } : p))
-    );
+  const updateProgram = async (id: string, program: Partial<Program>) => {
+    const updated = await apiCall(`/api/programs/${id}`, 'PUT', program);
+    setPrograms(prev => prev.map(p => p.id === id ? updated : p));
     addLog("Memperbarui Program", program.title || id);
   };
-  const deleteProgram = (id: string) => {
-    const found = programs.find((p) => p.id === id);
-    setPrograms((prev) => prev.filter((p) => p.id !== id));
-    addLog("Menghapus Program", found?.title || id);
+  const deleteProgram = async (id: string) => {
+    await apiCall(`/api/programs/${id}`, 'DELETE');
+    setPrograms(prev => prev.filter(p => p.id !== id));
+    addLog("Menghapus Program", id);
   };
 
   // Facilities
-  const addFacility = (facility: Omit<Facility, "id">) => {
-    const newFac: Facility = { ...facility, id: generateId("fac") };
-    setFacilities((prev) => [...prev, newFac]);
-    addLog("Menambahkan Fasilitas Baru", facility.name);
+  const addFacility = async (facility: Omit<Facility, "id">) => {
+    const created = await apiCall('/api/facilities', 'POST', facility);
+    setFacilities(prev => [...prev, created]);
+    addLog("Menambahkan Fasilitas", facility.name);
   };
-  const updateFacility = (id: string, facility: Partial<Facility>) => {
-    setFacilities((prev) =>
-      prev.map((f) => (f.id === id ? { ...f, ...facility } : f))
-    );
-    addLog("Memperbarui Fasilitas", facility.name || id);
+  const updateFacility = async (id: string, facility: Partial<Facility>) => {
+    const updated = await apiCall(`/api/facilities/${id}`, 'PUT', facility);
+    setFacilities(prev => prev.map(f => f.id === id ? updated : f));
   };
-  const deleteFacility = (id: string) => {
-    const found = facilities.find((f) => f.id === id);
-    setFacilities((prev) => prev.filter((f) => f.id !== id));
-    addLog("Menghapus Fasilitas", found?.name || id);
+  const deleteFacility = async (id: string) => {
+    await apiCall(`/api/facilities/${id}`, 'DELETE');
+    setFacilities(prev => prev.filter(f => f.id !== id));
   };
 
   // Achievements
-  const addAchievement = (achievement: Omit<Achievement, "id">) => {
-    const newAch: Achievement = { ...achievement, id: generateId("ach") };
-    setAchievements((prev) => [newAch, ...prev]);
-    addLog("Menambahkan Prestasi Baru", achievement.title);
+  const addAchievement = async (achievement: Omit<Achievement, "id">) => {
+    const created = await apiCall('/api/achievements', 'POST', achievement);
+    setAchievements(prev => [created, ...prev]);
   };
-  const updateAchievement = (id: string, achievement: Partial<Achievement>) => {
-    setAchievements((prev) =>
-      prev.map((a) => (a.id === id ? { ...a, ...achievement } : a))
-    );
-    addLog("Memperbarui Prestasi", achievement.title || id);
+  const updateAchievement = async (id: string, achievement: Partial<Achievement>) => {
+    const updated = await apiCall(`/api/achievements/${id}`, 'PUT', achievement);
+    setAchievements(prev => prev.map(a => a.id === id ? updated : a));
   };
-  const deleteAchievement = (id: string) => {
-    const found = achievements.find((a) => a.id === id);
-    setAchievements((prev) => prev.filter((a) => a.id !== id));
-    addLog("Menghapus Prestasi", found?.title || id);
+  const deleteAchievement = async (id: string) => {
+    await apiCall(`/api/achievements/${id}`, 'DELETE');
+    setAchievements(prev => prev.filter(a => a.id !== id));
   };
 
   // Articles
-  const addArticle = (article: Omit<Article, "id">) => {
-    const newArt: Article = { ...article, id: generateId("art") };
-    setArticles((prev) => [newArt, ...prev]);
-    addLog("Menerbitkan Artikel Berita", article.title);
+  const addArticle = async (article: Omit<Article, "id">) => {
+    const created = await apiCall('/api/articles', 'POST', article);
+    setArticles(prev => [created, ...prev]);
   };
-  const updateArticle = (id: string, article: Partial<Article>) => {
-    setArticles((prev) =>
-      prev.map((a) => (a.id === id ? { ...a, ...article } : a))
-    );
-    addLog("Memperbarui Artikel", article.title || id);
+  const updateArticle = async (id: string, article: Partial<Article>) => {
+    const updated = await apiCall(`/api/articles/${id}`, 'PUT', article);
+    setArticles(prev => prev.map(a => a.id === id ? updated : a));
   };
-  const deleteArticle = (id: string) => {
-    const found = articles.find((a) => a.id === id);
-    setArticles((prev) => prev.filter((a) => a.id !== id));
-    addLog("Menghapus Artikel", found?.title || id);
+  const deleteArticle = async (id: string) => {
+    await apiCall(`/api/articles/${id}`, 'DELETE');
+    setArticles(prev => prev.filter(a => a.id !== id));
   };
 
   // Events
-  const addEvent = (event: Omit<SchoolEvent, "id">) => {
-    const newEvt: SchoolEvent = { ...event, id: generateId("evt") };
-    setEvents((prev) => [...prev, newEvt]);
-    addLog("Menambahkan Agenda Kegiatan", event.title);
+  const addEvent = async (event: Omit<SchoolEvent, "id">) => {
+    const created = await apiCall('/api/events', 'POST', event);
+    setEvents(prev => [...prev, created]);
   };
-  const updateEvent = (id: string, event: Partial<SchoolEvent>) => {
-    setEvents((prev) =>
-      prev.map((e) => (e.id === id ? { ...e, ...event } : e))
-    );
-    addLog("Memperbarui Agenda", event.title || id);
+  const updateEvent = async (id: string, event: Partial<SchoolEvent>) => {
+    const updated = await apiCall(`/api/events/${id}`, 'PUT', event);
+    setEvents(prev => prev.map(e => e.id === id ? updated : e));
   };
-  const deleteEvent = (id: string) => {
-    const found = events.find((e) => e.id === id);
-    setEvents((prev) => prev.filter((e) => e.id !== id));
-    addLog("Menghapus Agenda", found?.title || id);
-  };
-
-  // Media
-  const addMedia = (mediaItem: Omit<MediaItem, "id" | "uploadedAt">) => {
-    const newMed: MediaItem = {
-      ...mediaItem,
-      id: generateId("med"),
-      uploadedAt: new Date().toISOString().split("T")[0],
-    };
-    setMedia((prev) => [newMed, ...prev]);
-    addLog("Mengunggah File Media", mediaItem.fileName);
-  };
-  const deleteMedia = (id: string) => {
-    const found = media.find((m) => m.id === id);
-    setMedia((prev) => prev.filter((m) => m.id !== id));
-    addLog("Menghapus Media", found?.fileName || id);
+  const deleteEvent = async (id: string) => {
+    await apiCall(`/api/events/${id}`, 'DELETE');
+    setEvents(prev => prev.filter(e => e.id !== id));
   };
 
   // Organization
-  const addMember = (member: Omit<OrganizationMember, "id">) => {
-    const newMem: OrganizationMember = { ...member, id: generateId("org") };
-    setOrganization((prev) => [...prev, newMem]);
-    addLog("Menambahkan Tim/Guru", member.name);
+  const addMember = async (member: Omit<OrganizationMember, "id">) => {
+    const created = await apiCall('/api/organization', 'POST', member);
+    setOrganization(prev => [...prev, created]);
   };
-  const updateMember = (id: string, member: Partial<OrganizationMember>) => {
-    setOrganization((prev) =>
-      prev.map((m) => (m.id === id ? { ...m, ...member } : m))
-    );
-    addLog("Memperbarui Data Tim/Guru", member.name || id);
+  const updateMember = async (id: string, member: Partial<OrganizationMember>) => {
+    const updated = await apiCall(`/api/organization/${id}`, 'PUT', member);
+    setOrganization(prev => prev.map(m => m.id === id ? updated : m));
   };
-  const deleteMember = (id: string) => {
-    const found = organization.find((m) => m.id === id);
-    setOrganization((prev) => prev.filter((m) => m.id !== id));
-    addLog("Menghapus Tim/Guru", found?.name || id);
+  const deleteMember = async (id: string) => {
+    await apiCall(`/api/organization/${id}`, 'DELETE');
+    setOrganization(prev => prev.filter(m => m.id !== id));
   };
 
   // Testimonials
-  const addTestimonial = (testimonial: Omit<Testimonial, "id">) => {
-    const newTest: Testimonial = { ...testimonial, id: generateId("test") };
-    setTestimonials((prev) => [...prev, newTest]);
-    addLog("Menambahkan Testimoni", testimonial.name);
+  const addTestimonial = async (testimonial: Omit<Testimonial, "id">) => {
+    const created = await apiCall('/api/testimonials', 'POST', testimonial);
+    setTestimonials(prev => [...prev, created]);
   };
-  const updateTestimonial = (id: string, testimonial: Partial<Testimonial>) => {
-    setTestimonials((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, ...testimonial } : t))
-    );
-    addLog("Memperbarui Testimoni", testimonial.name || id);
+  const updateTestimonial = async (id: string, testimonial: Partial<Testimonial>) => {
+    const updated = await apiCall(`/api/testimonials/${id}`, 'PUT', testimonial);
+    setTestimonials(prev => prev.map(t => t.id === id ? updated : t));
   };
-  const deleteTestimonial = (id: string) => {
-    const found = testimonials.find((t) => t.id === id);
-    setTestimonials((prev) => prev.filter((t) => t.id !== id));
-    addLog("Menghapus Testimoni", found?.name || id);
+  const deleteTestimonial = async (id: string) => {
+    await apiCall(`/api/testimonials/${id}`, 'DELETE');
+    setTestimonials(prev => prev.filter(t => t.id !== id));
   };
 
   // Admission & Settings
-  const updateAdmission = (data: Partial<AdmissionInfo>) => {
-    setAdmission((prev) => ({ ...prev, ...data }));
-    addLog("Memperbarui Informasi PPDB", "Jadwal & Biaya");
+  const updateAdmission = async (data: Partial<AdmissionInfo>) => {
+    const updated = await apiCall('/api/admission', 'PUT', data);
+    setAdmission(updated);
   };
 
-  const updateSettings = (data: Partial<WebsiteSettings>) => {
-    setSettings((prev) => ({ ...prev, ...data }));
-    addLog("Memperbarui Pengaturan Website", "SEO & Sosmed");
+  const updateSettings = async (data: Partial<WebsiteSettings>) => {
+    const updated = await apiCall('/api/settings', 'PUT', data);
+    setSettings(updated);
   };
 
-  // Contact Messages
-  const addContactMessage = (msg: Omit<ContactMessage, "id" | "submittedAt" | "status">) => {
-    const newMsg: ContactMessage = {
-      ...msg,
-      id: generateId("msg"),
-      submittedAt: new Date().toLocaleString("id-ID", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      status: "new",
-    };
-    setMessages((prev) => [newMsg, ...prev]);
+  // Messages
+  const addContactMessage = async (msg: Omit<ContactMessage, "id" | "submittedAt" | "status">) => {
+    const created = await apiCall('/api/messages', 'POST', msg);
+    setMessages(prev => [created, ...prev]);
+  };
+  const updateMessageStatus = async (id: string, status: ContactMessage["status"]) => {
+    const updated = await apiCall(`/api/messages/${id}`, 'PUT', { status });
+    setMessages(prev => prev.map(m => m.id === id ? updated : m));
+  };
+  const deleteMessage = async (id: string) => {
+    await apiCall(`/api/messages/${id}`, 'DELETE');
+    setMessages(prev => prev.filter(m => m.id !== id));
   };
 
-  const updateMessageStatus = (id: string, status: ContactMessage["status"]) => {
-    setMessages((prev) =>
-      prev.map((m) => (m.id === id ? { ...m, status } : m))
-    );
-    addLog("Memperbarui Status Pesan", status);
+  // Media (Mock API call for now, since we haven't built the upload API)
+  const addMedia = async (mediaItem: Omit<MediaItem, "id" | "uploadedAt">) => {
+    const newMed = { ...mediaItem, id: generateId("med"), uploadedAt: new Date().toISOString() };
+    setMedia(prev => [newMed, ...prev]);
+  };
+  const deleteMedia = async (id: string) => {
+    setMedia(prev => prev.filter(m => m.id !== id));
   };
 
-  const deleteMessage = (id: string) => {
-    setMessages((prev) => prev.filter((m) => m.id !== id));
-    addLog("Menghapus Pesan Kontak", id);
+  // Sections (State only for simplicity, assuming they are toggleable)
+  const toggleSection = async (id: string) => {
+    setSections(prev => prev.map(s => s.id === id ? { ...s, isEnabled: !s.isEnabled } : s));
   };
-
-  // Homepage Sections
-  const toggleSection = (id: string) => {
-    setSections((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, isEnabled: !s.isEnabled } : s))
-    );
-    addLog("Mengubah Visibilitas Seksi Beranda", id);
-  };
-
-  const reorderSections = (newSections: PageSectionConfig[]) => {
+  const reorderSections = async (newSections: PageSectionConfig[]) => {
     setSections(newSections);
-    addLog("Mengubah Urutan Seksi Beranda", "Tata Letak Beranda");
   };
 
   const resetToDefault = () => {
-    setProfile(initialSchoolProfile);
-    setPrograms(initialPrograms);
-    setFacilities(initialFacilities);
-    setAchievements(initialAchievements);
-    setArticles(initialArticles);
-    setEvents(initialEvents);
-    setMedia(initialMedia);
-    setOrganization(initialOrganization);
-    setTestimonials(initialTestimonials);
-    setAdmission(initialAdmissionInfo);
-    setMessages(initialContactMessages);
-    setSettings(initialWebsiteSettings);
-    setUsers(initialUsers);
-    setSections(initialSections);
-    localStorage.removeItem(STORAGE_KEY);
-    addLog("Mereset Sistem ke Pengaturan Awal", "Default Data");
+    console.warn("Reset to default is disabled when using DB");
   };
 
   return (
     <SchoolDataContext.Provider
       value={{
-        profile,
-        programs,
-        facilities,
-        achievements,
-        articles,
-        events,
-        media,
-        organization,
-        testimonials,
-        admission,
-        messages,
-        settings,
-        users,
-        sections,
-        logs,
-        updateProfile,
-        updateBrandingColors,
-        addProgram,
-        updateProgram,
-        deleteProgram,
-        addFacility,
-        updateFacility,
-        deleteFacility,
-        addAchievement,
-        updateAchievement,
-        deleteAchievement,
-        addArticle,
-        updateArticle,
-        deleteArticle,
-        addEvent,
-        updateEvent,
-        deleteEvent,
-        addMedia,
-        deleteMedia,
-        addMember,
-        updateMember,
-        deleteMember,
-        addTestimonial,
-        updateTestimonial,
-        deleteTestimonial,
-        updateAdmission,
-        updateSettings,
-        addContactMessage,
-        updateMessageStatus,
-        deleteMessage,
-        toggleSection,
-        reorderSections,
-        resetToDefault,
+        profile, programs, facilities, achievements, articles, events, media,
+        organization, testimonials, admission, messages, settings, users, sections, logs,
+        isLoading, error,
+        updateProfile, updateBrandingColors,
+        addProgram, updateProgram, deleteProgram,
+        addFacility, updateFacility, deleteFacility,
+        addAchievement, updateAchievement, deleteAchievement,
+        addArticle, updateArticle, deleteArticle,
+        addEvent, updateEvent, deleteEvent,
+        addMedia, deleteMedia,
+        addMember, updateMember, deleteMember,
+        addTestimonial, updateTestimonial, deleteTestimonial,
+        updateAdmission, updateSettings,
+        addContactMessage, updateMessageStatus, deleteMessage,
+        toggleSection, reorderSections, resetToDefault,
       }}
     >
       {children}
