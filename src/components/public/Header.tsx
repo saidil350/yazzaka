@@ -229,10 +229,10 @@ export function Header() {
               <span>WhatsApp CS</span>
             </a>
             <Link
-              href="/admin"
+              href="/login"
               className="hidden lg:inline font-semibold text-stone-400 hover:text-amber-300 transition-colors border-l border-white/15 pl-3 text-[11px]"
             >
-              CMS Admin
+              Login Staf
             </Link>
           </div>
         </div>
@@ -551,9 +551,9 @@ export function Header() {
                 <Phone className="h-3.5 w-3.5 text-emerald-600" />
                 <span>Konsultasi WhatsApp</span>
               </a>
-              <Link href="/admin" onClick={() => setMobileMenuOpen(false)} className="block">
+              <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="block">
                 <Button variant="outline" className="w-full justify-center text-xs h-8 text-stone-500">
-                  Portal Admin CMS
+                  Login Staf
                 </Button>
               </Link>
             </div>

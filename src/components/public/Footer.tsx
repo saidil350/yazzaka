@@ -284,8 +284,8 @@ export function Footer() {
             <span>© {new Date().getFullYear()} {profile.name}. Berkhidmat untuk Umat.</span>
           </p>
           <div className="flex items-center gap-5">
-            <Link href="/admin" className="text-stone-500 hover:text-[#FA6400] transition-colors font-bold">
-              CMS Admin
+            <Link href="/login" className="text-stone-500 hover:text-[#FA6400] transition-colors font-bold">
+              Login Staf
             </Link>
             <span className="text-stone-300">|</span>
             <Link href="/kontak" className="text-stone-500 hover:text-[#FA6400] transition-colors">

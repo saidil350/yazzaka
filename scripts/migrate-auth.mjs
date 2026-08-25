@@ -47,6 +47,14 @@ async function migrate() {
   `;
   console.log("✓ Kolom password_hash siap");
 
+  // Hapus baris legacy tanpa password_hash (warisan seed lama tanpa auth)
+  const removed = await sql`
+    DELETE FROM users WHERE password_hash IS NULL OR length(password_hash) = 0 RETURNING email
+  `;
+  if (removed.length > 0) {
+    console.log(`✓ ${removed.length} baris legacy tanpa hash dihapus`);
+  }
+
   const password = process.env.CMS_SEED_PASSWORD || "Yazzakka#2026";
   const hash = hashPassword(password);
 
