@@ -1,19 +1,53 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
-import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles, BookOpen, GraduationCap, Award, Globe, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function ProgramsDirectoryPage() {
-  const { programs } = useSchoolData();
+  const { programs, profile } = useSchoolData();
+  const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
   const published = programs
     .filter((p) => p.status === "published")
     .sort((a, b) => a.orderIndex - b.orderIndex);
+
+  const filterOptions = [
+    { key: "all", label: "Semua Unit (6)" },
+    { key: "quran_early", label: "Al-Qur'an & Usia Dini" },
+    { key: "empowerment", label: "Kesetaraan & Vokasi (PKBM)" },
+    { key: "tahfiz", label: "Tahfiz Intensif (Darul Quran)" },
+    { key: "strategic", label: "Wakaf Pesantren 6.0" },
+  ];
+
+  const filteredPrograms = published.filter((prog) => {
+    if (selectedFilter === "all") return true;
+    if (selectedFilter === "quran_early") {
+      return (
+        prog.slug === "tpa-yazzakka" ||
+        prog.slug === "tkit-yazzakka" ||
+        prog.slug === "sekolah-anak-shalih"
+      );
+    }
+    if (selectedFilter === "empowerment") return prog.slug === "pkbm-yazzakka";
+    if (selectedFilter === "tahfiz") return prog.slug === "darul-quran-yazzakka";
+    if (selectedFilter === "strategic") return prog.slug === "pesantren-peradaban-60";
+    return true;
+  });
+
+  const getUnitBadge = (slug: string) => {
+    if (slug === "tpa-yazzakka") return { tag: "Pendidikan Al-Qur'an", target: "Usia 4–12 Tahun", color: "bg-[#FFF0E5] text-[#FA6400] border-[#FED7AA]" };
+    if (slug === "tkit-yazzakka") return { tag: "TK Islam Terpadu", target: "Usia 4–6 Tahun", color: "bg-[#EDE9FE] text-[#7C3AED] border-[#DDD6FE]" };
+    if (slug === "sekolah-anak-shalih") return { tag: "Pembinaan Karakter", target: "Santri Cilik & Remaja", color: "bg-[#DCFCE7] text-[#16A34A] border-[#BBF7D0]" };
+    if (slug === "pkbm-yazzakka") return { tag: "Kesetaraan & Vokasi", target: "Paket A / B / C Resmi", color: "bg-[#E0F2FE] text-[#0284C7] border-[#BAE6FD]" };
+    if (slug === "darul-quran-yazzakka") return { tag: "Tahfiz 30 Juz Bersanad", target: "Santri & Mahasiswa", color: "bg-[#FEF9C3] text-[#A16207] border-[#FEF08A]" };
+    if (slug === "pesantren-peradaban-60") return { tag: "Wakaf Pembangunan", target: "Program Strategis Umat", color: "bg-[#FA6400] text-white border-[#FA6400]" };
+    return { tag: "Program Unggulan", target: "Santri", color: "bg-stone-100 text-stone-700 border-stone-200" };
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
@@ -25,78 +59,126 @@ export default function ProgramsDirectoryPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] text-[#0369A1] font-bold text-xs mb-3 shadow-xs">
               <Sparkles className="h-3.5 w-3.5 text-[#0284C7]" />
-              <span>Kurikulum &amp; Pembinaan Santri</span>
+              <span>Unit Pendidikan &amp; Program Strategis</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
-              Program Pendidikan Terpadu
+              Struktur Pendidikan {profile.name}
             </h1>
             <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
-              Struktur kurikulum terintegrasi yang dirancang untuk mengoptimalkan potensi intelektual, spiritual, dan kepemimpinan santri.
+              Menaungi 6 unit pendidikan formal, non-formal, tahfiz intensif Al-Qur&apos;an, serta inisiasi pembangunan Pesantren Peradaban 6.0 di Kabupaten Pidie, Aceh.
             </p>
           </div>
         </section>
 
-        {/* ── Directory Grid ──────────────────────────── */}
+        {/* ── Directory Grid with Filter ──────────────── */}
         <section className="py-12 lg:py-14 bg-white border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {published.map((prog) => (
-                <div
-                  key={prog.id}
-                  className="border-2 border-[#E8E2D8] rounded-3xl overflow-hidden bg-white flex flex-col justify-between hover:border-[#FA6400]/50 hover:shadow-md transition-all group shadow-xs"
+
+            {/* Filter Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {filterOptions.map((opt) => (
+                <button
+                  key={opt.key}
+                  onClick={() => setSelectedFilter(opt.key)}
+                  className={[
+                    "px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer border",
+                    selectedFilter === opt.key
+                      ? "bg-[#1E2330] text-white border-[#1E2330] shadow-xs"
+                      : "bg-[#FAF6EE] text-stone-600 border-[#E8E2D8] hover:bg-stone-100 hover:text-[#1E2330]",
+                  ].join(" ")}
                 >
-                  <div>
-                    <div className="h-48 relative overflow-hidden bg-stone-200">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={prog.imageUrl}
-                        alt={prog.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute top-3 left-3 bg-[#FA6400] text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-xs">
-                        {prog.category}
-                      </div>
-                    </div>
-
-                    <div className="p-5 space-y-3">
-                      <h2 className="text-base sm:text-lg font-bold text-[#1E2330] group-hover:text-[#FA6400] transition-colors leading-snug">
-                        {prog.title}
-                      </h2>
-                      <p className="text-xs text-stone-600 leading-relaxed font-medium line-clamp-3">
-                        {prog.shortDesc}
-                      </p>
-
-                      <div className="pt-3 border-t border-stone-100 space-y-1.5">
-                        <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wider block">
-                          Capaian Utama:
-                        </span>
-                        {prog.features.slice(0, 3).map((feat, fIdx) => (
-                          <div
-                            key={fIdx}
-                            className="flex items-center gap-2 text-xs text-stone-700 font-semibold"
-                          >
-                            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                            <span className="line-clamp-1">{feat}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-5 pt-0">
-                    <Link href={`/program/${prog.slug}`}>
-                      <Button
-                        variant="outline"
-                        size="default"
-                        className="w-full justify-between font-bold text-xs h-9"
-                      >
-                        <span>Rincian Kurikulum</span>
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
+                  {opt.label}
+                </button>
               ))}
+            </div>
+
+            {/* Programs Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredPrograms.map((prog, idx) => {
+                const badgeInfo = getUnitBadge(prog.slug);
+                const isSpecialWakaf = prog.slug === "pesantren-peradaban-60";
+
+                return (
+                  <div
+                    key={prog.id}
+                    className={[
+                      "border-2 rounded-3xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-200 group shadow-xs",
+                      isSpecialWakaf
+                        ? "bg-[#FFF9F2] border-[#FA6400] ring-2 ring-[#FA6400]/20"
+                        : "bg-white border-[#E8E2D8] hover:border-[#FA6400]/50",
+                    ].join(" ")}
+                  >
+                    <div>
+                      {/* Banner Image */}
+                      <div className="h-52 relative overflow-hidden bg-stone-200">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={prog.imageUrl}
+                          alt={prog.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
+
+                        {/* Badges on Image */}
+                        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
+                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider border shadow-xs ${badgeInfo.color}`}>
+                            {badgeInfo.tag}
+                          </span>
+                          <span className="px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold">
+                            {badgeInfo.target}
+                          </span>
+                        </div>
+
+                        <div className="absolute bottom-3 left-3 text-white text-xs font-bold drop-shadow-xs">
+                          Unit 0{idx + 1} • Yayasan Yazzakka
+                        </div>
+                      </div>
+
+                      {/* Content Body */}
+                      <div className="p-5 space-y-3">
+                        <h2 className="text-base sm:text-lg font-bold text-[#1E2330] group-hover:text-[#FA6400] transition-colors leading-snug">
+                          {prog.title}
+                        </h2>
+                        <p className="text-xs text-stone-600 leading-relaxed font-medium line-clamp-3">
+                          {prog.shortDesc}
+                        </p>
+
+                        {/* Features & Targets */}
+                        <div className="pt-3 border-t border-stone-100 space-y-2">
+                          <span className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider block">
+                            Fokus Kurikulum &amp; Output:
+                          </span>
+                          {prog.features.slice(0, 3).map((feat, fIdx) => (
+                            <div
+                              key={fIdx}
+                              className="flex items-center gap-2 text-xs text-stone-700 font-semibold"
+                            >
+                              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                              <span className="line-clamp-1">{feat}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Button */}
+                    <div className="p-5 pt-0">
+                      <Link href={`/program/${prog.slug}`}>
+                        <Button
+                          variant={isSpecialWakaf ? "default" : "outline"}
+                          className={[
+                            "w-full justify-between font-bold text-xs h-10",
+                            isSpecialWakaf ? "bg-[#FA6400] hover:bg-[#E05A00] text-white shadow-xs" : "",
+                          ].join(" ")}
+                        >
+                          <span>{isSpecialWakaf ? "Detail Wakaf & Masterplan" : "Rincian Kurikulum & Pendaftaran"}</span>
+                          <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
           </div>

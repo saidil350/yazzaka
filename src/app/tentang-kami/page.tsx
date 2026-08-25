@@ -71,7 +71,7 @@ export default function AboutPage() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80"
-                      alt="Gedung Kampus Yazzaka"
+                      alt="Gedung Kampus Yazzakka"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -145,7 +145,7 @@ export default function AboutPage() {
                 Nilai Filosofis
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
-                Panca Jiwa Pondok Pesantren Yazzaka
+                Panca Jiwa Pondok Pesantren Yazzakka
               </h2>
             </div>
 

@@ -36,7 +36,7 @@ export default function AdminNewsPage() {
   const [content, setContent] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const [tags, setTags] = useState("");
-  const [author, setAuthor] = useState("Redaksi Yazzaka");
+  const [author, setAuthor] = useState("Redaksi Yazzakka");
   const [status, setStatus] = useState<"published" | "draft">("published");
 
   const categories: Article["category"][] = [
@@ -54,8 +54,8 @@ export default function AdminNewsPage() {
     setExcerpt("");
     setContent("");
     setCoverImage("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80");
-    setTags("Edukasi, Santri, Yazzaka");
-    setAuthor("Redaksi Yazzaka");
+    setTags("Edukasi, Santri, Yazzakka");
+    setAuthor("Redaksi Yazzakka");
     setStatus("published");
     setModalOpen(true);
   };
@@ -262,7 +262,7 @@ export default function AdminNewsPage() {
           <Input
             label="Judul Artikel"
             required
-            placeholder="Contoh: Santri Yazzaka Raih Medali Emas OSN 2025"
+            placeholder="Contoh: Santri Yazzakka Raih Medali Emas OSN 2025"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />

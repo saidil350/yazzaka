@@ -16,11 +16,11 @@ import {
 } from "../types";
 
 export const initialSchoolProfile: SchoolProfile = {
-  id: "profile-yazzaka",
-  name: "SMA & Pesantren Modern Yazzaka",
-  tagline: "Menumbuhkan Generasi Unggul, Berkarakter, dan Siap Memimpin Masa Depan.",
+  id: "profile-yazzakka",
+  name: "Yayasan Yazzakka Aceh",
+  tagline: "Menumbuhkan Generasi Unggul, Berkarakter Qur'ani, dan Siap Memimpin Masa Depan.",
   description:
-    "Institusi pendidikan terpadu yang memadukan keunggulan kurikulum nasional, sains modern, penguasaan bahasa internasional (Arab & Inggris), serta penanaman adab dan tahfiz Al-Qur'an 30 juz.",
+    "Institusi pendidikan Islam terpadu yang memadukan keunggulan kurikulum nasional, sains modern, penguasaan bahasa internasional (Arab & Inggris), serta penanaman adab dan tahfiz Al-Qur'an 30 juz.",
   npsn: "69889210",
   accreditation: "A (Unggul)",
   establishedYear: 2012,
@@ -28,20 +28,20 @@ export const initialSchoolProfile: SchoolProfile = {
   teacherCount: 94,
   alumniCount: 2450,
   hafizCount: 310,
-  address: "Jl. Raya Bandar - Batang Km. 05, Desa Kauman, Kec. Bandar",
-  city: "Kabupaten Batang",
-  province: "Jawa Tengah 51254",
-  phone: "(0285) 4489211",
-  email: "info@yazzaka.sch.id",
+  address: "Jl. Banda Aceh - Medan Km. 18, Aceh Besar",
+  city: "Aceh Besar",
+  province: "Aceh",
+  phone: "(0651) 7558921",
+  email: "info@yazzakka.sch.id",
   whatsapp: "6281234567890",
   mapsEmbedUrl:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.989201509376!2d109.789234!3d-7.010234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMDAnMzYuOCJTIDEwOcKwNDcnMjEuMiJF!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid",
   principal: {
     name: "Dr. KH. Ahmad Zaki Mubarak, Lc., M.Phil.",
-    title: "Pimpinan & Direktur Pendidikan Yazzaka",
+    title: "Pimpinan & Direktur Pendidikan Yazzakka",
     photoUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
     welcomeMessage:
-      "Assalamu'alaikum Warahmatullahi Wabarakatuh.\n\nSelamat datang di portal resmi SMA & Pesantren Modern Yazzaka. Di era disrupsi informasi dan akselerasi teknologi, tantangan terbesar pendidikan bukanlah sekadar mentransfer pengetahuan kognitif, melainkan menumbuhkan jiwa yang beradab, berkarakter kokoh, dan berwawasan global.\n\nDi Yazzaka, kami mendampingi setiap anak didik untuk menemukan potensi fitrah terbaiknya. Melalui integrasi kurikulum sains modern, tradisi keilmuan Islam, dan penguasaan bahasa dunia, kami berikhtiar melahirkan generasi pemimpin masa depan yang berintegritas, mandiri, dan bermanfaat bagi peradaban umat.",
+      "Assalamu'alaikum Warahmatullahi Wabarakatuh.\n\nSelamat datang di portal resmi Yayasan Yazzakka Aceh. Di era disrupsi informasi dan akselerasi teknologi, tantangan terbesar pendidikan bukanlah sekadar mentransfer pengetahuan kognitif, melainkan menumbuhkan jiwa yang beradab, berkarakter kokoh, dan berwawasan global.\n\nDi Yazzakka, kami mendampingi setiap anak didik untuk menemukan potensi fitrah terbaiknya. Melalui integrasi kurikulum sains modern, tradisi keilmuan Islam, dan penguasaan bahasa dunia, kami berikhtiar melahirkan generasi pemimpin masa depan yang berintegritas, mandiri, dan bermanfaat bagi peradaban umat.",
   },
   vision:
     "Menjadi pusat keunggulan pendidikan Islam modern terpadu terkemuka di Asia Tenggara yang melahirkan generasi berkarakter Qur'ani, berdaya saing sains global, dan berjiwa kepemimpinan peradaban.",
@@ -76,10 +76,10 @@ export const initialSchoolProfile: SchoolProfile = {
   ],
   branding: {
     primaryColor: "#0F2B48",
-    accentColor: "#D97706",
+    accentColor: "#FA6400",
     secondaryColor: "#F4F6F8",
-    logoUrl: "/logo-yazzaka.svg",
-    faviconUrl: "/favicon.ico",
+    logoUrl: "/yazzakka.png",
+    faviconUrl: "/yazzakka.png",
   },
 };
 
@@ -688,17 +688,17 @@ export const initialContactMessages: ContactMessage[] = [
 ];
 
 export const initialWebsiteSettings: WebsiteSettings = {
-  siteTitle: "SMA & Pesantren Modern Yazzaka - Pendidikan Unggul & Berkarakter",
+  siteTitle: "Yayasan Yazzakka Aceh - Lembaga Pendidikan Islam Unggul & Berkarakter",
   metaDescription:
-    "Portal resmi SMA & Pesantren Modern Yazzaka. Memadukan kurikulum sains terpadu, tahfiz Al-Qur'an 30 juz, bahasa Arab & Inggris aktif, serta pembinaan karakter kepemimpinan.",
-  keywords: "pesantren modern, sma unggulan, tahfiz quran 30 juz, ppdb 2026, sekolah islam terbaik",
+    "Portal resmi Yayasan Yazzakka Aceh. Memadukan kurikulum sains terpadu, tahfiz Al-Qur'an 30 juz, bahasa Arab & Inggris aktif, serta pembinaan karakter kepemimpinan.",
+  keywords: "yayasan yazzakka aceh, pesantren modern yazzakka, sma unggulan, tahfiz quran 30 juz, ppdb 2026, sekolah islam terbaik aceh",
   ogImage: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
   socialMedia: {
-    instagram: "https://instagram.com/yazzakamodern",
-    youtube: "https://youtube.com/@yazzakamodern",
-    facebook: "https://facebook.com/yazzakamodern",
-    tiktok: "https://tiktok.com/@yazzakamodern",
-    linkedin: "https://linkedin.com/company/yazzaka-school",
+    instagram: "https://instagram.com/yazzakka.official",
+    youtube: "https://youtube.com/@yazzakkaofficial",
+    facebook: "https://facebook.com/yazzakka.official",
+    tiktok: "https://tiktok.com/@yazzakka.official",
+    linkedin: "https://linkedin.com/company/yazzakka-aceh",
   },
   navigation: {
     headerLinks: [
@@ -727,7 +727,7 @@ export const initialUsers: User[] = [
   {
     id: "usr-1",
     name: "Ust. Fathurrahman, S.Kom.",
-    email: "admin@yazzaka.sch.id",
+    email: "admin@yazzakka.sch.id",
     role: "super_admin",
     avatarUrl: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
     createdAt: "2026-01-10",
@@ -735,7 +735,7 @@ export const initialUsers: User[] = [
   {
     id: "usr-2",
     name: "Usth. Maryam Salsabila, S.Pd.",
-    email: "editor@yazzaka.sch.id",
+    email: "editor@yazzakka.sch.id",
     role: "editor",
     avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
     createdAt: "2026-02-15",
@@ -743,7 +743,7 @@ export const initialUsers: User[] = [
   {
     id: "usr-3",
     name: "Ahmad Wildan (SPMB Staff)",
-    email: "spmb@yazzaka.sch.id",
+    email: "spmb@yazzakka.sch.id",
     role: "admission_staff",
     avatarUrl: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80",
     createdAt: "2026-03-01",
@@ -755,7 +755,7 @@ export const initialSections: PageSectionConfig[] = [
   { id: "sec-2", key: "stats", title: "Statistik Kredibilitas", subtitle: "Angka kunci akreditasi & capaian", isEnabled: true, orderIndex: 2 },
   { id: "sec-3", key: "about", title: "Sambutan & Profil", subtitle: "Editorial pengenalan sekolah", isEnabled: true, orderIndex: 3 },
   { id: "sec-4", key: "programs", title: "Program Unggulan", subtitle: "Daftar kurikulum akademik & tahfiz", isEnabled: true, orderIndex: 4 },
-  { id: "sec-5", key: "whyus", title: "Keunggulan Yazzaka", subtitle: "Mengapa memilih pendidikan di sini", isEnabled: true, orderIndex: 5 },
+  { id: "sec-5", key: "whyus", title: "Keunggulan Yazzakka", subtitle: "Mengapa memilih pendidikan di sini", isEnabled: true, orderIndex: 5 },
   { id: "sec-6", key: "facilities", title: "Fasilitas Kampus", subtitle: "Galeri sarana prasarana modern", isEnabled: true, orderIndex: 6 },
   { id: "sec-7", key: "achievements", title: "Prestasi Siswa", subtitle: "Catatan kejuaraan tingkat nasional", isEnabled: true, orderIndex: 7 },
   { id: "sec-8", key: "news", title: "Berita & Wawasan", subtitle: "Artikel edukasi dan liputan terkini", isEnabled: true, orderIndex: 8 },

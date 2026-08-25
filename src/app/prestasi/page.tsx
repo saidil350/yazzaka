@@ -39,7 +39,7 @@ export default function AchievementsPage() {
               Prestasi &amp; Penghargaan Santri
             </h1>
             <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
-              Apresiasi capaian santri Yazzaka di ajang olimpiade sains nasional, kejuaraan robotik internasional, dan musabaqah tahfiz.
+              Apresiasi capaian santri Yazzakka di ajang olimpiade sains nasional, kejuaraan robotik internasional, dan musabaqah tahfiz.
             </p>
           </div>
         </section>

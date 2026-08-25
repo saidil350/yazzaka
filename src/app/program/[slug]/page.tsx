@@ -6,7 +6,20 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
-import { ArrowLeft, ArrowRight, CheckCircle2, BookOpen, Clock, Users, Sparkles } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  BookOpen,
+  Clock,
+  Users,
+  Sparkles,
+  Heart,
+  Phone,
+  MessageCircle,
+  Building2,
+  ShieldCheck,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function ProgramDetailPage({
@@ -15,13 +28,15 @@ export default function ProgramDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const resolvedParams = use(params);
-  const { programs } = useSchoolData();
+  const { programs, profile } = useSchoolData();
 
   const program = programs.find((p) => p.slug === resolvedParams.slug);
 
   if (!program) {
     notFound();
   }
+
+  const isWakaf = program.slug === "pesantren-peradaban-60";
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
@@ -36,12 +51,18 @@ export default function ProgramDetailPage({
               className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FA6400] hover:underline mb-3"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
-              <span>Kembali ke Direktori Program</span>
+              <span>Kembali ke Direktori Unit Pendidikan</span>
             </Link>
 
-            <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#FFF0E5] text-[#FA6400] font-bold text-xs border border-[#FED7AA] block w-fit mb-2">
-              {program.category}
+            <div className="flex flex-wrap items-center gap-2 mb-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#FFF0E5] text-[#FA6400] font-bold text-xs border border-[#FED7AA]">
+                {program.category}
+              </span>
+              <span className="px-2.5 py-0.5 rounded-full bg-[#EDE9FE] text-[#6D28D9] font-bold text-xs border border-[#DDD6FE]">
+                {profile.name}
+              </span>
             </div>
+
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
               {program.title}
             </h1>
@@ -72,7 +93,7 @@ export default function ProgramDetailPage({
 
                 <div className="space-y-3 text-sm text-stone-700 leading-relaxed font-medium">
                   <h2 className="text-xl sm:text-2xl font-extrabold text-[#1E2330]">
-                    Deskripsi &amp; Metodologi Pembelajaran
+                    {isWakaf ? "Latar Belakang & Visi Pesantren Peradaban 6.0" : "Deskripsi & Metodologi Pembinaan"}
                   </h2>
                   <p className="whitespace-pre-line leading-relaxed text-stone-600">
                     {program.fullDesc}
@@ -82,7 +103,7 @@ export default function ProgramDetailPage({
                 {/* Features list */}
                 <div className="bg-[#FAF6EE] p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-3 shadow-xs">
                   <h3 className="text-base font-bold text-[#1E2330]">
-                    Target Capaian &amp; Keunggulan Khusus
+                    {isWakaf ? "Pilar Strategis Pembangunan:" : "Target Capaian & Keunggulan Khusus:"}
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {program.features.map((feat, idx) => (
@@ -94,33 +115,96 @@ export default function ProgramDetailPage({
                   </div>
                 </div>
 
+                {/* Target Competencies */}
+                {program.targetCompetencies && program.targetCompetencies.length > 0 && (
+                  <div className="bg-[#E0F2FE]/60 p-6 rounded-3xl border-2 border-[#BAE6FD] space-y-3 shadow-xs">
+                    <h3 className="text-base font-bold text-[#0369A1]">
+                      {isWakaf ? "Dampak Peradaban & Kemaslahatan Umat:" : "Kompetensi Kelulusan Santri:"}
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {program.targetCompetencies.map((comp, idx) => (
+                        <div key={idx} className="flex items-start gap-2 text-xs text-stone-800 font-semibold">
+                          <Sparkles className="h-4 w-4 text-[#0284C7] shrink-0 mt-0.5" />
+                          <span>{comp}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Special Callout for Wakaf */}
+                {isWakaf && (
+                  <div className="bg-[#FFF9F2] p-6 rounded-3xl border-2 border-[#FED7AA] space-y-3 shadow-xs">
+                    <div className="flex items-center gap-2">
+                      <Heart className="h-5 w-5 fill-[#FA6400] text-[#FA6400]" />
+                      <h3 className="text-base font-bold text-[#1E2330]">
+                        Salurkan Wakaf Jariyah Pembangunan
+                      </h3>
+                    </div>
+                    <p className="text-xs text-stone-600 leading-relaxed font-medium">
+                      Pembangunan Pesantren Peradaban 6.0 di Cot Rheng, Pidie, membuka pintu amal jariyah bagi kaum muslimin. Setiap rupiah wakaf yang Anda salurkan akan mengalirkan pahala tak terputus bagi lahirnya kader ulama dan pemimpin peradaban Islam.
+                    </p>
+                    <div className="pt-2 flex flex-wrap gap-3">
+                      <a
+                        href={`https://wa.me/${profile.whatsapp}?text=Assalamu'alaikum%20Admin%20Yazzakka,%20saya%20ingin%20berkonsultasi%20mengenai%20Wakaf%20Pesantren%20Peradaban%206.0`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FA6400] text-white font-bold text-xs hover:bg-[#E05A00] transition-colors shadow-xs"
+                      >
+                        <MessageCircle className="h-4 w-4" />
+                        <span>Konfirmasi Wakaf via WhatsApp</span>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
               </div>
 
               {/* Right Sidebar (4 cols) */}
               <div className="lg:col-span-4 space-y-4">
                 <div className="bg-[#FAF6EE] p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-4 shadow-xs">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[#FA6400] block">
-                    Pendaftaran Santri Baru
+                    {isWakaf ? "Layanan Wakaf & Kemitraan" : "Layanan Admisi & Pendaftaran"}
                   </span>
                   <h3 className="text-base font-bold text-[#1E2330]">
-                    Tertarik dengan Program Ini?
+                    {isWakaf ? "Dukung Pembangunan Pesantren" : "Tertarik Bergabung dengan Unit Ini?"}
                   </h3>
                   <p className="text-xs text-stone-600 font-medium leading-relaxed">
-                    Daftarkan putra/putri Anda sekarang atau hubungi panitia PPDB untuk konsultasi kurikulum.
+                    {isWakaf
+                      ? "Konsultasikan akad wakaf tunai, pembebasan lahan, atau program kemitraan dakwah bersama pimpinan yayasan."
+                      : "Daftarkan putra/putri Anda sekarang atau hubungi panitia PPDB untuk konsultasi kurikulum dan jadwal visitasi."}
                   </p>
 
                   <div className="space-y-2 pt-2">
-                    <Link href="/pendaftaran" className="block">
-                      <Button className="w-full justify-center font-bold text-xs h-10">
-                        <span>Daftar Sekarang</span>
+                    <Link href={isWakaf ? "/kontak" : "/pendaftaran"} className="block">
+                      <Button className="w-full justify-center font-bold text-xs h-10 shadow-xs">
+                        <span>{isWakaf ? "Hubungi Sekretariat Wakaf" : "Daftar Santri Baru"}</span>
                         <ArrowRight className="h-3.5 w-3.5 ml-1" />
                       </Button>
                     </Link>
-                    <Link href="/kontak" className="block">
-                      <Button variant="outline" className="w-full justify-center text-xs h-9">
-                        Konsultasi Program
+
+                    <a
+                      href={`https://wa.me/${profile.whatsapp}?text=Assalamu'alaikum,%20saya%20ingin%20bertanya%20mengenai%20${encodeURIComponent(program.title)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <Button variant="outline" className="w-full justify-center text-xs h-9 font-bold">
+                        <MessageCircle className="h-3.5 w-3.5 text-emerald-600 mr-1.5" />
+                        <span>Chat WhatsApp Admisi</span>
                       </Button>
-                    </Link>
+                    </a>
+                  </div>
+
+                  <div className="pt-3 border-t border-[#E8E2D8] space-y-1.5 text-[11px] text-stone-500 font-medium">
+                    <div className="flex items-center gap-1.5">
+                      <Building2 className="h-3.5 w-3.5 text-stone-400 shrink-0" />
+                      <span>{profile.address}, Sigli</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                      <span>SK Kemenkumham: {profile.npsn}</span>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -63,7 +63,7 @@ export function WhyUsSection() {
         <div className="max-w-3xl space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FA6400]/20 border border-[#FA6400]/40 text-[#FF9E59] font-bold text-xs">
             <Sparkles className="h-3 w-3" />
-            <span>Mengapa Memilih Yazzaka?</span>
+            <span>Mengapa Memilih Yazzakka?</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-white tracking-tight leading-tight">
             Enam Alasan Kuat Santri Tumbuh Optimal Bersama Kami

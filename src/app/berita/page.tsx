@@ -48,7 +48,7 @@ export default function NewsIndexPage() {
               <span>Warta &amp; Kabar Terkini</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
-              Warta &amp; Publikasi Yazzaka
+              Warta &amp; Publikasi Yazzakka
             </h1>
             <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
               Dokumentasi kegiatan santri, wawasan pendidikan islami, capaian prestasi, dan informasi resmi pesantren.

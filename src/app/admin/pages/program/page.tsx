@@ -11,7 +11,7 @@ import { Layers, ArrowRight, Save } from "lucide-react";
 
 export default function AdminProgramsPageSettings() {
   const { toast } = useToast();
-  const [headerTitle, setHeaderTitle] = useState("Program Pendidikan Yazzaka");
+  const [headerTitle, setHeaderTitle] = useState("Program Pendidikan Yazzakka");
   const [headerSubtitle, setHeaderSubtitle] = useState(
     "Memadukan kurikulum sains mutakhir, tahfiz Al-Qur'an 30 juz bersanad, lingkungan bilingual aktif, dan pembinaan karakter kepemimpinan."
   );

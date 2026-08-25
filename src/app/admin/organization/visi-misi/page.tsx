@@ -48,7 +48,7 @@ export default function AdminVisionMissionPage() {
           Visi & Misi Lembaga
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 mt-1">
-          Kelola visi jangka panjang dan butir-butir misi strategis penyelenggaraan pendidikan Yazzaka.
+          Kelola visi jangka panjang dan butir-butir misi strategis penyelenggaraan pendidikan Yazzakka.
         </p>
       </div>
 

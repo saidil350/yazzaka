@@ -22,9 +22,9 @@ export default function AdminGeneralSettingsPage() {
 
   const presetThemes = [
     {
-      name: "Oxford Navy & Gold (Default Yazzaka)",
+      name: "Oxford Navy & Warm Orange (Default Yazzakka)",
       primary: "#0F2B48",
-      accent: "#D97706",
+      accent: "#FA6400",
     },
     {
       name: "Emerald Islamic & Warm Amber",

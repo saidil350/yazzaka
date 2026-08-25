@@ -128,7 +128,7 @@ export default function AdminContactSettingsPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="sekretariat@yazzaka.sch.id"
+                placeholder="sekretariat@yazzakka.sch.id"
               />
               <p className="text-xs text-muted-foreground">
                 Email utama yang menerima salinan notifikasi pesan masuk.
