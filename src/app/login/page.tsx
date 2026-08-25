@@ -31,11 +31,23 @@ export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // Path tujuan internal setelah login (dari ?next=), divalidasi same-origin
+  const resolveNextPath = () => {
+    if (typeof window === "undefined") return "/admin";
+    const params = new URLSearchParams(window.location.search);
+    const next = params.get("next") ?? "";
+    if (next.startsWith("/") && !next.startsWith("//") && !next.includes("\\")) {
+      return next;
+    }
+    return "/admin";
+  };
+
   // Jika pengguna sudah memiliki sesi login aktif, alihkan ke dashboard admin
   useEffect(() => {
     if (isInitialized && isAuthenticated) {
-      router.replace("/admin");
+      router.replace(resolveNextPath());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isInitialized, isAuthenticated, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,7 +76,8 @@ export default function LoginPage() {
 
       if (result.success) {
         toast("Autentikasi berhasil. Mengalihkan ke panel CMS...", "success");
-        router.push("/admin");
+        router.push(resolveNextPath());
+        router.refresh();
       } else {
         setErrorMessage(
           result.error ||
@@ -102,7 +115,7 @@ export default function LoginPage() {
           </Link>
           <div className="flex items-center gap-1.5 text-[11px] font-medium text-stone-500">
             <Shield className="h-3.5 w-3.5 text-stone-400" />
-            <span>Kanal Otentikasi Terenkripsi</span>
+            <span>Akses Terbatas untuk Staf</span>
           </div>
         </div>
       </header>
@@ -245,22 +258,6 @@ export default function LoginPage() {
                 </Button>
               </div>
             </form>
-
-            {/* Quick Demo Helper Hint */}
-            <div className="rounded-xl bg-[#FAF6EE] border border-[#E8E2D8] p-3 text-[11px] text-stone-600 space-y-1">
-              <p className="font-semibold text-stone-800">Akun Pengelola Terdaftar (Demo):</p>
-              <div className="flex flex-wrap gap-2 text-stone-600">
-                <span className="font-mono bg-white px-2 py-0.5 rounded border border-[#E8E2D8]">
-                  admin@yazzakka.sch.id
-                </span>
-                <span className="font-mono bg-white px-2 py-0.5 rounded border border-[#E8E2D8]">
-                  editor@yazzakka.sch.id
-                </span>
-              </div>
-              <p className="text-[10px] text-stone-500 pt-0.5">
-                Gunakan sandi minimal 6 karakter (contoh: <code className="font-mono">123456</code>).
-              </p>
-            </div>
           </div>
 
           {/* 4. Supporting Information */}

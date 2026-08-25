@@ -6,15 +6,14 @@ import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
-import { UserRole } from "@/lib/types";
 import {
   Menu,
   RotateCcw,
   ExternalLink,
   Bell,
-  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export function AdminTopbar({
   isCollapsed,
@@ -26,15 +25,9 @@ export function AdminTopbar({
   onToggleMobileSidebar?: () => void;
 }) {
   const pathname = usePathname();
-  const { role, switchRole } = useAuth();
+  const { role } = useAuth();
   const { resetToDefault, messages } = useSchoolData();
   const { toast } = useToast();
-
-  const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newRole = e.target.value as UserRole;
-    switchRole(newRole);
-    toast(`Peran dialihkan ke: ${newRole.replace("_", " ").toUpperCase()}`, "info");
-  };
 
   const handleReset = () => {
     if (confirm("Apakah Anda yakin ingin mereset seluruh data simulasi ke pengaturan awal sekolah?")) {
@@ -92,21 +85,13 @@ export function AdminTopbar({
 
       {/* ── Right: Tools ──────────────────────────────── */}
       <div className="flex items-center gap-2.5 shrink-0">
-        {/* Role Switcher */}
-        <div className="flex items-center h-9 px-3 rounded-full border-2 border-[#E8E2D8] bg-white text-xs text-stone-700 shadow-2xs hover:border-[#FA6400]/40 transition-colors">
-          <select
-            value={role}
-            onChange={handleRoleChange}
-            aria-label="Ganti peran pengguna"
-            className="bg-transparent text-xs font-extrabold text-[#1E2330] focus:outline-none cursor-pointer"
-          >
-            <option value="super_admin">Super Admin</option>
-            <option value="admin">Admin</option>
-            <option value="editor">Editor</option>
-            <option value="admission_staff">Admission Staff</option>
-            <option value="viewer">Viewer</option>
-          </select>
-        </div>
+        {/* Current Role Badge (read-only, dikelola server-side) */}
+        <Badge
+          variant="secondary"
+          className="h-9 px-3 rounded-full text-xs font-extrabold uppercase border-2 border-[#E8E2D8] bg-white text-[#1E2330]"
+        >
+          {role.replace("_", " ")}
+        </Badge>
 
         {/* Message Notification Bell */}
         {newMessages > 0 ? (

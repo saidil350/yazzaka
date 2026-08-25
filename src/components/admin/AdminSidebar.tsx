@@ -46,8 +46,8 @@ export function AdminSidebar({
   const { role, currentUser, logout } = useAuth();
   const { messages, profile } = useSchoolData();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     onMobileClose();
     router.push("/login");
   };

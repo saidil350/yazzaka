@@ -3,18 +3,15 @@
 import React, { useState } from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useAuth } from "@/context/AuthContext";
-import { useToast } from "@/components/ui/toast";
 import { User, UserRole } from "@/lib/types";
-import { Plus, Users, Shield, Check, Key } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Users, Shield, Check, Key } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { Badge } from "@/components/ui/badge";
 
 export default function AdminUsersManagementPage() {
   const { users } = useSchoolData();
-  const { role, switchRole } = useAuth();
-  const { toast } = useToast();
+  const { role } = useAuth();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [name, setName] = useState("");
@@ -49,11 +46,6 @@ export default function AdminUsersManagementPage() {
     },
   ];
 
-  const handleSimulateRole = (r: UserRole) => {
-    switchRole(r);
-    toast(`Peran simulasi berhasil dialihkan ke: ${r.toUpperCase()}`, "info");
-  };
-
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Header */}
@@ -69,13 +61,13 @@ export default function AdminUsersManagementPage() {
         </p>
       </div>
 
-      {/* Role Switcher Showcase Card */}
+      {/* Role Matrix Info Card */}
       <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-4">
         <h3 className="font-bold text-base text-[#1E2330]">
-          Simulasi Uji Hak Akses Pengguna (Role Quick Switch)
+          Hak Akses per Peran (RBAC)
         </h3>
         <p className="text-xs text-stone-500 font-medium">
-          Klik tombol di bawah ini untuk langsung merasakan tampilan dan batasan akses sesuai peran yang dipilih:
+          Peran ditetapkan oleh administrator dan divalidasi di sisi server. Perubahan peran hanya dapat dilakukan melalui manajemen akun.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
@@ -97,7 +89,7 @@ export default function AdminUsersManagementPage() {
                     </span>
                     {isCurrent && (
                       <Badge variant="accent" className="text-[10px] font-bold">
-                        Aktif
+                        Peran Anda
                       </Badge>
                     )}
                   </div>
@@ -105,16 +97,6 @@ export default function AdminUsersManagementPage() {
                     {item.desc}
                   </p>
                 </div>
-
-                <Button
-                  variant={isCurrent ? "default" : "outline"}
-                  size="sm"
-                  disabled={isCurrent}
-                  onClick={() => handleSimulateRole(item.role as UserRole)}
-                  className="w-full text-xs font-bold rounded-full"
-                >
-                  {isCurrent ? "Sedang Aktif" : "Uji Peran Ini"}
-                </Button>
               </div>
             );
           })}
