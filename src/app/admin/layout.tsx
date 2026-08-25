@@ -21,6 +21,7 @@ export default function AdminLayout({
     try {
       const saved = localStorage.getItem("yazzakka_admin_sidebar_collapsed");
       if (saved !== null) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- dibaca setelah hidrasi, bukan saat render
         setIsCollapsed(saved === "true");
       }
     } catch {
@@ -31,7 +32,9 @@ export default function AdminLayout({
   // Proteksi rute admin — arahkan ke /login jika tidak memiliki sesi aktif
   useEffect(() => {
     if (isInitialized && !isAuthenticated) {
-      router.replace("/login");
+      const loginUrl = new URL("/login", window.location.origin);
+      loginUrl.searchParams.set("next", window.location.pathname);
+      router.replace(loginUrl.pathname + loginUrl.search);
     }
   }, [isInitialized, isAuthenticated, router]);
 
