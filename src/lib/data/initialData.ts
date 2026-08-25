@@ -756,10 +756,8 @@ export const initialSections: PageSectionConfig[] = [
   { id: "sec-3", key: "about", title: "Sambutan & Profil", subtitle: "Editorial pengenalan sekolah", isEnabled: true, orderIndex: 3 },
   { id: "sec-4", key: "programs", title: "Program Unggulan", subtitle: "Daftar kurikulum akademik & tahfiz", isEnabled: true, orderIndex: 4 },
   { id: "sec-5", key: "whyus", title: "Keunggulan Yazzakka", subtitle: "Mengapa memilih pendidikan di sini", isEnabled: true, orderIndex: 5 },
-  { id: "sec-6", key: "facilities", title: "Fasilitas Kampus", subtitle: "Galeri sarana prasarana modern", isEnabled: true, orderIndex: 6 },
+  { id: "sec-6", key: "facilities", title: "Fasilitas Kampus", subtitle: "Galeri sarana prasarana modern", isEnabled: false, orderIndex: 6 },
   { id: "sec-7", key: "achievements", title: "Prestasi Siswa", subtitle: "Catatan kejuaraan tingkat nasional", isEnabled: true, orderIndex: 7 },
-  { id: "sec-8", key: "news", title: "Berita & Wawasan", subtitle: "Artikel edukasi dan liputan terkini", isEnabled: true, orderIndex: 8 },
-  { id: "sec-9", key: "events", title: "Agenda Kegiatan", subtitle: "Jadwal event dan agenda mendatang", isEnabled: true, orderIndex: 9 },
-  { id: "sec-10", key: "testimonials", title: "Testimoni", subtitle: "Kesan wali murid dan kiprah alumni", isEnabled: true, orderIndex: 10 },
-  { id: "sec-11", key: "admission_cta", title: "Banner Konversi PPDB", subtitle: "Ajakan mendaftar siswa baru", isEnabled: true, orderIndex: 11 },
+  { id: "sec-8", key: "testimonials", title: "Testimoni", subtitle: "Kesan wali murid dan kiprah alumni", isEnabled: true, orderIndex: 8 },
+  { id: "sec-9", key: "admission_cta", title: "Banner Konversi PPDB", subtitle: "Ajakan mendaftar siswa baru", isEnabled: true, orderIndex: 9 },
 ];

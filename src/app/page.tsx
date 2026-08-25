@@ -10,7 +10,6 @@ import { ProgramsSection } from "@/components/public/ProgramsSection";
 import { WhyUsSection } from "@/components/public/WhyUsSection";
 import { FacilitiesSection } from "@/components/public/FacilitiesSection";
 import { AchievementsSection } from "@/components/public/AchievementsSection";
-import { NewsAndEvents } from "@/components/public/NewsAndEvents";
 import { TestimonialsSection } from "@/components/public/TestimonialsSection";
 import { AdmissionCTA } from "@/components/public/AdmissionCTA";
 import { useSchoolData } from "@/context/SchoolDataContext";
@@ -35,7 +34,6 @@ export default function HomePage() {
         {isSectionEnabled("whyus") && <WhyUsSection />}
         {isSectionEnabled("facilities") && <FacilitiesSection />}
         {isSectionEnabled("achievements") && <AchievementsSection />}
-        {isSectionEnabled("news") && <NewsAndEvents />}
         {isSectionEnabled("testimonials") && <TestimonialsSection />}
         {isSectionEnabled("admission_cta") && <AdmissionCTA />}
       </main>

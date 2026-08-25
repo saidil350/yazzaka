@@ -377,12 +377,35 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
     setMedia(prev => prev.filter(m => m.id !== id));
   };
 
-  // Sections (State only for simplicity, assuming they are toggleable)
+  // Sections (Persisted ke API & Neon Database)
   const toggleSection = async (id: string) => {
-    setSections(prev => prev.map(s => s.id === id ? { ...s, isEnabled: !s.isEnabled } : s));
+    const updated = sections.map(s => s.id === id ? { ...s, isEnabled: !s.isEnabled } : s);
+    setSections(updated);
+    try {
+      await fetch('/api/sections', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sections: updated }),
+      });
+      addLog("Update", `Status seksi halaman diperbarui`);
+    } catch (err) {
+      console.error("Gagal menyimpan status seksi:", err);
+    }
   };
+
   const reorderSections = async (newSections: PageSectionConfig[]) => {
-    setSections(newSections);
+    const reordered = newSections.map((s, idx) => ({ ...s, orderIndex: idx + 1 }));
+    setSections(reordered);
+    try {
+      await fetch('/api/sections', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sections: reordered }),
+      });
+      addLog("Update", `Urutan seksi halaman diperbarui`);
+    } catch (err) {
+      console.error("Gagal menyimpan urutan seksi:", err);
+    }
   };
 
   const resetToDefault = () => {
