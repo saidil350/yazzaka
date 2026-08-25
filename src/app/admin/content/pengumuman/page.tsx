@@ -130,7 +130,7 @@ export default function AdminAchievementsPage() {
             Manajemen Prestasi Siswa & Santri
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Dokumentasikan medali, kejuaraan, piagam, dan piala yang diraih santri dan civitas akademika Yazzaka.
+            Dokumentasikan medali, kejuaraan, piagam, dan piala yang diraih santri dan civitas akademika Yazzakka.
           </p>
         </div>
 

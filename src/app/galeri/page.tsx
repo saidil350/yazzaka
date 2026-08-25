@@ -31,7 +31,7 @@ export default function GalleryPage() {
               <span>Dokumentasi Visual &amp; Multimedia</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
-              Galeri Kegiatan Yazzaka
+              Galeri Kegiatan Yazzakka
             </h1>
             <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
               Merekam dinamika keseharian santri, suasana pembelajaran di kelas, praktikum sains, keasrian kampus, dan kebersamaan ukhuwah.

@@ -57,7 +57,7 @@ export default function ContactPage() {
       setPhone("");
       setSubject("");
       setMessage("");
-      toast("Pesan Anda berhasil dikirim ke sekretariat Yazzaka! Kami akan segera merespons.", "success");
+      toast("Pesan Anda berhasil dikirim ke sekretariat Yazzakka! Kami akan segera merespons.", "success");
     }, 600);
   };
 
@@ -74,7 +74,7 @@ export default function ContactPage() {
               <span>Layanan Informasi &amp; Sekretariat</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
-              Hubungi Pesantren Yazzaka
+              Hubungi Pesantren Yazzakka
             </h1>
             <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
               Kami siap melayani pertanyaan seputar pendaftaran santri, kunjungan kampus, kemitraan akademik, dan konsultasi pendidikan.

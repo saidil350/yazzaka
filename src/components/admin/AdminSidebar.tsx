@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useSchoolData } from "@/context/SchoolDataContext";
@@ -159,17 +160,24 @@ export function AdminSidebar({
       >
         {/* ── Brand Header ───────────────────────────── */}
         <div className="flex flex-col">
-          <div className="h-14 px-4 flex items-center gap-3 border-b border-white/[0.08]">
-            <Link href="/admin" className="flex items-center gap-2.5">
-              <div className="h-7 w-7 rounded-md flex items-center justify-center bg-white/10 shrink-0">
-                <GraduationCap className="h-4 w-4 text-white" />
+          <div className="h-16 px-4 flex items-center gap-3 border-b border-white/[0.08]">
+            <Link href="/admin" className="flex items-center gap-2.5 w-full">
+              <div className="h-8 bg-white/95 rounded-lg p-1 shrink-0 flex items-center shadow-xs">
+                <Image
+                  src="/yazzakka.png"
+                  alt="CMS Yazzakka"
+                  width={100}
+                  height={28}
+                  style={{ width: "auto", height: "auto" }}
+                  className="h-6 w-auto object-contain"
+                />
               </div>
               <div className="min-w-0">
-                <span className="text-sm font-semibold text-white block leading-none truncate">
-                  CMS Yazzaka
+                <span className="text-xs font-bold text-white block leading-tight truncate">
+                  CMS Yazzakka
                 </span>
-                <span className="text-[10px] text-slate-500 block mt-0.5 truncate">
-                  Admin Dashboard
+                <span className="text-[10px] text-slate-400 block truncate">
+                  Admin Panel
                 </span>
               </div>
             </Link>

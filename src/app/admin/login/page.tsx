@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useSchoolData } from "@/context/SchoolDataContext";
@@ -24,7 +25,7 @@ export default function AdminLoginPage() {
   const { profile } = useSchoolData();
   const { toast } = useToast();
 
-  const [email, setEmail] = useState("admin@yazzaka.sch.id");
+  const [email, setEmail] = useState("admin@yazzakka.sch.id");
   const [password, setPassword] = useState("••••••••");
   const [role, setRole] = useState<UserRole>("super_admin");
 
@@ -41,13 +42,23 @@ export default function AdminLoginPage() {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-[var(--color-primary)]/40 rounded-full blur-3xl pointer-events-none" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 text-center space-y-3">
-        <Link href="/" className="inline-flex items-center justify-center">
-          <div className="h-12 w-12 rounded-2xl bg-[var(--color-accent)] text-white flex items-center justify-center shadow-lg">
-            <GraduationCap className="h-7 w-7 text-white" />
-          </div>
+        <Link href="/" className="inline-block bg-white p-3 rounded-2xl shadow-lg hover:opacity-95 transition-opacity">
+          <Image
+            src={
+              profile.branding?.logoUrl && profile.branding.logoUrl !== "/logo-yazzaka.svg"
+                ? profile.branding.logoUrl
+                : "/yazzakka.png"
+            }
+            alt={profile.name}
+            width={180}
+            height={48}
+            style={{ width: "auto", height: "auto" }}
+            className="h-10 w-auto object-contain"
+            priority
+          />
         </Link>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-          Login Portal CMS Sekolah
+          Login Portal CMS Yayasan
         </h2>
         <p className="text-xs sm:text-sm text-slate-400">
           Masuk ke dashboard administrasi {profile.name}

@@ -64,7 +64,7 @@ export default function ArticleDetailPage({
             </h1>
 
             <p className="text-xs sm:text-sm text-stone-600 font-medium leading-relaxed">
-              Oleh <strong className="text-[#1E2330]">{article.author}</strong> • Dewan Redaksi Media Yazzaka
+              Oleh <strong className="text-[#1E2330]">{article.author}</strong> • Dewan Redaksi Media Yazzakka
             </p>
           </div>
         </section>

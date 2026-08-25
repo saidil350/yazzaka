@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import {
   MapPin,
@@ -24,14 +25,20 @@ export function Footer() {
 
           {/* Institution Brand & Legal Data (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-2xl bg-[#FA6400] text-white flex items-center justify-center font-bold text-lg shadow-[0_2px_0_#cc5000]">
-                Y
-              </div>
-              <span className="text-xl text-white font-extrabold tracking-tight">
-                {profile.name}
-              </span>
-            </div>
+            <Link href="/" className="inline-block bg-white p-2.5 rounded-2xl shadow-xs hover:opacity-95 transition-opacity">
+              <Image
+                src={
+                  profile.branding?.logoUrl && profile.branding.logoUrl !== "/logo-yazzaka.svg"
+                    ? profile.branding.logoUrl
+                    : "/yazzakka.png"
+                }
+                alt={profile.name}
+                width={170}
+                height={45}
+                style={{ width: "auto", height: "auto" }}
+                className="h-9 w-auto object-contain"
+              />
+            </Link>
 
             <p className="text-xs text-stone-400 leading-relaxed pr-6 font-normal">
               {profile.description}

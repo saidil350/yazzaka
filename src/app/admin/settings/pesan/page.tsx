@@ -366,7 +366,7 @@ export default function AdminContactInboxPage() {
                     ""
                   )}?text=Assalamu'alaikum%20${encodeURIComponent(
                     selectedMessage.name
-                  )},%20kami%20dari%20Sekretariat%20Yazzaka%20menanggapi%20pertanyaan%20Anda.`}
+                  )},%20kami%20dari%20Sekretariat%20Yazzakka%20menanggapi%20pertanyaan%20Anda.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => handleStatusChange(selectedMessage.id, "replied")}

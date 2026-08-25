@@ -17,12 +17,18 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "SMA & Pesantren Modern Yazzaka — Lembaga Pendidikan Unggulan & Karakter",
+  title: "Yayasan Yazzakka Aceh — Lembaga Pendidikan Islam Unggul & Berkarakter",
   description:
     "Institusi pendidikan Islam terpadu yang memadukan keunggulan kurikulum nasional, sains modern, penguasaan bahasa internasional (Arab & Inggris), serta tahfiz Al-Qur'an 30 juz.",
-  keywords: ["Pesantren Modern", "SMA Unggulan", "Tahfiz Al-Qur'an", "PPDB 2026", "Sekolah Terbaik"],
+  keywords: ["Yayasan Yazzakka Aceh", "Pesantren Modern Yazzakka", "SMA Unggulan", "Tahfiz Al-Qur'an", "PPDB 2026", "Sekolah Terbaik Aceh"],
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/yazzakka.png" },
+      { url: "/icon.png" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/yazzakka.png",
+    apple: "/yazzakka.png",
   },
 };
 

@@ -44,7 +44,7 @@ export default function AdminEventsPage() {
     setDescription("");
     setDate(new Date().toISOString().split("T")[0]);
     setTime("08:00 - 12:00 WIB");
-    setLocation("Kampus Utama Yazzaka");
+    setLocation("Kampus Utama Yazzakka");
     setCategory("Akademik");
     setCoverImage("https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80");
     setRegistrationUrl("/pendaftaran");
@@ -274,7 +274,7 @@ export default function AdminEventsPage() {
 
           <Input
             label="Lokasi Acara"
-            placeholder="Auditorium Kampus Yazzaka / Online Zoom"
+            placeholder="Auditorium Kampus Yazzakka / Online Zoom"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />

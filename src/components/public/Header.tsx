@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import {
@@ -109,17 +110,21 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
 
           {/* Logo & School Name */}
-          <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-            <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0 bg-[#FA6400] text-white font-extrabold text-base shadow-[0_2px_0_#cc5000] group-hover:scale-105 transition-transform duration-200">
-              Y
-            </div>
-            <div>
-              <span className="text-base font-extrabold text-[#1E2330] tracking-tight block leading-none group-hover:text-[#FA6400] transition-colors">
-                {profile.name}
-              </span>
-              <span className="text-[10px] text-stone-500 font-semibold tracking-wide block mt-0.5">
-                Pesantren Modern &amp; Sains Terpadu
-              </span>
+          <Link href="/" className="flex items-center gap-3 shrink-0 group py-1">
+            <div className="relative h-10 w-auto flex items-center group-hover:opacity-95 transition-opacity">
+              <Image
+                src={
+                  profile.branding?.logoUrl && profile.branding.logoUrl !== "/logo-yazzaka.svg"
+                    ? profile.branding.logoUrl
+                    : "/yazzakka.png"
+                }
+                alt={profile.name}
+                width={160}
+                height={40}
+                style={{ width: "auto", height: "auto" }}
+                className="h-10 w-auto object-contain"
+                priority
+              />
             </div>
           </Link>
 
@@ -198,13 +203,19 @@ export function Header() {
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between pb-3.5 border-b border-[#E8E2D8] shrink-0">
-              <div className="flex items-center gap-2.5">
-                <div className="h-8 w-8 rounded-xl bg-[#FA6400] text-white flex items-center justify-center font-bold text-sm shadow-[0_2px_0_#cc5000]">
-                  Y
-                </div>
-                <span className="font-bold text-sm text-[#1E2330]">
-                  Menu Navigasi
-                </span>
+              <div className="flex items-center gap-2">
+                <Image
+                  src={
+                    profile.branding?.logoUrl && profile.branding.logoUrl !== "/logo-yazzaka.svg"
+                      ? profile.branding.logoUrl
+                      : "/yazzakka.png"
+                  }
+                  alt={profile.name}
+                  width={140}
+                  height={35}
+                  style={{ width: "auto", height: "auto" }}
+                  className="h-8 w-auto object-contain"
+                />
               </div>
               <button
                 type="button"

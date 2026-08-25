@@ -67,28 +67,28 @@ export default function AdminSocialMediaSettingsPage() {
           <CardContent className="space-y-4">
             <Input
               label="Akun Instagram"
-              placeholder="https://instagram.com/yazzakamodern"
+              placeholder="https://instagram.com/yazzakka.official"
               value={instagram}
               onChange={(e) => setInstagram(e.target.value)}
             />
 
             <Input
               label="Kanal YouTube"
-              placeholder="https://youtube.com/@yazzakamodern"
+              placeholder="https://youtube.com/@yazzakkaofficial"
               value={youtube}
               onChange={(e) => setYoutube(e.target.value)}
             />
 
             <Input
               label="Halaman Facebook"
-              placeholder="https://facebook.com/yazzakamodern"
+              placeholder="https://facebook.com/yazzakka.official"
               value={facebook}
               onChange={(e) => setFacebook(e.target.value)}
             />
 
             <Input
               label="Akun TikTok"
-              placeholder="https://tiktok.com/@yazzakamodern"
+              placeholder="https://tiktok.com/@yazzakka.official"
               value={tiktok}
               onChange={(e) => setTiktok(e.target.value)}
             />
