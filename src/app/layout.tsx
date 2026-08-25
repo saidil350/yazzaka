@@ -24,12 +24,10 @@ export const metadata: Metadata = {
   keywords: ["Yayasan Yazzakka Aceh", "Pesantren Modern Yazzakka", "SMA Unggulan", "Tahfiz Al-Qur'an", "PPDB 2026", "Sekolah Terbaik Aceh"],
   icons: {
     icon: [
-      { url: "/yazzakka.png" },
-      { url: "/icon.png" },
-      { url: "/favicon.ico" },
+      { url: "/logo-Favicon.png", type: "image/png" },
     ],
-    shortcut: "/yazzakka.png",
-    apple: "/yazzakka.png",
+    shortcut: "/logo-Favicon.png",
+    apple: "/logo-Favicon.png",
   },
 };
 
