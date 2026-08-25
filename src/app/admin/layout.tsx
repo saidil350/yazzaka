@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminTopbar } from "@/components/admin/AdminTopbar";
 
@@ -9,6 +11,8 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const { isAuthenticated, isInitialized } = useAuth();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -24,6 +28,13 @@ export default function AdminLayout({
     }
   }, []);
 
+  // Proteksi rute admin — arahkan ke /login jika tidak memiliki sesi aktif
+  useEffect(() => {
+    if (isInitialized && !isAuthenticated) {
+      router.replace("/login");
+    }
+  }, [isInitialized, isAuthenticated, router]);
+
   const handleToggleCollapse = () => {
     setIsCollapsed((prev) => {
       const next = !prev;
@@ -33,6 +44,16 @@ export default function AdminLayout({
       return next;
     });
   };
+
+  // State loading sementara saat verifikasi sesi inisialisasi
+  if (!isInitialized || !isAuthenticated) {
+    return (
+      <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#FCF8F1] text-[#1E2330] gap-3">
+        <div className="h-7 w-7 rounded-full border-2 border-[#FA6400] border-t-transparent animate-spin" />
+        <p className="text-xs font-semibold text-stone-500">Memverifikasi sesi pengelola...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen w-screen overflow-hidden bg-[#FCF8F1] text-[#1E2330] flex selection:bg-[#FFF0E5] selection:text-[#FA6400]">
