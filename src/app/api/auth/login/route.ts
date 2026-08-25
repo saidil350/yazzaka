@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
 
     const sql = getDb();
     const result =
-      await sql`SELECT id, name, email, role, avatar_url, password_hash FROM users WHERE lower(email) = ${email} LIMIT 1`;
+      await sql`SELECT id, name, email, role, avatar_url, password_hash FROM users WHERE lower(email) = ${email} AND password_hash IS NOT NULL ORDER BY created_at DESC LIMIT 1`;
     const user = result[0];
 
     // Selalu jalankan verifikasi (dummy bila user tak ada) untuk mencegah timing enumeration
