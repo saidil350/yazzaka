@@ -18,25 +18,17 @@ export default function ProgramsDirectoryPage() {
 
   const filterOptions = [
     { key: "all", label: "Semua Unit (6)" },
-    { key: "quran_early", label: "Al-Qur'an & Usia Dini" },
-    { key: "empowerment", label: "Kesetaraan & Vokasi (PKBM)" },
-    { key: "tahfiz", label: "Tahfiz Intensif (Darul Quran)" },
-    { key: "strategic", label: "Wakaf Pesantren 6.0" },
+    { key: "tpa-yazzakka", label: "Taman Pendidikan Al-Qur'an (TPA)" },
+    { key: "tkit-yazzakka", label: "TKIT Yazzakka" },
+    { key: "pkbm-yazzakka", label: "PKBM Yazzakka" },
+    { key: "sekolah-anak-shalih", label: "Sekolah Anak Shalih Yazzakka" },
+    { key: "darul-quran-yazzakka", label: "Darul Quran Yazzakka" },
+    { key: "pesantren-peradaban-60", label: "Wakaf" },
   ];
 
   const filteredPrograms = published.filter((prog) => {
     if (selectedFilter === "all") return true;
-    if (selectedFilter === "quran_early") {
-      return (
-        prog.slug === "tpa-yazzakka" ||
-        prog.slug === "tkit-yazzakka" ||
-        prog.slug === "sekolah-anak-shalih"
-      );
-    }
-    if (selectedFilter === "empowerment") return prog.slug === "pkbm-yazzakka";
-    if (selectedFilter === "tahfiz") return prog.slug === "darul-quran-yazzakka";
-    if (selectedFilter === "strategic") return prog.slug === "pesantren-peradaban-60";
-    return true;
+    return prog.slug === selectedFilter;
   });
 
   const getUnitBadge = (slug: string) => {
