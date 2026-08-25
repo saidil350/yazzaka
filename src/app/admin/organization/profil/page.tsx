@@ -53,21 +53,21 @@ export default function AdminOrgProfilePage() {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       <div>
-        <span className="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-1">
+        <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
           Organization / Profil Lembaga
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--color-primary)]">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
           Profil Resmi & Identitas Sekolah
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+        <p className="text-xs sm:text-sm text-stone-500 mt-1">
           Kelola nama resmi lembaga, NPSN, akreditasi, data statistik kunci, serta informasi pimpinan sekolah.
         </p>
       </div>
 
       <form onSubmit={handleSave} className="space-y-8">
         {/* Basic Identity */}
-        <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
-          <h3 className="text-base font-bold text-[var(--color-primary)]">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
+          <h3 className="text-base font-bold text-[#1E2330]">
             Identitas Pokok & Akreditasi
           </h3>
 
@@ -105,8 +105,8 @@ export default function AdminOrgProfilePage() {
           </div>
 
           {/* Statistics Key Numbers */}
-          <div className="pt-4 border-t border-slate-100">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4 block">
+          <div className="pt-4 border-t border-[#E8E2D8]">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] mb-4 block">
               Metrik Kunci Sekolah (Tampil di Trust Section)
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -139,8 +139,8 @@ export default function AdminOrgProfilePage() {
         </div>
 
         {/* Principal Info */}
-        <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
-          <h3 className="text-base font-bold text-[var(--color-primary)]">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
+          <h3 className="text-base font-bold text-[#1E2330]">
             Data Pimpinan / Kepala Sekolah
           </h3>
 
@@ -170,8 +170,8 @@ export default function AdminOrgProfilePage() {
             onChange={(e) => setPrincipalWelcome(e.target.value)}
           />
 
-          <div className="flex justify-end pt-4 border-t border-slate-100">
-            <Button type="submit" variant="accent" size="default">
+          <div className="flex justify-end pt-4 border-t border-[#E8E2D8]">
+            <Button type="submit" variant="default" size="default" className="font-extrabold h-11 px-6 rounded-full shadow-[0_3px_0_#cc5000] active:translate-y-0.5 active:shadow-none transition-all">
               <Save className="h-4 w-4" />
               Simpan Profil Lembaga
             </Button>

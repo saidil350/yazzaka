@@ -8,37 +8,47 @@ import { useAuth } from "@/context/AuthContext";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import {
   LayoutDashboard,
-  FileText,
   Layers,
   Image as ImageIcon,
-  Building2,
   Settings,
   Users,
   ChevronRight,
-  GraduationCap,
   ExternalLink,
-  MessageSquare,
+  SlidersHorizontal,
+  GraduationCap,
+  Building2,
+  Trophy,
+  Quote,
+  FileText,
+  PhoneCall,
+  Globe,
+  Mail,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from "lucide-react";
 
+export interface AdminSidebarProps {
+  isMobileOpen: boolean;
+  onMobileClose: () => void;
+  isCollapsed: boolean;
+  onToggleCollapse?: () => void;
+}
+
 export function AdminSidebar({
-  isOpen,
-  onClose,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-}) {
+  isMobileOpen,
+  onMobileClose,
+  isCollapsed,
+  onToggleCollapse,
+}: AdminSidebarProps) {
   const pathname = usePathname();
   const { role, currentUser } = useAuth();
-  const { messages } = useSchoolData();
+  const { messages, profile } = useSchoolData();
 
   const newMessagesCount = messages.filter((m) => m.status === "new").length;
 
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(() => {
-    if (pathname.includes("/admin/pages")) return "pages";
     if (pathname.includes("/admin/content")) return "content";
-    if (pathname.includes("/admin/media")) return "media";
-    if (pathname.includes("/admin/organization")) return "organization";
-    if (pathname.includes("/admin/settings")) return "settings";
+    if (pathname.includes("/admin/settings") || pathname.includes("/admin/organization")) return "settings";
     return null;
   });
 
@@ -55,81 +65,54 @@ export function AdminSidebar({
       roles: ["super_admin", "admin", "editor", "admission_staff", "viewer"],
     },
     {
-      type: "group",
-      key: "pages",
-      title: "Pages",
-      icon: FileText,
+      type: "single",
+      title: "Tata Letak Beranda",
+      href: "/admin/pages/beranda",
+      icon: SlidersHorizontal,
       roles: ["super_admin", "admin", "editor"],
-      items: [
-        { label: "Beranda", href: "/admin/pages/beranda" },
-        { label: "Tentang Kami", href: "/admin/pages/tentang-kami" },
-        { label: "Program", href: "/admin/pages/program" },
-        { label: "Kontak", href: "/admin/pages/kontak" },
-      ],
     },
     {
       type: "group",
       key: "content",
-      title: "Content",
+      title: "Konten Landing Page",
       icon: Layers,
       roles: ["super_admin", "admin", "editor", "admission_staff"],
       items: [
-        { label: "Berita & Artikel", href: "/admin/content/berita" },
-        { label: "Kegiatan / Events", href: "/admin/content/kegiatan" },
-        { label: "Program Pendidikan", href: "/admin/content/program" },
-        { label: "Prestasi & Pengumuman", href: "/admin/content/pengumuman" },
-        { label: "Fasilitas Kampus", href: "/admin/content/fasilitas" },
-        { label: "Pendaftaran (PPDB)", href: "/admin/content/pendaftaran" },
-        { label: "Testimoni", href: "/admin/content/testimoni" },
-      ],
-    },
-    {
-      type: "group",
-      key: "media",
-      title: "Media",
-      icon: ImageIcon,
-      roles: ["super_admin", "admin", "editor"],
-      items: [
-        { label: "Media Library", href: "/admin/media" },
-        { label: "Images", href: "/admin/media?type=image" },
-        { label: "Videos", href: "/admin/media?type=video" },
-        { label: "Documents", href: "/admin/media?type=document" },
-      ],
-    },
-    {
-      type: "group",
-      key: "organization",
-      title: "Organization",
-      icon: Building2,
-      roles: ["super_admin", "admin"],
-      items: [
-        { label: "Profil Sekolah", href: "/admin/organization/profil" },
-        { label: "Visi & Misi", href: "/admin/organization/visi-misi" },
-        { label: "Struktur Organisasi", href: "/admin/organization/struktur" },
-        { label: "Tim & Tenaga Pendidik", href: "/admin/organization/tim" },
+        { label: "Program Pendidikan", href: "/admin/content/program", icon: GraduationCap },
+        { label: "Fasilitas Kampus", href: "/admin/content/fasilitas", icon: Building2 },
+        { label: "Prestasi Santri", href: "/admin/content/pengumuman", icon: Trophy },
+        { label: "Testimoni Wali & Alumni", href: "/admin/content/testimoni", icon: Quote },
+        { label: "Berita & Artikel", href: "/admin/content/berita", icon: FileText },
       ],
     },
     {
       type: "group",
       key: "settings",
-      title: "Website Settings",
+      title: "Identitas & Kontak",
       icon: Settings,
       roles: ["super_admin", "admin"],
       items: [
-        { label: "General & Branding", href: "/admin/settings/general" },
-        { label: "SEO Global", href: "/admin/settings/seo" },
-        { label: "Social Media", href: "/admin/settings/social" },
-        { label: "Contact Info", href: "/admin/settings/contact" },
+        { label: "Profil & Slogan", href: "/admin/organization/profil", icon: Globe },
+        { label: "Kontak & Sosmed", href: "/admin/settings/contact", icon: PhoneCall },
         {
           label: "Pesan Masuk",
           href: "/admin/settings/pesan",
+          icon: Mail,
           badge: newMessagesCount > 0 ? `${newMessagesCount}` : undefined,
         },
+        { label: "SEO Global", href: "/admin/settings/seo", icon: Settings },
       ],
     },
     {
       type: "single",
-      title: "Users",
+      title: "Media Library",
+      href: "/admin/media",
+      icon: ImageIcon,
+      roles: ["super_admin", "admin", "editor"],
+    },
+    {
+      type: "single",
+      title: "Manajemen Pengguna",
       href: "/admin/users",
       icon: Users,
       roles: ["super_admin", "admin"],
@@ -138,183 +121,327 @@ export function AdminSidebar({
 
   return (
     <>
-      {/* Mobile Backdrop */}
-      {isOpen && (
+      {/* Mobile Backdrop Overlay */}
+      {isMobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/60 lg:hidden backdrop-blur-xs transition-opacity duration-300"
           aria-hidden="true"
-          onClick={onClose}
+          onClick={onMobileClose}
         />
       )}
 
+      {/* Sidebar Container */}
       <aside
-        aria-label="Navigation CMS"
+        aria-label="Navigasi CMS Landing Page"
         className={[
-          "fixed inset-y-0 left-0 z-50 w-60 flex flex-col",
-          "bg-[#0f172a] text-slate-300",
-          "border-r border-white/[0.08]",
-          "transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
-          "lg:static lg:translate-x-0",
-          isOpen ? "translate-x-0" : "-translate-x-full",
+          "fixed inset-y-0 left-0 z-50 flex flex-col h-screen",
+          "bg-[#FAF6EE] text-[#1E2330]",
+          "border-r border-[#E8E2D8]",
+          "transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shrink-0",
+          // Mobile state
+          isMobileOpen
+            ? "translate-x-0 w-64 shadow-2xl"
+            : "-translate-x-full lg:translate-x-0",
+          // Desktop state
+          "lg:static lg:z-30 lg:shadow-none",
+          isCollapsed ? "lg:w-20" : "lg:w-64",
         ].join(" ")}
       >
-        {/* ── Brand Header ───────────────────────────── */}
-        <div className="flex flex-col">
-          <div className="h-16 px-4 flex items-center gap-3 border-b border-white/[0.08]">
-            <Link href="/admin" className="flex items-center gap-2.5 w-full">
-              <div className="h-8 bg-white/95 rounded-lg p-1 shrink-0 flex items-center shadow-xs">
-                <Image
-                  src="/yazzakka.png"
-                  alt="CMS Yazzakka"
-                  width={100}
-                  height={28}
-                  style={{ width: "auto", height: "auto" }}
-                  className="h-6 w-auto object-contain"
-                />
-              </div>
-              <div className="min-w-0">
-                <span className="text-xs font-bold text-white block leading-tight truncate">
-                  CMS Yazzakka
-                </span>
-                <span className="text-[10px] text-slate-400 block truncate">
-                  Admin Panel
-                </span>
-              </div>
-            </Link>
-          </div>
-
-          {/* User Identity Strip */}
-          <div className="px-3 py-2.5 border-b border-white/[0.08]">
-            <p className="text-xs font-medium text-white truncate">
-              {currentUser?.name ?? "Administrator"}
-            </p>
-            <p className="text-[11px] text-slate-500 truncate mt-0.5">
-              {role.replace("_", " ")}
-            </p>
-          </div>
-
-          {/* Navigation */}
-          <nav
-            aria-label="Menu CMS"
-            className="flex-1 px-2 py-2 space-y-0.5 overflow-y-auto"
+        {/* ── Brand Header (Full Logo Clean) ──────────────────────── */}
+        <div
+          className={[
+            "h-16 px-4 flex items-center border-b border-[#E8E2D8] bg-white shrink-0",
+            isCollapsed ? "justify-center" : "justify-between gap-2",
+          ].join(" ")}
+        >
+          <Link
+            href="/admin"
+            className={[
+              "flex items-center group py-1 min-w-0 flex-1",
+              isCollapsed ? "justify-center" : "justify-start",
+            ].join(" ")}
+            title="Dashboard Yazzakka"
           >
-            {navGroups.map((group) => {
-              const isAllowed = role === "super_admin" || group.roles.includes(role);
-              if (!isAllowed) return null;
+            <div className="flex items-center">
+              <Image
+                src={
+                  profile?.branding?.logoUrl && profile.branding.logoUrl !== "/logo-yazzaka.svg"
+                    ? profile.branding.logoUrl
+                    : "/yazzakka.png"
+                }
+                alt="Logo Yazzakka"
+                width={160}
+                height={40}
+                style={{ width: "auto", height: "auto" }}
+                className={[
+                  "object-contain transition-all duration-200 group-hover:scale-[1.02]",
+                  isCollapsed ? "h-7 max-w-[36px]" : "h-8 max-w-[160px]",
+                ].join(" ")}
+                priority
+              />
+            </div>
+          </Link>
 
-              // Single link
-              if (group.type === "single") {
-                const isActive = pathname === group.href;
-                const Icon = group.icon!;
-                return (
-                  <Link
-                    key={group.href}
-                    href={group.href!}
-                    onClick={onClose}
-                    aria-current={isActive ? "page" : undefined}
-                    className={[
-                      "flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-sm",
-                      "transition-colors duration-150",
-                      isActive
-                        ? "bg-white/[0.1] text-white font-medium"
-                        : "text-slate-400 hover:text-white hover:bg-white/[0.05] font-normal",
-                    ].join(" ")}
-                  >
-                    <Icon className={[
-                      "h-4 w-4 shrink-0",
-                      isActive ? "text-white" : "text-slate-500",
-                    ].join(" ")} />
-                    <span>{group.title}</span>
-                  </Link>
-                );
-              }
+          {/* Desktop Toggle Collapse Button */}
+          {!isCollapsed && onToggleCollapse && (
+            <button
+              type="button"
+              onClick={onToggleCollapse}
+              aria-label="Kecilkan sidebar"
+              title="Kecilkan sidebar"
+              className="hidden lg:inline-flex h-8 w-8 items-center justify-center rounded-full text-stone-400 hover:text-[#FA6400] hover:bg-[#FFF0E5] transition-colors cursor-pointer shrink-0"
+            >
+              <PanelLeftClose className="h-4 w-4" />
+            </button>
+          )}
+        </div>
 
-              // Group with submenu
-              const isGroupOpen = openSubmenu === group.key;
+        {/* ── Active User Profile Strip ─────────────────────────────── */}
+        <div
+          className={[
+            "py-2.5 border-b border-[#E8E2D8] bg-white/60 shrink-0",
+            isCollapsed ? "px-2 text-center" : "px-3.5",
+          ].join(" ")}
+        >
+          {isCollapsed ? (
+            <div
+              className="flex justify-center"
+              title={`${currentUser?.name ?? "Administrator"} (${role.replace("_", " ")})`}
+            >
+              <div className="relative">
+                <div className="h-8 w-8 rounded-full bg-[#FFF0E5] border border-[#FED7AA] flex items-center justify-center text-[#FA6400] text-xs font-extrabold shadow-2xs">
+                  {currentUser?.name?.charAt(0) ?? "A"}
+                </div>
+                <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-emerald-500 border border-white" />
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between gap-2">
+              <div className="min-w-0 flex items-center gap-2.5">
+                <div className="h-7 w-7 rounded-full bg-[#FFF0E5] border border-[#FED7AA] flex items-center justify-center text-[#FA6400] text-xs font-extrabold shrink-0 shadow-2xs">
+                  {currentUser?.name?.charAt(0) ?? "A"}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-extrabold text-[#1E2330] truncate">
+                    {currentUser?.name ?? "Administrator"}
+                  </p>
+                  <p className="text-[10px] text-stone-500 font-bold capitalize truncate">
+                    {role.replace("_", " ")}
+                  </p>
+                </div>
+              </div>
+              <span
+                className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(52,211,153,0.6)] shrink-0"
+                title="Online"
+              />
+            </div>
+          )}
+        </div>
+
+        {/* ── Navigation Menu (Scroll Mandiri & Bebas Bug) ──────────── */}
+        <nav
+          aria-label="Menu Utama CMS"
+          className={[
+            "flex-1 py-3 space-y-1.5 overflow-y-auto overflow-x-hidden",
+            isCollapsed ? "px-2" : "px-3",
+          ].join(" ")}
+        >
+          {navGroups.map((group) => {
+            const isAllowed = role === "super_admin" || group.roles.includes(role);
+            if (!isAllowed) return null;
+
+            // Single item
+            if (group.type === "single") {
+              const isActive = pathname === group.href;
               const Icon = group.icon!;
-              const hasActiveChild = group.items?.some(
-                (item) => pathname === item.href || pathname.startsWith(item.href + "/")
-              );
 
               return (
-                <div key={group.key}>
+                <Link
+                  key={group.href}
+                  href={group.href!}
+                  onClick={onMobileClose}
+                  aria-current={isActive ? "page" : undefined}
+                  title={isCollapsed ? group.title : undefined}
+                  className={[
+                    "flex items-center rounded-full text-xs font-bold transition-all duration-150 group",
+                    isCollapsed
+                      ? "justify-center h-11 w-11 mx-auto"
+                      : "gap-3 px-3.5 py-2 w-full",
+                    isActive
+                      ? "bg-[#FA6400] text-white shadow-[0_3px_0_#cc5000] active:translate-y-0.5"
+                      : "text-stone-700 hover:text-[#1E2330] hover:bg-white shadow-2xs hover:shadow-xs",
+                  ].join(" ")}
+                >
+                  <Icon
+                    className={[
+                      "h-4 w-4 shrink-0 transition-colors",
+                      isActive ? "text-white" : "text-stone-500 group-hover:text-[#FA6400]",
+                    ].join(" ")}
+                  />
+                  {!isCollapsed && <span>{group.title}</span>}
+                </Link>
+              );
+            }
+
+            // Group with collapsible sub-items
+            const isGroupOpen = openSubmenu === group.key;
+            const Icon = group.icon!;
+            const hasActiveChild = group.items?.some(
+              (item) => pathname === item.href || pathname.startsWith(item.href + "/")
+            );
+
+            // Tampilan saat Collapsed (Mode Ikon Ringkas)
+            if (isCollapsed) {
+              return (
+                <div key={group.key} className="space-y-1 flex flex-col items-center">
                   <button
                     type="button"
-                    onClick={() => toggleSubmenu(group.key!)}
-                    aria-expanded={isGroupOpen}
+                    onClick={() => {
+                      if (onToggleCollapse) onToggleCollapse();
+                      setOpenSubmenu(group.key!);
+                    }}
+                    title={`${group.title} (Klik untuk buka)`}
+                    aria-label={group.title}
                     className={[
-                      "w-full flex items-center justify-between px-2.5 py-1.5 rounded-md text-sm",
-                      "transition-colors duration-150 cursor-pointer",
+                      "flex items-center justify-center h-11 w-11 rounded-full text-xs font-bold transition-all duration-150 group cursor-pointer",
                       hasActiveChild
-                        ? "text-white bg-white/[0.05] font-medium"
-                        : "text-slate-400 hover:text-white hover:bg-white/[0.05] font-normal",
+                        ? "text-[#FA6400] bg-white border border-[#FED7AA] shadow-xs"
+                        : "text-stone-700 hover:text-[#FA6400] hover:bg-white",
                     ].join(" ")}
                   >
-                    <span className="flex items-center gap-2.5">
-                      <Icon className={[
-                        "h-4 w-4 shrink-0",
-                        hasActiveChild ? "text-white" : "text-slate-500",
-                      ].join(" ")} />
-                      <span>{group.title}</span>
-                    </span>
-                    <ChevronRight
+                    <Icon
                       className={[
-                        "h-3.5 w-3.5 text-slate-600 transition-transform duration-150 shrink-0",
-                        isGroupOpen ? "rotate-90" : "",
+                        "h-4 w-4 shrink-0 transition-colors",
+                        hasActiveChild ? "text-[#FA6400]" : "text-stone-500 group-hover:text-[#FA6400]",
                       ].join(" ")}
                     />
                   </button>
-
-                  {isGroupOpen && (
-                    <div className="ml-4 mt-0.5 pl-3 py-1 space-y-0.5 border-l border-white/[0.08]">
-                      {group.items?.map((item) => {
-                        const isActive = pathname === item.href;
-                        return (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            onClick={onClose}
-                            aria-current={isActive ? "page" : undefined}
-                            className={[
-                              "flex items-center justify-between px-2.5 py-1.5 rounded-md text-[12px]",
-                              "transition-colors duration-150",
-                              isActive
-                                ? "text-white bg-white/[0.08] font-medium"
-                                : "text-slate-500 hover:text-white hover:bg-white/[0.05] font-normal",
-                            ].join(" ")}
-                          >
-                            <span className="truncate">{item.label}</span>
-                            {item.badge && (
-                              <span className="ml-2 flex h-4 min-w-4 px-1 items-center justify-center rounded bg-destructive text-[9px] font-bold text-white shrink-0">
-                                {item.badge}
-                              </span>
-                            )}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  )}
                 </div>
               );
-            })}
-          </nav>
-        </div>
+            }
 
-        {/* ── Footer ──────────────────────────────────── */}
-        <div className="px-2 py-2 border-t border-white/[0.08]">
-          <Link
-            href="/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={[
-              "flex items-center justify-between px-2.5 py-1.5 rounded-md text-xs",
-              "text-slate-500 hover:text-slate-300 hover:bg-white/[0.05]",
-              "transition-colors duration-150",
-            ].join(" ")}
-          >
-            <span>Lihat Situs Publik</span>
-            <ExternalLink className="h-3 w-3 shrink-0" />
-          </Link>
+            // Tampilan Normal (Lebar Penuh)
+            return (
+              <div key={group.key} className="space-y-0.5">
+                <button
+                  type="button"
+                  onClick={() => toggleSubmenu(group.key!)}
+                  aria-expanded={isGroupOpen}
+                  className={[
+                    "w-full flex items-center justify-between px-3.5 py-2 rounded-full text-xs font-bold",
+                    "transition-all duration-150 cursor-pointer group",
+                    hasActiveChild
+                      ? "text-[#FA6400] bg-white border border-[#FED7AA] shadow-xs"
+                      : "text-stone-700 hover:text-[#1E2330] hover:bg-white",
+                  ].join(" ")}
+                >
+                  <span className="flex items-center gap-3">
+                    <Icon
+                      className={[
+                        "h-4 w-4 shrink-0 transition-colors",
+                        hasActiveChild ? "text-[#FA6400]" : "text-stone-500 group-hover:text-[#FA6400]",
+                      ].join(" ")}
+                    />
+                    <span>{group.title}</span>
+                  </span>
+                  <ChevronRight
+                    className={[
+                      "h-3.5 w-3.5 text-stone-400 transition-transform duration-200 shrink-0",
+                      isGroupOpen ? "rotate-90 text-[#FA6400]" : "",
+                    ].join(" ")}
+                  />
+                </button>
+
+                {isGroupOpen && (
+                  <div className="ml-4 pl-3 py-1 space-y-1 border-l-2 border-[#E8E2D8]">
+                    {group.items?.map((item) => {
+                      const isActive = pathname === item.href;
+                      const SubIcon = item.icon;
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={onMobileClose}
+                          aria-current={isActive ? "page" : undefined}
+                          className={[
+                            "flex items-center justify-between px-3 py-1.5 rounded-full text-xs",
+                            "transition-all duration-150 group",
+                            isActive
+                              ? "bg-[#FFF0E5] text-[#FA6400] font-extrabold border border-[#FED7AA] shadow-2xs"
+                              : "text-stone-600 hover:text-[#FA6400] hover:bg-white font-medium",
+                          ].join(" ")}
+                        >
+                          <span className="flex items-center gap-2 truncate">
+                            {SubIcon && (
+                              <SubIcon
+                                className={[
+                                  "h-3.5 w-3.5 shrink-0",
+                                  isActive ? "text-[#FA6400]" : "text-stone-400 group-hover:text-[#FA6400]",
+                                ].join(" ")}
+                              />
+                            )}
+                            <span className="truncate">{item.label}</span>
+                          </span>
+                          {item.badge && (
+                            <span className="ml-2 flex h-4 min-w-4 px-1.5 items-center justify-center rounded-full bg-[#FA6400] text-[10px] font-bold text-white shrink-0 shadow-xs">
+                              {item.badge}
+                            </span>
+                          )}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </nav>
+
+        {/* ── Footer Link to Public Landing Page ────────────────────── */}
+        <div
+          className={[
+            "border-t border-[#E8E2D8] bg-white shrink-0",
+            isCollapsed ? "p-2 text-center" : "p-3",
+          ].join(" ")}
+        >
+          {isCollapsed ? (
+            <div className="flex flex-col items-center gap-2">
+              <Link
+                href="/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Buka Situs Publik"
+                className="flex items-center justify-center h-10 w-10 rounded-full bg-[#FFF0E5] text-[#C2410C] hover:bg-[#FA6400] hover:text-white border border-[#FED7AA] transition-all shadow-2xs"
+              >
+                <ExternalLink className="h-4 w-4" />
+              </Link>
+              {onToggleCollapse && (
+                <button
+                  type="button"
+                  onClick={onToggleCollapse}
+                  title="Besarkan sidebar"
+                  aria-label="Besarkan sidebar"
+                  className="hidden lg:flex items-center justify-center h-8 w-8 rounded-full text-stone-400 hover:text-[#FA6400] hover:bg-[#FAF6EE] transition-colors cursor-pointer"
+                >
+                  <PanelLeftOpen className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+          ) : (
+            <Link
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={[
+                "flex items-center justify-between px-4 py-2.5 rounded-full text-xs font-extrabold",
+                "bg-[#FFF0E5] text-[#C2410C] hover:bg-[#FA6400] hover:text-white border border-[#FED7AA]",
+                "transition-all duration-150 shadow-2xs group active:scale-95",
+              ].join(" ")}
+            >
+              <span>Buka Situs Publik</span>
+              <ExternalLink className="h-3.5 w-3.5 shrink-0 text-current group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          )}
         </div>
       </aside>
     </>

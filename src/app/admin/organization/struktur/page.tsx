@@ -14,37 +14,37 @@ export default function AdminOrgStructurePage() {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       <div>
-        <span className="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-1">
+        <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
           Organization / Struktur Organisasi
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--color-primary)]">
-          Struktur Kepengurusan & Hierarki Organisasi
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+          Struktur Kepengurusan &amp; Hierarki Organisasi
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+        <p className="text-xs sm:text-sm text-stone-500 mt-1">
           Bagan struktur pimpinan yayasan, dewan asatidz pengasuh, dan tenaga pendidik {profile.name}.
         </p>
       </div>
 
-      <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-xs space-y-8">
+      <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#E8E2D8] shadow-xs space-y-8">
         
         {/* Tier 1: Pimpinan Yayasan */}
         <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--color-primary)] text-white text-xs font-bold uppercase">
-            <Building2 className="h-3.5 w-3.5 text-amber-400" />
-            <span>Pimpinan Yayasan & Lembaga</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1E2330] text-white text-xs font-bold uppercase tracking-wider shadow-xs">
+            <Building2 className="h-3.5 w-3.5 text-[#FA6400]" />
+            <span>Pimpinan Yayasan &amp; Lembaga</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {yayasan.map((m) => (
-              <div key={m.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-3">
+              <div key={m.id} className="p-4 rounded-2xl bg-[#FAF6EE] border border-[#E8E2D8] flex items-center gap-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={m.photoUrl}
                   alt={m.name}
-                  className="h-12 w-12 rounded-full object-cover border border-slate-300"
+                  className="h-12 w-12 rounded-full object-cover border-2 border-[#E8E2D8] shadow-2xs"
                 />
                 <div>
-                  <h4 className="font-bold text-sm text-[var(--color-primary)]">{m.name}</h4>
-                  <p className="text-xs text-amber-700 font-semibold">{m.roleTitle}</p>
+                  <h4 className="font-bold text-sm text-[#1E2330]">{m.name}</h4>
+                  <p className="text-xs text-[#FA6400] font-bold">{m.roleTitle}</p>
                 </div>
               </div>
             ))}
@@ -52,19 +52,19 @@ export default function AdminOrgStructurePage() {
         </div>
 
         {/* Tier 2: Pengasuhan & Akademik */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-200">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-[#E8E2D8]">
           <div className="space-y-3">
-            <h4 className="font-bold text-sm text-slate-700 uppercase tracking-wider">
-              Direktorat Pengasuhan & Bahasa
+            <h4 className="font-bold text-xs text-stone-500 uppercase tracking-wider">
+              Direktorat Pengasuhan &amp; Bahasa
             </h4>
             <div className="space-y-2">
               {asrama.map((m) => (
-                <div key={m.id} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
+                <div key={m.id} className="p-3.5 rounded-2xl bg-[#FAF6EE] border border-[#E8E2D8] flex items-center gap-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={m.photoUrl} alt={m.name} className="h-10 w-10 rounded-full object-cover" />
+                  <img src={m.photoUrl} alt={m.name} className="h-10 w-10 rounded-full object-cover border border-[#E8E2D8]" />
                   <div>
-                    <h5 className="font-bold text-xs text-slate-900">{m.name}</h5>
-                    <p className="text-[11px] text-slate-500">{m.roleTitle}</p>
+                    <h5 className="font-bold text-xs text-[#1E2330]">{m.name}</h5>
+                    <p className="text-[11px] text-stone-500 font-medium">{m.roleTitle}</p>
                   </div>
                 </div>
               ))}
@@ -72,17 +72,17 @@ export default function AdminOrgStructurePage() {
           </div>
 
           <div className="space-y-3">
-            <h4 className="font-bold text-sm text-slate-700 uppercase tracking-wider">
-              Koordinator Akademik & Riset
+            <h4 className="font-bold text-xs text-stone-500 uppercase tracking-wider">
+              Koordinator Akademik &amp; Riset
             </h4>
             <div className="space-y-2">
               {pendidik.map((m) => (
-                <div key={m.id} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
+                <div key={m.id} className="p-3.5 rounded-2xl bg-[#FAF6EE] border border-[#E8E2D8] flex items-center gap-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={m.photoUrl} alt={m.name} className="h-10 w-10 rounded-full object-cover" />
+                  <img src={m.photoUrl} alt={m.name} className="h-10 w-10 rounded-full object-cover border border-[#E8E2D8]" />
                   <div>
-                    <h5 className="font-bold text-xs text-slate-900">{m.name}</h5>
-                    <p className="text-[11px] text-slate-500">{m.roleTitle}</p>
+                    <h5 className="font-bold text-xs text-[#1E2330]">{m.name}</h5>
+                    <p className="text-[11px] text-stone-500 font-medium">{m.roleTitle}</p>
                   </div>
                 </div>
               ))}

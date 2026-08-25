@@ -11,7 +11,6 @@ import { WhyUsSection } from "@/components/public/WhyUsSection";
 import { FacilitiesSection } from "@/components/public/FacilitiesSection";
 import { AchievementsSection } from "@/components/public/AchievementsSection";
 import { TestimonialsSection } from "@/components/public/TestimonialsSection";
-import { AdmissionCTA } from "@/components/public/AdmissionCTA";
 import { useSchoolData } from "@/context/SchoolDataContext";
 
 export default function HomePage() {
@@ -35,7 +34,6 @@ export default function HomePage() {
         {isSectionEnabled("facilities") && <FacilitiesSection />}
         {isSectionEnabled("achievements") && <AchievementsSection />}
         {isSectionEnabled("testimonials") && <TestimonialsSection />}
-        {isSectionEnabled("admission_cta") && <AdmissionCTA />}
       </main>
       <Footer />
     </div>

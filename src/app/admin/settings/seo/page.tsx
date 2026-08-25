@@ -6,14 +6,6 @@ import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Save } from "lucide-react";
 
 export default function AdminSEOSettingsPage() {
@@ -41,31 +33,31 @@ export default function AdminSEOSettingsPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-8">
       {/* ── Page Header ────────────────────────────────────────────── */}
-      <div className="space-y-1">
-        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+      <div>
+        <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
           Website Settings / SEO Global
         </span>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-          Pengaturan Mesin Pencari (SEO) & Metadata
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+          Pengaturan Mesin Pencari (SEO) &amp; Metadata
         </h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-xs sm:text-sm text-stone-500 mt-1">
           Optimalkan metadata judul, deskripsi pencarian Google, kata kunci (keywords), dan gambar OpenGraph untuk preview media sosial.
         </p>
       </div>
 
-      {/* ── SEO Form Card (Shadcn UI Standard) ────────────────────── */}
+      {/* ── SEO Form Card (Warm Native) ────────────────────────────── */}
       <form onSubmit={handleSave}>
-        <Card>
-          <CardHeader>
-            <CardTitle>Metadata Mesin Pencari</CardTitle>
-            <CardDescription>
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
+          <div>
+            <h3 className="font-bold text-base text-[#1E2330]">Metadata Mesin Pencari</h3>
+            <p className="text-xs text-stone-500 mt-1 font-medium">
               Konfigurasi tag metadata yang terbaca oleh robot perayap Google, Bing, dan platform media sosial.
-            </CardDescription>
-          </CardHeader>
+            </p>
+          </div>
 
-          <CardContent className="space-y-4">
+          <div className="space-y-4">
             <Input
               label="Judul Situs (Default Meta Title)"
               required
@@ -100,15 +92,15 @@ export default function AdminSEOSettingsPage() {
               value={googleVerification}
               onChange={(e) => setGoogleVerification(e.target.value)}
             />
-          </CardContent>
+          </div>
 
-          <CardFooter className="flex justify-end border-t px-6 py-4 bg-muted/20">
-            <Button type="submit">
-              <Save className="h-4 w-4 mr-2" />
+          <div className="flex justify-end pt-4 border-t border-[#E8E2D8]">
+            <Button type="submit" variant="default" className="font-extrabold h-11 px-6 rounded-full shadow-[0_3px_0_#cc5000] active:translate-y-0.5 active:shadow-none transition-all">
+              <Save className="h-4 w-4" aria-hidden="true" />
               Simpan Pengaturan SEO
             </Button>
-          </CardFooter>
-        </Card>
+          </div>
+        </div>
       </form>
     </div>
   );

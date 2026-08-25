@@ -144,8 +144,9 @@
   --border-default:          hsl(38 25% 87%);
   --border-strong:           hsl(38 25% 78%);
   --border-inverse:          rgba(255, 255, 255, 0.12);
-  --color-primary:           hsl(222 25% 15%);     /* Deep Charcoal #1E2330 for headings */
-  --color-primary-dark:      hsl(222 35% 10%);
+  --color-heading:           hsl(222 25% 15%);     /* Deep Charcoal #1E2330 for headings */
+  --color-primary:           hsl(23 98% 50%);      /* Headspace Signature Orange #FA6400 */
+  --color-primary-dark:      hsl(23 95% 40%);
   --color-accent:            hsl(23 98% 50%);      /* Headspace Orange for accents */
   --color-accent-hover:      hsl(23 95% 44%);
   --color-accent-light:      hsl(28 100% 94%);
@@ -186,6 +187,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
     font-size: 16px;
     font-family: var(--font-sans);
     color: var(--foreground);
@@ -290,12 +292,53 @@
   }
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-backdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .animate-float {
   animation: float-gentle 4.5s ease-in-out infinite;
 }
 
 .animate-float-delayed {
   animation: float-gentle 5s ease-in-out 2s infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-backdrop {
+  animation: fade-backdrop 0.2s ease-out forwards;
 }
 
 /* ── Scrollbar ───────────────────────────────────────────── */

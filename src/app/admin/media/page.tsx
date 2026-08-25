@@ -18,6 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
+import { EmptyState } from "@/components/ui/empty-state";
 
 export default function AdminMediaPage() {
   const { media, addMedia, deleteMedia } = useSchoolData();
@@ -86,18 +87,18 @@ export default function AdminMediaPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-1">
+          <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
             Media / Media Library
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--color-primary)]">
-            Media Manager & Arsip Berkas
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+            Media Manager &amp; Arsip Berkas
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-stone-500 mt-1">
             Pusat penyimpanan gambar, video profil, brosur PDF, dan dokumen sekolah.
           </p>
         </div>
 
-        <Button onClick={handleOpenAdd} variant="accent" size="default" className="shrink-0 shadow-sm">
+        <Button onClick={handleOpenAdd} variant="default" size="default" className="shrink-0 font-extrabold h-11 px-6 rounded-full shadow-[0_3px_0_#cc5000] active:translate-y-0.5 active:shadow-none transition-all">
           <Upload className="h-4 w-4" />
           <span>Upload / Tambah Media</span>
         </Button>
@@ -107,109 +108,126 @@ export default function AdminMediaPage() {
       <div className="flex items-center gap-2 overflow-x-auto pb-2">
         <button
           onClick={() => setSelectedType("all")}
-          className={`px-4 py-2 rounded-full text-xs font-semibold transition-colors cursor-pointer ${
+          className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
             selectedType === "all"
-              ? "bg-[var(--color-primary)] text-white shadow-xs"
-              : "bg-white text-slate-700 border border-slate-200"
+              ? "bg-[#FA6400] text-white shadow-xs shadow-[#FA6400]/30"
+              : "bg-white text-stone-700 border border-[#E8E2D8] hover:bg-[#FAF6EE] hover:border-[#FA6400]"
           }`}
         >
           Semua Format ({media.length})
         </button>
         <button
           onClick={() => setSelectedType("image")}
-          className={`px-4 py-2 rounded-full text-xs font-semibold transition-colors cursor-pointer ${
+          className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
             selectedType === "image"
-              ? "bg-[var(--color-primary)] text-white shadow-xs"
-              : "bg-white text-slate-700 border border-slate-200"
+              ? "bg-[#FA6400] text-white shadow-xs shadow-[#FA6400]/30"
+              : "bg-white text-stone-700 border border-[#E8E2D8] hover:bg-[#FAF6EE] hover:border-[#FA6400]"
           }`}
         >
-          Foto & Gambar ({media.filter((m) => m.fileType === "image").length})
+          Foto &amp; Gambar ({media.filter((m) => m.fileType === "image").length})
         </button>
         <button
           onClick={() => setSelectedType("video")}
-          className={`px-4 py-2 rounded-full text-xs font-semibold transition-colors cursor-pointer ${
+          className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
             selectedType === "video"
-              ? "bg-[var(--color-primary)] text-white shadow-xs"
-              : "bg-white text-slate-700 border border-slate-200"
+              ? "bg-[#FA6400] text-white shadow-xs shadow-[#FA6400]/30"
+              : "bg-white text-stone-700 border border-[#E8E2D8] hover:bg-[#FAF6EE] hover:border-[#FA6400]"
           }`}
         >
           Video ({media.filter((m) => m.fileType === "video").length})
         </button>
         <button
           onClick={() => setSelectedType("document")}
-          className={`px-4 py-2 rounded-full text-xs font-semibold transition-colors cursor-pointer ${
+          className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
             selectedType === "document"
-              ? "bg-[var(--color-primary)] text-white shadow-xs"
-              : "bg-white text-slate-700 border border-slate-200"
+              ? "bg-[#FA6400] text-white shadow-xs shadow-[#FA6400]/30"
+              : "bg-white text-stone-700 border border-[#E8E2D8] hover:bg-[#FAF6EE] hover:border-[#FA6400]"
           }`}
         >
           Dokumen / PDF ({media.filter((m) => m.fileType === "document").length})
         </button>
       </div>
 
-      {/* Media Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {filtered.map((item) => (
-          <div
-            key={item.id}
-            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
-          >
-            <div className="h-44 relative overflow-hidden bg-slate-100 flex items-center justify-center">
-              {item.fileType === "image" ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
-                  src={item.fileUrl}
-                  alt={item.altText}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              ) : item.fileType === "video" ? (
-                <div className="flex flex-col items-center gap-1 text-slate-500">
-                  <Video className="h-10 w-10 text-amber-500" />
-                  <span className="text-[10px] font-bold">Video Link</span>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center gap-1 text-slate-500">
-                  <FileText className="h-10 w-10 text-[var(--color-primary)]" />
-                  <span className="text-[10px] font-bold">Dokumen PDF</span>
-                </div>
-              )}
+      {/* Media Grid or EmptyState */}
+      {filtered.length === 0 ? (
+        <div className="bg-white rounded-3xl p-8 border border-[#E8E2D8] shadow-xs">
+          <EmptyState
+            icon={ImageIcon}
+            title="Belum Ada Berkas Media"
+            description="Unggah foto kegiatan, thumbnail video, atau berkas PDF pertama Anda."
+            action={{
+              label: "Unggah Media Baru",
+              onClick: () => setModalOpen(true),
+              icon: Upload,
+            }}
+          />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filtered.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all duration-200 flex flex-col justify-between group"
+            >
+              <div className="h-44 relative overflow-hidden bg-[#FAF6EE] flex items-center justify-center">
+                {item.fileType === "image" ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={item.fileUrl}
+                    alt={item.altText}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : item.fileType === "video" ? (
+                  <div className="flex flex-col items-center gap-1 text-stone-500">
+                    <Video className="h-10 w-10 text-[#FA6400]" aria-hidden="true" />
+                    <span className="text-[10px] font-bold text-stone-600">Video Link</span>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-1 text-stone-500">
+                    <FileText className="h-10 w-10 text-[#FA6400]" aria-hidden="true" />
+                    <span className="text-[10px] font-bold text-stone-600">Dokumen PDF</span>
+                  </div>
+                )}
 
-              <div className="absolute top-2 left-2 bg-slate-900/80 text-white px-2 py-0.5 rounded text-[10px] font-semibold">
-                {item.category}
+                <div className="absolute top-2 left-2 bg-[#FFF0E5] text-[#C2410C] border border-[#FED7AA] px-2.5 py-0.5 rounded-full text-[10px] font-extrabold shadow-2xs">
+                  {item.category}
+                </div>
+              </div>
+
+              <div className="p-4 space-y-2">
+                <div className="space-y-0.5">
+                  <h4 className="font-bold text-xs text-[#1E2330] line-clamp-1">
+                    {item.fileName}
+                  </h4>
+                  <p className="text-[10px] text-stone-400">
+                    {item.fileSize} • {item.uploadedAt}
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between pt-2 border-t border-[#E8E2D8]">
+                  <button
+                    type="button"
+                    onClick={() => handleCopyUrl(item.fileUrl)}
+                    aria-label={`Salin URL ${item.fileName}`}
+                    className="text-xs font-bold text-[#FA6400] hover:text-[#C2410C] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                  >
+                    <Copy className="h-3 w-3" aria-hidden="true" />
+                    <span>Salin URL</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(item.id, item.fileName)}
+                    aria-label={`Hapus ${item.fileName}`}
+                    className="text-rose-500 hover:text-rose-700 p-1 rounded-full hover:bg-rose-50 transition-colors cursor-pointer"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
+                  </button>
+                </div>
               </div>
             </div>
-
-            <div className="p-4 space-y-2">
-              <div className="space-y-0.5">
-                <h4 className="font-bold text-xs text-slate-900 line-clamp-1">
-                  {item.fileName}
-                </h4>
-                <p className="text-[10px] text-slate-400">
-                  {item.fileSize} • {item.uploadedAt}
-                </p>
-              </div>
-
-              <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                <button
-                  type="button"
-                  onClick={() => handleCopyUrl(item.fileUrl)}
-                  className="text-xs font-semibold text-[var(--color-primary)] hover:underline inline-flex items-center gap-1 cursor-pointer"
-                >
-                  <Copy className="h-3 w-3" />
-                  <span>Salin URL</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDelete(item.id, item.fileName)}
-                  className="text-rose-500 hover:text-rose-700 p-1 cursor-pointer"
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Upload / Add Media Modal */}
       <Modal
@@ -247,13 +265,13 @@ export default function AdminMediaPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-700 block">
+              <label className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] block">
                 Format / Tipe File
               </label>
               <select
                 value={fileType}
                 onChange={(e) => setFileType(e.target.value as MediaItem["fileType"])}
-                className="w-full h-10 rounded-md border border-slate-300 px-3 text-sm bg-white"
+                className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-sm bg-white text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]/25 focus:border-[#FA6400] shadow-xs"
               >
                 <option value="image">Gambar / Foto (Image)</option>
                 <option value="video">Video URL (YouTube/Vimeo)</option>
@@ -262,13 +280,13 @@ export default function AdminMediaPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-700 block">
+              <label className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] block">
                 Kategori Media
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as MediaItem["category"])}
-                className="w-full h-10 rounded-md border border-slate-300 px-3 text-sm bg-white"
+                className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-sm bg-white text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]/25 focus:border-[#FA6400] shadow-xs"
               >
                 <option value="Galeri">Galeri</option>
                 <option value="Fasilitas">Fasilitas</option>

@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
+import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 
 // Helper status format & config
@@ -128,25 +129,25 @@ export default function AdminContactInboxPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       {/* ── Page Header ────────────────────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200/80 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#E8E2D8] pb-6">
         <div>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-amber-700 block mb-1">
+          <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
             Website Settings / Pesan Masuk
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
-            Kotak Pesan & Konsultasi
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1E2330]">
+            Kotak Pesan &amp; Konsultasi
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-stone-500 mt-1 max-w-2xl leading-relaxed font-medium">
             Daftar pertanyaan publik dan permohonan konsultasi pendaftaran santri baru dari formulir website.
           </p>
         </div>
 
         {/* Quick Summary Pill */}
         {countNew > 0 && (
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold self-start sm:self-auto shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFF0E5] border border-[#FED7AA] text-[#FA6400] text-xs font-bold self-start sm:self-auto shadow-xs">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-600"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FA6400] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FA6400]"></span>
             </span>
             <span>{countNew} pesan baru butuh respon</span>
           </div>
@@ -154,22 +155,22 @@ export default function AdminContactInboxPage() {
       </div>
 
       {/* ── Filter Tabs Segmented Control ───────────────────────────── */}
-      <div className="flex items-center gap-1.5 p-1 bg-slate-200/60 rounded-xl w-fit max-w-full overflow-x-auto border border-slate-200">
+      <div className="flex items-center gap-1.5 p-1.5 bg-[#FAF6EE] rounded-2xl w-fit max-w-full overflow-x-auto border border-[#E8E2D8]">
         <button
           type="button"
           onClick={() => setFilterStatus("all")}
-          className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer active:scale-95 whitespace-nowrap ${
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all duration-150 cursor-pointer active:scale-95 whitespace-nowrap ${
             filterStatus === "all"
-              ? "bg-white text-slate-900 shadow-xs ring-1 ring-black/5"
-              : "text-slate-600 hover:text-slate-900 hover:bg-white/50"
+              ? "bg-white text-[#1E2330] shadow-xs border border-[#E8E2D8]"
+              : "text-stone-600 hover:text-[#1E2330] hover:bg-white/60"
           }`}
         >
           <span>Semua Pesan</span>
           <span
             className={`px-1.5 py-0.5 rounded-md text-[10px] font-bold ${
               filterStatus === "all"
-                ? "bg-slate-100 text-slate-800"
-                : "bg-slate-300/60 text-slate-600"
+                ? "bg-[#FAF6EE] text-[#1E2330]"
+                : "bg-stone-200/80 text-stone-600"
             }`}
           >
             {messages.length}
@@ -179,18 +180,18 @@ export default function AdminContactInboxPage() {
         <button
           type="button"
           onClick={() => setFilterStatus("new")}
-          className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer active:scale-95 whitespace-nowrap ${
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all duration-150 cursor-pointer active:scale-95 whitespace-nowrap ${
             filterStatus === "new"
-              ? "bg-white text-rose-700 shadow-xs ring-1 ring-rose-200"
-              : "text-slate-600 hover:text-slate-900 hover:bg-white/50"
+              ? "bg-white text-[#FA6400] shadow-xs border border-[#FED7AA]"
+              : "text-stone-600 hover:text-[#FA6400] hover:bg-white/60"
           }`}
         >
           <span>Baru</span>
           <span
             className={`px-1.5 py-0.5 rounded-md text-[10px] font-bold ${
               countNew > 0
-                ? "bg-rose-500 text-white"
-                : "bg-slate-300/60 text-slate-600"
+                ? "bg-[#FA6400] text-white shadow-xs"
+                : "bg-stone-200/80 text-stone-600"
             }`}
           >
             {countNew}
@@ -200,14 +201,14 @@ export default function AdminContactInboxPage() {
         <button
           type="button"
           onClick={() => setFilterStatus("read")}
-          className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer active:scale-95 whitespace-nowrap ${
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all duration-150 cursor-pointer active:scale-95 whitespace-nowrap ${
             filterStatus === "read"
-              ? "bg-white text-slate-900 shadow-xs ring-1 ring-black/5"
-              : "text-slate-600 hover:text-slate-900 hover:bg-white/50"
+              ? "bg-white text-[#1E2330] shadow-xs border border-[#E8E2D8]"
+              : "text-stone-600 hover:text-[#1E2330] hover:bg-white/60"
           }`}
         >
           <span>Dibaca</span>
-          <span className="px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-slate-200 text-slate-700">
+          <span className="px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-[#FAF6EE] text-stone-700">
             {countRead}
           </span>
         </button>
@@ -215,10 +216,10 @@ export default function AdminContactInboxPage() {
         <button
           type="button"
           onClick={() => setFilterStatus("replied")}
-          className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer active:scale-95 whitespace-nowrap ${
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all duration-150 cursor-pointer active:scale-95 whitespace-nowrap ${
             filterStatus === "replied"
-              ? "bg-white text-emerald-800 shadow-xs ring-1 ring-emerald-200"
-              : "text-slate-600 hover:text-slate-900 hover:bg-white/50"
+              ? "bg-white text-emerald-800 shadow-xs border border-emerald-200"
+              : "text-stone-600 hover:text-emerald-800 hover:bg-white/60"
           }`}
         >
           <span>Sudah Dibalas</span>
@@ -229,19 +230,29 @@ export default function AdminContactInboxPage() {
       </div>
 
       {/* ── Messages List Container ─────────────────────────────────── */}
-      <div className="bg-white rounded-2xl border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_6px_16px_-4px_rgba(0,0,0,0.03)] overflow-hidden">
+      <div className="bg-white rounded-3xl border border-[#E8E2D8] shadow-xs overflow-hidden">
         {filtered.length === 0 ? (
-          <div className="py-16 px-4 text-center">
-            <div className="h-12 w-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
-              <Inbox className="h-6 w-6" />
-            </div>
-            <h3 className="text-sm font-bold text-slate-800">Tidak ada pesan</h3>
-            <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-              Tidak ada pesan masuk yang cocok dengan filter status yang dipilih.
-            </p>
+          <div className="p-8">
+            <EmptyState
+              icon={Inbox}
+              title="Tidak Ada Pesan Masuk"
+              description={
+                filterStatus !== "all"
+                  ? `Tidak ada pesan dengan status "${(STATUS_CONFIG as Record<string, { label: string }>)[filterStatus]?.label || filterStatus}".`
+                  : "Kotak pesan masuk konsultasi publik masih kosong."
+              }
+              action={
+                filterStatus !== "all"
+                  ? {
+                      label: "Tampilkan Semua Pesan",
+                      onClick: () => setFilterStatus("all"),
+                    }
+                  : undefined
+              }
+            />
           </div>
         ) : (
-          <div className="divide-y divide-slate-100" role="list">
+          <div className="divide-y divide-[#E8E2D8]" role="list">
             {filtered.map((msg) => {
               const isNew = msg.status === "new";
               const isReplied = msg.status === "replied";
@@ -251,10 +262,10 @@ export default function AdminContactInboxPage() {
                   key={msg.id}
                   type="button"
                   onClick={() => handleOpenDetail(msg)}
-                  className={`w-full text-left p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6 transition-all duration-150 ease-out cursor-pointer active:scale-[0.998] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--color-primary)] ${
+                  className={`w-full text-left p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6 transition-all duration-150 ease-out cursor-pointer active:scale-[0.998] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FA6400] ${
                     isNew
-                      ? "bg-amber-50/40 hover:bg-amber-50/80"
-                      : "bg-white hover:bg-slate-50/80"
+                      ? "bg-[#FFF0E5]/50 hover:bg-[#FFF0E5]/80"
+                      : "bg-white hover:bg-[#FFF9F2]"
                   }`}
                 >
                   {/* Left Column: Avatar/Indicator & Text Info */}
@@ -263,7 +274,7 @@ export default function AdminContactInboxPage() {
                     <div className="pt-1 shrink-0">
                       {isNew ? (
                         <span
-                          className="flex h-2.5 w-2.5 rounded-full bg-rose-500 ring-4 ring-rose-100"
+                          className="flex h-2.5 w-2.5 rounded-full bg-[#FA6400] ring-4 ring-[#FED7AA]"
                           title="Pesan baru belum dibaca"
                         />
                       ) : isReplied ? (
@@ -273,7 +284,7 @@ export default function AdminContactInboxPage() {
                         />
                       ) : (
                         <span
-                          className="flex h-2.5 w-2.5 rounded-full bg-slate-300"
+                          className="flex h-2.5 w-2.5 rounded-full bg-stone-300"
                           title="Pesan sudah dibaca"
                         />
                       )}
@@ -284,44 +295,44 @@ export default function AdminContactInboxPage() {
                       <div className="flex items-center flex-wrap gap-x-2 gap-y-1">
                         <span
                           className={`text-sm font-bold truncate ${
-                            isNew ? "text-slate-950" : "text-slate-800"
+                            isNew ? "text-[#1E2330]" : "text-stone-800"
                           }`}
                         >
                           {msg.name}
                         </span>
-                        <span className="text-xs text-slate-400 font-mono">
+                        <span className="text-xs text-stone-400 font-mono">
                           • {msg.phone}
                         </span>
                       </div>
 
                       {/* Subject */}
                       <h3
-                        className={`text-xs sm:text-sm font-semibold truncate ${
+                        className={`text-xs sm:text-sm font-bold truncate ${
                           isNew
-                            ? "text-[var(--color-primary)] font-bold"
-                            : "text-slate-700"
+                            ? "text-[#FA6400]"
+                            : "text-[#1E2330]"
                         }`}
                       >
                         {msg.subject}
                       </h3>
 
                       {/* Message Preview */}
-                      <p className="text-xs text-slate-500 line-clamp-1 leading-relaxed max-w-3xl">
+                      <p className="text-xs text-stone-500 line-clamp-1 leading-relaxed max-w-3xl font-medium">
                         {msg.message}
                       </p>
                     </div>
                   </div>
 
                   {/* Right Column: Time & Status Badge */}
-                  <div className="flex items-center sm:flex-col sm:items-end justify-between sm:justify-center gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
-                    <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium">
+                  <div className="flex items-center sm:flex-col sm:items-end justify-between sm:justify-center gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#E8E2D8]">
+                    <div className="flex items-center gap-1.5 text-[11px] text-stone-400 font-medium">
                       <Clock className="h-3 w-3 shrink-0" />
                       <span>{formatDisplayDate(msg.submittedAt)}</span>
                     </div>
 
                     <Badge
                       variant={STATUS_CONFIG[msg.status]?.badgeVariant || "secondary"}
-                      className="text-[10px] font-semibold tracking-wide"
+                      className="text-[10px] font-bold tracking-wide"
                     >
                       {STATUS_CONFIG[msg.status]?.label || msg.status}
                     </Badge>
@@ -345,7 +356,7 @@ export default function AdminContactInboxPage() {
               <button
                 type="button"
                 onClick={() => handleDelete(selectedMessage.id)}
-                className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 px-3 py-2 rounded-lg transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 text-xs font-bold text-rose-600 hover:text-rose-700 hover:bg-rose-50 px-3 py-2 rounded-full transition-colors cursor-pointer"
               >
                 <Trash2 className="h-4 w-4 shrink-0" />
                 <span>Hapus Pesan</span>
@@ -357,6 +368,7 @@ export default function AdminContactInboxPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => setSelectedMessage(null)}
+                  className="rounded-full"
                 >
                   Tutup
                 </Button>
@@ -373,9 +385,9 @@ export default function AdminContactInboxPage() {
                 >
                   <Button
                     type="button"
-                    variant="accent"
+                    variant="default"
                     size="sm"
-                    className="font-semibold shadow-xs"
+                    className="font-bold shadow-xs rounded-full bg-emerald-600 hover:bg-emerald-700 text-white"
                   >
                     <MessageCircle className="h-4 w-4" />
                     <span>Balas via WhatsApp</span>
@@ -388,36 +400,36 @@ export default function AdminContactInboxPage() {
         >
           <div className="space-y-5 text-xs sm:text-sm">
             {/* Meta Grid Card */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-slate-50/80 rounded-xl border border-slate-200/80">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-[#FAF6EE] rounded-2xl border border-[#E8E2D8]">
               <div className="space-y-0.5">
-                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+                <span className="text-[11px] font-extrabold text-stone-500 uppercase tracking-wider block">
                   Email
                 </span>
-                <span className="text-slate-900 font-medium break-all">
+                <span className="text-[#1E2330] font-bold break-all">
                   {selectedMessage.email || "-"}
                 </span>
               </div>
 
               <div className="space-y-0.5">
-                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+                <span className="text-[11px] font-extrabold text-stone-500 uppercase tracking-wider block">
                   Nomor WhatsApp / Telp
                 </span>
-                <span className="text-slate-900 font-mono font-medium">
+                <span className="text-[#1E2330] font-mono font-bold">
                   {selectedMessage.phone}
                 </span>
               </div>
 
               <div className="space-y-0.5">
-                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+                <span className="text-[11px] font-extrabold text-stone-500 uppercase tracking-wider block">
                   Waktu Pengiriman
                 </span>
-                <span className="text-slate-800 font-medium">
+                <span className="text-stone-700 font-medium">
                   {formatDisplayDate(selectedMessage.submittedAt)}
                 </span>
               </div>
 
               <div className="space-y-1">
-                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+                <span className="text-[11px] font-extrabold text-stone-500 uppercase tracking-wider block">
                   Ubah Status Pesan
                 </span>
                 <select
@@ -428,7 +440,7 @@ export default function AdminContactInboxPage() {
                       e.target.value as ContactMessage["status"]
                     )
                   }
-                  className="w-full bg-white text-xs font-semibold rounded-lg px-2.5 py-1.5 border border-slate-300 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                  className="w-full bg-white text-xs font-bold rounded-xl px-2.5 py-1.5 border border-[#E8E2D8] text-[#1E2330] focus:outline-none focus:ring-2 focus:ring-[#FA6400]"
                 >
                   <option value="new">🔴 Baru (New)</option>
                   <option value="read">⚪ Sudah Dibaca (Read)</option>
@@ -440,20 +452,20 @@ export default function AdminContactInboxPage() {
 
             {/* Subject Section */}
             <div className="space-y-1">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#FA6400] block">
                 Subjek Pertanyaan
               </span>
-              <p className="text-base font-bold text-slate-900">
+              <p className="text-base font-bold text-[#1E2330]">
                 {selectedMessage.subject}
               </p>
             </div>
 
             {/* Message Body Card */}
             <div className="space-y-1.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-stone-500 block">
                 Isi Pesan
               </span>
-              <div className="p-4 bg-white rounded-xl border border-slate-200 text-slate-800 whitespace-pre-line leading-relaxed text-xs sm:text-sm font-normal">
+              <div className="p-4 bg-white rounded-2xl border border-[#E8E2D8] text-[#1E2330] whitespace-pre-line leading-relaxed text-xs sm:text-sm font-medium">
                 {selectedMessage.message}
               </div>
             </div>

@@ -110,27 +110,27 @@ export default function AdminAdmissionPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       <div>
-        <span className="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-1">
+        <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
           Content / Pendaftaran (PPDB)
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--color-primary)]">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
           Manajemen Penerimaan Santri Baru (PPDB)
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+        <p className="text-xs sm:text-sm text-stone-500 mt-1">
           Kelola nama periode gelombang, persyaratan berkas, tabel biaya transparan, dan tanya jawab (FAQ).
         </p>
       </div>
 
       <Tabs defaultValue="general" className="w-full">
-        <TabsList className="bg-white border border-slate-200">
-          <TabsTrigger value="general">Informasi Umum & Syarat</TabsTrigger>
+        <TabsList>
+          <TabsTrigger value="general">Informasi Umum &amp; Syarat</TabsTrigger>
           <TabsTrigger value="fees">Tabel Biaya Pendidikan</TabsTrigger>
           <TabsTrigger value="faqs">Tanya Jawab (FAQ)</TabsTrigger>
         </TabsList>
 
         {/* Tab 1: General & Requirements */}
         <TabsContent value="general">
-          <form onSubmit={handleSaveGeneral} className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
+          <form onSubmit={handleSaveGeneral} className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
                 label="Nama Periode Pendaftaran"
@@ -151,8 +151,8 @@ export default function AdminAdmissionPage() {
               onChange={(e) => setRequirementsText(e.target.value)}
             />
 
-            <div className="flex justify-end pt-4 border-t border-slate-100">
-              <Button type="submit" variant="accent" size="default">
+            <div className="flex justify-end pt-4 border-t border-[#E8E2D8]">
+              <Button type="submit" variant="default" size="default" className="font-bold h-11 px-6 shadow-sm">
                 <Save className="h-4 w-4" />
                 Simpan Informasi PPDB
               </Button>
@@ -162,8 +162,8 @@ export default function AdminAdmissionPage() {
 
         {/* Tab 2: Fees Breakdown */}
         <TabsContent value="fees" className="space-y-6">
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
-            <h3 className="font-bold text-base text-[var(--color-primary)]">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-4">
+            <h3 className="font-bold text-base text-[#1E2330]">
               Tambah Komponen Biaya Baru
             </h3>
             <form onSubmit={handleAddFee} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
@@ -183,30 +183,30 @@ export default function AdminAdmissionPage() {
                 onChange={(e) => setNewFeeAmount(Number(e.target.value))}
               />
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold uppercase tracking-wider text-slate-700 block">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#1E2330] block">
                   Kategori
                 </label>
                 <select
                   value={newFeeCategory}
                   onChange={(e) => setNewFeeCategory(e.target.value as AdmissionFeeItem["category"])}
-                  className="w-full h-10 rounded-md border border-slate-300 px-3 text-sm bg-white"
+                  className="w-full h-11 rounded-xl border border-[#E8E2D8] px-3 text-xs sm:text-sm bg-white text-[#1E2330] focus:outline-none focus:ring-2 focus:ring-[#FA6400] font-medium"
                 >
                   <option value="Pendaftaran">Pendaftaran</option>
                   <option value="Uang Pangkal / Sarpras">Uang Pangkal / Sarpras</option>
                   <option value="SPP Bulanan">SPP Bulanan</option>
-                  <option value="Seragam & Kit Santri">Seragam & Kit Santri</option>
+                  <option value="Seragam & Kit Santri">Seragam &amp; Kit Santri</option>
                 </select>
               </div>
-              <Button type="submit" variant="accent" size="default" className="w-full">
+              <Button type="submit" variant="default" size="default" className="w-full font-bold h-11 shadow-sm">
                 <Plus className="h-4 w-4" />
                 Tambah Biaya
               </Button>
             </form>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+          <div className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase text-slate-500">
+              <thead className="bg-[#FAF6EE] border-b border-[#E8E2D8] text-xs font-bold uppercase text-stone-500">
                 <tr>
                   <th className="p-4 sm:px-6">Nama Komponen</th>
                   <th className="p-4 sm:px-6">Kategori</th>
@@ -214,18 +214,23 @@ export default function AdminAdmissionPage() {
                   <th className="p-4 sm:px-6 text-right">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-slate-700">
+              <tbody className="divide-y divide-[#E8E2D8] text-stone-700 bg-white">
                 {fees.map((fee, idx) => (
-                  <tr key={idx} className="hover:bg-slate-50/80">
-                    <td className="p-4 sm:px-6 font-semibold text-slate-900">{fee.name}</td>
-                    <td className="p-4 sm:px-6 text-xs">{fee.category}</td>
-                    <td className="p-4 sm:px-6 text-right font-bold text-[var(--color-primary)]">
+                  <tr key={idx} className="hover:bg-[#FFF9F2] transition-colors">
+                    <td className="p-4 sm:px-6 font-bold text-[#1E2330]">{fee.name}</td>
+                    <td className="p-4 sm:px-6 text-xs font-semibold text-stone-600">
+                      <span className="px-2.5 py-1 rounded-full bg-[#FAF6EE] border border-[#E8E2D8] text-stone-700">
+                        {fee.category}
+                      </span>
+                    </td>
+                    <td className="p-4 sm:px-6 text-right font-extrabold text-[#FA6400]">
                       {formatRupiah(fee.amount)}
                     </td>
                     <td className="p-4 sm:px-6 text-right">
                       <button
                         onClick={() => handleDeleteFee(idx)}
-                        className="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg"
+                        className="p-2 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors cursor-pointer"
+                        title="Hapus Komponen"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>
@@ -239,8 +244,8 @@ export default function AdminAdmissionPage() {
 
         {/* Tab 3: FAQs */}
         <TabsContent value="faqs" className="space-y-6">
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
-            <h3 className="font-bold text-base text-[var(--color-primary)]">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-4">
+            <h3 className="font-bold text-base text-[#1E2330]">
               Tambah Tanya Jawab (FAQ) Baru
             </h3>
             <form onSubmit={handleAddFaq} className="space-y-4">
@@ -259,7 +264,7 @@ export default function AdminAdmissionPage() {
                 value={newFaqA}
                 onChange={(e) => setNewFaqA(e.target.value)}
               />
-              <Button type="submit" variant="accent" size="default">
+              <Button type="submit" variant="default" size="default" className="font-bold h-11 px-6 shadow-sm">
                 <Plus className="h-4 w-4" />
                 Tambah FAQ
               </Button>
@@ -270,19 +275,20 @@ export default function AdminAdmissionPage() {
             {faqs.map((faq) => (
               <div
                 key={faq.id}
-                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-start justify-between gap-4"
+                className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E8E2D8] shadow-xs flex items-start justify-between gap-4"
               >
-                <div className="space-y-1">
-                  <h4 className="font-bold text-sm text-[var(--color-primary)]">
+                <div className="space-y-1.5">
+                  <h4 className="font-bold text-sm text-[#1E2330]">
                     {faq.question}
                   </h4>
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-xs text-stone-600 leading-relaxed font-medium">
                     {faq.answer}
                   </p>
                 </div>
                 <button
                   onClick={() => handleDeleteFaq(faq.id)}
-                  className="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg shrink-0"
+                  className="p-2 text-rose-600 hover:bg-rose-50 rounded-xl shrink-0 transition-colors cursor-pointer"
+                  title="Hapus FAQ"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>

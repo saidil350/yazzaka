@@ -6,15 +6,6 @@ import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import {
   Phone,
   Save,
   MessageCircle,
@@ -44,34 +35,35 @@ export default function AdminContactSettingsPage() {
   const cleanWaNumber = whatsapp.replace(/\D/g, "");
 
   return (
-    <div className="max-w-2xl space-y-6">
+    <div className="max-w-4xl mx-auto space-y-8">
       {/* ── Page Header ─────────────────────────────── */}
       <div>
-        <h1 className="text-lg font-semibold tracking-tight">
-          Informasi Kontak
+        <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+          Website Settings / Kontak Resmi
+        </span>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+          Informasi Kontak Lembaga
         </h1>
-        <p className="text-sm text-muted-foreground mt-1">
+        <p className="text-xs sm:text-sm text-stone-500 mt-1">
           Kelola nomor hotline, WhatsApp admisi, dan alamat email resmi sekolah.
         </p>
       </div>
 
-      <Separator />
-
       {/* ── Form ────────────────────────────────────── */}
       <form onSubmit={handleSave}>
-        <Card>
-          <CardHeader>
-            <CardTitle>Saluran Komunikasi Publik</CardTitle>
-            <CardDescription>
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
+          <div>
+            <h3 className="font-bold text-base text-[#1E2330]">Saluran Komunikasi Publik</h3>
+            <p className="text-xs text-stone-500 mt-1 font-medium">
               Pastikan nomor dan email yang dimasukkan aktif dan dapat dihubungi oleh calon santri atau wali santri.
-            </CardDescription>
-          </CardHeader>
+            </p>
+          </div>
 
-          <CardContent className="space-y-5">
+          <div className="space-y-5">
             {/* Hotline */}
             <div className="space-y-1.5">
-              <label htmlFor="input-phone" className="text-sm font-medium flex items-center gap-2">
-                <Phone className="h-3.5 w-3.5 text-muted-foreground" />
+              <label htmlFor="input-phone" className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] flex items-center gap-2 block">
+                <Phone className="h-3.5 w-3.5 text-[#FA6400]" aria-hidden="true" />
                 Nomor Telepon Kantor
               </label>
               <Input
@@ -81,7 +73,7 @@ export default function AdminContactSettingsPage() {
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="(0285) 123456"
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-stone-500 font-medium">
                 Ditampilkan di header dan footer situs publik.
               </p>
             </div>
@@ -89,8 +81,8 @@ export default function AdminContactSettingsPage() {
             {/* WhatsApp */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <label htmlFor="input-whatsapp" className="text-sm font-medium flex items-center gap-2">
-                  <MessageCircle className="h-3.5 w-3.5 text-muted-foreground" />
+                <label htmlFor="input-whatsapp" className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] flex items-center gap-2">
+                  <MessageCircle className="h-3.5 w-3.5 text-[#FA6400]" aria-hidden="true" />
                   WhatsApp Admisi SPMB
                 </label>
                 {cleanWaNumber && (
@@ -98,10 +90,10 @@ export default function AdminContactSettingsPage() {
                     href={`https://wa.me/${cleanWaNumber}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    className="inline-flex items-center gap-1 text-xs text-[#FA6400] hover:text-[#C2410C] font-bold transition-colors"
                   >
                     Uji link
-                    <ExternalLink className="h-3 w-3" />
+                    <ExternalLink className="h-3 w-3" aria-hidden="true" />
                   </a>
                 )}
               </div>
@@ -112,15 +104,15 @@ export default function AdminContactSettingsPage() {
                 onChange={(e) => setWhatsapp(e.target.value)}
                 placeholder="6281234567890"
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-stone-500 font-medium">
                 Format internasional tanpa + atau spasi, contoh: 628123456789
               </p>
             </div>
 
             {/* Email */}
             <div className="space-y-1.5">
-              <label htmlFor="input-email" className="text-sm font-medium flex items-center gap-2">
-                <Mail className="h-3.5 w-3.5 text-muted-foreground" />
+              <label htmlFor="input-email" className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] flex items-center gap-2 block">
+                <Mail className="h-3.5 w-3.5 text-[#FA6400]" aria-hidden="true" />
                 Alamat Email Resmi
               </label>
               <Input
@@ -130,24 +122,24 @@ export default function AdminContactSettingsPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="sekretariat@yazzakka.sch.id"
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-stone-500 font-medium">
                 Email utama yang menerima salinan notifikasi pesan masuk.
               </p>
             </div>
-          </CardContent>
+          </div>
 
-          <CardFooter className="border-t border-border pt-4">
+          <div className="flex justify-end pt-4 border-t border-[#E8E2D8]">
             <Button
               type="submit"
               disabled={isSaving}
-              isLoading={isSaving}
-              className="ml-auto"
+              variant="default"
+              className="font-extrabold h-11 px-6 rounded-full shadow-[0_3px_0_#cc5000] active:translate-y-0.5 active:shadow-none transition-all"
             >
-              <Save className="h-4 w-4" />
+              <Save className="h-4 w-4" aria-hidden="true" />
               Simpan Kontak
             </Button>
-          </CardFooter>
-        </Card>
+          </div>
+        </div>
       </form>
     </div>
   );

@@ -368,13 +368,16 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
     setMessages(prev => prev.filter(m => m.id !== id));
   };
 
-  // Media (Mock API call for now, since we haven't built the upload API)
+  // Media (Persisted ke API & Neon Database)
   const addMedia = async (mediaItem: Omit<MediaItem, "id" | "uploadedAt">) => {
-    const newMed = { ...mediaItem, id: generateId("med"), uploadedAt: new Date().toISOString() };
-    setMedia(prev => [newMed, ...prev]);
+    const created = await apiCall('/api/media', 'POST', mediaItem);
+    setMedia(prev => [created, ...prev]);
+    addLog("Menambahkan Media", mediaItem.fileName);
   };
   const deleteMedia = async (id: string) => {
+    await apiCall(`/api/media/${id}`, 'DELETE');
     setMedia(prev => prev.filter(m => m.id !== id));
+    addLog("Menghapus Media", id);
   };
 
   // Sections (Persisted ke API & Neon Database)

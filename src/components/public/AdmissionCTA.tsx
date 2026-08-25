@@ -10,7 +10,7 @@ export function AdmissionCTA() {
   const { profile, admission } = useSchoolData();
 
   return (
-    <section className="py-14 lg:py-18 bg-[#FFFDF9]">
+    <section id="ppdb" className="py-14 lg:py-18 bg-[#FFFDF9] scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Headspace Warm Sunset Banner */}

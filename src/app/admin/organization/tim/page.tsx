@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Modal } from "@/components/ui/modal";
+import { EmptyState } from "@/components/ui/empty-state";
 
 export default function AdminTeamMembersPage() {
   const { organization, addMember, updateMember, deleteMember } = useSchoolData();
@@ -101,73 +102,90 @@ export default function AdminTeamMembersPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-1">
-            Organization / Tim & Pendidik
+          <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+            Organization / Tim &amp; Pendidik
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--color-primary)]">
-            Manajemen Dewan Guru & Asatidz
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+            Manajemen Dewan Guru &amp; Asatidz
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-stone-500 mt-1">
             Daftar tenaga pengajar, kualifikasi ijazah, bidang pengasuhan, dan profil singkat asatidz.
           </p>
         </div>
 
-        <Button onClick={handleOpenAdd} variant="accent" size="default" className="shrink-0 shadow-sm">
+        <Button onClick={handleOpenAdd} variant="default" size="default" className="shrink-0 font-bold h-11 px-6 shadow-sm">
           <Plus className="h-4 w-4" />
           <span>Tambah Guru / Pendidik</span>
         </Button>
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {organization.map((m) => (
-          <div
-            key={m.id}
-            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
-          >
-            <div>
-              <div className="h-48 relative overflow-hidden bg-slate-100">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={m.photoUrl}
-                  alt={m.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+      {/* Grid or EmptyState */}
+      {organization.length === 0 ? (
+        <div className="bg-white rounded-3xl p-8 border border-[#E8E2D8] shadow-xs">
+          <EmptyState
+            icon={Users}
+            title="Belum Ada Data Guru / Asatidz"
+            description="Tambahkan profil pengajar, pembina asrama, atau pimpinan sekolah pertama Anda."
+            action={{
+              label: "Tambah Guru / Pendidik",
+              onClick: handleOpenAdd,
+              icon: Plus,
+            }}
+          />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {organization.map((m) => (
+            <div
+              key={m.id}
+              className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all duration-200 flex flex-col justify-between group"
+            >
+              <div>
+                <div className="h-48 relative overflow-hidden bg-[#FAF6EE]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={m.photoUrl}
+                    alt={m.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+
+                <div className="p-5 space-y-2">
+                  <span className="text-[10px] font-extrabold text-[#FA6400] uppercase tracking-wider block">
+                    {m.department}
+                  </span>
+                  <h4 className="font-bold text-sm text-[#1E2330] leading-snug">
+                    {m.name}
+                  </h4>
+                  <p className="text-xs text-stone-500 font-bold">
+                    {m.roleTitle}
+                  </p>
+                  <p className="text-xs text-stone-600 line-clamp-2 pt-2 border-t border-[#E8E2D8] font-medium">
+                    {m.bio}
+                  </p>
+                </div>
               </div>
 
-              <div className="p-5 space-y-2">
-                <span className="text-[10px] font-bold text-amber-700 uppercase tracking-wider block">
-                  {m.department}
-                </span>
-                <h4 className="font-bold text-sm text-[var(--color-primary)] leading-snug">
-                  {m.name}
-                </h4>
-                <p className="text-xs text-slate-500 font-medium">
-                  {m.roleTitle}
-                </p>
-                <p className="text-xs text-slate-600 line-clamp-2 pt-1 border-t border-slate-100">
-                  {m.bio}
-                </p>
+              <div className="p-4 pt-0 border-t border-[#E8E2D8] flex items-center justify-end gap-2">
+                <button
+                  onClick={() => handleOpenEdit(m)}
+                  className="p-2 rounded-xl text-stone-600 hover:bg-[#FFF0E5] hover:text-[#FA6400] transition-colors cursor-pointer"
+                  title="Edit Pendidik"
+                >
+                  <Edit2 className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => handleDelete(m.id, m.name)}
+                  className="p-2 rounded-xl text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                  title="Hapus Pendidik"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
               </div>
             </div>
-
-            <div className="p-4 pt-0 border-t border-slate-100 flex items-center justify-end gap-2">
-              <button
-                onClick={() => handleOpenEdit(m)}
-                className="p-1.5 rounded-md text-slate-600 hover:bg-slate-100"
-              >
-                <Edit2 className="h-4 w-4" />
-              </button>
-              <button
-                onClick={() => handleDelete(m.id, m.name)}
-                className="p-1.5 rounded-md text-rose-600 hover:bg-rose-50"
-              >
-                <Trash2 className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Modal */}
       <Modal

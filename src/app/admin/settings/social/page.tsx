@@ -5,14 +5,6 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Save } from "lucide-react";
 
 export default function AdminSocialMediaSettingsPage() {
@@ -40,31 +32,31 @@ export default function AdminSocialMediaSettingsPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-8">
       {/* ── Page Header ────────────────────────────────────────────── */}
-      <div className="space-y-1">
-        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+      <div>
+        <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
           Website Settings / Social Media
         </span>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
           Tautan Akun Media Sosial Resmi
         </h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-xs sm:text-sm text-stone-500 mt-1">
           Hubungkan akun Instagram, YouTube, TikTok, Facebook, dan LinkedIn sekolah ke tombol navigasi publik dan footer.
         </p>
       </div>
 
-      {/* ── Social Form Card (Shadcn UI Standard) ─────────────────── */}
+      {/* ── Social Form Card (Warm Native) ─────────────────────────── */}
       <form onSubmit={handleSave}>
-        <Card>
-          <CardHeader>
-            <CardTitle>Akun Media Sosial</CardTitle>
-            <CardDescription>
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
+          <div>
+            <h3 className="font-bold text-base text-[#1E2330]">Akun Media Sosial</h3>
+            <p className="text-xs text-stone-500 mt-1 font-medium">
               Tautan ini akan diarahkan secara otomatis ketika pengunjung mengklik ikon media sosial di landing page.
-            </CardDescription>
-          </CardHeader>
+            </p>
+          </div>
 
-          <CardContent className="space-y-4">
+          <div className="space-y-4">
             <Input
               label="Akun Instagram"
               placeholder="https://instagram.com/yazzakka.official"
@@ -99,15 +91,15 @@ export default function AdminSocialMediaSettingsPage() {
               value={linkedin}
               onChange={(e) => setLinkedin(e.target.value)}
             />
-          </CardContent>
+          </div>
 
-          <CardFooter className="flex justify-end border-t px-6 py-4 bg-muted/20">
-            <Button type="submit">
-              <Save className="h-4 w-4 mr-2" />
+          <div className="flex justify-end pt-4 border-t border-[#E8E2D8]">
+            <Button type="submit" variant="default" className="font-extrabold h-11 px-6 rounded-full shadow-[0_3px_0_#cc5000] active:translate-y-0.5 active:shadow-none transition-all">
+              <Save className="h-4 w-4" aria-hidden="true" />
               Simpan Media Sosial
             </Button>
-          </CardFooter>
-        </Card>
+          </div>
+        </div>
       </form>
     </div>
   );
