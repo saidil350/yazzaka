@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Modal } from "@/components/ui/modal";
 import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/ui/empty-state";
 
 export default function AdminAchievementsPage() {
   const { achievements, addAchievement, updateAchievement, deleteAchievement } = useSchoolData();
@@ -123,88 +124,107 @@ export default function AdminAchievementsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-1">
-            Content / Prestasi & Pengumuman
+          <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+            Content / Prestasi &amp; Piagam
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--color-primary)]">
-            Manajemen Prestasi Siswa & Santri
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+            Manajemen Prestasi Siswa &amp; Santri
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-stone-500 mt-1">
             Dokumentasikan medali, kejuaraan, piagam, dan piala yang diraih santri dan civitas akademika Yazzakka.
           </p>
         </div>
 
-        <Button onClick={handleOpenAdd} variant="accent" size="default" className="shrink-0 shadow-sm">
+        <Button onClick={handleOpenAdd} variant="default" size="default" className="shrink-0 font-extrabold h-11 px-6 rounded-full shadow-[0_3px_0_#cc5000] active:translate-y-0.5 active:shadow-none transition-all">
           <Plus className="h-4 w-4" />
           <span>Tambah Prestasi Baru</span>
         </Button>
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase text-slate-500">
-              <tr>
-                <th className="p-4 sm:px-6">Kejuaraan & Prestasi</th>
-                <th className="p-4 sm:px-6">Siswa / Tim</th>
-                <th className="p-4 sm:px-6">Tingkat & Kategori</th>
-                <th className="p-4 sm:px-6">Tanggal</th>
-                <th className="p-4 sm:px-6 text-right">Aksi</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 text-slate-700">
-              {achievements.map((ach) => (
-                <tr key={ach.id} className="hover:bg-slate-50/80 transition-colors">
-                  <td className="p-4 sm:px-6">
-                    <div className="flex items-center gap-3 max-w-sm">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={ach.imageUrl}
-                        alt={ach.title}
-                        className="h-12 w-16 object-cover rounded-lg shrink-0 border border-slate-200 bg-slate-100"
-                      />
-                      <div>
-                        <h4 className="font-bold text-sm text-slate-900 leading-snug">
-                          {ach.title}
-                        </h4>
-                        <p className="text-xs text-slate-500 line-clamp-1 mt-0.5">
-                          {ach.competitionName}
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="p-4 sm:px-6 text-xs font-semibold text-slate-900">
-                    {ach.studentName}
-                  </td>
-                  <td className="p-4 sm:px-6">
-                    <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold mr-1">
-                      {ach.level}
-                    </span>
-                    <span className="text-xs text-slate-500">{ach.category}</span>
-                  </td>
-                  <td className="p-4 sm:px-6 text-xs text-slate-500">
-                    {formatDateIndonesian(ach.date)}
-                  </td>
-                  <td className="p-4 sm:px-6 text-right space-x-2">
-                    <button
-                      onClick={() => handleOpenEdit(ach)}
-                      className="p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
-                    >
-                      <Edit2 className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(ach.id, ach.title)}
-                      className="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </td>
+      <div className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs">
+        {achievements.length === 0 ? (
+          <div className="p-8">
+            <EmptyState
+              icon={Trophy}
+              title="Belum Ada Prestasi Santri"
+              description="Catat prestasi, piagam kejuaraan, atau penghargaan olimpiade pertama yang diraih santri."
+              action={{
+                label: "Tambah Prestasi Baru",
+                onClick: handleOpenAdd,
+                icon: Plus,
+              }}
+            />
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-[#FAF6EE] border-b border-[#E8E2D8] text-xs font-bold uppercase text-stone-500">
+                <tr>
+                  <th className="p-4 sm:px-6">Kejuaraan &amp; Prestasi</th>
+                  <th className="p-4 sm:px-6">Siswa / Tim</th>
+                  <th className="p-4 sm:px-6">Tingkat &amp; Kategori</th>
+                  <th className="p-4 sm:px-6">Tanggal</th>
+                  <th className="p-4 sm:px-6 text-right">Aksi</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="divide-y divide-[#E8E2D8] text-stone-700 bg-white">
+                {achievements.map((ach) => (
+                  <tr key={ach.id} className="hover:bg-[#FFF9F2] transition-colors">
+                    <td className="p-4 sm:px-6">
+                      <div className="flex items-center gap-3 max-w-sm">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={ach.imageUrl}
+                          alt={ach.title}
+                          className="h-12 w-16 object-cover rounded-xl shrink-0 border border-[#E8E2D8] bg-[#FAF6EE]"
+                        />
+                        <div>
+                          <h4 className="font-bold text-sm text-[#1E2330] leading-snug">
+                            {ach.title}
+                          </h4>
+                          <p className="text-xs text-stone-500 line-clamp-1 mt-0.5 font-medium">
+                            {ach.competitionName}
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-4 sm:px-6 text-xs font-bold text-[#1E2330]">
+                      {ach.studentName}
+                    </td>
+                    <td className="p-4 sm:px-6">
+                      <span className="px-3 py-1 rounded-full bg-[#E6F4EA] text-[#15803D] border border-[#BDE7CC] text-xs font-bold mr-1 shadow-2xs">
+                        {ach.level}
+                      </span>
+                      <span className="text-xs text-stone-500 font-medium">{ach.category}</span>
+                    </td>
+                    <td className="p-4 sm:px-6 text-xs text-stone-500 font-medium">
+                      {formatDateIndonesian(ach.date)}
+                    </td>
+                    <td className="p-4 sm:px-6 text-right space-x-2">
+                      <button
+                        onClick={() => handleOpenEdit(ach)}
+                        className="p-2 rounded-full text-stone-600 hover:bg-[#FFF0E5] hover:text-[#FA6400] transition-colors cursor-pointer"
+                        title="Edit Prestasi"
+                        aria-label="Edit Prestasi"
+                      >
+                        <Edit2 className="h-4 w-4" aria-hidden="true" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(ach.id, ach.title)}
+                        className="p-2 rounded-full text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                        title="Hapus Prestasi"
+                        aria-label="Hapus Prestasi"
+                      >
+                        <Trash2 className="h-4 w-4" aria-hidden="true" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       {/* Modal */}
@@ -252,13 +272,13 @@ export default function AdminAchievementsPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-700 block">
+              <label className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] block">
                 Kategori
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as Achievement["category"])}
-                className="w-full h-10 rounded-md border border-slate-300 px-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-sm bg-white text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]/25 focus:border-[#FA6400] shadow-xs"
               >
                 {categories.map((c) => (
                   <option key={c} value={c}>
@@ -269,13 +289,13 @@ export default function AdminAchievementsPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-700 block">
+              <label className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] block">
                 Tingkat
               </label>
               <select
                 value={level}
                 onChange={(e) => setLevel(e.target.value as Achievement["level"])}
-                className="w-full h-10 rounded-md border border-slate-300 px-3 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-sm bg-white text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]/25 focus:border-[#FA6400] shadow-xs"
               >
                 {levels.map((l) => (
                   <option key={l} value={l}>

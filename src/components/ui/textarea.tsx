@@ -17,11 +17,11 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         {label && (
           <label
             htmlFor={textareaId}
-            className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]"
+            className="block text-xs font-bold text-[#1E2330]"
           >
             {label}
             {props.required && (
-              <span className="ml-1 text-[var(--color-danger)]" aria-label="wajib diisi">*</span>
+              <span className="ml-1 text-rose-500" aria-label="wajib diisi">*</span>
             )}
           </label>
         )}
@@ -31,26 +31,25 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           aria-invalid={!!error}
           aria-describedby={error ? `${textareaId}-error` : helperText ? `${textareaId}-hint` : undefined}
           className={cn(
-            "flex min-h-[100px] w-full rounded-md border px-3 py-3",
-            "bg-[var(--surface-raised)] text-[var(--text-primary)]",
-            "text-sm leading-relaxed",
-            "placeholder:text-[var(--text-placeholder)]",
-            "border-[var(--border-strong)]",
-            "transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]",
-            "hover:border-[var(--text-muted)]",
-            "focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20",
-            "disabled:cursor-not-allowed disabled:opacity-40 disabled:bg-[var(--surface-overlay)]",
-            "resize-y",
+            "flex min-h-[100px] w-full rounded-xl border border-[#E8E2D8] px-3.5 py-2.5",
+            "bg-white text-[#1E2330]",
+            "text-sm font-medium leading-relaxed",
+            "placeholder:text-stone-400",
+            "transition-colors duration-150",
+            "hover:border-stone-400",
+            "focus:outline-none focus:border-[#FA6400] focus:ring-2 focus:ring-[#FA6400]/25",
+            "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[#FAF6EE]",
+            "resize-y shadow-xs",
             error && [
-              "border-[var(--color-danger)]",
-              "focus:border-[var(--color-danger)] focus:ring-[var(--color-danger)]/20",
+              "border-rose-500",
+              "focus:border-rose-500 focus:ring-rose-500/20",
             ],
             className
           )}
           {...props}
         />
         {error && (
-          <p id={`${textareaId}-error`} role="alert" className="flex items-center gap-1 text-xs text-[var(--color-danger)] font-medium">
+          <p id={`${textareaId}-error`} role="alert" className="flex items-center gap-1 text-xs text-rose-500 font-medium">
             {error}
           </p>
         )}

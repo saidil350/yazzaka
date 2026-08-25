@@ -5,12 +5,13 @@ import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Compass, Sparkles, Building2, Users, Award, BookOpen } from "lucide-react";
+import { EmptyState } from "@/components/ui/empty-state";
 
 export default function AboutPage() {
   const { profile, organization } = useSchoolData();
 
-  const leadership = organization.filter(
-    (o) => o.department === "Pimpinan Yayasan & Sekolah"
+  const sortedMembers = [...organization].sort(
+    (a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0)
   );
 
   return (
@@ -145,7 +146,7 @@ export default function AboutPage() {
                 Nilai Filosofis
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
-                Panca Jiwa Pondok Pesantren Yazzakka
+                Panca Jiwa Pondok Pesantren {profile.name}
               </h2>
             </div>
 
@@ -192,39 +193,55 @@ export default function AboutPage() {
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
                 Pimpinan &amp; Dewan Asatidz
               </h2>
+              <p className="text-xs sm:text-sm text-stone-600">
+                Pendidik berdedikasi tinggi yang memadukan kedalaman tradisi keilmuan Islam dan kompetensi sains modern.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {leadership.map((lead) => (
-                <div
-                  key={lead.id}
-                  className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between shadow-xs hover:border-[#FA6400]/40 transition-all"
-                >
-                  <div className="h-52 relative overflow-hidden bg-stone-200">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={lead.photoUrl}
-                      alt={lead.name}
-                      className="w-full h-full object-cover"
-                    />
+            {sortedMembers.length === 0 ? (
+              <EmptyState
+                icon={Users}
+                title="Struktur Pengajar Sedang Diperbarui"
+                description="Profil pimpinan dan dewan asatidz akan segera dimuat dari sistem."
+              />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {sortedMembers.map((lead) => (
+                  <div
+                    key={lead.id}
+                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between shadow-xs hover:border-[#FA6400]/40 transition-all"
+                  >
+                    <div className="h-52 relative overflow-hidden bg-stone-200">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={lead.photoUrl}
+                        alt={lead.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-4 space-y-1">
+                      <span className="text-[10px] font-bold text-[#FA6400] uppercase tracking-wider block">
+                        {lead.department}
+                      </span>
+                      <h3 className="text-sm font-bold text-[#1E2330] leading-snug">
+                        {lead.name}
+                      </h3>
+                      <p className="text-xs text-stone-500 font-semibold">
+                        {lead.roleTitle}
+                      </p>
+                      {lead.qualifications && (
+                        <p className="text-[10px] text-stone-400 italic">
+                          {lead.qualifications}
+                        </p>
+                      )}
+                      <p className="text-[11px] text-stone-600 pt-2 border-t border-stone-100 line-clamp-2 font-medium">
+                        {lead.bio}
+                      </p>
+                    </div>
                   </div>
-                  <div className="p-4 space-y-1">
-                    <span className="text-[10px] font-bold text-[#FA6400] uppercase tracking-wider block">
-                      {lead.department}
-                    </span>
-                    <h3 className="text-sm font-bold text-[#1E2330] leading-snug">
-                      {lead.name}
-                    </h3>
-                    <p className="text-xs text-stone-500 font-semibold">
-                      {lead.roleTitle}
-                    </p>
-                    <p className="text-[11px] text-stone-600 pt-2 border-t border-stone-100 line-clamp-2 font-medium">
-                      {lead.bio}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
           </div>
         </section>

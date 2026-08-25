@@ -4,221 +4,580 @@ import React from "react";
 import Link from "next/link";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/components/ui/toast";
 import {
-  FileText,
-  Layers,
-  Calendar,
+  GraduationCap,
+  Building2,
+  Trophy,
+  Quote,
   MessageSquare,
   ArrowUpRight,
+  Sparkles,
+  PhoneCall,
+  SlidersHorizontal,
+  ChevronRight,
+  Database,
+  Globe,
   Clock,
-  Activity,
-  Settings,
+  Send,
+  CheckCircle2,
+  ExternalLink,
+  ShieldCheck,
   Users,
-  ArrowRight,
+  Award,
+  BookOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 
 export default function AdminDashboardOverview() {
   const {
-    articles,
-    programs,
-    events,
-    messages,
-    logs,
     profile,
+    programs,
+    facilities,
+    achievements,
+    testimonials,
+    sections,
+    messages,
+    toggleSection,
   } = useSchoolData();
-  const { role, currentUser } = useAuth();
+  const { currentUser } = useAuth();
+  const { toast } = useToast();
 
-  const publishedArticles = articles.filter((a) => a.status === "published").length;
-  const draftArticles = articles.filter((a) => a.status === "draft").length;
-  const unreadMessages = messages.filter((m) => m.status === "new").length;
-  const upcomingEvents = events.filter((e) => e.status === "upcoming").length;
+  const unreadMessages = messages.filter((m) => m.status === "new");
+  const recentMessages = messages.slice(0, 5);
 
-  const stats = [
+  // 4 KPI Utama yang secara langsung terhubung ke Landing Page
+  const landingKpis = [
     {
-      label: "Artikel Berita",
-      value: articles.length,
-      meta: `${publishedArticles} terbit · ${draftArticles} draf`,
-      icon: FileText,
-      href: "/admin/content/berita",
-    },
-    {
-      label: "Program Kurikulum",
+      title: "Program Pendidikan",
       value: programs.length,
-      meta: "Tahfiz, Sains & Bahasa",
-      icon: Layers,
+      unit: "Unit Jenjang",
+      desc: "Kurikulum & jenjang santri",
+      icon: GraduationCap,
       href: "/admin/content/program",
+      badgeColor: "bg-[#E0F2FE] text-[#0369A1] border-[#BAE6FD]",
+      accentHover: "hover:border-[#0284C7]/50",
     },
     {
-      label: "Agenda & Events",
-      value: events.length,
-      meta: `${upcomingEvents} mendatang`,
-      icon: Calendar,
-      href: "/admin/content/kegiatan",
+      title: "Fasilitas Kampus",
+      value: facilities.length,
+      unit: "Sarana Aktif",
+      desc: "Gedung, asrama & lab",
+      icon: Building2,
+      href: "/admin/content/fasilitas",
+      badgeColor: "bg-[#FFF0E5] text-[#FA6400] border-[#FED7AA]",
+      accentHover: "hover:border-[#FA6400]/50",
     },
     {
-      label: "Pesan Masuk",
-      value: messages.length,
-      meta: unreadMessages > 0 ? `${unreadMessages} belum dibaca` : "Semua terbaca",
-      icon: MessageSquare,
-      href: "/admin/settings/pesan",
-      alert: unreadMessages > 0,
+      title: "Prestasi & Medali",
+      value: achievements.length,
+      unit: "Capaian Juara",
+      desc: "Prestasi daerah & nasional",
+      icon: Trophy,
+      href: "/admin/content/pengumuman",
+      badgeColor: "bg-[#E6F4EA] text-[#15803D] border-[#BDE7CC]",
+      accentHover: "hover:border-[#16A34A]/50",
+    },
+    {
+      title: "Testimoni Publik",
+      value: testimonials.length,
+      unit: "Ulasan Terbit",
+      desc: "Kesan wali santri & alumni",
+      icon: Quote,
+      href: "/admin/content/testimoni",
+      badgeColor: "bg-[#EDE9FE] text-[#6D28D9] border-[#DDD6FE]",
+      accentHover: "hover:border-[#7C3AED]/50",
     },
   ];
 
-  const quickActions = [
-    { label: "Tulis Artikel Baru", icon: FileText, href: "/admin/content/berita" },
-    { label: "Tambah Event / Agenda", icon: Calendar, href: "/admin/content/kegiatan" },
-    { label: "Kelola Media Library", icon: Activity, href: "/admin/media" },
-    { label: "Pengaturan Branding", icon: Settings, href: "/admin/settings/general" },
-    { label: "Manajemen Pengguna", icon: Users, href: "/admin/users" },
-    { label: "Kotak Pesan Masuk", icon: MessageSquare, href: "/admin/settings/pesan" },
+  // Modul Pengeditan Cepat Landing Page
+  const landingModules = [
+    {
+      title: "Profil & Hero Utama",
+      desc: "Nama pesantren, slogan hero, sambutan pimpinan, dan visi-misi.",
+      href: "/admin/organization/profil",
+      icon: Globe,
+      badge: "Hero & About",
+    },
+    {
+      title: "Program & Kurikulum",
+      desc: "Daftar unit jenjang pendidikan (SMP, SMA, Tahfiz, Madrasah).",
+      href: "/admin/content/program",
+      icon: GraduationCap,
+      badge: "Seksi Program",
+    },
+    {
+      title: "Galeri Fasilitas",
+      desc: "Sarana asrama, masjid, laboratorium sains, dan fasilitas santri.",
+      href: "/admin/content/fasilitas",
+      icon: Building2,
+      badge: "Seksi Fasilitas",
+    },
+    {
+      title: "Piagam & Prestasi",
+      desc: "Daftar penghargaan santri tingkat daerah, nasional & internasional.",
+      href: "/admin/content/pengumuman",
+      icon: Trophy,
+      badge: "Seksi Prestasi",
+    },
+    {
+      title: "Testimoni & Ulasan",
+      desc: "Ulasan dan pengalaman orang tua santri dan alumni pesantren.",
+      href: "/admin/content/testimoni",
+      icon: Quote,
+      badge: "Seksi Testimoni",
+    },
+    {
+      title: "Kontak & WhatsApp Hotline",
+      desc: "Nomor WhatsApp pendaftaran, email, alamat maps, dan media sosial.",
+      href: "/admin/settings/contact",
+      icon: PhoneCall,
+      badge: "Header & Footer",
+    },
   ];
 
-  const recentLogs = logs.slice(0, 8);
+  const handleToggleSection = async (sectionId: string, sectionTitle: string) => {
+    try {
+      await toggleSection(sectionId);
+      toast(`Visibilitas seksi “${sectionTitle}” berhasil diperbarui`, "success");
+    } catch {
+      toast("Gagal memperbarui status seksi", "error");
+    }
+  };
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
+    <div className="space-y-8 max-w-6xl mx-auto pb-12">
+      {/* ── 1. Page Header (Shadcn Dashboard Standard with Warm Accents) ── */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#E8E2D8] pb-6">
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF0E5] border border-[#FED7AA] text-[#FA6400] text-xs font-extrabold shadow-2xs">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+              Pusat Kendali Landing Page
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#E6F4EA] border border-[#BDE7CC] text-[#15803D] text-[11px] font-bold">
+              <span className="h-2 w-2 rounded-full bg-[#15803D] animate-pulse" aria-hidden="true" />
+              Live Sync
+            </span>
+          </div>
 
-      {/* ── Page Header ──────────────────────────────── */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-semibold tracking-tight">
-            {currentUser?.name ?? "Administrator"}
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1E2330]">
+            Dashboard Ikhtisar {profile.name}
           </h1>
-          <p className="text-sm text-muted-foreground mt-0.5">
-            {profile.name} — Dashboard pengelola konten
+          <p className="text-xs sm:text-sm text-stone-500 max-w-2xl leading-relaxed font-medium">
+            Kelola visibilitas seksi, perbarui konten landing page secara langsung, dan tindak lanjuti pesan konsultasi calon santri baru.
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <Badge variant="secondary" className="font-mono text-xs">
-            {role.replace("_", " ")}
-          </Badge>
-          <Link href="/" target="_blank">
-            <Button variant="outline" size="sm">
-              <ArrowUpRight className="h-3.5 w-3.5" />
-              Lihat Situs
+
+        {/* Action Toolbar */}
+        <div className="flex items-center gap-2.5 shrink-0 self-start md:self-auto">
+          <Link href="/admin/pages/beranda">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 text-xs font-bold gap-2 rounded-full border-2 border-[#E8E2D8] hover:border-[#FA6400] hover:bg-[#FAF6EE] text-[#1E2330]"
+              aria-label="Atur urutan seksi beranda"
+            >
+              <SlidersHorizontal className="h-3.5 w-3.5 text-[#FA6400]" aria-hidden="true" />
+              <span>Tata Letak Beranda</span>
+            </Button>
+          </Link>
+
+          <Link href="/" target="_blank" rel="noopener noreferrer">
+            <Button
+              variant="default"
+              size="sm"
+              className="h-10 text-xs font-bold gap-2 rounded-full px-5 shadow-sm"
+              aria-label="Buka situs publik di tab baru"
+            >
+              <span>Lihat Web Publik</span>
+              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
             </Button>
           </Link>
         </div>
       </div>
 
-      <Separator />
+      {/* ── 2. Alert Kotak Masuk Baru (Tampil dinamis jika ada leads masuk) ── */}
+      {unreadMessages.length > 0 && (
+        <div
+          role="alert"
+          aria-live="polite"
+          className="bg-[#FFF0E5] border border-[#FED7AA] rounded-3xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs animate-in fade-in duration-300"
+        >
+          <div className="flex items-start sm:items-center gap-4 min-w-0">
+            <div className="h-11 w-11 rounded-2xl bg-[#FA6400] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#FA6400]/30">
+              <MessageSquare className="h-5 w-5" aria-hidden="true" />
+            </div>
+            <div className="min-w-0">
+              <h2 className="text-sm sm:text-base font-bold text-[#1E2330] truncate">
+                Terdapat {unreadMessages.length} pesan konsultasi pendaftaran baru
+              </h2>
+              <p className="text-xs text-stone-600 mt-0.5 font-medium leading-relaxed">
+                Calon wali santri baru saja mengirimkan formulir pertanyaan melalui landing page.
+              </p>
+            </div>
+          </div>
+          <Link href="/admin/settings/pesan" className="shrink-0">
+            <Button
+              size="sm"
+              className="font-bold text-xs h-9 px-5 rounded-full shadow-xs"
+              aria-label="Buka kotak pesan masuk"
+            >
+              <span>Buka Kotak Masuk</span>
+              <ChevronRight className="h-4 w-4 ml-1" aria-hidden="true" />
+            </Button>
+          </Link>
+        </div>
+      )}
 
-      {/* ── Stat Row ─────────────────────────────────── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <Link key={stat.href} href={stat.href} className="group">
-              <div className="p-4 rounded-lg border border-border bg-card hover:bg-accent/30 transition-colors duration-150">
-                <div className="flex items-center justify-between mb-3">
-                  <Icon className="h-4 w-4 text-muted-foreground" />
-                  {stat.alert && (
-                    <span className="h-2 w-2 rounded-full bg-destructive" />
-                  )}
+      {/* ── 3. Top Metric Cards (4 KPI Cards in Shadcn UI Standard) ── */}
+      <section aria-labelledby="kpi-section-heading">
+        <h2 id="kpi-section-heading" className="sr-only">
+          Statistik Konten Landing Page
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {landingKpis.map((kpi) => {
+            const Icon = kpi.icon;
+            return (
+              <Link
+                key={kpi.href}
+                href={kpi.href}
+                className="group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400] rounded-3xl"
+                aria-label={`Kelola ${kpi.title}, total ${kpi.value} ${kpi.unit}`}
+              >
+                <Card className={`h-full border-2 border-[#E8E2D8] bg-white hover:shadow-md transition-all duration-200 ${kpi.accentHover}`}>
+                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+                    <CardTitle className="text-xs font-bold uppercase tracking-wider text-stone-500 group-hover:text-[#1E2330] transition-colors">
+                      {kpi.title}
+                    </CardTitle>
+                    <div className={`p-2 rounded-2xl border ${kpi.badgeColor} shadow-2xs`}>
+                      <Icon className="h-4 w-4" aria-hidden="true" />
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-1.5">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-3xl font-extrabold text-[#1E2330] tabular-nums tracking-tight">
+                        {kpi.value}
+                      </span>
+                      <span className="text-xs font-bold text-stone-500">{kpi.unit}</span>
+                    </div>
+                    <div className="flex items-center justify-between pt-1">
+                      <p className="text-[11px] text-stone-500 font-medium line-clamp-1">
+                        {kpi.desc}
+                      </p>
+                      <ArrowUpRight className="h-3.5 w-3.5 text-stone-400 opacity-0 group-hover:opacity-100 group-hover:text-[#FA6400] transition-all" aria-hidden="true" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ── 4. Main 2-Column Dashboard Grid (Shadcn Dashboard Pattern) ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* ── Left Column (7 cols): Primary Operations & Leads ── */}
+        <div className="lg:col-span-7 space-y-8">
+          {/* Card: Live Section Controller */}
+          <Card className="border-2 border-[#E8E2D8] bg-white">
+            <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E8E2D8] pb-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <SlidersHorizontal className="h-4 w-4 text-[#FA6400]" aria-hidden="true" />
+                  <CardTitle className="text-base font-bold text-[#1E2330]">
+                    Visibilitas Seksi Beranda
+                  </CardTitle>
                 </div>
-                <div className="text-2xl font-semibold tabular-nums">
-                  {stat.value}
-                </div>
-                <div className="text-sm font-medium mt-0.5">{stat.label}</div>
-                <div className="text-xs text-muted-foreground mt-0.5">{stat.meta}</div>
+                <CardDescription className="text-xs text-stone-500 mt-0.5 font-medium">
+                  Aktifkan atau sembunyikan seksi konten di halaman depan secara langsung.
+                </CardDescription>
               </div>
-            </Link>
-          );
-        })}
-      </div>
 
-      {/* ── Body Grid ────────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <Link href="/admin/pages/beranda">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-8 text-xs font-bold rounded-full border border-[#E8E2D8] hover:border-[#FA6400] hover:text-[#FA6400] text-stone-700"
+                >
+                  <span>Atur Urutan</span>
+                  <ChevronRight className="h-3.5 w-3.5 ml-1 text-stone-400" aria-hidden="true" />
+                </Button>
+              </Link>
+            </CardHeader>
 
-        {/* Quick Actions (5 cols) */}
-        <div className="lg:col-span-5 space-y-3">
-          <h2 className="text-sm font-semibold">Aksi Cepat</h2>
-          <div className="rounded-lg border border-border bg-card overflow-hidden divide-y divide-border">
-            {quickActions.map((action, idx) => {
-              const Icon = action.icon;
-              return (
-                <Link key={idx} href={action.href}>
-                  <div className="flex items-center justify-between px-4 py-3 hover:bg-accent/50 transition-colors duration-150 group cursor-pointer">
-                    <div className="flex items-center gap-3">
-                      <Icon className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
-                      <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                        {action.label}
+            <CardContent className="pt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {sections.map((sec) => (
+                  <div
+                    key={sec.id}
+                    className={`p-3.5 rounded-2xl border transition-all duration-150 flex items-center justify-between gap-3 ${
+                      sec.isEnabled
+                        ? "bg-[#FAF6EE] border-[#E8E2D8]"
+                        : "bg-[#FAF6EE]/40 border-[#E8E2D8]/50 opacity-60"
+                    }`}
+                  >
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <span
+                          className={`h-2 w-2 rounded-full shrink-0 ${
+                            sec.isEnabled
+                              ? "bg-emerald-500 shadow-[0_0_6px_rgba(52,211,153,0.6)]"
+                              : "bg-stone-300"
+                          }`}
+                          aria-hidden="true"
+                        />
+                        <span className="text-xs font-bold text-[#1E2330] truncate block">
+                          {sec.title}
+                        </span>
+                      </div>
+                      <span className="text-[10px] text-stone-500 block truncate mt-0.5 font-medium">
+                        #{sec.key} · {sec.isEnabled ? "Aktif di Beranda" : "Disembunyikan"}
                       </span>
                     </div>
-                    <ArrowRight className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
 
-          {/* Unread message alert */}
-          {unreadMessages > 0 && (
-            <Link href="/admin/settings/pesan">
-              <div className="flex items-center gap-3 px-4 py-3 rounded-lg border border-destructive/20 bg-destructive/5 hover:bg-destructive/10 transition-colors duration-150 cursor-pointer">
-                <MessageSquare className="h-4 w-4 text-destructive shrink-0" />
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-destructive">
-                    {unreadMessages} pesan belum dibaca
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Klik untuk buka kotak pesan masuk
-                  </p>
-                </div>
-                <ArrowRight className="h-3.5 w-3.5 text-destructive shrink-0" />
-              </div>
-            </Link>
-          )}
-        </div>
-
-        {/* Activity Log (7 cols) */}
-        <div className="lg:col-span-7 space-y-3">
-          <h2 className="text-sm font-semibold">Log Aktivitas Terbaru</h2>
-
-          <div className="rounded-lg border border-border bg-card overflow-hidden">
-            {recentLogs.length === 0 ? (
-              <div className="p-8 text-center">
-                <Activity className="h-8 w-8 text-muted-foreground/40 mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground">Belum ada aktivitas.</p>
-              </div>
-            ) : (
-              <div className="divide-y divide-border">
-                {recentLogs.map((log) => (
-                  <div
-                    key={log.id}
-                    className="flex items-start gap-3 px-4 py-3 hover:bg-accent/30 transition-colors duration-150"
-                  >
-                    <div className="h-6 w-6 rounded-md border border-border flex items-center justify-center shrink-0 mt-0.5 bg-muted">
-                      <Activity className="h-3 w-3 text-muted-foreground" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm text-foreground leading-snug truncate">
-                        {log.action}{" "}
-                        <span className="font-medium">{log.target}</span>
-                      </p>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          {log.timestamp}
-                        </span>
-                        <span className="text-xs text-muted-foreground">· {log.user}</span>
-                      </div>
-                    </div>
-                    <Badge variant="outline" className="shrink-0 hidden sm:inline-flex text-xs">
-                      {log.action}
-                    </Badge>
+                    <Switch
+                      checked={sec.isEnabled}
+                      onCheckedChange={() => handleToggleSection(sec.id, sec.title)}
+                      id={`section-switch-${sec.id}`}
+                      aria-label={`Aktifkan atau nonaktifkan seksi ${sec.title}`}
+                    />
                   </div>
                 ))}
               </div>
-            )}
-          </div>
+            </CardContent>
+          </Card>
+
+          {/* Card: Recent Inquiries (Pesan Masuk) */}
+          <Card className="border-2 border-[#E8E2D8] bg-white overflow-hidden">
+            <CardHeader className="flex flex-row items-center justify-between border-b border-[#E8E2D8] bg-[#FAF6EE] pb-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <MessageSquare className="h-4 w-4 text-[#FA6400]" aria-hidden="true" />
+                  <CardTitle className="text-base font-bold text-[#1E2330]">
+                    Pesan Konsultasi Masuk
+                  </CardTitle>
+                </div>
+                <CardDescription className="text-xs text-stone-500 mt-0.5 font-medium">
+                  Leads pertanyaan calon wali santri dari formulir kontak publik.
+                </CardDescription>
+              </div>
+
+              <Link href="/admin/settings/pesan">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 text-xs font-bold text-stone-700 hover:text-[#FA6400] rounded-full"
+                >
+                  <span>Lihat Semua ({messages.length})</span>
+                  <ChevronRight className="h-3.5 w-3.5 ml-1 text-stone-400" aria-hidden="true" />
+                </Button>
+              </Link>
+            </CardHeader>
+
+            <CardContent className="p-0">
+              {recentMessages.length === 0 ? (
+                <div className="p-8 text-center">
+                  <MessageSquare className="h-8 w-8 text-stone-300 mx-auto mb-2" aria-hidden="true" />
+                  <p className="text-xs text-stone-500 font-medium">
+                    Belum ada pesan masuk dari formulir kontak publik.
+                  </p>
+                </div>
+              ) : (
+                <div className="divide-y divide-[#E8E2D8]" role="list">
+                  {recentMessages.map((msg) => (
+                    <div
+                      key={msg.id}
+                      className="p-4 sm:px-6 hover:bg-[#FFF9F2] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                    >
+                      <div className="min-w-0 space-y-1 flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-[#1E2330] truncate">
+                            {msg.name}
+                          </span>
+                          {msg.status === "new" ? (
+                            <span className="px-2.5 py-0.5 rounded-full bg-[#FFF0E5] text-[#FA6400] border border-[#FED7AA] text-[10px] font-bold shadow-2xs">
+                              Baru
+                            </span>
+                          ) : (
+                            <span className="px-2.5 py-0.5 rounded-full bg-[#FAF6EE] text-stone-600 border border-[#E8E2D8] text-[10px] font-medium">
+                              {msg.status === "replied" ? "Dibalas" : "Dibaca"}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs font-bold text-stone-700 truncate">
+                          {msg.subject || "Konsultasi Santri Baru"}
+                        </p>
+                        <p className="text-xs text-stone-500 truncate max-w-md font-medium">
+                          {msg.message}
+                        </p>
+                        <div className="flex items-center gap-3 text-[11px] text-stone-400 pt-0.5 font-medium">
+                          <span>{msg.phone || msg.email}</span>
+                          <span>·</span>
+                          <span className="flex items-center gap-1">
+                            <Clock className="h-3 w-3" aria-hidden="true" />
+                            {msg.submittedAt}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 shrink-0 pt-2 sm:pt-0">
+                        {msg.phone && (
+                          <a
+                            href={`https://wa.me/${msg.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
+                              `Halo ${msg.name}, terima kasih telah menghubungi Pondok Pesantren Yazzakka mengenai "${msg.subject}".`
+                            )}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Balas WhatsApp ke ${msg.name}`}
+                          >
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="h-8 text-xs font-bold text-emerald-700 border-emerald-300 hover:bg-emerald-50 gap-1.5 rounded-full shadow-2xs"
+                            >
+                              <Send className="h-3 w-3 text-emerald-600" aria-hidden="true" />
+                              <span>Balas WA</span>
+                            </Button>
+                          </a>
+                        )}
+                        <Link href="/admin/settings/pesan">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="h-8 text-xs font-bold text-stone-600 hover:text-[#FA6400] rounded-full"
+                          >
+                            Rincian
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
 
+        {/* ── Right Column (5 cols): Quick Editor Shortcuts & Identity ── */}
+        <div className="lg:col-span-5 space-y-8">
+          {/* Card: Quick Module Editor Shortcuts */}
+          <Card className="border-2 border-[#E8E2D8] bg-white">
+            <CardHeader className="border-b border-[#E8E2D8] pb-4">
+              <CardTitle className="text-base font-bold text-[#1E2330]">
+                Pusat Pengeditan Modul
+              </CardTitle>
+              <CardDescription className="text-xs text-stone-500 font-medium">
+                Pintasan cepat untuk memperbarui data dan foto di halaman publik.
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent className="p-4 space-y-2.5">
+              {landingModules.map((mod) => {
+                const Icon = mod.icon;
+                return (
+                  <Link
+                    key={mod.href}
+                    href={mod.href}
+                    className="flex items-center justify-between p-3 rounded-2xl border border-[#E8E2D8] bg-white hover:bg-[#FFF9F2] hover:border-[#FA6400]/40 transition-all duration-150 group"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="h-9 w-9 rounded-xl bg-[#FFF0E5] border border-[#FED7AA] flex items-center justify-center text-[#FA6400] group-hover:bg-[#FA6400] group-hover:text-white transition-all shrink-0 shadow-2xs">
+                        <Icon className="h-4 w-4" aria-hidden="true" />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="text-xs font-bold text-[#1E2330] group-hover:text-[#FA6400] transition-colors truncate">
+                          {mod.title}
+                        </h3>
+                        <span className="text-[10px] text-stone-400 font-semibold block">
+                          {mod.badge}
+                        </span>
+                      </div>
+                    </div>
+
+                    <ChevronRight className="h-4 w-4 text-stone-400 group-hover:text-[#FA6400] group-hover:translate-x-0.5 transition-all shrink-0" aria-hidden="true" />
+                  </Link>
+                );
+              })}
+            </CardContent>
+          </Card>
+
+          {/* Card: Institutional Trust Metrics & Identity Summary */}
+          <Card className="border-2 border-[#E8E2D8] bg-gradient-to-b from-[#FAF6EE] to-white">
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-base font-bold text-[#1E2330]">
+                  Profil &amp; Legalitas Lembaga
+                </CardTitle>
+                <Badge variant="success" className="text-[10px] font-bold">
+                  Akreditasi {profile.accreditation}
+                </Badge>
+              </div>
+              <CardDescription className="text-xs text-stone-500 font-medium">
+                Data resmi yang tampil di header, trust section, dan footer.
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent className="space-y-3.5 pt-1">
+              <div className="p-3.5 rounded-2xl bg-white border border-[#E8E2D8] space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-stone-500 font-medium">NPSN Resmi:</span>
+                  <span className="font-bold text-[#1E2330] font-mono">{profile.npsn}</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-stone-500 font-medium">Tahun Berdiri:</span>
+                  <span className="font-bold text-[#1E2330]">{profile.establishedYear}</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-stone-500 font-medium">Kepala Sekolah:</span>
+                  <span className="font-bold text-[#1E2330] truncate max-w-[180px]">{profile.principal.name}</span>
+                </div>
+              </div>
+
+              {/* Trust Metric Counters */}
+              <div className="grid grid-cols-2 gap-2.5">
+                <div className="p-3 rounded-2xl bg-white border border-[#E8E2D8] text-center">
+                  <span className="text-xl font-extrabold text-[#1E2330] tabular-nums block">
+                    {profile.studentCount}
+                  </span>
+                  <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
+                    Santri Aktif
+                  </span>
+                </div>
+                <div className="p-3 rounded-2xl bg-white border border-[#E8E2D8] text-center">
+                  <span className="text-xl font-extrabold text-[#FA6400] tabular-nums block">
+                    {profile.hafizCount}
+                  </span>
+                  <span className="text-[10px] text-stone-500 font-bold uppercase tracking-wider block">
+                    Hafiz 30 Juz
+                  </span>
+                </div>
+              </div>
+
+              <Link href="/admin/organization/profil" className="block pt-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full text-xs font-bold h-9 rounded-full border border-[#E8E2D8] hover:border-[#FA6400] hover:text-[#FA6400]"
+                >
+                  <span>Edit Profil &amp; Legalitas</span>
+                  <ChevronRight className="h-3.5 w-3.5 ml-1" aria-hidden="true" />
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
 }
+

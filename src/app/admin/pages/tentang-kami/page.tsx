@@ -32,18 +32,18 @@ export default function AdminAboutPageContent() {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
-        <span className="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-1">
+        <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
           Pages / Tentang Kami
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--color-primary)]">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
           Pengaturan Halaman Tentang Kami
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+        <p className="text-xs sm:text-sm text-stone-500 mt-1">
           Kelola narasi pengenalan sejarah, visi pendidikan, dan pesan sambutan pimpinan sekolah.
         </p>
       </div>
 
-      <form onSubmit={handleSave} className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
+      <form onSubmit={handleSave} className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
         <Textarea
           label="Deskripsi Ringkas Institusi (Meta & Intro)"
           rows={3}
@@ -65,8 +65,8 @@ export default function AdminAboutPageContent() {
           onChange={(e) => setWelcomeMessage(e.target.value)}
         />
 
-        <div className="pt-4 border-t border-slate-100 flex justify-end">
-          <Button type="submit" variant="accent" size="default">
+        <div className="pt-4 border-t border-[#E8E2D8] flex justify-end">
+          <Button type="submit" variant="default" size="default" className="font-bold h-11 px-6 shadow-sm">
             <Save className="h-4 w-4" />
             Simpan Perubahan
           </Button>

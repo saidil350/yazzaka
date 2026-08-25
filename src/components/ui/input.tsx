@@ -21,11 +21,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className="text-xs font-bold text-[#1E2330] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             {label}
             {props.required && (
-              <span className="ml-1 text-destructive" aria-label="wajib diisi">*</span>
+              <span className="ml-1 text-rose-500" aria-label="wajib diisi">*</span>
             )}
           </label>
         )}
@@ -38,13 +38,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             error ? `${inputId}-error` : helperText ? `${inputId}-hint` : undefined
           }
           className={cn(
-            "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1",
-            "text-sm shadow-sm",
-            "placeholder:text-muted-foreground",
+            "flex h-10 w-full rounded-xl border border-[#E8E2D8] bg-white px-3.5 py-2",
+            "text-sm font-medium text-[#1E2330] shadow-xs",
+            "placeholder:text-stone-400",
             "transition-colors duration-150",
-            "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-            "disabled:cursor-not-allowed disabled:opacity-50",
-            error && "border-destructive focus-visible:ring-destructive",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400]/25 focus-visible:border-[#FA6400]",
+            "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[#FAF6EE]",
+            error && "border-rose-500 focus-visible:ring-rose-500/20 focus-visible:border-rose-500",
             className
           )}
           {...props}

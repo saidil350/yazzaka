@@ -79,24 +79,24 @@ export function Modal({
       <div
         className={cn(
           "relative z-10 w-full flex flex-col max-h-[88vh]",
-          "bg-[var(--surface-raised)] rounded-lg",
-          "border border-[var(--border-default)]",
+          "bg-white rounded-3xl",
+          "border border-[#E8E2D8]",
           // Layered shadow: ambient + key light
-          "shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07),0_20px_36px_-4px_rgba(0,0,0,0.10)]",
+          "shadow-[0_4px_25px_rgba(0,0,0,0.08)]",
           maxWidthClass[maxWidth] ?? "max-w-lg"
         )}
       >
         {/* Header */}
-        <div className="flex items-start justify-between px-6 pt-5 pb-4 border-b border-[var(--border-subtle)] shrink-0">
+        <div className="flex items-start justify-between px-6 pt-5 pb-4 border-b border-[#E8E2D8] bg-[#FAF6EE] rounded-t-3xl shrink-0">
           <div className="space-y-0.5 pr-6">
             <h2
               id={titleId}
-              className="font-editorial text-lg font-bold text-[var(--text-primary)] leading-snug"
+              className="text-lg font-bold text-[#1E2330] leading-snug"
             >
               {title}
             </h2>
             {description && (
-              <p id={descId} className="text-sm text-[var(--text-muted)]">
+              <p id={descId} className="text-xs sm:text-sm text-stone-500 leading-relaxed">
                 {description}
               </p>
             )}
@@ -107,12 +107,12 @@ export function Modal({
             autoFocus
             aria-label="Tutup dialog"
             className={[
-              "h-8 w-8 rounded-md flex items-center justify-center shrink-0 mt-0.5",
-              "text-[var(--text-muted)] border border-transparent",
+              "h-8 w-8 rounded-full flex items-center justify-center shrink-0 mt-0.5",
+              "text-stone-500 border border-transparent",
               "transition-all duration-150",
-              "hover:bg-[var(--surface-overlay)] hover:text-[var(--text-primary)] hover:border-[var(--border-default)]",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]/30",
-              "active:scale-95",
+              "hover:bg-[#FFF0E5] hover:text-[#FA6400] hover:border-[#FED7AA]",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400]/30",
+              "active:scale-95 cursor-pointer",
             ].join(" ")}
           >
             <X className="h-4 w-4" />
@@ -126,7 +126,7 @@ export function Modal({
 
         {/* Footer */}
         {footer && (
-          <div className="flex items-center justify-end gap-3 px-6 pt-4 pb-5 border-t border-[var(--border-subtle)] shrink-0">
+          <div className="flex items-center justify-end gap-3 px-6 pt-4 pb-5 border-t border-[#E8E2D8] bg-[#FAF6EE] rounded-b-3xl shrink-0">
             {footer}
           </div>
         )}

@@ -58,23 +58,23 @@ export default function AdminUsersManagementPage() {
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Header */}
       <div>
-        <span className="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-1">
-          Users & Access Control
+        <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+          Users &amp; Access Control
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--color-primary)]">
-          Manajemen Pengguna & Hak Akses (RBAC)
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+          Manajemen Pengguna &amp; Hak Akses (RBAC)
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+        <p className="text-xs sm:text-sm text-stone-500 mt-1">
           Daftar staf pengelola CMS dengan peran dan izin yang disesuaikan menurut tupoksi masing-masing.
         </p>
       </div>
 
       {/* Role Switcher Showcase Card */}
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-4">
-        <h3 className="font-bold text-base text-[var(--color-primary)]">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-4">
+        <h3 className="font-bold text-base text-[#1E2330]">
           Simulasi Uji Hak Akses Pengguna (Role Quick Switch)
         </h3>
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-stone-500 font-medium">
           Klik tombol di bawah ini untuk langsung merasakan tampilan dan batasan akses sesuai peran yang dipilih:
         </p>
 
@@ -84,34 +84,34 @@ export default function AdminUsersManagementPage() {
             return (
               <div
                 key={item.role}
-                className={`p-4 rounded-xl border transition-all flex flex-col justify-between space-y-3 ${
+                className={`p-5 rounded-2xl border transition-all flex flex-col justify-between space-y-3 ${
                   isCurrent
-                    ? "bg-amber-50/80 border-amber-400 ring-2 ring-amber-400/20"
-                    : "bg-slate-50 border-slate-200"
+                    ? "bg-[#FFF0E5] border-[#FED7AA] shadow-xs ring-2 ring-[#FA6400]/20"
+                    : "bg-[#FAF6EE] border-[#E8E2D8]"
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-sm text-slate-900">
+                    <span className="font-bold text-sm text-[#1E2330]">
                       {item.title}
                     </span>
                     {isCurrent && (
-                      <Badge variant="accent" className="text-[10px]">
+                      <Badge variant="accent" className="text-[10px] font-bold">
                         Aktif
                       </Badge>
                     )}
                   </div>
-                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  <p className="text-xs text-stone-600 mt-1 leading-relaxed font-medium">
                     {item.desc}
                   </p>
                 </div>
 
                 <Button
-                  variant={isCurrent ? "accent" : "outline"}
+                  variant={isCurrent ? "default" : "outline"}
                   size="sm"
                   disabled={isCurrent}
                   onClick={() => handleSimulateRole(item.role as UserRole)}
-                  className="w-full text-xs font-semibold"
+                  className="w-full text-xs font-bold rounded-full"
                 >
                   {isCurrent ? "Sedang Aktif" : "Uji Peran Ini"}
                 </Button>
@@ -122,15 +122,15 @@ export default function AdminUsersManagementPage() {
       </div>
 
       {/* Users Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-          <h3 className="font-bold text-base text-[var(--color-primary)]">
+      <div className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs">
+        <div className="p-5 sm:p-6 border-b border-[#E8E2D8] bg-[#FAF6EE] flex items-center justify-between">
+          <h3 className="font-bold text-base text-[#1E2330]">
             Daftar Akun Pengguna Terdaftar
           </h3>
         </div>
 
         <table className="w-full text-left text-sm">
-          <thead className="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase text-slate-500">
+          <thead className="bg-[#FAF6EE] border-b border-[#E8E2D8] text-xs font-bold uppercase text-stone-500">
             <tr>
               <th className="p-4 sm:px-6">Pengguna</th>
               <th className="p-4 sm:px-6">Email</th>
@@ -138,10 +138,10 @@ export default function AdminUsersManagementPage() {
               <th className="p-4 sm:px-6">Terdaftar Sejak</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 text-slate-700">
+          <tbody className="divide-y divide-[#E8E2D8] text-stone-700 bg-white">
             {users.map((u) => (
-              <tr key={u.id} className="hover:bg-slate-50">
-                <td className="p-4 sm:px-6 font-semibold text-slate-900 flex items-center gap-3">
+              <tr key={u.id} className="hover:bg-[#FFF9F2] transition-colors">
+                <td className="p-4 sm:px-6 font-bold text-[#1E2330] flex items-center gap-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={
@@ -149,19 +149,19 @@ export default function AdminUsersManagementPage() {
                       "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80"
                     }
                     alt={u.name}
-                    className="h-8 w-8 rounded-full object-cover border border-slate-300"
+                    className="h-9 w-9 rounded-full object-cover border-2 border-[#E8E2D8] shadow-2xs"
                   />
                   <span>{u.name}</span>
                 </td>
-                <td className="p-4 sm:px-6 text-xs font-mono text-slate-600">
+                <td className="p-4 sm:px-6 text-xs font-mono text-stone-600">
                   {u.email}
                 </td>
                 <td className="p-4 sm:px-6">
-                  <Badge variant="secondary" className="text-xs uppercase">
+                  <Badge variant="secondary" className="text-xs uppercase font-bold">
                     {u.role.replace("_", " ")}
                   </Badge>
                 </td>
-                <td className="p-4 sm:px-6 text-xs text-slate-500">
+                <td className="p-4 sm:px-6 text-xs text-stone-500 font-medium">
                   {u.createdAt}
                 </td>
               </tr>

@@ -5,13 +5,18 @@ import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Image as ImageIcon, Video, FileText, X, ExternalLink, Sparkles } from "lucide-react";
+import { EmptyState } from "@/components/ui/empty-state";
 
 export default function GalleryPage() {
-  const { media } = useSchoolData();
+  const { media, profile } = useSchoolData();
   const [selectedCategory, setSelectedCategory] = useState<string>("Semua");
   const [activeLightbox, setActiveLightbox] = useState<string | null>(null);
 
-  const categories = ["Semua", "Galeri", "Fasilitas", "Kegiatan"];
+  // Dynamic categories extracted from media library in database
+  const categories = [
+    "Semua",
+    ...Array.from(new Set(media.map((m) => m.category).filter(Boolean))),
+  ];
 
   const filtered =
     selectedCategory === "Semua"
@@ -31,7 +36,7 @@ export default function GalleryPage() {
               <span>Dokumentasi Visual &amp; Multimedia</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
-              Galeri Kegiatan Yazzakka
+              Galeri Kegiatan {profile.name}
             </h1>
             <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
               Merekam dinamika keseharian santri, suasana pembelajaran di kelas, praktikum sains, keasrian kampus, dan kebersamaan ukhuwah.
@@ -117,6 +122,26 @@ export default function GalleryPage() {
                 </div>
               ))}
             </div>
+
+            {filtered.length === 0 && (
+              <EmptyState
+                icon={ImageIcon}
+                title="Tidak Ada Media Ditemukan"
+                description={
+                  selectedCategory !== "Semua"
+                    ? `Belum ada dokumentasi foto atau video dalam kategori "${selectedCategory}".`
+                    : "Belum ada berkas media galeri yang dipublikasikan."
+                }
+                action={
+                  selectedCategory !== "Semua"
+                    ? {
+                        label: "Tampilkan Semua Media",
+                        onClick: () => setSelectedCategory("Semua"),
+                      }
+                    : undefined
+                }
+              />
+            )}
 
           </div>
         </section>

@@ -28,8 +28,8 @@ export function Switch({
         disabled={disabled}
         onClick={() => onCheckedChange(!checked)}
         className={cn(
-          "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-          checked ? "bg-[var(--color-primary)]" : "bg-slate-300"
+          "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#FA6400] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          checked ? "bg-[#FA6400]" : "bg-stone-300"
         )}
       >
         <span
@@ -42,7 +42,7 @@ export function Switch({
       {label && (
         <label
           htmlFor={switchId}
-          className="text-sm font-medium text-slate-700 cursor-pointer select-none"
+          className="text-sm font-semibold text-[#1E2330] cursor-pointer select-none"
         >
           {label}
         </label>
