@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import {
@@ -25,6 +25,7 @@ import {
   Mail,
   PanelLeftClose,
   PanelLeftOpen,
+  LogOut,
 } from "lucide-react";
 
 export interface AdminSidebarProps {
@@ -41,8 +42,15 @@ export function AdminSidebar({
   onToggleCollapse,
 }: AdminSidebarProps) {
   const pathname = usePathname();
-  const { role, currentUser } = useAuth();
+  const router = useRouter();
+  const { role, currentUser, logout } = useAuth();
   const { messages, profile } = useSchoolData();
+
+  const handleLogout = () => {
+    logout();
+    onMobileClose();
+    router.push("/login");
+  };
 
   const newMessagesCount = messages.filter((m) => m.status === "new").length;
 
@@ -397,10 +405,10 @@ export function AdminSidebar({
           })}
         </nav>
 
-        {/* ── Footer Link to Public Landing Page ────────────────────── */}
+        {/* ── Footer Link to Public Landing Page & Logout ─────────── */}
         <div
           className={[
-            "border-t border-[#E8E2D8] bg-white shrink-0",
+            "border-t border-[#E8E2D8] bg-white shrink-0 space-y-2",
             isCollapsed ? "p-2 text-center" : "p-3",
           ].join(" ")}
         >
@@ -415,6 +423,15 @@ export function AdminSidebar({
               >
                 <ExternalLink className="h-4 w-4" />
               </Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                title="Keluar dari CMS (Logout)"
+                aria-label="Keluar dari CMS"
+                className="flex items-center justify-center h-10 w-10 rounded-full bg-rose-50 text-rose-600 hover:bg-rose-500 hover:text-white border border-rose-200 transition-all shadow-2xs cursor-pointer"
+              >
+                <LogOut className="h-4 w-4" />
+              </button>
               {onToggleCollapse && (
                 <button
                   type="button"
@@ -428,19 +445,33 @@ export function AdminSidebar({
               )}
             </div>
           ) : (
-            <Link
-              href="/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={[
-                "flex items-center justify-between px-4 py-2.5 rounded-full text-xs font-extrabold",
-                "bg-[#FFF0E5] text-[#C2410C] hover:bg-[#FA6400] hover:text-white border border-[#FED7AA]",
-                "transition-all duration-150 shadow-2xs group active:scale-95",
-              ].join(" ")}
-            >
-              <span>Buka Situs Publik</span>
-              <ExternalLink className="h-3.5 w-3.5 shrink-0 text-current group-hover:translate-x-0.5 transition-transform" />
-            </Link>
+            <div className="space-y-2">
+              <Link
+                href="/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={[
+                  "flex items-center justify-between px-4 py-2.5 rounded-full text-xs font-extrabold",
+                  "bg-[#FFF0E5] text-[#C2410C] hover:bg-[#FA6400] hover:text-white border border-[#FED7AA]",
+                  "transition-all duration-150 shadow-2xs group active:scale-95",
+                ].join(" ")}
+              >
+                <span>Buka Situs Publik</span>
+                <ExternalLink className="h-3.5 w-3.5 shrink-0 text-current group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className={[
+                  "w-full flex items-center justify-between px-4 py-2 rounded-full text-xs font-bold",
+                  "bg-rose-50 text-rose-700 hover:bg-rose-500 hover:text-white border border-rose-200",
+                  "transition-all duration-150 shadow-2xs group cursor-pointer active:scale-95",
+                ].join(" ")}
+              >
+                <span>Keluar (Logout)</span>
+                <LogOut className="h-3.5 w-3.5 shrink-0 text-rose-500 group-hover:text-white transition-colors" />
+              </button>
+            </div>
           )}
         </div>
       </aside>
