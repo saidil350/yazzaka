@@ -54,7 +54,7 @@ export interface Program {
   id: string;
   slug: string;
   title: string;
-  category: "Akademik" | "Keagamaan / Tahfiz" | "Bahasa Asing" | "Sains & Riset" | "Kepemimpinan & Karakter";
+  category: string;
   shortDesc: string;
   fullDesc: string;
   imageUrl: string;
@@ -68,7 +68,7 @@ export interface Program {
 export interface Facility {
   id: string;
   name: string;
-  category: "Ruang Belajar" | "Laboratorium & Riset" | "Asrama & Hunian" | "Sarana Ibadah & Olahraga" | "Penunjang";
+  category: string;
   description: string;
   capacity?: string;
   imageUrl: string;
@@ -79,10 +79,10 @@ export interface Facility {
 export interface Achievement {
   id: string;
   title: string;
-  category: "Akademik & Sains" | "Tahfiz & Agama" | "Bahasa & Debat" | "Olahraga & Seni" | "Inovasi";
+  category: string;
   studentName: string;
   competitionName: string;
-  level: "Kabupaten / Kota" | "Provinsi" | "Nasional" | "Internasional";
+  level: "Kabupaten / Kota" | "Provinsi" | "Nasional" | "Internasional" | string;
   year: number;
   date: string;
   imageUrl: string;
@@ -96,7 +96,7 @@ export interface Article {
   excerpt: string;
   content: string;
   coverImage: string;
-  category: "Berita Sekolah" | "Wawasan & Opini" | "Prestasi" | "Kegiatan Santri" | "Pengumuman";
+  category: string;
   tags: string[];
   author: string;
   authorRole: string;
@@ -115,7 +115,7 @@ export interface SchoolEvent {
   date: string;
   time: string;
   location: string;
-  category: "Akademik" | "Penerimaan Siswa" | "Seminar & Parenting" | "Kegiatan Santri" | "Wisuda & Pameran";
+  category: string;
   coverImage: string;
   registrationUrl?: string;
   status: "upcoming" | "completed";
@@ -125,9 +125,9 @@ export interface MediaItem {
   id: string;
   fileName: string;
   fileUrl: string;
-  fileType: "image" | "video" | "document";
+  fileType: "image" | "video" | "document" | string;
   fileSize: string;
-  category: "Galeri" | "Fasilitas" | "Kegiatan" | "Dokumen PPDB" | "Banner";
+  category: string;
   altText: string;
   uploadedAt: string;
 }
@@ -136,7 +136,7 @@ export interface OrganizationMember {
   id: string;
   name: string;
   roleTitle: string;
-  department: "Pimpinan Yayasan & Sekolah" | "Tenaga Pendidik (Guru)" | "Kepengasuhan Asrama" | "Staf Administrasi";
+  department: string;
   photoUrl: string;
   bio: string;
   qualifications: string;

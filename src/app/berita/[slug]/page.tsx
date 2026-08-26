@@ -15,9 +15,31 @@ export default function ArticleDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const resolvedParams = use(params);
-  const { articles } = useSchoolData();
+  const { articles, isLoading } = useSchoolData();
 
   const article = articles.find((a) => a.slug === resolvedParams.slug);
+
+  // If loading and article is not resolved from initial data yet, show skeleton loader
+  if (isLoading && !article) {
+    return (
+      <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
+        <Header />
+        <main className="flex-1 py-14">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 animate-pulse">
+            <div className="h-5 w-40 bg-stone-200 rounded-full" />
+            <div className="h-10 w-3/4 bg-stone-300 rounded-2xl" />
+            <div className="aspect-video bg-stone-200 rounded-3xl" />
+            <div className="space-y-3 pt-4">
+              <div className="h-4 bg-stone-200 rounded" />
+              <div className="h-4 bg-stone-200 rounded" />
+              <div className="h-4 w-5/6 bg-stone-200 rounded" />
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!article) {
     notFound();

@@ -28,15 +28,45 @@ export default function ProgramDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const resolvedParams = use(params);
-  const { programs, profile } = useSchoolData();
+  const { programs, profile, isLoading } = useSchoolData();
 
   const program = programs.find((p) => p.slug === resolvedParams.slug);
 
+  // If loading and program is not resolved from initial data yet, show skeleton loader
+  if (isLoading && !program) {
+    return (
+      <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
+        <Header />
+        <main className="flex-1 py-14">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-pulse">
+            <div className="h-5 w-48 bg-stone-200 rounded-full" />
+            <div className="h-10 w-3/4 bg-stone-300 rounded-2xl" />
+            <div className="h-6 w-1/2 bg-stone-200 rounded-xl" />
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6">
+              <div className="lg:col-span-8 space-y-6">
+                <div className="aspect-video bg-stone-200 rounded-3xl" />
+                <div className="h-32 bg-stone-200 rounded-2xl" />
+              </div>
+              <div className="lg:col-span-4">
+                <div className="h-72 bg-stone-200 rounded-3xl" />
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Only trigger 404 if data has finished loading and no matching program found
   if (!program) {
     notFound();
   }
 
   const isWakaf = program.slug === "pesantren-peradaban-60";
+  const otherPrograms = programs
+    .filter((p) => p.slug !== program.slug && p.status === "published")
+    .slice(0, 4);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
@@ -212,6 +242,58 @@ export default function ProgramDetailPage({
             </div>
           </div>
         </section>
+
+        {/* ── Other Programs & Units ──────────────────── */}
+        {otherPrograms.length > 0 && (
+          <section className="py-12 bg-[#FAF6EE] border-b border-[#E8E2D8]">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-[#1E2330]">
+                    Unit Pendidikan &amp; Program Lainnya
+                  </h2>
+                  <p className="text-xs sm:text-sm text-stone-600 font-medium">
+                    Jelajahi jenjang pendidikan dan program pembinaan lainnya di {profile.name}
+                  </p>
+                </div>
+                <Link
+                  href="/program"
+                  className="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-[#FA6400] hover:underline"
+                >
+                  <span>Lihat Semua Unit</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {otherPrograms.map((p) => (
+                  <Link
+                    key={p.id}
+                    href={`/program/${p.slug}`}
+                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-4 space-y-2.5 flex flex-col justify-between group shadow-xs hover:border-[#FA6400]/40 transition-all"
+                  >
+                    <div className="space-y-2">
+                      <span className="text-[10px] font-bold text-[#FA6400] bg-[#FFF0E5] px-2 py-0.5 rounded-full inline-block">
+                        {p.category}
+                      </span>
+                      <h3 className="text-xs font-bold text-[#1E2330] group-hover:text-[#FA6400] transition-colors line-clamp-2">
+                        {p.title}
+                      </h3>
+                      <p className="text-[11px] text-stone-500 line-clamp-2 font-medium">
+                        {p.shortDesc}
+                      </p>
+                    </div>
+
+                    <span className="text-[11px] font-bold text-[#FA6400] inline-flex items-center gap-1 pt-2">
+                      <span>Pelajari</span>
+                      <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
       </main>
       <Footer />

@@ -4,13 +4,9 @@ const DATABASE_URL = "postgresql://neondb_owner:npg_DliS6bq9BNpd@ep-round-surf-a
 const sql = neon(DATABASE_URL);
 
 async function check() {
-  const programs = await sql`SELECT id, slug, title, category FROM programs ORDER BY order_index ASC`;
-  console.log("=== PROGRAMS ===");
-  console.log(JSON.stringify(programs, null, 2));
-
-  const articles = await sql`SELECT id, slug, title, category FROM articles ORDER BY published_date DESC`;
-  console.log("=== ARTICLES ===");
-  console.log(JSON.stringify(articles, null, 2));
+  const [profile] = await sql`SELECT * FROM school_profile LIMIT 1`;
+  console.log("=== PROFILE ===");
+  console.log(JSON.stringify(profile, null, 2));
 }
 
 check().catch(console.error);
