@@ -179,6 +179,10 @@ export interface AdmissionInfo {
   periodName: string;
   academicYear: string;
   isOpen: boolean;
+  startDate?: string;
+  endDate?: string;
+  hideFormWhenClosed?: boolean;
+  closedMessage?: string;
   registrationUrl: string;
   consultationWhatsapp: string;
   timeline: AdmissionTimelineStep[];

@@ -27,6 +27,7 @@ import {
   PanelLeftOpen,
   LogOut,
   UserPlus,
+  Compass,
 } from "lucide-react";
 
 export interface AdminSidebarProps {
@@ -56,7 +57,7 @@ export function AdminSidebar({
   const newMessagesCount = messages.filter((m) => m.status === "new").length;
 
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(() => {
-    if (pathname.includes("/admin/content")) return "content";
+    if (pathname.includes("/admin/content") || pathname.includes("/admin/organization/tim")) return "content";
     if (pathname.includes("/admin/settings") || pathname.includes("/admin/organization")) return "settings";
     return null;
   });
@@ -91,6 +92,7 @@ export function AdminSidebar({
         { label: "Program Pendidikan", href: "/admin/content/program", icon: GraduationCap },
         { label: "Fasilitas Sekolah", href: "/admin/content/fasilitas", icon: Building2 },
         { label: "Prestasi Santri", href: "/admin/content/pengumuman", icon: Trophy },
+        { label: "Pimpinan & Dewan Asatidz", href: "/admin/organization/tim", icon: Users },
         { label: "Testimoni Wali & Alumni", href: "/admin/content/testimoni", icon: Quote },
         { label: "Berita & Artikel", href: "/admin/content/berita", icon: FileText },
       ],
@@ -103,6 +105,7 @@ export function AdminSidebar({
       roles: ["super_admin"],
       items: [
         { label: "Profil & Slogan", href: "/admin/organization/profil", icon: Globe },
+        { label: "Visi & Misi", href: "/admin/organization/visi-misi", icon: Compass },
         { label: "Kontak & Sosmed", href: "/admin/settings/contact", icon: PhoneCall },
         {
           label: "Pesan Masuk",

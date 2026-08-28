@@ -1,10 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { formatRupiah } from "@/lib/utils";
-import { Plus, Trash2, Save, Sparkles, CreditCard, HelpCircle } from "lucide-react";
+import {
+  Plus,
+  Trash2,
+  Save,
+  ArrowUp,
+  ArrowDown,
+  FileText,
+  CheckCircle2,
+  Calendar,
+  Clock,
+  Lock,
+  Unlock,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  Sparkles,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,9 +34,34 @@ export default function AdminAdmissionPage() {
   const [periodName, setPeriodName] = useState(admission.periodName);
   const [academicYear, setAcademicYear] = useState(admission.academicYear);
   const [isOpen, setIsOpen] = useState(admission.isOpen);
-  const [requirementsText, setRequirementsText] = useState(
-    admission.requirements.join("\n")
+  const [startDate, setStartDate] = useState(admission.startDate || "");
+  const [endDate, setEndDate] = useState(admission.endDate || "");
+  const [hideFormWhenClosed, setHideFormWhenClosed] = useState(admission.hideFormWhenClosed ?? true);
+  const [closedMessage, setClosedMessage] = useState(
+    admission.closedMessage ||
+      "Pendaftaran santri baru untuk periode ini sedang ditutup. Untuk informasi jadwal gelombang berikutnya atau konsultasi langsung, silakan hubungi sekretariat PPDB kami melalui WhatsApp."
   );
+  const [requirements, setRequirements] = useState<string[]>(admission.requirements || []);
+  const [newRequirement, setNewRequirement] = useState("");
+
+  // Sync state ketika data admission termuat atau berubah
+  useEffect(() => {
+    if (admission) {
+      setPeriodName(admission.periodName || "");
+      setAcademicYear(admission.academicYear || "");
+      setIsOpen(admission.isOpen ?? true);
+      setStartDate(admission.startDate || "");
+      setEndDate(admission.endDate || "");
+      setHideFormWhenClosed(admission.hideFormWhenClosed ?? true);
+      setClosedMessage(
+        admission.closedMessage ||
+          "Pendaftaran santri baru untuk periode ini sedang ditutup. Untuk informasi jadwal gelombang berikutnya atau konsultasi langsung, silakan hubungi sekretariat PPDB kami melalui WhatsApp."
+      );
+      setRequirements(admission.requirements || []);
+      setFees(admission.fees || []);
+      setFaqs(admission.faqs || []);
+    }
+  }, [admission]);
 
   // Fees state
   const [fees, setFees] = useState(admission.fees);
@@ -34,16 +75,87 @@ export default function AdminAdmissionPage() {
   const [newFaqQ, setNewFaqQ] = useState("");
   const [newFaqA, setNewFaqA] = useState("");
 
-  const handleSaveGeneral = (e: React.FormEvent) => {
-    e.preventDefault();
-    const reqArray = requirementsText.split("\n").map((r) => r.trim()).filter(Boolean);
-    updateAdmission({
-      periodName,
-      academicYear,
-      isOpen,
-      requirements: reqArray,
+  const [isSavingGeneral, setIsSavingGeneral] = useState(false);
+
+  // Handler Persyaratan Berkas Poin per Poin
+  const handleAddRequirement = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!newRequirement.trim()) {
+      toast("Teks butir persyaratan tidak boleh kosong.", "error");
+      return;
+    }
+    const updated = [...requirements, newRequirement.trim()];
+    setRequirements(updated);
+    setNewRequirement("");
+    try {
+      await updateAdmission({ requirements: updated });
+      toast("Butir persyaratan berhasil ditambahkan dan disimpan ke database!", "success");
+    } catch (err) {
+      console.error("Gagal menyimpan butir persyaratan:", err);
+      toast("Gagal menyimpan butir persyaratan ke database.", "error");
+    }
+  };
+
+  const handleUpdateRequirement = (index: number, value: string) => {
+    setRequirements((prev) => {
+      const updated = [...prev];
+      updated[index] = value;
+      return updated;
     });
-    toast("Pengaturan umum PPDB berhasil disimpan!", "success");
+  };
+
+  const handleDeleteRequirement = async (index: number) => {
+    const updated = requirements.filter((_, i) => i !== index);
+    setRequirements(updated);
+    try {
+      await updateAdmission({ requirements: updated });
+      toast("Butir persyaratan berhasil dihapus dari database.", "info");
+    } catch (err) {
+      console.error("Gagal menghapus butir persyaratan:", err);
+      toast("Gagal menghapus butir persyaratan di database.", "error");
+    }
+  };
+
+  const handleMoveRequirement = async (index: number, direction: "up" | "down") => {
+    const updated = [...requirements];
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= updated.length) return;
+    const temp = updated[index];
+    updated[index] = updated[targetIndex];
+    updated[targetIndex] = temp;
+    setRequirements(updated);
+    try {
+      await updateAdmission({ requirements: updated });
+      toast("Urutan persyaratan berhasil diperbarui di database!", "info");
+    } catch (err) {
+      console.error("Gagal mengubah urutan:", err);
+      toast("Gagal menyimpan perubahan urutan di database.", "error");
+    }
+  };
+
+  const handleSaveGeneral = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSavingGeneral(true);
+    try {
+      const cleanRequirements = requirements.map((r) => r.trim()).filter(Boolean);
+      await updateAdmission({
+        periodName,
+        academicYear,
+        isOpen,
+        startDate,
+        endDate,
+        hideFormWhenClosed,
+        closedMessage,
+        requirements: cleanRequirements,
+      });
+      setRequirements(cleanRequirements);
+      toast("Pengaturan pendaftaran & butir persyaratan berhasil disimpan ke database!", "success");
+    } catch (err) {
+      console.error("Gagal menyimpan informasi umum PPDB:", err);
+      toast("Gagal menyimpan ke database. Silakan coba lagi.", "error");
+    } finally {
+      setIsSavingGeneral(false);
+    }
   };
 
   const handleAddFee = (e: React.FormEvent) => {
@@ -131,30 +243,288 @@ export default function AdminAdmissionPage() {
         {/* Tab 1: General & Requirements */}
         <TabsContent value="general">
           <form onSubmit={handleSaveGeneral} className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input
-                label="Nama Periode Pendaftaran"
-                value={periodName}
-                onChange={(e) => setPeriodName(e.target.value)}
-              />
-              <Input
-                label="Tahun Ajaran"
-                value={academicYear}
-                onChange={(e) => setAcademicYear(e.target.value)}
-              />
+            
+            {/* Status Pendaftaran Banner & Toggle */}
+            <div className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+              isOpen 
+                ? "bg-emerald-50/70 border-emerald-200" 
+                : "bg-stone-100/80 border-stone-300"
+            }`}>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex items-start sm:items-center gap-3">
+                  <div className={`p-2.5 rounded-xl text-white shrink-0 ${
+                    isOpen ? "bg-emerald-600 shadow-xs" : "bg-stone-500"
+                  }`}>
+                    {isOpen ? <Unlock className="h-5 w-5" /> : <Lock className="h-5 w-5" />}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-extrabold text-sm sm:text-base text-[#1E2330]">
+                        Status Pendaftaran: {isOpen ? "Sedang Dibuka" : "Sedang Ditutup"}
+                      </h3>
+                      <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
+                        isOpen 
+                          ? "bg-emerald-100 text-emerald-800 border border-emerald-300" 
+                          : "bg-stone-200 text-stone-700 border border-stone-300"
+                      }`}>
+                        {isOpen ? "Aktif" : "Tertutup"}
+                      </span>
+                    </div>
+                    <p className="text-xs text-stone-600 mt-0.5">
+                      {isOpen 
+                        ? "Pendaftaran dapat diakses oleh publik dan formulir konsultasi aktif menerima pengajuan." 
+                        : "Pendaftaran saat ini ditutup. Fitur pendaftaran akan menyesuaikan opsi visibilitas di bawah."}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(!isOpen)}
+                  className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 cursor-pointer transition-all border shrink-0 ${
+                    isOpen
+                      ? "bg-rose-50 hover:bg-rose-100 text-rose-700 border-rose-200"
+                      : "bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-700 shadow-xs"
+                  }`}
+                >
+                  {isOpen ? (
+                    <>
+                      <Lock className="h-4 w-4" />
+                      Tutup Pendaftaran
+                    </>
+                  ) : (
+                    <>
+                      <Unlock className="h-4 w-4" />
+                      Buka Pendaftaran
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
 
-            <Textarea
-              label="Daftar Persyaratan Berkas (Satu per baris)"
-              rows={6}
-              value={requirementsText}
-              onChange={(e) => setRequirementsText(e.target.value)}
-            />
+            {/* Informasi Periode & Tanggal Pendaftaran */}
+            <div className="space-y-4 pt-1">
+              <div className="flex items-center gap-2 pb-1 border-b border-[#E8E2D8]">
+                <Calendar className="h-4 w-4 text-[#FA6400]" />
+                <h3 className="font-bold text-sm text-[#1E2330] uppercase tracking-wider text-xs">
+                  Jadwal &amp; Identitas Gelombang PPDB
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Input
+                  label="Nama Periode Pendaftaran"
+                  value={periodName}
+                  onChange={(e) => setPeriodName(e.target.value)}
+                  placeholder="Contoh: Gelombang 1 (Reguler & Beasiswa)"
+                />
+                <Input
+                  label="Tahun Ajaran"
+                  value={academicYear}
+                  onChange={(e) => setAcademicYear(e.target.value)}
+                  placeholder="Contoh: 2026/2027"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#1E2330] flex items-center gap-1.5">
+                    <Clock className="h-3.5 w-3.5 text-stone-500" />
+                    Tanggal Pembukaan Pendaftaran
+                  </label>
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="w-full h-11 rounded-xl border border-[#E8E2D8] px-3.5 text-xs sm:text-sm bg-white text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]"
+                  />
+                  <p className="text-[11px] text-stone-500">
+                    Tanggal resmi pendaftaran online dan penerimaan berkas dimulai.
+                  </p>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#1E2330] flex items-center gap-1.5">
+                    <Clock className="h-3.5 w-3.5 text-stone-500" />
+                    Tanggal Penutupan Pendaftaran
+                  </label>
+                  <input
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="w-full h-11 rounded-xl border border-[#E8E2D8] px-3.5 text-xs sm:text-sm bg-white text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]"
+                  />
+                  <p className="text-[11px] text-stone-500">
+                    Batas akhir pendaftaran online dan penyerahan berkas calon santri.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Pengaturan Visibilitas Saat Pendaftaran Ditutup */}
+            <div className="space-y-4 pt-4 border-t border-[#E8E2D8]">
+              <div className="flex items-center gap-2 pb-1">
+                <EyeOff className="h-4 w-4 text-stone-600" />
+                <h3 className="font-bold text-sm text-[#1E2330] uppercase tracking-wider text-xs">
+                  Pengaturan Visibilitas Saat Pendaftaran Ditutup
+                </h3>
+              </div>
+
+              {/* Toggle Sembunyikan Formulir */}
+              <div className="p-4 rounded-2xl bg-[#FAF6EE] border border-[#E8E2D8] flex items-start justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-xs sm:text-sm text-[#1E2330]">
+                      Sembunyikan Formulir Pendaftaran / Konsultasi Saat Ditutup
+                    </span>
+                    {hideFormWhenClosed && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#FFF0E5] text-[#FA6400] border border-[#FED7AA]">
+                        Auto-Hide Aktif
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-stone-600">
+                    Jika diaktifkan dan pendaftaran ditutup, formulir pengajuan di halaman publik akan disembunyikan dan digantikan dengan kartu pemberitahuan pendaftaran ditutup.
+                  </p>
+                </div>
+
+                <label className="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
+                  <input
+                    type="checkbox"
+                    checked={hideFormWhenClosed}
+                    onChange={(e) => setHideFormWhenClosed(e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-stone-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#FA6400]"></div>
+                </label>
+              </div>
+
+              {/* Pesan Kustom Pengumuman Penutupan */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#1E2330] block">
+                  Pesan Pengumuman Ketika Pendaftaran Ditutup
+                </label>
+                <Textarea
+                  rows={2}
+                  value={closedMessage}
+                  onChange={(e) => setClosedMessage(e.target.value)}
+                  placeholder="Tuliskan pesan penjelasan yang akan tampil kepada wali santri saat pendaftaran ditutup..."
+                />
+                <p className="text-[11px] text-stone-500">
+                  Pesan ini akan ditampilkan di halaman informasi PPDB untuk mengarahkan wali santri ke sekretariat atau gelombang pendaftaran berikutnya.
+                </p>
+              </div>
+            </div>
+
+            {/* Daftar Persyaratan Berkas Poin per Poin */}
+            <div className="space-y-4 pt-4 border-t border-[#E8E2D8]">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-wider text-[#1E2330] block">
+                    Daftar Persyaratan Berkas (Poin per Poin)
+                  </label>
+                  <p className="text-xs text-stone-500 mt-0.5">
+                    Kelola butir dokumen administrasi pendaftaran secara terpisah. Setiap poin dapat diedit langsung, diurutkan, atau dihapus.
+                  </p>
+                </div>
+                <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#FAF6EE] border border-[#E8E2D8] text-stone-700 w-fit">
+                  {requirements.length} Butir Dokumen
+                </span>
+              </div>
+
+              {/* List Poin */}
+              <div className="space-y-2.5">
+                {requirements.length === 0 ? (
+                  <div className="p-6 text-center rounded-2xl bg-[#FAF6EE] border border-dashed border-[#E8E2D8] text-stone-500 text-xs sm:text-sm">
+                    Belum ada butir persyaratan berkas. Tulis butir persyaratan di bawah lalu klik tombol Tambah.
+                  </div>
+                ) : (
+                  requirements.map((req, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-2xl bg-[#FAF6EE] border border-[#E8E2D8] group hover:border-[#FA6400]/40 transition-colors"
+                    >
+                      <span className="h-7 w-7 rounded-xl bg-[#FA6400] text-white text-xs font-bold flex items-center justify-center shrink-0 shadow-2xs">
+                        {idx + 1}
+                      </span>
+                      <input
+                        type="text"
+                        value={req}
+                        onChange={(e) => handleUpdateRequirement(idx, e.target.value)}
+                        className="flex-1 bg-white border border-[#E8E2D8] rounded-xl px-3.5 py-2 text-xs sm:text-sm text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400] focus:border-transparent"
+                        placeholder={`Tulis butir persyaratan ${idx + 1}...`}
+                      />
+                      <div className="flex items-center gap-1 shrink-0">
+                        <button
+                          type="button"
+                          disabled={idx === 0}
+                          onClick={() => handleMoveRequirement(idx, "up")}
+                          className="p-1.5 text-stone-400 hover:text-[#1E2330] hover:bg-stone-200/60 rounded-lg disabled:opacity-25 disabled:hover:bg-transparent disabled:hover:text-stone-400 transition-colors cursor-pointer disabled:cursor-not-allowed"
+                          title="Pindah ke Atas"
+                        >
+                          <ArrowUp className="h-4 w-4" />
+                        </button>
+                        <button
+                          type="button"
+                          disabled={idx === requirements.length - 1}
+                          onClick={() => handleMoveRequirement(idx, "down")}
+                          className="p-1.5 text-stone-400 hover:text-[#1E2330] hover:bg-stone-200/60 rounded-lg disabled:opacity-25 disabled:hover:bg-transparent disabled:hover:text-stone-400 transition-colors cursor-pointer disabled:cursor-not-allowed"
+                          title="Pindah ke Bawah"
+                        >
+                          <ArrowDown className="h-4 w-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteRequirement(idx)}
+                          className="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                          title="Hapus Butir Persyaratan"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* Form Input Tambah Poin Baru */}
+              <div className="flex gap-2 sm:gap-3 pt-2">
+                <input
+                  type="text"
+                  placeholder="Ketik butir persyaratan baru (misal: Pasfoto 3x4 latar biru 4 lembar)..."
+                  value={newRequirement}
+                  onChange={(e) => setNewRequirement(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleAddRequirement();
+                    }
+                  }}
+                  className="flex-1 h-11 rounded-xl border border-[#E8E2D8] px-4 text-xs sm:text-sm bg-white text-[#1E2330] placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#FA6400]"
+                />
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="default"
+                  onClick={handleAddRequirement}
+                  className="shrink-0 font-bold h-11 px-4 sm:px-5 border border-[#E8E2D8] hover:bg-[#FAF6EE]"
+                >
+                  <Plus className="h-4 w-4 mr-1 text-[#FA6400]" />
+                  Tambah Poin
+                </Button>
+              </div>
+            </div>
 
             <div className="flex justify-end pt-4 border-t border-[#E8E2D8]">
-              <Button type="submit" variant="default" size="default" className="font-bold h-11 px-6 shadow-sm">
-                <Save className="h-4 w-4" />
-                Simpan Informasi PPDB
+              <Button
+                type="submit"
+                variant="default"
+                size="default"
+                disabled={isSavingGeneral}
+                className="font-bold h-11 px-6 shadow-sm disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed"
+              >
+                <Save className={`h-4 w-4 ${isSavingGeneral ? "animate-spin" : ""}`} />
+                {isSavingGeneral ? "Menyimpan ke Database..." : "Simpan Informasi PPDB"}
               </Button>
             </div>
           </form>

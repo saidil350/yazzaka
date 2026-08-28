@@ -28,7 +28,7 @@ export default function ProgramDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const resolvedParams = use(params);
-  const { programs, profile, isLoading } = useSchoolData();
+  const { programs, profile, admission, isLoading } = useSchoolData();
 
   const program = programs.find((p) => p.slug === resolvedParams.slug);
 
@@ -208,7 +208,13 @@ export default function ProgramDetailPage({
                   <div className="space-y-2 pt-2">
                     <Link href={isWakaf ? "/kontak" : "/pendaftaran"} className="block">
                       <Button className="w-full justify-center font-bold text-xs h-10 shadow-xs">
-                        <span>{isWakaf ? "Hubungi Sekretariat Wakaf" : "Daftar Santri Baru"}</span>
+                        <span>
+                          {isWakaf
+                            ? "Hubungi Sekretariat Wakaf"
+                            : admission.isOpen
+                            ? "Daftar Santri Baru"
+                            : "Informasi PPDB (Ditutup)"}
+                        </span>
                         <ArrowRight className="h-3.5 w-3.5 ml-1" />
                       </Button>
                     </Link>

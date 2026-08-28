@@ -80,12 +80,56 @@ function MemberCard({ member }: MemberCardProps) {
   );
 }
 
-export default function AboutPage() {
-  const { profile, organization } = useSchoolData();
+const PRESET_DEPARTMENTS_ORDER = [
+  "Taman Pendidikan Al-Qur'an (TPA)",
+  "TKIT Yazzakka",
+  "PKBM Yazzakka",
+  "Sekolah Anak Shalih Yazzakka",
+  "Darul Quran Yazzakka",
+  "Pimpinan Yayasan",
+];
 
-  const sortedMembers = [...organization].sort(
-    (a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0)
+export default function AboutPage() {
+  const { profile, organization, sections } = useSchoolData();
+  const [activeDept, setActiveDept] = React.useState("Semua");
+
+  const teamSection = sections.find(
+    (s) => s.key === "organization" || s.id === "sec-team"
   );
+  const sectionTitle = teamSection?.title || "Pimpinan & Dewan Asatidz";
+  const sectionSubtitle =
+    teamSection?.subtitle ||
+    "Pendidik berdedikasi tinggi yang memadukan kedalaman tradisi keilmuan Islam dan kompetensi sains modern.";
+
+  const sortedMembers = [...organization].sort((a, b) => {
+    if (activeDept === "Semua") {
+      const idxA = PRESET_DEPARTMENTS_ORDER.indexOf(a.department);
+      const idxB = PRESET_DEPARTMENTS_ORDER.indexOf(b.department);
+      if (idxA !== -1 && idxB !== -1 && idxA !== idxB) {
+        return idxA - idxB;
+      }
+    }
+    return (a.orderIndex ?? 0) - (b.orderIndex ?? 0);
+  });
+
+  const availableDepts = [
+    "Semua",
+    ...PRESET_DEPARTMENTS_ORDER.filter((dept) =>
+      organization.some((m) => m.department === dept)
+    ),
+    ...Array.from(
+      new Set(
+        organization
+          .map((m) => m.department)
+          .filter((d) => d && !PRESET_DEPARTMENTS_ORDER.includes(d))
+      )
+    ),
+  ];
+
+  const displayedMembers =
+    activeDept === "Semua"
+      ? sortedMembers
+      : sortedMembers.filter((m) => m.department === activeDept);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
@@ -241,19 +285,40 @@ export default function AboutPage() {
         <section className="py-12 lg:py-14 bg-[#FAF6EE]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
-            <div className="max-w-3xl space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#DCFCE7] text-[#15803D] font-bold text-xs border border-[#BBF7D0]">
-                Struktur &amp; Keteladanan
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="max-w-3xl space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#DCFCE7] text-[#15803D] font-bold text-xs border border-[#BBF7D0]">
+                  Struktur &amp; Keteladanan
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+                  {sectionTitle}
+                </h2>
+                <p className="text-xs sm:text-sm text-stone-600">
+                  {sectionSubtitle}
+                </p>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
-                Pimpinan &amp; Dewan Asatidz
-              </h2>
-              <p className="text-xs sm:text-sm text-stone-600">
-                Pendidik berdedikasi tinggi yang memadukan kedalaman tradisi keilmuan Islam dan kompetensi sains modern.
-              </p>
+
+              {/* Department Filter Tabs */}
+              {availableDepts.length > 2 && (
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
+                  {availableDepts.map((dept) => (
+                    <button
+                      key={dept}
+                      onClick={() => setActiveDept(dept)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                        activeDept === dept
+                          ? "bg-[#FA6400] text-white shadow-2xs"
+                          : "bg-white text-stone-600 border border-[#E8E2D8] hover:bg-[#FFF0E5]"
+                      }`}
+                    >
+                      {dept}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {sortedMembers.length === 0 ? (
+            {displayedMembers.length === 0 ? (
               <EmptyState>
                 <EmptyState.Icon icon={Users} />
                 <EmptyState.Title>Struktur Pengajar Sedang Diperbarui</EmptyState.Title>
@@ -261,7 +326,7 @@ export default function AboutPage() {
               </EmptyState>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                {sortedMembers.map((lead) => (
+                {displayedMembers.map((lead) => (
                   <MemberCard key={lead.id} member={lead} />
                 ))}
               </div>

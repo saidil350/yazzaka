@@ -202,17 +202,35 @@ export function mapTestimonial(r: Record<string, unknown>) {
   };
 }
 
+function ensureArray<T>(val: unknown): T[] {
+  if (!val) return [];
+  if (Array.isArray(val)) return val as T[];
+  if (typeof val === "string") {
+    try {
+      const parsed = JSON.parse(val);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
 export function mapAdmission(r: Record<string, unknown>) {
   return {
-    periodName: r.period_name,
-    academicYear: r.academic_year,
-    isOpen: r.is_open,
-    registrationUrl: r.registration_url,
-    consultationWhatsapp: r.consultation_whatsapp,
-    timeline: r.timeline,
-    requirements: r.requirements,
-    fees: r.fees,
-    faqs: r.faqs,
+    periodName: (r.period_name as string) || "",
+    academicYear: (r.academic_year as string) || "",
+    isOpen: Boolean(r.is_open),
+    startDate: (r.start_date as string) || "",
+    endDate: (r.end_date as string) || "",
+    hideFormWhenClosed: r.hide_form_when_closed !== undefined ? Boolean(r.hide_form_when_closed) : true,
+    closedMessage: (r.closed_message as string) || "",
+    registrationUrl: (r.registration_url as string) || "",
+    consultationWhatsapp: (r.consultation_whatsapp as string) || "",
+    timeline: ensureArray(r.timeline),
+    requirements: ensureArray<string>(r.requirements),
+    fees: ensureArray(r.fees),
+    faqs: ensureArray(r.faqs),
   };
 }
 
