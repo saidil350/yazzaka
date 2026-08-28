@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, use, useState, useEffect, useCallback } from "react";
 import {
   SchoolProfile,
   Program,
@@ -441,7 +441,7 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
 }
 
 export function useSchoolData() {
-  const context = useContext(SchoolDataContext);
+  const context = use(SchoolDataContext);
   if (!context) {
     throw new Error("useSchoolData must be used within a SchoolDataProvider");
   }

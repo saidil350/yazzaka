@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Modal } from "@/components/ui/modal";
 import { EmptyState } from "@/components/ui/empty-state";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 export default function AdminTestimonialsPage() {
   const { testimonials, addTestimonial, updateTestimonial, deleteTestimonial } = useSchoolData();
@@ -248,10 +249,12 @@ export default function AdminTestimonialsPage() {
             />
           </div>
 
-          <Input
-            label="URL Foto Profil"
+          <ImageUpload
+            label="Foto Profil Pemberi Testimoni"
             value={photoUrl}
-            onChange={(e) => setPhotoUrl(e.target.value)}
+            onChange={(val) => setPhotoUrl(val)}
+            placeholder="https://images.unsplash.com/... atau unggah gambar"
+            helperText="Unggah foto wajah/profil (drag & drop) atau gunakan URL gambar."
           />
 
           <Textarea

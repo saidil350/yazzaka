@@ -1,4 +1,5 @@
 import * as React from "react";
+import { use } from "react";
 import { cn } from "@/lib/utils";
 
 interface TabsContextType {
@@ -67,7 +68,7 @@ export function TabsTrigger({
   children: React.ReactNode;
   className?: string;
 }) {
-  const context = React.useContext(TabsContext);
+  const context = use(TabsContext);
   if (!context) throw new Error("TabsTrigger must be used within Tabs");
 
   const isActive = context.activeTab === value;
@@ -98,7 +99,7 @@ export function TabsContent({
   children: React.ReactNode;
   className?: string;
 }) {
-  const context = React.useContext(TabsContext);
+  const context = use(TabsContext);
   if (!context) throw new Error("TabsContent must be used within Tabs");
 
   if (context.activeTab !== value) return null;

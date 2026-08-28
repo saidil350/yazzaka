@@ -28,6 +28,7 @@ import { Select } from "@/components/ui/select";
 import { Modal } from "@/components/ui/modal";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 export default function AdminProgramsCrudPage() {
   const { programs, addProgram, updateProgram, deleteProgram } = useSchoolData();
@@ -372,7 +373,7 @@ export default function AdminProgramsCrudPage() {
             </div>
           </div>
 
-          {/* Section 2: Banner & Media */}
+          {/* Section 2: Media Banner */}
           <div className="bg-[#FCFBF7] rounded-2xl p-4 sm:p-5 border border-[#E8E2D8] space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-[#E8E2D8]">
               <ImageIcon className="w-4 h-4 text-[#FA6400]" />
@@ -381,37 +382,13 @@ export default function AdminProgramsCrudPage() {
               </h3>
             </div>
 
-            <div className="space-y-3">
-              <Input
-                label="URL Foto Banner Program"
-                leftIcon={<Globe className="w-4 h-4" />}
-                placeholder="https://images.unsplash.com/..."
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                helperText="Masukkan tautan gambar beresolusi tajam (Unsplash / CDN gambar)"
-              />
-
-              {imageUrl && (
-                <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white border border-[#E8E2D8]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={imageUrl}
-                    alt="Preview Banner"
-                    className="h-14 w-24 object-cover rounded-lg border border-[#E8E2D8] bg-stone-100 shrink-0"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src =
-                        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80";
-                    }}
-                  />
-                  <div className="min-w-0 flex-1">
-                    <span className="text-[11px] font-bold text-stone-700 flex items-center gap-1">
-                      <Check className="w-3 h-3 text-emerald-500" /> Pratinjau Gambar Banner
-                    </span>
-                    <p className="text-[11px] text-stone-500 truncate mt-0.5">{imageUrl}</p>
-                  </div>
-                </div>
-              )}
-            </div>
+            <ImageUpload
+              label="Foto Banner Program"
+              value={imageUrl}
+              onChange={(val) => setImageUrl(val)}
+              placeholder="https://images.unsplash.com/... atau unggah gambar"
+              helperText="Unggah berkas gambar (drag & drop) atau gunakan tautan URL gambar resolusi tinggi."
+            />
           </div>
 
           {/* Section 3: Deskripsi Program */}

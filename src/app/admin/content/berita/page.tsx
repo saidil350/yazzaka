@@ -22,6 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Modal } from "@/components/ui/modal";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 export default function AdminNewsPage() {
   const { articles, addArticle, updateArticle, deleteArticle } = useSchoolData();
@@ -323,12 +324,13 @@ export default function AdminNewsPage() {
             </div>
           </div>
 
-          <Input
-            label="URL Foto Sampul (Cover Image)"
+          <ImageUpload
+            label="Foto Sampul (Cover Image)"
             required
-            placeholder="https://images.unsplash.com/..."
             value={coverImage}
-            onChange={(e) => setCoverImage(e.target.value)}
+            onChange={(val) => setCoverImage(val)}
+            placeholder="https://images.unsplash.com/... atau unggah gambar"
+            helperText="Unggah gambar atau masukkan URL gambar sampul beresolusi tinggi."
           />
 
           <Textarea

@@ -4,8 +4,81 @@ import React from "react";
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
-import { Compass, Sparkles, Building2, Users, Award, BookOpen } from "lucide-react";
+import { Compass, Sparkles, Users } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
+import { OrganizationMember } from "@/lib/types";
+
+// ── Sub-component: Philosophy Value Card (Panca Jiwa) ────────────────────────
+interface ValueCardProps {
+  index: number;
+  title: string;
+  description: string;
+}
+
+const VALUE_THEMES = [
+  { bg: "bg-[#FFF0E5]", border: "border-[#FED7AA]", text: "text-[#C2410C]" },
+  { bg: "bg-[#E0F2FE]", border: "border-[#BAE6FD]", text: "text-[#0369A1]" },
+  { bg: "bg-[#EDE9FE]", border: "border-[#DDD6FE]", text: "text-[#6D28D9]" },
+  { bg: "bg-[#DCFCE7]", border: "border-[#BBF7D0]", text: "text-[#15803D]" },
+  { bg: "bg-[#FEF9C3]", border: "border-[#FEF08A]", text: "text-[#A16207]" },
+] as const;
+
+function PhilosophyCard({ index, title, description }: ValueCardProps) {
+  const theme = VALUE_THEMES[index % VALUE_THEMES.length];
+
+  return (
+    <div
+      className={`${theme.bg} ${theme.border} border-2 p-4 rounded-2xl space-y-1.5 shadow-xs`}
+    >
+      <span className={`text-[10px] font-extrabold uppercase ${theme.text} block`}>
+        Jiwa 0{index + 1}
+      </span>
+      <h3 className="text-sm font-bold text-[#1E2330]">{title}</h3>
+      <p className="text-xs text-stone-600 leading-relaxed font-medium">
+        {description}
+      </p>
+    </div>
+  );
+}
+
+// ── Sub-component: Organization / Educator Member Card ────────────────────────
+interface MemberCardProps {
+  member: OrganizationMember;
+}
+
+function MemberCard({ member }: MemberCardProps) {
+  return (
+    <div className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between shadow-xs hover:border-[#FA6400]/40 transition-all">
+      <div className="h-52 relative overflow-hidden bg-stone-200">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={member.photoUrl}
+          alt={member.name}
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <div className="p-4 space-y-1">
+        <span className="text-[10px] font-bold text-[#FA6400] uppercase tracking-wider block">
+          {member.department}
+        </span>
+        <h3 className="text-sm font-bold text-[#1E2330] leading-snug">
+          {member.name}
+        </h3>
+        <p className="text-xs text-stone-500 font-semibold">
+          {member.roleTitle}
+        </p>
+        {member.qualifications && (
+          <p className="text-[10px] text-stone-400 italic">
+            {member.qualifications}
+          </p>
+        )}
+        <p className="text-[11px] text-stone-600 pt-2 border-t border-stone-100 line-clamp-2 font-medium">
+          {member.bio}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default function AboutPage() {
   const { profile, organization } = useSchoolData();
@@ -19,7 +92,7 @@ export default function AboutPage() {
       <Header />
       <main className="flex-1">
 
-        {/* ── Headspace Warm Page Hero Banner ─────────── */}
+        {/* ── Page Hero Banner ─────────────────────────── */}
         <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EDE9FE] border border-[#DDD6FE] text-[#6D28D9] font-bold text-xs mb-3 shadow-xs">
@@ -151,32 +224,14 @@ export default function AboutPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              {profile.values.map((val, idx) => {
-                const colors = [
-                  { bg: "bg-[#FFF0E5]", border: "border-[#FED7AA]", text: "text-[#C2410C]" },
-                  { bg: "bg-[#E0F2FE]", border: "border-[#BAE6FD]", text: "text-[#0369A1]" },
-                  { bg: "bg-[#EDE9FE]", border: "border-[#DDD6FE]", text: "text-[#6D28D9]" },
-                  { bg: "bg-[#DCFCE7]", border: "border-[#BBF7D0]", text: "text-[#15803D]" },
-                  { bg: "bg-[#FEF9C3]", border: "border-[#FEF08A]", text: "text-[#A16207]" },
-                ][idx % 5];
-
-                return (
-                  <div
-                    key={idx}
-                    className={`${colors.bg} ${colors.border} border-2 p-4 rounded-2xl space-y-1.5 shadow-xs`}
-                  >
-                    <span className={`text-[10px] font-extrabold uppercase ${colors.text} block`}>
-                      Jiwa 0{idx + 1}
-                    </span>
-                    <h3 className="text-sm font-bold text-[#1E2330]">
-                      {val.title}
-                    </h3>
-                    <p className="text-xs text-stone-600 leading-relaxed font-medium">
-                      {val.description}
-                    </p>
-                  </div>
-                );
-              })}
+              {profile.values.map((val, idx) => (
+                <PhilosophyCard
+                  key={idx}
+                  index={idx}
+                  title={val.title}
+                  description={val.description}
+                />
+              ))}
             </div>
 
           </div>
@@ -199,46 +254,15 @@ export default function AboutPage() {
             </div>
 
             {sortedMembers.length === 0 ? (
-              <EmptyState
-                icon={Users}
-                title="Struktur Pengajar Sedang Diperbarui"
-                description="Profil pimpinan dan dewan asatidz akan segera dimuat dari sistem."
-              />
+              <EmptyState>
+                <EmptyState.Icon icon={Users} />
+                <EmptyState.Title>Struktur Pengajar Sedang Diperbarui</EmptyState.Title>
+                <EmptyState.Description>Profil pimpinan dan dewan asatidz akan segera dimuat dari sistem.</EmptyState.Description>
+              </EmptyState>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {sortedMembers.map((lead) => (
-                  <div
-                    key={lead.id}
-                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between shadow-xs hover:border-[#FA6400]/40 transition-all"
-                  >
-                    <div className="h-52 relative overflow-hidden bg-stone-200">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={lead.photoUrl}
-                        alt={lead.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="p-4 space-y-1">
-                      <span className="text-[10px] font-bold text-[#FA6400] uppercase tracking-wider block">
-                        {lead.department}
-                      </span>
-                      <h3 className="text-sm font-bold text-[#1E2330] leading-snug">
-                        {lead.name}
-                      </h3>
-                      <p className="text-xs text-stone-500 font-semibold">
-                        {lead.roleTitle}
-                      </p>
-                      {lead.qualifications && (
-                        <p className="text-[10px] text-stone-400 italic">
-                          {lead.qualifications}
-                        </p>
-                      )}
-                      <p className="text-[11px] text-stone-600 pt-2 border-t border-stone-100 line-clamp-2 font-medium">
-                        {lead.bio}
-                      </p>
-                    </div>
-                  </div>
+                  <MemberCard key={lead.id} member={lead} />
                 ))}
               </div>
             )}

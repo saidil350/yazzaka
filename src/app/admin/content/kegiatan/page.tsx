@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Modal } from "@/components/ui/modal";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 export default function AdminEventsPage() {
   const { events, addEvent, updateEvent, deleteEvent } = useSchoolData();
@@ -299,10 +300,12 @@ export default function AdminEventsPage() {
             onChange={(e) => setLocation(e.target.value)}
           />
 
-          <Input
-            label="URL Foto Banner"
+          <ImageUpload
+            label="Foto Banner Acara / Kegiatan"
             value={coverImage}
-            onChange={(e) => setCoverImage(e.target.value)}
+            onChange={(val) => setCoverImage(val)}
+            placeholder="https://images.unsplash.com/... atau unggah gambar"
+            helperText="Unggah foto flyer/kegiatan (drag & drop) atau tautkan URL gambar."
           />
 
           <Input

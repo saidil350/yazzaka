@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Modal } from "@/components/ui/modal";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 export default function AdminAchievementsPage() {
   const { achievements, addAchievement, updateAchievement, deleteAchievement } = useSchoolData();
@@ -313,19 +314,20 @@ export default function AdminAchievementsPage() {
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Input
-              label="Tanggal Perolehan"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-            <Input
-              label="URL Foto Dokumentasi"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-            />
-          </div>
+          <Input
+            label="Tanggal Perolehan"
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+
+          <ImageUpload
+            label="Foto Dokumentasi / Piagam Prestasi"
+            value={imageUrl}
+            onChange={(val) => setImageUrl(val)}
+            placeholder="https://images.unsplash.com/... atau unggah gambar"
+            helperText="Unggah foto santri/piala (drag & drop) atau gunakan tautan URL gambar."
+          />
 
           <Textarea
             label="Deskripsi Capaian / Ulasan Singkat"

@@ -6,6 +6,7 @@ import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { ImageUpload } from "@/components/ui/image-upload";
 import { Save, Building2, User } from "lucide-react";
 
 export default function AdminOrgProfilePage() {
@@ -157,10 +158,12 @@ export default function AdminOrgProfilePage() {
             />
           </div>
 
-          <Input
-            label="URL Foto Pimpinan"
+          <ImageUpload
+            label="Foto Pimpinan / Kepala Sekolah"
             value={principalPhoto}
-            onChange={(e) => setPrincipalPhoto(e.target.value)}
+            onChange={(val) => setPrincipalPhoto(val)}
+            placeholder="https://images.unsplash.com/... atau unggah gambar"
+            helperText="Unggah foto formal pimpinan lembaga (drag & drop) atau tautkan URL gambar."
           />
 
           <Textarea
