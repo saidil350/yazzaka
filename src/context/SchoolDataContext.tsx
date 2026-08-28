@@ -15,6 +15,7 @@ import {
   ContactMessage,
   WebsiteSettings,
   User,
+  UserRole,
   PageSectionConfig,
   ActivityLog,
 } from "@/lib/types";
@@ -111,6 +112,12 @@ interface SchoolDataContextType {
   // Homepage Sections
   toggleSection: (id: string) => Promise<void>;
   reorderSections: (newSections: PageSectionConfig[]) => Promise<void>;
+
+  // Users
+  addUser: (user: { name: string; email: string; password: string; role: UserRole }) => Promise<void>;
+  updateUserRole: (id: string, role: UserRole) => Promise<void>;
+  deleteUser: (id: string) => Promise<void>;
+  refreshUsers: () => Promise<void>;
 
   // Reset to initial
   resetToDefault: () => void;
@@ -374,6 +381,36 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
     setMedia(prev => [created, ...prev]);
     addLog("Menambahkan Media", mediaItem.fileName);
   };
+  // Users
+  const addUser = async (userData: { name: string; email: string; password: string; role: UserRole }) => {
+    const created = await apiCall('/api/users', 'POST', userData);
+    setUsers(prev => [...prev, created.user]);
+    addLog("Menambahkan Pengguna", userData.name);
+  };
+
+  const updateUserRole = async (id: string, role: UserRole) => {
+    const updated = await apiCall(`/api/users/${id}`, 'PATCH', { role });
+    setUsers(prev => prev.map(u => u.id === id ? updated.user : u));
+    addLog("Memperbarui Peran", `ID: ${id} → ${role}`);
+  };
+
+  const deleteUser = async (id: string) => {
+    await apiCall(`/api/users/${id}`, 'DELETE');
+    setUsers(prev => prev.filter(u => u.id !== id));
+    addLog("Menghapus Pengguna", id);
+  };
+
+  const refreshUsers = async () => {
+    try {
+      const res = await fetch('/api/users');
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.users) setUsers(data.users);
+    } catch (err) {
+      console.error("Gagal refresh users:", err);
+    }
+  };
+
   const deleteMedia = async (id: string) => {
     await apiCall(`/api/media/${id}`, 'DELETE');
     setMedia(prev => prev.filter(m => m.id !== id));
@@ -432,7 +469,9 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
         addTestimonial, updateTestimonial, deleteTestimonial,
         updateAdmission, updateSettings,
         addContactMessage, updateMessageStatus, deleteMessage,
-        toggleSection, reorderSections, resetToDefault,
+        toggleSection, reorderSections,
+        addUser, updateUserRole, deleteUser, refreshUsers,
+        resetToDefault,
       }}
     >
       {children}

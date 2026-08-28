@@ -229,12 +229,6 @@ export function Header() {
               <Phone className="h-2.5 w-2.5 text-emerald-400 shrink-0" aria-hidden="true" />
               <span>WhatsApp CS</span>
             </a>
-            <Link
-              href="/login"
-              className="hidden lg:inline font-semibold text-stone-400 hover:text-amber-300 transition-colors border-l border-white/15 pl-3 text-[11px]"
-            >
-              Login Staf
-            </Link>
           </div>
         </div>
       </div>
@@ -363,16 +357,18 @@ export function Header() {
 
           {/* Action CTA & Mobile Hamburger */}
           <div className="flex items-center gap-2.5 shrink-0">
-            <Link href="/pendaftaran" className="hidden sm:inline-flex">
-              <Button
-                variant="default"
-                size="default"
-                className="px-4 py-2 text-xs font-bold h-9"
-              >
-                <span>Daftar Sekarang</span>
-                <ArrowRight className="h-3.5 w-3.5 ml-1" />
-              </Button>
-            </Link>
+            {pathname !== "/pendaftaran" && (
+              <Link href="/pendaftaran" className="hidden sm:inline-flex">
+                <Button
+                  variant="default"
+                  size="default"
+                  className="px-4 py-2 text-xs font-bold h-9"
+                >
+                  <span>Daftar Sekarang</span>
+                  <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                </Button>
+              </Link>
+            )}
 
             <button
               type="button"
@@ -552,11 +548,6 @@ export function Header() {
                 <Phone className="h-3.5 w-3.5 text-emerald-600" />
                 <span>Konsultasi WhatsApp</span>
               </a>
-              <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="block">
-                <Button variant="outline" className="w-full justify-center text-xs h-8 text-stone-500">
-                  Login Staf
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
