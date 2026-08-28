@@ -109,9 +109,10 @@ interface SchoolDataContextType {
   updateMessageStatus: (id: string, status: ContactMessage["status"]) => Promise<void>;
   deleteMessage: (id: string) => Promise<void>;
 
-  // Homepage Sections
+  // Homepage & Page Sections
   toggleSection: (id: string) => Promise<void>;
   reorderSections: (newSections: PageSectionConfig[]) => Promise<void>;
+  updateSection: (id: string, partial: Partial<PageSectionConfig>) => Promise<void>;
 
   // Users
   addUser: (user: { name: string; email: string; password: string; role: UserRole }) => Promise<void>;
@@ -448,6 +449,23 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
     }
   };
 
+  const updateSection = async (id: string, partial: Partial<PageSectionConfig>) => {
+    const updated = sections.map((s) =>
+      s.id === id || s.key === id ? { ...s, ...partial } : s
+    );
+    setSections(updated);
+    try {
+      await fetch('/api/sections', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sections: updated }),
+      });
+      addLog("Update", `Konfigurasi seksi "${partial.title || id}" diperbarui`);
+    } catch (err) {
+      console.error("Gagal memperbarui konfigurasi seksi:", err);
+    }
+  };
+
   const resetToDefault = () => {
     console.warn("Reset to default is disabled when using DB");
   };
@@ -469,7 +487,7 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
         addTestimonial, updateTestimonial, deleteTestimonial,
         updateAdmission, updateSettings,
         addContactMessage, updateMessageStatus, deleteMessage,
-        toggleSection, reorderSections,
+        toggleSection, reorderSections, updateSection,
         addUser, updateUserRole, deleteUser, refreshUsers,
         resetToDefault,
       }}

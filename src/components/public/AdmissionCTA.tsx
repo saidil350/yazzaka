@@ -4,7 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Phone, Sparkles, CheckCircle2 } from "lucide-react";
+import { formatDateIndonesian } from "@/lib/utils";
+import { ArrowRight, Phone, Sparkles, CheckCircle2, Lock, Unlock, Calendar } from "lucide-react";
 
 export function AdmissionCTA() {
   const { profile, admission } = useSchoolData();
@@ -24,17 +25,44 @@ export function AdmissionCTA() {
 
             {/* Left Content (8 cols) */}
             <div className="lg:col-span-8 space-y-3.5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs border border-white/30 text-white font-extrabold text-xs shadow-xs">
-                <Sparkles className="h-3.5 w-3.5 text-amber-200" />
-                <span>{admission.periodName}</span>
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs border border-white/30 text-white font-extrabold text-xs shadow-xs">
+                  <Sparkles className="h-3.5 w-3.5 text-amber-200" />
+                  <span>{admission.periodName}</span>
+                </div>
+
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-xs border border-white/20 text-white text-[11px] font-bold">
+                  {admission.isOpen ? (
+                    <>
+                      <Unlock className="h-3 w-3 text-emerald-300" />
+                      <span>Pendaftaran Dibuka</span>
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="h-3 w-3 text-amber-200" />
+                      <span>Pendaftaran Ditutup</span>
+                    </>
+                  )}
+                </div>
+
+                {admission.startDate && admission.endDate && (
+                  <div className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-xs border border-white/20 text-white text-[11px] font-medium">
+                    <Calendar className="h-3 w-3 text-amber-200" />
+                    <span>{formatDateIndonesian(admission.startDate)} – {formatDateIndonesian(admission.endDate)}</span>
+                  </div>
+                )}
               </div>
 
               <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-white tracking-tight leading-tight">
-                Mulai Perjalanan Belajar Santri yang Menyenangkan &amp; Berkah
+                {admission.isOpen 
+                  ? "Mulai Perjalanan Belajar Santri yang Menyenangkan & Berkah" 
+                  : "Informasi Penerimaan Siswa & Santri Baru Yayasan Yazzaka"}
               </h2>
 
               <p className="text-sm sm:text-base text-amber-100 leading-relaxed max-w-2xl font-medium">
-                Pendaftaran santri baru jalur beasiswa tahfiz, prestasi olimpiade sains, dan reguler telah dibuka. Kuota setiap gelombang terbatas demi menjaga rasio pengasuhan dan pembelajaran yang ideal.
+                {admission.isOpen
+                  ? "Pendaftaran santri baru jalur beasiswa tahfiz, prestasi olimpiade sains, dan reguler telah dibuka. Kuota setiap gelombang terbatas demi menjaga rasio pengasuhan dan pembelajaran yang ideal."
+                  : (admission.closedMessage || "Pendaftaran gelombang ini sedang ditutup. Anda dapat melihat informasi persyaratan berkas, transparansi biaya, dan konsultasi dengan panitia admisi.")}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs sm:text-sm text-white/95 font-bold">
@@ -54,9 +82,9 @@ export function AdmissionCTA() {
               <Link href="/pendaftaran" className="block w-full">
                 <Button
                   size="default"
-                  className="w-full justify-center text-sm font-extrabold bg-white text-[#FA6400] hover:bg-[#FAF6EE] shadow-md border-2 border-white h-11"
+                  className="w-full justify-center text-sm font-extrabold bg-white text-[#FA6400] hover:bg-[#FAF6EE] shadow-md border-2 border-white h-11 cursor-pointer"
                 >
-                  <span>Daftar Siswa Baru</span>
+                  <span>{admission.isOpen ? "Daftar Siswa Baru" : "Lihat Informasi PPDB"}</span>
                   <ArrowRight className="h-4 w-4 ml-1" />
                 </Button>
               </Link>

@@ -52,6 +52,7 @@ export default function AdminDashboardOverview() {
     messages,
     articles,
     admission,
+    organization,
     toggleSection,
   } = useSchoolData();
   const { currentUser } = useAuth();
@@ -102,6 +103,13 @@ export default function AdminDashboardOverview() {
       href: "/admin/content/pendaftaran",
       icon: UserPlus,
       badge: "Seksi PPDB",
+    },
+    {
+      title: "Pimpinan & Dewan Asatidz",
+      desc: "Profil pimpinan, kepala sekolah, asatidz, kualifikasi ijazah, dan foto.",
+      href: "/admin/organization/tim",
+      icon: Users,
+      badge: "Seksi Asatidz",
     },
     {
       title: "Berita & Artikel Publikasi",

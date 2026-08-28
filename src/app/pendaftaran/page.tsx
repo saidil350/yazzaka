@@ -5,7 +5,7 @@ import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
-import { formatRupiah } from "@/lib/utils";
+import { formatRupiah, formatDateIndonesian } from "@/lib/utils";
 import {
   Sparkles,
   CheckCircle2,
@@ -13,6 +13,12 @@ import {
   Phone,
   ArrowRight,
   ShieldCheck,
+  Calendar,
+  Clock,
+  Lock,
+  Unlock,
+  AlertCircle,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -90,19 +96,73 @@ export default function AdmissionPage() {
 
         {/* ── Headspace Warm Page Hero Banner ─────────── */}
         <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0E5] border border-[#FED7AA] text-[#FA6400] font-bold text-xs mb-3 shadow-xs">
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>{admission.periodName} ({admission.academicYear})</span>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl space-y-3">
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0E5] border border-[#FED7AA] text-[#FA6400] font-bold text-xs shadow-xs">
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>{admission.periodName} ({admission.academicYear})</span>
+              </div>
+
+              {admission.isOpen ? (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/90 border border-emerald-300 text-emerald-800 font-bold text-xs shadow-xs">
+                  <Unlock className="h-3 w-3" />
+                  Pendaftaran Dibuka
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-200 border border-stone-300 text-stone-700 font-bold text-xs shadow-xs">
+                  <Lock className="h-3 w-3" />
+                  Pendaftaran Ditutup
+                </span>
+              )}
+
+              {admission.startDate && admission.endDate && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-[#E8E2D8] text-stone-700 font-semibold text-xs shadow-xs">
+                  <Calendar className="h-3.5 w-3.5 text-[#FA6400]" />
+                  <span>{formatDateIndonesian(admission.startDate)} – {formatDateIndonesian(admission.endDate)}</span>
+                </span>
+              )}
             </div>
+
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
               Penerimaan Siswa &amp; Santri Baru
             </h1>
-            <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
+            <p className="text-sm sm:text-base text-stone-600 leading-relaxed font-medium">
               Informasi resmi alur seleksi, berkas persyaratan, transparansi biaya pendidikan, dan formulir konsultasi PPDB online.
             </p>
           </div>
         </section>
+
+        {/* ── Official Closed Notice Banner (Jika Ditutup) ─── */}
+        {!admission.isOpen && (
+          <div className="bg-amber-500/10 border-b border-amber-300/80 py-4 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="h-9 w-9 rounded-xl bg-[#FA6400] text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <Lock className="h-4 w-4" />
+                </div>
+                <div>
+                  <h2 className="font-extrabold text-xs sm:text-sm text-[#1E2330]">
+                    Pemberitahuan Resmi: Penerimaan Santri Baru Saat Ini Sedang Ditutup
+                  </h2>
+                  <p className="text-[11px] sm:text-xs text-stone-600 font-medium">
+                    {admission.closedMessage || "Pendaftaran gelombang ini telah ditutup. Anda tetap dapat mempelajari persyaratan berkas dan rincian biaya di bawah ini."}
+                  </p>
+                </div>
+              </div>
+              <a
+                href={`https://wa.me/${admission.consultationWhatsapp || profile.whatsapp}?text=Halo%20Sekretariat%20Yazzaka,%20saya%20ingin%20berkonsultasi%20mengenai%20jadwal%20dan%20pembukaan%20gelombang%20pendaftaran%20santri%20baru.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 w-full sm:w-auto"
+              >
+                <Button size="sm" className="w-full font-bold text-xs bg-[#25D366] hover:bg-[#20bd5a] text-white border-0 shadow-xs h-8 px-3.5">
+                  <MessageCircle className="h-3.5 w-3.5 mr-1" />
+                  Hubungi Panitia PPDB
+                </Button>
+              </a>
+            </div>
+          </div>
+        )}
 
         {/* ── Steps to Register ───────────────────────── */}
         <section className="py-12 lg:py-14 bg-white border-b border-[#E8E2D8]">
@@ -258,74 +318,134 @@ export default function AdmissionPage() {
                 </Accordion>
               </div>
 
-              {/* Consultation Form */}
-              <div className="lg:col-span-5 bg-[#FAF6EE] p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-4 shadow-xs">
-                <div>
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
-                    Layanan Admisi
-                  </span>
-                  <h3 className="text-lg font-bold text-[#1E2330]">
-                    Formulir Konsultasi Pendaftaran
-                  </h3>
-                  <p className="text-xs text-stone-600 mt-0.5 font-medium">
-                    Ajukan pertanyaan seputar tes masuk atau jadwal kunjungan sekolah.
-                  </p>
-                </div>
+              {/* Consultation Form or Closed Notice */}
+              <div className="lg:col-span-5">
+                {!admission.isOpen && (admission.hideFormWhenClosed ?? true) ? (
+                  <div className="bg-[#FAF6EE] p-6 sm:p-7 rounded-3xl border-2 border-[#E8E2D8] space-y-5 shadow-xs">
+                    <div className="flex items-start gap-3.5">
+                      <div className="h-11 w-11 rounded-2xl bg-amber-500/10 text-[#FA6400] border border-amber-200 flex items-center justify-center shrink-0">
+                        <Lock className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#FA6400] block mb-0.5">
+                          Status Pendaftaran
+                        </span>
+                        <h3 className="text-lg font-bold text-[#1E2330]">
+                          Pendaftaran Sedang Ditutup
+                        </h3>
+                        <p className="text-xs text-stone-500 font-medium">
+                          Periode {admission.periodName} ({admission.academicYear})
+                        </p>
+                      </div>
+                    </div>
 
-                <form onSubmit={handleSubmit} className="space-y-3.5">
-                  <Input
-                    label="Nama Calon Santri / Orang Tua"
-                    required
-                    placeholder="Contoh: Budi Prasetyo"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="bg-white"
-                  />
+                    <div className="p-4 rounded-2xl bg-white border border-[#E8E2D8] space-y-2.5 shadow-2xs">
+                      <p className="text-xs text-stone-700 leading-relaxed font-medium">
+                        {admission.closedMessage ||
+                          "Pendaftaran santri baru untuk periode ini sedang ditutup. Untuk informasi jadwal gelombang berikutnya atau konsultasi langsung, silakan hubungi sekretariat PPDB kami melalui WhatsApp."}
+                      </p>
+                      {admission.startDate && admission.endDate && (
+                        <div className="pt-2.5 border-t border-stone-100 flex items-center gap-2 text-[11px] text-stone-600 font-semibold">
+                          <Calendar className="h-3.5 w-3.5 text-[#FA6400] shrink-0" />
+                          <span>
+                            Jadwal Periode: {formatDateIndonesian(admission.startDate)} – {formatDateIndonesian(admission.endDate)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
 
-                  <Input
-                    label="Nomor WhatsApp Aktif"
-                    type="tel"
-                    required
-                    placeholder="081234567890"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="bg-white"
-                  />
-
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold text-stone-700 block">
-                      Program Minat
-                    </label>
-                    <select
-                      value={interestProgram}
-                      onChange={(e) => setInterestProgram(e.target.value)}
-                      className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-xs sm:text-sm bg-white text-[#1E2330] font-medium"
-                    >
-                      <option value="Tahfiz & Sains Terpadu">Tahfiz &amp; Sains Terpadu</option>
-                      <option value="Kelas Bilingual Internasional">Kelas Bilingual Internasional</option>
-                      <option value="Program Reguler & Karakter">Program Reguler &amp; Karakter</option>
-                    </select>
+                    <div className="space-y-2">
+                      <a
+                        href={`https://wa.me/${admission.consultationWhatsapp || profile.whatsapp}?text=Halo%20Sekretariat%20Yazzaka,%20saya%20ingin%20berkonsultasi%20mengenai%20jadwal%20dan%20pembukaan%20gelombang%20pendaftaran%20santri%20baru.`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full"
+                      >
+                        <Button
+                          type="button"
+                          variant="default"
+                          size="default"
+                          className="w-full justify-center font-bold text-xs h-11 bg-[#25D366] hover:bg-[#20bd5a] text-white border-0 shadow-xs cursor-pointer"
+                        >
+                          <MessageCircle className="h-4 w-4 mr-1.5" />
+                          Konsultasi via WhatsApp PPDB
+                        </Button>
+                      </a>
+                      <p className="text-[11px] text-stone-500 text-center font-medium">
+                        Panitia admisi siap melayani pertanyaan seputar kurikulum &amp; persiapan berkas.
+                      </p>
+                    </div>
                   </div>
+                ) : (
+                  <div className="bg-[#FAF6EE] p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-4 shadow-xs">
+                    <div>
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+                        Layanan Admisi
+                      </span>
+                      <h3 className="text-lg font-bold text-[#1E2330]">
+                        Formulir Konsultasi Pendaftaran
+                      </h3>
+                      <p className="text-xs text-stone-600 mt-0.5 font-medium">
+                        Ajukan pertanyaan seputar tes masuk atau jadwal kunjungan sekolah.
+                      </p>
+                    </div>
 
-                  <Textarea
-                    label="Pertanyaan / Catatan Khusus"
-                    rows={3}
-                    placeholder="Pertanyaan Anda seputar PPDB..."
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    className="bg-white"
-                  />
+                    <form onSubmit={handleSubmit} className="space-y-3.5">
+                      <Input
+                        label="Nama Calon Santri / Orang Tua"
+                        required
+                        placeholder="Contoh: Budi Prasetyo"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="bg-white"
+                      />
 
-                  <Button
-                    type="submit"
-                    variant="default"
-                    size="default"
-                    disabled={isSubmitting}
-                    className="w-full justify-center font-bold text-xs h-10"
-                  >
-                    {isSubmitting ? "Mengirimkan..." : "Kirim Permohonan Konsultasi"}
-                  </Button>
-                </form>
+                      <Input
+                        label="Nomor WhatsApp Aktif"
+                        type="tel"
+                        required
+                        placeholder="081234567890"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="bg-white"
+                      />
+
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-stone-700 block">
+                          Program Minat
+                        </label>
+                        <select
+                          value={interestProgram}
+                          onChange={(e) => setInterestProgram(e.target.value)}
+                          className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-xs sm:text-sm bg-white text-[#1E2330] font-medium"
+                        >
+                          <option value="Tahfiz & Sains Terpadu">Tahfiz &amp; Sains Terpadu</option>
+                          <option value="Kelas Bilingual Internasional">Kelas Bilingual Internasional</option>
+                          <option value="Program Reguler & Karakter">Program Reguler &amp; Karakter</option>
+                        </select>
+                      </div>
+
+                      <Textarea
+                        label="Pertanyaan / Catatan Khusus"
+                        rows={3}
+                        placeholder="Pertanyaan Anda seputar PPDB..."
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                        className="bg-white"
+                      />
+
+                      <Button
+                        type="submit"
+                        variant="default"
+                        size="default"
+                        disabled={isSubmitting}
+                        className="w-full justify-center font-bold text-xs h-10 shadow-xs cursor-pointer"
+                      >
+                        {isSubmitting ? "Mengirimkan..." : "Kirim Permohonan Konsultasi"}
+                      </Button>
+                    </form>
+                  </div>
+                )}
               </div>
 
             </div>

@@ -29,7 +29,11 @@ export async function PUT(request: Request) {
       SET 
         period_name = COALESCE(${body.periodName ?? null}, period_name),
         academic_year = COALESCE(${body.academicYear ?? null}, academic_year),
-        is_open = COALESCE(${body.isOpen ?? null}, is_open),
+        is_open = COALESCE(${body.isOpen !== undefined ? body.isOpen : null}, is_open),
+        start_date = COALESCE(${body.startDate !== undefined ? body.startDate : null}, start_date),
+        end_date = COALESCE(${body.endDate !== undefined ? body.endDate : null}, end_date),
+        hide_form_when_closed = COALESCE(${body.hideFormWhenClosed !== undefined ? body.hideFormWhenClosed : null}, hide_form_when_closed),
+        closed_message = COALESCE(${body.closedMessage !== undefined ? body.closedMessage : null}, closed_message),
         registration_url = COALESCE(${body.registrationUrl ?? null}, registration_url),
         consultation_whatsapp = COALESCE(${body.consultationWhatsapp ?? null}, consultation_whatsapp),
         timeline = COALESCE(${timelineJson ? sql`${timelineJson}::jsonb` : null}, timeline),

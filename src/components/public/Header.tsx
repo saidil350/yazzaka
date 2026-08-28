@@ -77,7 +77,7 @@ const quickUnits = [
 ];
 
 export function Header() {
-  const { profile } = useSchoolData();
+  const { profile, admission } = useSchoolData();
   const pathname = usePathname();
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -205,13 +205,20 @@ export function Header() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between text-xs">
           <div className="flex items-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FA6400]/25 text-[#FFB07A] font-bold text-[11px]">
-              <Sparkles className="h-3 w-3 animate-spin" style={{ animationDuration: "6s" }} />
-              PPDB 2026/2027 Dibuka
-            </span>
+            {admission.isOpen ? (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FA6400]/25 text-[#FFB07A] font-bold text-[11px]">
+                <Sparkles className="h-3 w-3 animate-spin" style={{ animationDuration: "6s" }} />
+                PPDB {admission.academicYear || "2026/2027"} Dibuka
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-stone-700/80 text-stone-300 font-bold text-[11px]">
+                <span className="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
+                PPDB {admission.academicYear || "2026/2027"} Ditutup
+              </span>
+            )}
             <span className="hidden md:inline text-white/30">·</span>
             <span className="hidden md:inline text-stone-300 font-medium text-[11px]">
-              Informasi &amp; Pendaftaran Santri / Siswa Baru
+              {admission.isOpen ? "Informasi & Pendaftaran Santri / Siswa Baru" : "Informasi Jadwal & Persyaratan PPDB"}
             </span>
           </div>
 
@@ -360,11 +367,11 @@ export function Header() {
             {pathname !== "/pendaftaran" && (
               <Link href="/pendaftaran" className="hidden sm:inline-flex">
                 <Button
-                  variant="default"
+                  variant={admission.isOpen ? "default" : "outline"}
                   size="default"
                   className="px-4 py-2 text-xs font-bold h-9"
                 >
-                  <span>Daftar Sekarang</span>
+                  <span>{admission.isOpen ? "Daftar Sekarang" : "Info PPDB"}</span>
                   <ArrowRight className="h-3.5 w-3.5 ml-1" />
                 </Button>
               </Link>
@@ -535,7 +542,7 @@ export function Header() {
             <div className="pt-3.5 border-t border-[#E8E2D8] space-y-2 shrink-0">
               <Link href="/pendaftaran" onClick={() => setMobileMenuOpen(false)} className="block">
                 <Button className="w-full justify-center font-bold h-10 text-xs">
-                  Daftar Santri Baru (PPDB)
+                  {admission.isOpen ? "Daftar Santri Baru (PPDB)" : "Informasi PPDB (Ditutup)"}
                   <ArrowRight className="h-3.5 w-3.5 ml-1" />
                 </Button>
               </Link>
