@@ -292,7 +292,7 @@ export default function AdminTeamMembersPage() {
 
       {/* ── Statistik Ringkas ────────────────────────── */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-2xl border border-[#E8E2D8] shadow-2xs">
+        <div className="bg-white p-4 rounded-xl border border-[#E8E2D8] shadow-xs">
           <div className="flex items-center gap-2 text-stone-500 text-xs font-bold mb-1">
             <Users className="h-4 w-4 text-[#FA6400]" />
             <span>Total Pengajar</span>
@@ -301,7 +301,7 @@ export default function AdminTeamMembersPage() {
           <span className="text-[11px] text-stone-400">Seluruh unit yayasan</span>
         </div>
 
-        <div className="bg-white p-4 rounded-2xl border border-[#E8E2D8] shadow-2xs">
+        <div className="bg-white p-4 rounded-xl border border-[#E8E2D8] shadow-xs">
           <div className="flex items-center gap-2 text-stone-500 text-xs font-bold mb-1">
             <Building2 className="h-4 w-4 text-emerald-600" />
             <span>TPA &amp; TKIT</span>
@@ -310,7 +310,7 @@ export default function AdminTeamMembersPage() {
           <span className="text-[11px] text-stone-400">Pendidikan Usia Dini &amp; Quran</span>
         </div>
 
-        <div className="bg-white p-4 rounded-2xl border border-[#E8E2D8] shadow-2xs">
+        <div className="bg-white p-4 rounded-xl border border-[#E8E2D8] shadow-xs">
           <div className="flex items-center gap-2 text-stone-500 text-xs font-bold mb-1">
             <GraduationCap className="h-4 w-4 text-blue-600" />
             <span>PKBM &amp; Anak Shalih</span>
@@ -319,7 +319,7 @@ export default function AdminTeamMembersPage() {
           <span className="text-[11px] text-stone-400">Sekolah &amp; Kesetaraan</span>
         </div>
 
-        <div className="bg-white p-4 rounded-2xl border border-[#E8E2D8] shadow-2xs">
+        <div className="bg-white p-4 rounded-xl border border-[#E8E2D8] shadow-xs">
           <div className="flex items-center gap-2 text-stone-500 text-xs font-bold mb-1">
             <Shield className="h-4 w-4 text-purple-600" />
             <span>Darul Quran &amp; Pimpinan</span>
@@ -332,7 +332,7 @@ export default function AdminTeamMembersPage() {
       {/* ── Pengaturan Header Seksi Publik ──────────── */}
       <form
         onSubmit={handleSaveSectionHeader}
-        className="bg-white rounded-3xl p-6 border border-[#E8E2D8] shadow-xs space-y-4"
+        className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-4"
       >
         <div className="flex items-center justify-between gap-2 pb-2 border-b border-[#E8E2D8]">
           <div className="flex items-center gap-2">
@@ -414,7 +414,7 @@ export default function AdminTeamMembersPage() {
 
       {/* ── Grid Daftar Pengajar ─────────────────────── */}
       {filteredMembers.length === 0 ? (
-        <div className="bg-white rounded-3xl p-8 border border-[#E8E2D8] shadow-xs">
+        <div className="bg-white rounded-xl p-8 border border-[#E8E2D8] shadow-xs">
           <EmptyState
             icon={Users}
             title={
@@ -435,10 +435,10 @@ export default function AdminTeamMembersPage() {
           {filteredMembers.map((m, idx) => (
             <div
               key={m.id}
-              className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all duration-200 flex flex-col justify-between group"
+              className="bg-white rounded-xl border border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all duration-200 flex flex-col justify-between group"
             >
               <div>
-                {/* Photo & Order Badge */}
+                {/* Photo */}
                 <div className="h-52 relative overflow-hidden bg-[#FAF6EE]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -446,9 +446,6 @@ export default function AdminTeamMembersPage() {
                     alt={m.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-2.5 left-2.5 bg-black/60 backdrop-blur-xs text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded-md shadow-xs">
-                    #{m.orderIndex ?? idx + 1}
-                  </div>
                 </div>
 
                 {/* Content */}
@@ -523,7 +520,7 @@ export default function AdminTeamMembersPage() {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title={editingId ? "Edit Profil Pengajar / Asatidz" : "Tambah Pengajar Baru"}
-        maxWidth="lg"
+        maxWidth="2xl"
         footer={
           <>
             <Button variant="ghost" onClick={() => setModalOpen(false)}>

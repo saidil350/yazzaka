@@ -246,7 +246,7 @@ export default function AdminUsersManagementPage() {
       {/* Toast Notifikasi */}
       {toast && (
         <div
-          className={`fixed top-5 right-5 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-lg border text-sm font-semibold transition-all animate-in slide-in-from-top-2 ${
+          className={`fixed top-5 right-5 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-lg shadow-lg border text-sm font-semibold transition-all animate-in slide-in-from-top-2 ${
             toast.type === "success"
               ? "bg-[#E6F4EA] border-[#BDE7CC] text-[#15803D]"
               : "bg-[#FEE2E2] border-[#FCA5A5] text-[#B91C1C]"
@@ -302,7 +302,7 @@ export default function AdminUsersManagementPage() {
       </div>
 
       {/* Role Matrix Card */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-4">
+      <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-4">
         <div>
           <h3 className="font-bold text-base text-[#1E2330]">
             Hak Akses per Peran (RBAC)
@@ -319,7 +319,7 @@ export default function AdminUsersManagementPage() {
             return (
               <div
                 key={item.role}
-                className={`p-5 rounded-2xl border transition-all flex flex-col justify-between space-y-3 ${
+                className={`p-5 rounded-lg border transition-all flex flex-col justify-between space-y-3 ${
                   isCurrent ? item.activeBg : item.bg
                 }`}
               >
@@ -346,10 +346,10 @@ export default function AdminUsersManagementPage() {
       </div>
 
       {/* Tabel Pengguna */}
-      <div className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs">
+      <div className="bg-white rounded-xl border border-[#E8E2D8] overflow-hidden shadow-xs">
         <div className="p-5 sm:p-6 border-b border-[#E8E2D8] bg-[#FAF6EE] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-[#FFF0E5] border border-[#FED7AA] flex items-center justify-center">
+            <div className="h-9 w-9 rounded-lg bg-[#FFF0E5] border border-[#FED7AA] flex items-center justify-center">
               <Users className="h-4.5 w-4.5 text-[#FA6400]" />
             </div>
             <div>
@@ -480,7 +480,7 @@ export default function AdminUsersManagementPage() {
         onClose={closeModal}
         title="Tambah Pengguna Baru"
         description="Isi formulir berikut untuk membuat akun pengelola CMS baru. Kata sandi akan di-hash secara aman sebelum disimpan."
-        maxWidth="md"
+        maxWidth="lg"
         footer={
           <div className="flex items-center gap-3 w-full">
             <Button variant="outline" onClick={closeModal} disabled={isSubmitting}>

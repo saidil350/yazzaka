@@ -42,7 +42,7 @@ export default function AdminProgramsPageSettings() {
         </p>
       </div>
 
-      <form onSubmit={handleSave} className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
+      <form onSubmit={handleSave} className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-6">
         <Input
           label="Judul Header Halaman Program"
           type="text"

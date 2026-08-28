@@ -136,7 +136,7 @@ export default function AdminEventsPage() {
       </div>
 
       {/* Events Table */}
-      <div className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs">
+      <div className="bg-white rounded-xl border border-[#E8E2D8] overflow-hidden shadow-xs">
         {events.length === 0 ? (
           <div className="p-8">
             <EmptyState
@@ -223,7 +223,7 @@ export default function AdminEventsPage() {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title={editingId ? "Edit Agenda Kegiatan" : "Tambah Agenda Baru"}
-        maxWidth="lg"
+        maxWidth="2xl"
         footer={
           <>
             <Button variant="ghost" onClick={() => setModalOpen(false)}>

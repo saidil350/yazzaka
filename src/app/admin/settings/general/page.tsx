@@ -85,7 +85,7 @@ export default function AdminGeneralSettingsPage() {
       </div>
 
       {/* Preset Color Themes */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-4">
+      <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-4">
         <div className="flex items-center gap-2 text-[#FA6400] font-extrabold text-sm uppercase tracking-wide">
           <Palette className="h-4 w-4" />
           <span>Pilihan Palet Tema Warna Sekolah (Live Presets)</span>
@@ -97,7 +97,7 @@ export default function AdminGeneralSettingsPage() {
               key={idx}
               type="button"
               onClick={() => handleApplyColors(preset.primary, preset.accent)}
-              className="p-4 rounded-2xl border border-[#E8E2D8] hover:border-[#FA6400] bg-[#FAF6EE] flex items-center justify-between text-left transition-all cursor-pointer group"
+              className="p-4 rounded-lg border border-[#E8E2D8] hover:border-[#FA6400] bg-[#FAF6EE] flex items-center justify-between text-left transition-all cursor-pointer group"
             >
               <div>
                 <span className="font-bold text-xs text-[#1E2330] block">
@@ -126,7 +126,7 @@ export default function AdminGeneralSettingsPage() {
       </div>
 
       {/* Custom Color Form */}
-      <form onSubmit={handleSave} className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
+      <form onSubmit={handleSave} className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-6">
         <h3 className="text-base font-bold text-[#1E2330]">
           Kustomisasi Nilai Hex Warna Manual
         </h3>

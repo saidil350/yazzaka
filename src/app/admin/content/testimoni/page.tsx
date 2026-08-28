@@ -120,7 +120,7 @@ export default function AdminTestimonialsPage() {
 
       {/* Grid or EmptyState */}
       {testimonials.length === 0 ? (
-        <div className="bg-white rounded-3xl p-8 border border-[#E8E2D8] shadow-xs">
+        <div className="bg-white rounded-xl p-8 border border-[#E8E2D8] shadow-xs">
           <EmptyState
             icon={MessageSquare}
             title="Belum Ada Testimoni"
@@ -137,7 +137,7 @@ export default function AdminTestimonialsPage() {
           {testimonials.map((test) => (
             <div
               key={test.id}
-              className="bg-white rounded-3xl p-6 border border-[#E8E2D8] shadow-xs hover:border-[#FA6400]/40 hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-4"
+              className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs hover:border-[#FA6400]/40 hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-4"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -195,7 +195,7 @@ export default function AdminTestimonialsPage() {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title={editingId ? "Edit Testimoni" : "Tambah Testimoni Baru"}
-        maxWidth="md"
+        maxWidth="2xl"
         footer={
           <>
             <Button variant="ghost" onClick={() => setModalOpen(false)}>

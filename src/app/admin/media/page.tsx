@@ -151,7 +151,7 @@ export default function AdminMediaPage() {
 
       {/* Media Grid or EmptyState */}
       {filtered.length === 0 ? (
-        <div className="bg-white rounded-3xl p-8 border border-[#E8E2D8] shadow-xs">
+        <div className="bg-white rounded-xl p-8 border border-[#E8E2D8] shadow-xs">
           <EmptyState
             icon={ImageIcon}
             title="Belum Ada Berkas Media"
@@ -168,7 +168,7 @@ export default function AdminMediaPage() {
           {filtered.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all duration-200 flex flex-col justify-between group"
+              className="bg-white rounded-xl border border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all duration-200 flex flex-col justify-between group"
             >
               <div className="h-44 relative overflow-hidden bg-[#FAF6EE] flex items-center justify-center">
                 {item.fileType === "image" ? (
@@ -235,7 +235,7 @@ export default function AdminMediaPage() {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title="Tambah File Media ke Library"
-        maxWidth="md"
+        maxWidth="xl"
         footer={
           <>
             <Button variant="ghost" onClick={() => setModalOpen(false)}>

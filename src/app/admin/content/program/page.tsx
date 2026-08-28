@@ -205,7 +205,7 @@ export default function AdminProgramsCrudPage() {
       </div>
 
       {/* Programs List */}
-      <div className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs">
+      <div className="bg-white rounded-xl border border-[#E8E2D8] overflow-hidden shadow-xs">
         {programs.length === 0 ? (
           <div className="p-8">
             <EmptyState
@@ -298,7 +298,7 @@ export default function AdminProgramsCrudPage() {
         onClose={() => setModalOpen(false)}
         title={editingId ? "Edit Program Pendidikan" : "Tambah Program Baru"}
         description="Kelola informasi kurikulum, media foto, dan target capaian santri secara lengkap."
-        maxWidth="2xl"
+        maxWidth="4xl"
         footer={
           <div className="flex items-center justify-between w-full gap-3">
             <span className="text-xs text-stone-400 font-medium hidden sm:inline-flex items-center gap-1">
@@ -329,7 +329,7 @@ export default function AdminProgramsCrudPage() {
       >
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Section 1: Informasi Utama */}
-          <div className="bg-[#FCFBF7] rounded-2xl p-4 sm:p-5 border border-[#E8E2D8] space-y-4">
+          <div className="bg-[#FCFBF7] rounded-lg p-4 sm:p-5 border border-[#E8E2D8] space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-[#E8E2D8]">
               <BookOpen className="w-4 h-4 text-[#FA6400]" />
               <h3 className="text-xs font-bold uppercase tracking-wider text-stone-700">
@@ -374,7 +374,7 @@ export default function AdminProgramsCrudPage() {
           </div>
 
           {/* Section 2: Media Banner */}
-          <div className="bg-[#FCFBF7] rounded-2xl p-4 sm:p-5 border border-[#E8E2D8] space-y-4">
+          <div className="bg-[#FCFBF7] rounded-lg p-4 sm:p-5 border border-[#E8E2D8] space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-[#E8E2D8]">
               <ImageIcon className="w-4 h-4 text-[#FA6400]" />
               <h3 className="text-xs font-bold uppercase tracking-wider text-stone-700">
@@ -392,7 +392,7 @@ export default function AdminProgramsCrudPage() {
           </div>
 
           {/* Section 3: Deskripsi Program */}
-          <div className="bg-[#FCFBF7] rounded-2xl p-4 sm:p-5 border border-[#E8E2D8] space-y-4">
+          <div className="bg-[#FCFBF7] rounded-lg p-4 sm:p-5 border border-[#E8E2D8] space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-[#E8E2D8]">
               <FileText className="w-4 h-4 text-[#FA6400]" />
               <h3 className="text-xs font-bold uppercase tracking-wider text-stone-700">
@@ -421,7 +421,7 @@ export default function AdminProgramsCrudPage() {
           </div>
 
           {/* Section 4: Keunggulan & Target Capaian (Point-by-Point Dynamic List) */}
-          <div className="bg-[#FCFBF7] rounded-2xl p-4 sm:p-5 border border-[#E8E2D8] space-y-4">
+          <div className="bg-[#FCFBF7] rounded-lg p-4 sm:p-5 border border-[#E8E2D8] space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-[#E8E2D8]">
               <Sparkles className="w-4 h-4 text-[#FA6400]" />
               <h3 className="text-xs font-bold uppercase tracking-wider text-stone-700">

@@ -43,7 +43,7 @@ export default function AdminOrgStructurePage() {
 
       <div className="space-y-6">
         {departments.length === 0 ? (
-          <div className="bg-white rounded-3xl p-8 border border-[#E8E2D8] text-center space-y-2">
+          <div className="bg-white rounded-xl p-8 border border-[#E8E2D8] text-center space-y-2">
             <p className="font-bold text-sm text-[#1E2330]">Belum ada data pengajar per unit.</p>
             <p className="text-xs text-stone-500">Silakan tambahkan data pimpinan dan pengajar melalui menu Tim &amp; Asatidz.</p>
           </div>
@@ -53,7 +53,7 @@ export default function AdminOrgStructurePage() {
             return (
               <div
                 key={dept}
-                className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-5"
+                className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-5"
               >
                 <div className="flex items-center justify-between gap-2 pb-3 border-b border-[#E8E2D8]">
                   <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1E2330] text-white text-xs font-bold uppercase tracking-wider shadow-2xs">
@@ -69,7 +69,7 @@ export default function AdminOrgStructurePage() {
                   {members.map((m) => (
                     <div
                       key={m.id}
-                      className="p-4 rounded-2xl bg-[#FAF6EE] border border-[#E8E2D8] flex items-center gap-3.5 hover:border-[#FA6400]/40 transition-colors"
+                      className="p-4 rounded-lg bg-[#FAF6EE] border border-[#E8E2D8] flex items-center gap-3.5 hover:border-[#FA6400]/40 transition-colors"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
