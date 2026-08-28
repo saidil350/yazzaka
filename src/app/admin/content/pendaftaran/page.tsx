@@ -242,10 +242,10 @@ export default function AdminAdmissionPage() {
 
         {/* Tab 1: General & Requirements */}
         <TabsContent value="general">
-          <form onSubmit={handleSaveGeneral} className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
+          <form onSubmit={handleSaveGeneral} className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-6">
             
             {/* Status Pendaftaran Banner & Toggle */}
-            <div className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+            <div className={`p-4 sm:p-5 rounded-lg border transition-all ${
               isOpen 
                 ? "bg-emerald-50/70 border-emerald-200" 
                 : "bg-stone-100/80 border-stone-300"
@@ -371,7 +371,7 @@ export default function AdminAdmissionPage() {
               </div>
 
               {/* Toggle Sembunyikan Formulir */}
-              <div className="p-4 rounded-2xl bg-[#FAF6EE] border border-[#E8E2D8] flex items-start justify-between gap-4">
+              <div className="p-4 rounded-lg bg-[#FAF6EE] border border-[#E8E2D8] flex items-start justify-between gap-4">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <span className="font-bold text-xs sm:text-sm text-[#1E2330]">
@@ -435,14 +435,14 @@ export default function AdminAdmissionPage() {
               {/* List Poin */}
               <div className="space-y-2.5">
                 {requirements.length === 0 ? (
-                  <div className="p-6 text-center rounded-2xl bg-[#FAF6EE] border border-dashed border-[#E8E2D8] text-stone-500 text-xs sm:text-sm">
+                  <div className="p-6 text-center rounded-lg bg-[#FAF6EE] border border-dashed border-[#E8E2D8] text-stone-500 text-xs sm:text-sm">
                     Belum ada butir persyaratan berkas. Tulis butir persyaratan di bawah lalu klik tombol Tambah.
                   </div>
                 ) : (
                   requirements.map((req, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-2xl bg-[#FAF6EE] border border-[#E8E2D8] group hover:border-[#FA6400]/40 transition-colors"
+                      className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg bg-[#FAF6EE] border border-[#E8E2D8] group hover:border-[#FA6400]/40 transition-colors"
                     >
                       <span className="h-7 w-7 rounded-xl bg-[#FA6400] text-white text-xs font-bold flex items-center justify-center shrink-0 shadow-2xs">
                         {idx + 1}
@@ -532,7 +532,7 @@ export default function AdminAdmissionPage() {
 
         {/* Tab 2: Fees Breakdown */}
         <TabsContent value="fees" className="space-y-6">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-4">
+          <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-4">
             <h3 className="font-bold text-base text-[#1E2330]">
               Tambah Komponen Biaya Baru
             </h3>
@@ -574,7 +574,7 @@ export default function AdminAdmissionPage() {
             </form>
           </div>
 
-          <div className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs">
+          <div className="bg-white rounded-xl border border-[#E8E2D8] overflow-hidden shadow-xs">
             <table className="w-full text-left text-sm">
               <thead className="bg-[#FAF6EE] border-b border-[#E8E2D8] text-xs font-bold uppercase text-stone-500">
                 <tr>
@@ -614,7 +614,7 @@ export default function AdminAdmissionPage() {
 
         {/* Tab 3: FAQs */}
         <TabsContent value="faqs" className="space-y-6">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-4">
+          <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-4">
             <h3 className="font-bold text-base text-[#1E2330]">
               Tambah Tanya Jawab (FAQ) Baru
             </h3>
@@ -645,7 +645,7 @@ export default function AdminAdmissionPage() {
             {faqs.map((faq) => (
               <div
                 key={faq.id}
-                className="bg-white p-5 sm:p-6 rounded-3xl border border-[#E8E2D8] shadow-xs flex items-start justify-between gap-4"
+                className="bg-white p-5 sm:p-6 rounded-xl border border-[#E8E2D8] shadow-xs flex items-start justify-between gap-4"
               >
                 <div className="space-y-1.5">
                   <h4 className="font-bold text-sm text-[#1E2330]">

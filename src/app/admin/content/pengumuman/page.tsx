@@ -143,7 +143,7 @@ export default function AdminAchievementsPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs">
+      <div className="bg-white rounded-xl border border-[#E8E2D8] overflow-hidden shadow-xs">
         {achievements.length === 0 ? (
           <div className="p-8">
             <EmptyState
@@ -233,7 +233,7 @@ export default function AdminAchievementsPage() {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title={editingId ? "Edit Prestasi" : "Tambah Prestasi Baru"}
-        maxWidth="lg"
+        maxWidth="2xl"
         footer={
           <>
             <Button variant="ghost" onClick={() => setModalOpen(false)}>

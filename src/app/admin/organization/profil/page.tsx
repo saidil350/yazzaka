@@ -67,7 +67,7 @@ export default function AdminOrgProfilePage() {
 
       <form onSubmit={handleSave} className="space-y-8">
         {/* Basic Identity */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
+        <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-6">
           <h3 className="text-base font-bold text-[#1E2330]">
             Identitas Pokok & Akreditasi
           </h3>
@@ -140,7 +140,7 @@ export default function AdminOrgProfilePage() {
         </div>
 
         {/* Principal Info */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
+        <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-6">
           <h3 className="text-base font-bold text-[#1E2330]">
             Data Pimpinan / Kepala Sekolah
           </h3>

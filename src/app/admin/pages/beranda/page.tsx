@@ -55,7 +55,7 @@ export default function AdminHomepageSectionsPage() {
       </div>
 
       {/* Sections List */}
-      <div className="bg-white rounded-3xl border border-[#E8E2D8] shadow-xs overflow-hidden divide-y divide-[#E8E2D8]">
+      <div className="bg-white rounded-xl border border-[#E8E2D8] shadow-xs overflow-hidden divide-y divide-[#E8E2D8]">
         {sections.map((sec, idx) => (
           <div
             key={sec.id}

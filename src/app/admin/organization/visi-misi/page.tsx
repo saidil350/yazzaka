@@ -53,7 +53,7 @@ export default function AdminVisionMissionPage() {
       </div>
 
       {/* Vision */}
-      <form onSubmit={handleSaveVision} className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-4">
+      <form onSubmit={handleSaveVision} className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-4">
         <div className="flex items-center gap-2 text-[#FA6400] font-extrabold text-sm uppercase tracking-wide">
           <Compass className="h-4 w-4" />
           <span>Visi Lembaga</span>
@@ -72,7 +72,7 @@ export default function AdminVisionMissionPage() {
       </form>
 
       {/* Mission List */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
+      <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-6">
         <div className="flex items-center gap-2 text-[#FA6400] font-extrabold text-sm uppercase tracking-wide">
           <Target className="h-4 w-4" />
           <span>Butir-Butir Misi Strategis</span>
@@ -82,7 +82,7 @@ export default function AdminVisionMissionPage() {
           {missionList.map((item, idx) => (
             <div
               key={idx}
-              className="flex items-start justify-between gap-3 p-4 rounded-2xl bg-[#FAF6EE] border border-[#E8E2D8] text-xs sm:text-sm text-[#1E2330] font-medium"
+              className="flex items-start justify-between gap-3 p-4 rounded-lg bg-[#FAF6EE] border border-[#E8E2D8] text-xs sm:text-sm text-[#1E2330] font-medium"
             >
               <div className="flex items-start gap-3">
                 <span className="h-6 w-6 rounded-full bg-[#FA6400] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">

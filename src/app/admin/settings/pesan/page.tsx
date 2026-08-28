@@ -155,7 +155,7 @@ export default function AdminContactInboxPage() {
       </div>
 
       {/* ── Filter Tabs Segmented Control ───────────────────────────── */}
-      <div className="flex items-center gap-1.5 p-1.5 bg-[#FAF6EE] rounded-2xl w-fit max-w-full overflow-x-auto border border-[#E8E2D8]">
+      <div className="flex items-center gap-1.5 p-1.5 bg-[#FAF6EE] rounded-lg w-fit max-w-full overflow-x-auto border border-[#E8E2D8]">
         <button
           type="button"
           onClick={() => setFilterStatus("all")}
@@ -230,7 +230,7 @@ export default function AdminContactInboxPage() {
       </div>
 
       {/* ── Messages List Container ─────────────────────────────────── */}
-      <div className="bg-white rounded-3xl border border-[#E8E2D8] shadow-xs overflow-hidden">
+      <div className="bg-white rounded-xl border border-[#E8E2D8] shadow-xs overflow-hidden">
         {filtered.length === 0 ? (
           <div className="p-8">
             <EmptyState
@@ -350,7 +350,7 @@ export default function AdminContactInboxPage() {
           isOpen={!!selectedMessage}
           onClose={() => setSelectedMessage(null)}
           title={`Detail Pesan dari ${selectedMessage.name}`}
-          maxWidth="lg"
+          maxWidth="2xl"
           footer={
             <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 w-full">
               <button
@@ -400,7 +400,7 @@ export default function AdminContactInboxPage() {
         >
           <div className="space-y-5 text-xs sm:text-sm">
             {/* Meta Grid Card */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-[#FAF6EE] rounded-2xl border border-[#E8E2D8]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-[#FAF6EE] rounded-lg border border-[#E8E2D8]">
               <div className="space-y-0.5">
                 <span className="text-[11px] font-extrabold text-stone-500 uppercase tracking-wider block">
                   Email
@@ -465,7 +465,7 @@ export default function AdminContactInboxPage() {
               <span className="text-[11px] font-extrabold uppercase tracking-wider text-stone-500 block">
                 Isi Pesan
               </span>
-              <div className="p-4 bg-white rounded-2xl border border-[#E8E2D8] text-[#1E2330] whitespace-pre-line leading-relaxed text-xs sm:text-sm font-medium">
+              <div className="p-4 bg-white rounded-lg border border-[#E8E2D8] text-[#1E2330] whitespace-pre-line leading-relaxed text-xs sm:text-sm font-medium">
                 {selectedMessage.message}
               </div>
             </div>

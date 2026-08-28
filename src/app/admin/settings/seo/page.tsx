@@ -47,9 +47,9 @@ export default function AdminSEOSettingsPage() {
         </p>
       </div>
 
-      {/* ── SEO Form Card (Warm Native) ────────────────────────────── */}
+      {/* ── SEO Form Card ────────────────────────────── */}
       <form onSubmit={handleSave}>
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E8E2D8] shadow-xs space-y-6">
+        <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-6">
           <div>
             <h3 className="font-bold text-base text-[#1E2330]">Metadata Mesin Pencari</h3>
             <p className="text-xs text-stone-500 mt-1 font-medium">

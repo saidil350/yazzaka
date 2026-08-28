@@ -207,10 +207,10 @@ export default function AdminDashboardOverview() {
         <div
           role="alert"
           aria-live="polite"
-          className="bg-[#FFF0E5] border border-[#FED7AA] rounded-3xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs animate-in fade-in duration-300"
+          className="bg-[#FFF0E5] border border-[#FED7AA] rounded-xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs animate-in fade-in duration-300"
         >
           <div className="flex items-start sm:items-center gap-4 min-w-0">
-            <div className="h-11 w-11 rounded-2xl bg-[#FA6400] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#FA6400]/30">
+            <div className="h-10 w-10 rounded-lg bg-[#FA6400] text-white flex items-center justify-center shrink-0 shadow-xs">
               <MessageSquare className="h-5 w-5" aria-hidden="true" />
             </div>
             <div className="min-w-0">
@@ -225,7 +225,7 @@ export default function AdminDashboardOverview() {
           <Link href="/admin/settings/pesan" className="shrink-0">
             <Button
               size="sm"
-              className="font-bold text-xs h-9 px-5 rounded-full shadow-xs"
+              className="font-bold text-xs h-9 px-4 rounded-lg shadow-xs"
               aria-label="Buka kotak pesan masuk"
             >
               <span>Buka Kotak Masuk</span>
@@ -247,15 +247,15 @@ export default function AdminDashboardOverview() {
               <Link
                 key={kpi.href}
                 href={kpi.href}
-                className="group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400] rounded-3xl"
+                className="group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400] rounded-xl"
                 aria-label={`Kelola ${kpi.title}, total ${kpi.value} ${kpi.unit}`}
               >
-                <Card className={`h-full border-2 border-[#E8E2D8] bg-white hover:shadow-md transition-all duration-200 ${kpi.accentHover}`}>
+                <Card className={`h-full border border-[#E8E2D8] bg-white hover:shadow-md transition-all duration-200 ${kpi.accentHover}`}>
                   <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
                     <CardTitle className="text-xs font-bold uppercase tracking-wider text-stone-500 group-hover:text-[#1E2330] transition-colors">
                       {kpi.title}
                     </CardTitle>
-                    <div className={`p-2 rounded-2xl border ${kpi.badgeColor} shadow-2xs`}>
+                    <div className={`p-2 rounded-lg border ${kpi.badgeColor} shadow-2xs`}>
                       <Icon className="h-4 w-4" aria-hidden="true" />
                     </div>
                   </CardHeader>
@@ -283,9 +283,9 @@ export default function AdminDashboardOverview() {
       {/* ── 4. Main 2-Column Dashboard Grid (Shadcn Dashboard Pattern) ── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* ── Left Column (7 cols): Primary Operations & Leads ── */}
-        <div className="lg:col-span-7 space-y-8">
+        <div className="lg:col-span-7 space-y-6">
           {/* Card: Live Section Controller */}
-          <Card className="border-2 border-[#E8E2D8] bg-white">
+          <Card className="border border-[#E8E2D8] bg-white">
             <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E8E2D8] pb-4">
               <div>
                 <div className="flex items-center gap-2">
@@ -303,7 +303,7 @@ export default function AdminDashboardOverview() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-8 text-xs font-bold rounded-full border border-[#E8E2D8] hover:border-[#FA6400] hover:text-[#FA6400] text-stone-700"
+                  className="h-8 text-xs font-bold rounded-lg border border-[#E8E2D8] hover:border-[#FA6400] hover:text-[#FA6400] text-stone-700"
                 >
                   <span>Atur Urutan</span>
                   <ChevronRight className="h-3.5 w-3.5 ml-1 text-stone-400" aria-hidden="true" />
@@ -316,7 +316,7 @@ export default function AdminDashboardOverview() {
                 {sections.map((sec) => (
                   <div
                     key={sec.id}
-                    className={`p-3.5 rounded-2xl border transition-all duration-150 flex items-center justify-between gap-3 ${
+                    className={`p-3 rounded-lg border transition-all duration-150 flex items-center justify-between gap-3 ${
                       sec.isEnabled
                         ? "bg-[#FAF6EE] border-[#E8E2D8]"
                         : "bg-[#FAF6EE]/40 border-[#E8E2D8]/50 opacity-60"
@@ -354,7 +354,7 @@ export default function AdminDashboardOverview() {
           </Card>
 
           {/* Card: Recent Inquiries (Pesan Masuk) */}
-          <Card className="border-2 border-[#E8E2D8] bg-white overflow-hidden">
+          <Card className="border border-[#E8E2D8] bg-white overflow-hidden">
             <CardHeader className="flex flex-row items-center justify-between border-b border-[#E8E2D8] bg-[#FAF6EE] pb-4">
               <div>
                 <div className="flex items-center gap-2">
@@ -372,7 +372,7 @@ export default function AdminDashboardOverview() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-8 text-xs font-bold text-stone-700 hover:text-[#FA6400] rounded-full"
+                  className="h-8 text-xs font-bold text-stone-700 hover:text-[#FA6400] rounded-lg"
                 >
                   <span>Lihat Semua ({messages.length})</span>
                   <ChevronRight className="h-3.5 w-3.5 ml-1 text-stone-400" aria-hidden="true" />
@@ -439,7 +439,7 @@ export default function AdminDashboardOverview() {
                             <Button
                               size="sm"
                               variant="outline"
-                              className="h-8 text-xs font-bold text-emerald-700 border-emerald-300 hover:bg-emerald-50 gap-1.5 rounded-full shadow-2xs"
+                              className="h-8 text-xs font-bold text-emerald-700 border-emerald-300 hover:bg-emerald-50 gap-1.5 rounded-lg shadow-2xs"
                             >
                               <Send className="h-3 w-3 text-emerald-600" aria-hidden="true" />
                               <span>Balas WA</span>
@@ -450,7 +450,7 @@ export default function AdminDashboardOverview() {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="h-8 text-xs font-bold text-stone-600 hover:text-[#FA6400] rounded-full"
+                            className="h-8 text-xs font-bold text-stone-600 hover:text-[#FA6400] rounded-lg"
                           >
                             Rincian
                           </Button>
@@ -465,9 +465,9 @@ export default function AdminDashboardOverview() {
         </div>
 
         {/* ── Right Column (5 cols): Quick Editor Shortcuts & Identity ── */}
-        <div className="lg:col-span-5 space-y-8">
+        <div className="lg:col-span-5 space-y-6">
           {/* Card: Quick Module Editor Shortcuts */}
-          <Card className="border-2 border-[#E8E2D8] bg-white">
+          <Card className="border border-[#E8E2D8] bg-white">
             <CardHeader className="border-b border-[#E8E2D8] pb-4">
               <CardTitle className="text-base font-bold text-[#1E2330]">
                 Pusat Pengeditan Modul
@@ -484,10 +484,10 @@ export default function AdminDashboardOverview() {
                   <Link
                     key={mod.href}
                     href={mod.href}
-                    className="flex items-center justify-between p-3 rounded-2xl border border-[#E8E2D8] bg-white hover:bg-[#FFF9F2] hover:border-[#FA6400]/40 transition-all duration-150 group"
+                    className="flex items-center justify-between p-3 rounded-lg border border-[#E8E2D8] bg-white hover:bg-[#FFF9F2] hover:border-[#FA6400]/40 transition-all duration-150 group"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="h-9 w-9 rounded-xl bg-[#FFF0E5] border border-[#FED7AA] flex items-center justify-center text-[#FA6400] group-hover:bg-[#FA6400] group-hover:text-white transition-all shrink-0 shadow-2xs">
+                      <div className="h-9 w-9 rounded-lg bg-[#FFF0E5] border border-[#FED7AA] flex items-center justify-center text-[#FA6400] group-hover:bg-[#FA6400] group-hover:text-white transition-all shrink-0 shadow-2xs">
                         <Icon className="h-4 w-4" aria-hidden="true" />
                       </div>
                       <div className="min-w-0">
@@ -508,7 +508,7 @@ export default function AdminDashboardOverview() {
           </Card>
 
           {/* Card: Institutional Trust Metrics & Identity Summary */}
-          <Card className="border-2 border-[#E8E2D8] bg-gradient-to-b from-[#FAF6EE] to-white">
+          <Card className="border border-[#E8E2D8] bg-gradient-to-b from-[#FAF6EE] to-white">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-base font-bold text-[#1E2330]">
@@ -524,7 +524,7 @@ export default function AdminDashboardOverview() {
             </CardHeader>
 
             <CardContent className="space-y-3.5 pt-1">
-              <div className="p-3.5 rounded-2xl bg-white border border-[#E8E2D8] space-y-2">
+              <div className="p-3.5 rounded-lg bg-white border border-[#E8E2D8] space-y-2">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-stone-500 font-medium">NPSN Resmi:</span>
                   <span className="font-bold text-[#1E2330] font-mono">{profile.npsn}</span>
@@ -541,7 +541,7 @@ export default function AdminDashboardOverview() {
 
               {/* Trust Metric Counters */}
               <div className="grid grid-cols-2 gap-2.5">
-                <div className="p-3 rounded-2xl bg-white border border-[#E8E2D8] text-center">
+                <div className="p-3 rounded-lg bg-white border border-[#E8E2D8] text-center">
                   <span className="text-xl font-extrabold text-[#1E2330] tabular-nums block">
                     {profile.studentCount}
                   </span>
@@ -549,7 +549,7 @@ export default function AdminDashboardOverview() {
                     Santri Aktif
                   </span>
                 </div>
-                <div className="p-3 rounded-2xl bg-white border border-[#E8E2D8] text-center">
+                <div className="p-3 rounded-lg bg-white border border-[#E8E2D8] text-center">
                   <span className="text-xl font-extrabold text-[#FA6400] tabular-nums block">
                     {profile.hafizCount}
                   </span>
@@ -563,7 +563,7 @@ export default function AdminDashboardOverview() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="w-full text-xs font-bold h-9 rounded-full border border-[#E8E2D8] hover:border-[#FA6400] hover:text-[#FA6400]"
+                  className="w-full text-xs font-bold h-9 rounded-lg border border-[#E8E2D8] hover:border-[#FA6400] hover:text-[#FA6400]"
                 >
                   <span>Edit Profil &amp; Legalitas</span>
                   <ChevronRight className="h-3.5 w-3.5 ml-1" aria-hidden="true" />

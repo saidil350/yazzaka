@@ -162,7 +162,7 @@ export default function AdminNewsPage() {
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white p-3.5 px-4 rounded-2xl border border-[#E8E2D8] shadow-xs flex items-center gap-3">
+      <div className="bg-white p-3.5 px-4 rounded-lg border border-[#E8E2D8] shadow-xs flex items-center gap-3">
         <Search className="h-4 w-4 text-[#FA6400] shrink-0" />
         <input
           type="text"
@@ -174,7 +174,7 @@ export default function AdminNewsPage() {
       </div>
 
       {/* Articles Table / List */}
-      <div className="bg-white rounded-3xl border border-[#E8E2D8] overflow-hidden shadow-xs">
+      <div className="bg-white rounded-xl border border-[#E8E2D8] overflow-hidden shadow-xs">
         {filtered.length === 0 ? (
           <div className="p-8">
             <EmptyState
@@ -270,7 +270,7 @@ export default function AdminNewsPage() {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title={editingId ? "Edit Artikel Berita" : "Tulis Artikel Berita Baru"}
-        maxWidth="2xl"
+        maxWidth="4xl"
         footer={
           <>
             <Button variant="ghost" onClick={() => setModalOpen(false)}>
