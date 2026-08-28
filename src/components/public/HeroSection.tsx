@@ -119,7 +119,7 @@ export function HeroSection() {
                 <div className="absolute top-1/3 -left-2 animate-float-delayed">
                   <div className="px-3 py-1 rounded-xl bg-[#DCFCE7]/95 backdrop-blur-xs border border-[#BBF7D0] text-[#15803D] font-bold text-[11px] shadow-md flex items-center gap-1.5">
                     <Award className="h-3.5 w-3.5 text-emerald-600" />
-                    <span>Juara Robotik</span>
+                    <span>Karakter &amp; Adab</span>
                   </div>
                 </div>
 
@@ -128,13 +128,13 @@ export function HeroSection() {
                   <div className="flex items-center justify-between gap-2">
                     <div>
                       <span className="inline-block px-2 py-0.5 rounded-full bg-[#FFF0E5] text-[#FA6400] text-[9px] font-extrabold uppercase tracking-wide">
-                        Kampus Terpadu
+                        Sekolah Terpadu
                       </span>
                       <h4 className="text-xs font-bold text-[#1E2330] mt-0.5">
-                        SMA &amp; Pesantren Modern Yazzaka
+                        Sekolah Formal &amp; Pesantren Yazzakka
                       </h4>
                       <p className="text-[10px] text-stone-500">
-                        Mendidik generasi Qur&apos;ani berwawasan global
+                        Mendidik generasi Qur&apos;ani berkarakter mulia
                       </p>
                     </div>
                     <div className="h-8 w-8 rounded-xl bg-[#FA6400] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">

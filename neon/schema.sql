@@ -175,13 +175,14 @@ CREATE TABLE IF NOT EXISTS contact_messages (
     status VARCHAR(20) DEFAULT 'new'
 );
 
--- 12. Tabel Pengguna CMS (RBAC)
-CREATE TABLE IF NOT EXISTS cms_users (
+-- 12. Tabel Pengguna CMS (RBAC: super_admin & editor)
+CREATE TABLE IF NOT EXISTS users (
     id VARCHAR(50) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    role VARCHAR(50) NOT NULL,
+    role VARCHAR(50) NOT NULL CHECK (role IN ('super_admin', 'editor')),
     avatar_url TEXT,
+    password_hash TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 

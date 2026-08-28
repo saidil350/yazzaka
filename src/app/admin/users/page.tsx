@@ -22,27 +22,12 @@ export default function AdminUsersManagementPage() {
     {
       role: "super_admin",
       title: "Super Admin",
-      desc: "Akses mutlak ke seluruh modul CMS, pengaturan tema, database & manajemen pengguna.",
-    },
-    {
-      role: "admin",
-      title: "Administrator",
-      desc: "Mengelola seluruh konten situs, profil sekolah, dan pengaturan umum.",
+      desc: "Akses mutlak ke seluruh modul CMS, pengaturan identitas lembaga, SEO, database & manajemen pengguna.",
     },
     {
       role: "editor",
-      title: "Editor",
-      desc: "Menulis, menyunting artikel berita, galeri foto/video, dan agenda kegiatan.",
-    },
-    {
-      role: "admission_staff",
-      title: "Admission Staff (PPDB)",
-      desc: "Mengelola informasi pendaftaran, syarat, biaya, dan melayani pesan kontak masuk.",
-    },
-    {
-      role: "viewer",
-      title: "Viewer",
-      desc: "Akses baca dan pratinjau (read-only) tanpa hak mengubah data.",
+      title: "Editor Konten",
+      desc: "Mengelola konten publikasi seperti program pendidikan, fasilitas, prestasi, testimoni, berita & agenda kegiatan.",
     },
   ];
 

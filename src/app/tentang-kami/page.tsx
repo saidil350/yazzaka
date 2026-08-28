@@ -72,7 +72,7 @@ export default function AboutPage() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80"
-                      alt="Gedung Kampus Yazzakka"
+                      alt="Gedung Sekolah Yazzakka"
                       className="w-full h-full object-cover"
                     />
                   </div>

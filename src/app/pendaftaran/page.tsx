@@ -268,7 +268,7 @@ export default function AdmissionPage() {
                     Formulir Konsultasi Pendaftaran
                   </h3>
                   <p className="text-xs text-stone-600 mt-0.5 font-medium">
-                    Ajukan pertanyaan seputar tes masuk atau jadwal kunjungan kampus.
+                    Ajukan pertanyaan seputar tes masuk atau jadwal kunjungan sekolah.
                   </p>
                 </div>
 

@@ -74,10 +74,10 @@ export default function ContactPage() {
               <span>Layanan Informasi &amp; Sekretariat</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
-              Hubungi Pesantren Yazzakka
+              Hubungi Yayasan Yazzakka
             </h1>
             <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
-              Kami siap melayani pertanyaan seputar pendaftaran santri, kunjungan kampus, kemitraan akademik, dan konsultasi pendidikan.
+              Kami siap melayani pertanyaan seputar pendaftaran santri/siswa, kunjungan ke sekolah, kemitraan dakwah/pendidikan, dan konsultasi program.
             </p>
           </div>
         </section>
@@ -101,7 +101,7 @@ export default function ContactPage() {
                         <MapPin className="h-4 w-4" />
                       </div>
                       <div>
-                        <span className="font-bold text-[#1E2330] block">Alamat Kampus:</span>
+                        <span className="font-bold text-[#1E2330] block">Alamat Sekretariat &amp; Sekolah:</span>
                         <p className="mt-0.5 leading-relaxed text-stone-600 font-medium">
                           {profile.address}, {profile.city}, {profile.province}
                         </p>

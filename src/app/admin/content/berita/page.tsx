@@ -182,7 +182,7 @@ export default function AdminNewsPage() {
               description={
                 searchQuery
                   ? `Tidak ada artikel yang cocok dengan pencarian "${searchQuery}".`
-                  : "Mulai buat artikel, berita liputan kampus, atau opini edukatif pertama Anda."
+                  : "Mulai buat artikel, berita liputan sekolah/yayasan, atau opini edukatif pertama Anda."
               }
               action={{
                 label: "Tulis Berita Baru",

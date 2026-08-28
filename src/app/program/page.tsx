@@ -40,7 +40,7 @@ export default function ProgramsDirectoryPage() {
       return { tag: "Wakaf Pembangunan", target: "Program Strategis Umat", color: "bg-[#FA6400] text-white border-[#FA6400]" };
     }
     if (cat.includes("tahfiz") || slug.includes("darul-quran")) {
-      return { tag: "Tahfiz 30 Juz Bersanad", target: "Santri & Mahasiswa", color: "bg-[#FEF9C3] text-[#A16207] border-[#FEF08A]" };
+      return { tag: "Tahfiz 30 Juz Bersanad", target: "Santri & Pelajar Formal", color: "bg-[#FEF9C3] text-[#A16207] border-[#FEF08A]" };
     }
     if (slug.includes("tpa")) {
       return { tag: "Pendidikan Al-Qur'an", target: "Usia 4–12 Tahun", color: "bg-[#FFF0E5] text-[#FA6400] border-[#FED7AA]" };

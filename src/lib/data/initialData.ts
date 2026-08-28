@@ -426,7 +426,7 @@ export const initialEvents: SchoolEvent[] = [
     description: "Pendaftaran online berkas dan ujian seleksi masuk online/offline untuk calon santri TA 2026/2027.",
     date: "2026-09-01",
     time: "08:00 - 15:00 WIB",
-    location: "Kampus Yazzaka & Online Portal",
+    location: "Kompleks Pendidikan Yazzakka & Online Portal",
     category: "Penerimaan Siswa",
     coverImage: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
     registrationUrl: "/pendaftaran",
@@ -438,7 +438,7 @@ export const initialEvents: SchoolEvent[] = [
     description: "Menghadirkan pakar psikologi anak dan praktisi pendidikan karakter Islam nasional untuk wali murid dan umum.",
     date: "2026-09-20",
     time: "09:00 - 12:30 WIB",
-    location: "Auditorium Utama Kampus Yazzaka",
+    location: "Aula Utama Yayasan Yazzakka",
     category: "Seminar & Parenting",
     coverImage: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
     registrationUrl: "/kontak",
@@ -450,7 +450,7 @@ export const initialEvents: SchoolEvent[] = [
     description: "Uji publik hafalan Al-Qur'an 30 juz sekali duduk dan penganugerahan sanad tajwid bagi para wisudawan.",
     date: "2026-10-15",
     time: "07:30 - 13:00 WIB",
-    location: "Masjid Raya Baiturrahman Yazzaka",
+    location: "Masjid Baiturrahim Yazzakka",
     category: "Wisuda & Pameran",
     coverImage: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=800&q=80",
     registrationUrl: "",
@@ -461,12 +461,12 @@ export const initialEvents: SchoolEvent[] = [
 export const initialMedia: MediaItem[] = [
   {
     id: "med-1",
-    fileName: "kampus-utama-yazzaka.jpg",
+    fileName: "gedung-sekolah-yazzaka.jpg",
     fileUrl: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
     fileType: "image",
     fileSize: "1.8 MB",
     category: "Fasilitas",
-    altText: "Gedung Utama dan Halaman Asri Kampus Terpadu Yazzaka",
+    altText: "Gedung Utama dan Halaman Asri Sekolah Terpadu Yazzakka",
     uploadedAt: "2026-08-01",
   },
   {
@@ -476,7 +476,7 @@ export const initialMedia: MediaItem[] = [
     fileType: "image",
     fileSize: "2.1 MB",
     category: "Kegiatan",
-    altText: "Aktivitas Halaqah Tahfiz Al-Qur'an Pagi Santri Yazzaka",
+    altText: "Aktivitas Halaqah Tahfiz Al-Qur'an Pagi Santri Yazzakka",
     uploadedAt: "2026-08-05",
   },
   {
@@ -486,7 +486,7 @@ export const initialMedia: MediaItem[] = [
     fileType: "image",
     fileSize: "2.4 MB",
     category: "Fasilitas",
-    altText: "Praktikum Siswa di Laboratorium Sains Terpadu",
+    altText: "Praktikum Siswa di Laboratorium Pembelajaran Terpadu",
     uploadedAt: "2026-08-10",
   },
   {
@@ -501,12 +501,12 @@ export const initialMedia: MediaItem[] = [
   },
   {
     id: "med-5",
-    fileName: "video-profil-kampus-2026.mp4",
+    fileName: "video-profil-sekolah-2026.mp4",
     fileUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     fileType: "video",
     fileSize: "45.0 MB",
     category: "Kegiatan",
-    altText: "Video Profil Dokumentasi Kampus dan Keseharian Santri",
+    altText: "Video Profil Dokumentasi Sekolah dan Keseharian Santri",
     uploadedAt: "2026-08-18",
   },
 ];
@@ -703,9 +703,9 @@ export const initialContactMessages: ContactMessage[] = [
     name: "Ibu Nur Laila",
     email: "nurlaila88@yahoo.co.id",
     phone: "085712345678",
-    subject: "Jadwal Visitasi & Tur Kampus",
+    subject: "Jadwal Visitasi & Kunjungan Sekolah",
     message:
-      "Selamat pagi admin. Kami sekeluarga dari Surabaya berencana berkunjung ke kampus Yazzaka akhir pekan ini untuk melihat asrama dan kelas. Apakah perlu reservasi jadwal terlebih dahulu?",
+      "Selamat pagi admin. Kami sekeluarga dari Sigli berencana berkunjung ke unit sekolah Yazzakka akhir pekan ini untuk melihat sarana kelas. Apakah perlu reservasi jadwal terlebih dahulu?",
     submittedAt: "2026-08-20 14:30",
     status: "read",
   },
@@ -714,8 +714,8 @@ export const initialContactMessages: ContactMessage[] = [
 export const initialWebsiteSettings: WebsiteSettings = {
   siteTitle: "Yayasan Yazzakka Aceh - Lembaga Pendidikan Islam Unggul & Berkarakter",
   metaDescription:
-    "Portal resmi Yayasan Yazzakka Aceh. Memadukan kurikulum sains terpadu, tahfiz Al-Qur'an 30 juz, bahasa Arab & Inggris aktif, serta pembinaan karakter kepemimpinan.",
-  keywords: "yayasan yazzakka aceh, pesantren modern yazzakka, sma unggulan, tahfiz quran 30 juz, ppdb 2026, sekolah islam terbaik aceh",
+    "Portal resmi Yayasan Yazzakka Aceh. Memadukan kurikulum pendidikan formal, kesetaraan vokasi, tahfiz Al-Qur'an 30 juz, serta pembinaan karakter generasi qurani.",
+  keywords: "yayasan yazzakka aceh, sekolah islam terpadu, tkit, tpa, pkbm, pesantren peradaban, tahfiz quran 30 juz, ppdb 2026, pendidikan formal sigli",
   ogImage: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
   socialMedia: {
     instagram: "https://instagram.com/yazzakka.official",
@@ -730,7 +730,6 @@ export const initialWebsiteSettings: WebsiteSettings = {
       { label: "Tentang Kami", href: "/tentang-kami" },
       { label: "Program", href: "/program" },
       { label: "Fasilitas", href: "/fasilitas" },
-      { label: "Prestasi", href: "/prestasi" },
       { label: "Berita", href: "/berita" },
       { label: "Agenda", href: "/agenda" },
       { label: "Galeri", href: "/galeri" },
@@ -764,14 +763,6 @@ export const initialUsers: User[] = [
     avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
     createdAt: "2026-02-15",
   },
-  {
-    id: "usr-3",
-    name: "Ahmad Wildan (SPMB Staff)",
-    email: "spmb@yazzakka.sch.id",
-    role: "admission_staff",
-    avatarUrl: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80",
-    createdAt: "2026-03-01",
-  },
 ];
 
 export const initialSections: PageSectionConfig[] = [
@@ -780,8 +771,8 @@ export const initialSections: PageSectionConfig[] = [
   { id: "sec-3", key: "about", title: "Sambutan & Profil", subtitle: "Editorial pengenalan sekolah", isEnabled: true, orderIndex: 3 },
   { id: "sec-4", key: "programs", title: "Program Unggulan", subtitle: "Daftar kurikulum akademik & tahfiz", isEnabled: true, orderIndex: 4 },
   { id: "sec-5", key: "whyus", title: "Keunggulan Yazzakka", subtitle: "Mengapa memilih pendidikan di sini", isEnabled: true, orderIndex: 5 },
-  { id: "sec-6", key: "facilities", title: "Fasilitas Kampus", subtitle: "Galeri sarana prasarana modern", isEnabled: false, orderIndex: 6 },
-  { id: "sec-7", key: "achievements", title: "Prestasi Siswa", subtitle: "Catatan kejuaraan tingkat nasional", isEnabled: true, orderIndex: 7 },
+  { id: "sec-6", key: "facilities", title: "Fasilitas Sekolah", subtitle: "Galeri sarana prasarana modern", isEnabled: false, orderIndex: 6 },
+  { id: "sec-7", key: "achievements", title: "Prestasi Siswa", subtitle: "Catatan kejuaraan tingkat nasional", isEnabled: false, orderIndex: 7 },
   { id: "sec-8", key: "testimonials", title: "Testimoni", subtitle: "Kesan wali murid dan kiprah alumni", isEnabled: true, orderIndex: 8 },
   { id: "sec-9", key: "admission_cta", title: "Banner Konversi PPDB", subtitle: "Ajakan mendaftar siswa baru", isEnabled: true, orderIndex: 9 },
 ];

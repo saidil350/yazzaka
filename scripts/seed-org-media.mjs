@@ -75,12 +75,12 @@ async function seed() {
   const media = [
     {
       id: "med-1",
-      file_name: "kampus-utama-yazzaka.jpg",
+      file_name: "gedung-sekolah-yazzaka.jpg",
       file_url: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
       file_type: "image",
       file_size: "1.8 MB",
       category: "Fasilitas",
-      alt_text: "Gedung Utama dan Halaman Asri Kampus Terpadu Yazzaka",
+      alt_text: "Gedung Utama dan Halaman Asri Sekolah Terpadu Yazzakka",
     },
     {
       id: "med-2",
@@ -89,7 +89,7 @@ async function seed() {
       file_type: "image",
       file_size: "2.1 MB",
       category: "Kegiatan",
-      alt_text: "Aktivitas Halaqah Tahfiz Al-Qur'an Pagi Santri Yazzaka",
+      alt_text: "Aktivitas Halaqah Tahfiz Al-Qur'an Pagi Santri Yazzakka",
     },
     {
       id: "med-3",
@@ -98,7 +98,7 @@ async function seed() {
       file_type: "image",
       file_size: "2.4 MB",
       category: "Fasilitas",
-      alt_text: "Praktikum Siswa di Laboratorium Sains Terpadu",
+      alt_text: "Praktikum Siswa di Laboratorium Pembelajaran Terpadu",
     },
     {
       id: "med-4",
@@ -111,12 +111,12 @@ async function seed() {
     },
     {
       id: "med-5",
-      file_name: "video-profil-kampus-2026.mp4",
+      file_name: "video-profil-sekolah-2026.mp4",
       file_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       file_type: "video",
       file_size: "45.0 MB",
       category: "Kegiatan",
-      alt_text: "Video Profil Dokumentasi Kampus dan Keseharian Santri",
+      alt_text: "Video Profil Dokumentasi Sekolah dan Keseharian Santri",
     },
   ];
 

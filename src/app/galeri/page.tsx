@@ -39,7 +39,7 @@ export default function GalleryPage() {
               Galeri Kegiatan {profile.name}
             </h1>
             <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
-              Merekam dinamika keseharian santri, suasana pembelajaran di kelas, praktikum sains, keasrian kampus, dan kebersamaan ukhuwah.
+              Merekam dinamika keseharian santri, suasana pembelajaran di kelas, keasrian lingkungan sekolah, dan kebersamaan ukhuwah.
             </p>
           </div>
         </section>

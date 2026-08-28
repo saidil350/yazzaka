@@ -70,24 +70,24 @@ export function AdminSidebar({
       title: "Dashboard",
       href: "/admin",
       icon: LayoutDashboard,
-      roles: ["super_admin", "admin", "editor", "admission_staff", "viewer"],
+      roles: ["super_admin", "editor"],
     },
     {
       type: "single",
       title: "Tata Letak Beranda",
       href: "/admin/pages/beranda",
       icon: SlidersHorizontal,
-      roles: ["super_admin", "admin", "editor"],
+      roles: ["super_admin", "editor"],
     },
     {
       type: "group",
       key: "content",
       title: "Konten Landing Page",
       icon: Layers,
-      roles: ["super_admin", "admin", "editor", "admission_staff"],
+      roles: ["super_admin", "editor"],
       items: [
         { label: "Program Pendidikan", href: "/admin/content/program", icon: GraduationCap },
-        { label: "Fasilitas Kampus", href: "/admin/content/fasilitas", icon: Building2 },
+        { label: "Fasilitas Sekolah", href: "/admin/content/fasilitas", icon: Building2 },
         { label: "Prestasi Santri", href: "/admin/content/pengumuman", icon: Trophy },
         { label: "Testimoni Wali & Alumni", href: "/admin/content/testimoni", icon: Quote },
         { label: "Berita & Artikel", href: "/admin/content/berita", icon: FileText },
@@ -98,7 +98,7 @@ export function AdminSidebar({
       key: "settings",
       title: "Identitas & Kontak",
       icon: Settings,
-      roles: ["super_admin", "admin"],
+      roles: ["super_admin"],
       items: [
         { label: "Profil & Slogan", href: "/admin/organization/profil", icon: Globe },
         { label: "Kontak & Sosmed", href: "/admin/settings/contact", icon: PhoneCall },
@@ -116,14 +116,14 @@ export function AdminSidebar({
       title: "Media Library",
       href: "/admin/media",
       icon: ImageIcon,
-      roles: ["super_admin", "admin", "editor"],
+      roles: ["super_admin", "editor"],
     },
     {
       type: "single",
       title: "Manajemen Pengguna",
       href: "/admin/users",
       icon: Users,
-      roles: ["super_admin", "admin"],
+      roles: ["super_admin"],
     },
   ];
 
@@ -182,7 +182,7 @@ export function AdminSidebar({
                 height={40}
                 style={{ width: "auto", height: "auto" }}
                 className={[
-                  "object-contain transition-all duration-200 group-hover:scale-[1.02]",
+                  "w-auto object-contain transition-all duration-200 group-hover:scale-[1.02]",
                   isCollapsed ? "h-7 max-w-[36px]" : "h-8 max-w-[160px]",
                 ].join(" ")}
                 priority
@@ -405,24 +405,15 @@ export function AdminSidebar({
           })}
         </nav>
 
-        {/* ── Footer Link to Public Landing Page & Logout ─────────── */}
+        {/* ── Footer Logout & Sidebar Toggle ───────────────────────── */}
         <div
           className={[
-            "border-t border-[#E8E2D8] bg-white shrink-0 space-y-2",
-            isCollapsed ? "p-2 text-center" : "p-3",
+            "border-t border-[#E8E2D8] bg-white shrink-0",
+            isCollapsed ? "p-2 text-center space-y-2" : "p-3 space-y-2",
           ].join(" ")}
         >
           {isCollapsed ? (
             <div className="flex flex-col items-center gap-2">
-              <Link
-                href="/"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Buka Situs Publik"
-                className="flex items-center justify-center h-10 w-10 rounded-full bg-[#FFF0E5] text-[#C2410C] hover:bg-[#FA6400] hover:text-white border border-[#FED7AA] transition-all shadow-2xs"
-              >
-                <ExternalLink className="h-4 w-4" />
-              </Link>
               <button
                 type="button"
                 onClick={handleLogout}
@@ -445,33 +436,18 @@ export function AdminSidebar({
               )}
             </div>
           ) : (
-            <div className="space-y-2">
-              <Link
-                href="/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={[
-                  "flex items-center justify-between px-4 py-2.5 rounded-full text-xs font-extrabold",
-                  "bg-[#FFF0E5] text-[#C2410C] hover:bg-[#FA6400] hover:text-white border border-[#FED7AA]",
-                  "transition-all duration-150 shadow-2xs group active:scale-95",
-                ].join(" ")}
-              >
-                <span>Buka Situs Publik</span>
-                <ExternalLink className="h-3.5 w-3.5 shrink-0 text-current group-hover:translate-x-0.5 transition-transform" />
-              </Link>
-              <button
-                type="button"
-                onClick={handleLogout}
-                className={[
-                  "w-full flex items-center justify-between px-4 py-2 rounded-full text-xs font-bold",
-                  "bg-rose-50 text-rose-700 hover:bg-rose-500 hover:text-white border border-rose-200",
-                  "transition-all duration-150 shadow-2xs group cursor-pointer active:scale-95",
-                ].join(" ")}
-              >
-                <span>Keluar (Logout)</span>
-                <LogOut className="h-3.5 w-3.5 shrink-0 text-rose-500 group-hover:text-white transition-colors" />
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className={[
+                "w-full flex items-center justify-between px-4 py-2.5 rounded-full text-xs font-extrabold",
+                "bg-rose-50 text-rose-700 hover:bg-rose-500 hover:text-white border border-rose-200",
+                "transition-all duration-150 shadow-2xs group cursor-pointer active:scale-95",
+              ].join(" ")}
+            >
+              <span>Keluar (Logout)</span>
+              <LogOut className="h-3.5 w-3.5 shrink-0 text-rose-500 group-hover:text-white transition-colors" />
+            </button>
           )}
         </div>
       </aside>
