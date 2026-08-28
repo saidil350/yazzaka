@@ -36,10 +36,10 @@ export function FacilitiesSection() {
               <span>Sarana &amp; Lingkungan Terpadu</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
-              Fasilitas Kampus Modern &amp; Asri
+              Fasilitas Sekolah &amp; Pembelajaran Terpadu
             </h2>
             <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
-              Infrastruktur terintegrasi untuk mendukung proses belajar mengajar, praktikum sains, ibadah berjamaah, dan kenyamanan hidup asrama.
+              Infrastruktur terintegrasi untuk mendukung proses belajar mengajar formal, keagamaan, ibadah berjamaah, dan pembinaan karakter santri.
             </p>
           </div>
 

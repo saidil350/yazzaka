@@ -68,7 +68,7 @@ export default function AdminDashboardOverview() {
       accentHover: "hover:border-[#0284C7]/50",
     },
     {
-      title: "Fasilitas Kampus",
+      title: "Fasilitas Sekolah",
       value: facilities.length,
       unit: "Sarana Aktif",
       desc: "Gedung, asrama & lab",

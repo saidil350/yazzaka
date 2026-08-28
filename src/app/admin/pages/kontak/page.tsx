@@ -39,7 +39,7 @@ export default function AdminContactPageSettings() {
           Pengaturan Halaman Kontak &amp; Lokasi
         </h1>
         <p className="text-xs sm:text-sm text-stone-500 mt-1">
-          Kelola alamat fisik kampus dan sematan peta Google Maps pada halaman kontak publik.
+          Kelola alamat fisik yayasan/sekolah dan sematan peta Google Maps pada halaman kontak publik.
         </p>
       </div>
 

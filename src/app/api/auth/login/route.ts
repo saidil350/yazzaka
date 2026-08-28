@@ -87,9 +87,7 @@ export async function POST(request: NextRequest) {
     resetRateLimit(rateKey);
 
     const role = user.role as string;
-    if (
-      !["super_admin", "admin", "editor", "admission_staff", "viewer"].includes(role)
-    ) {
+    if (!["super_admin", "editor"].includes(role)) {
       return NextResponse.json(
         { error: "Peran akun tidak dikenali. Hubungi administrator." },
         { status: 403 }

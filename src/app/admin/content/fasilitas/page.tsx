@@ -103,7 +103,7 @@ export default function AdminFacilitiesPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
-            Content / Fasilitas Kampus
+            Content / Fasilitas Sekolah
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
             Manajemen Fasilitas &amp; Sarpras
@@ -126,7 +126,7 @@ export default function AdminFacilitiesPage() {
             <EmptyState
               icon={Building}
               title="Belum Ada Data Fasilitas"
-              description="Tambahkan sarana gedung, laboratorium sains, asrama, atau perpustakaan kampus."
+              description="Tambahkan sarana gedung, ruang kelas, asrama, atau perpustakaan sekolah."
               action={{
                 label: "Tambah Fasilitas Baru",
                 onClick: handleOpenAdd,

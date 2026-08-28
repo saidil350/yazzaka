@@ -13,8 +13,8 @@ export interface SessionPayload {
   exp: number; // unix detik
 }
 
-export const ADMIN_ROLES: UserRole[] = ["super_admin", "admin"];
-export const EDITOR_ROLES: UserRole[] = ["super_admin", "admin", "editor"];
+export const ADMIN_ROLES: UserRole[] = ["super_admin"];
+export const EDITOR_ROLES: UserRole[] = ["super_admin", "editor"];
 
 function getAuthSecret(): string {
   const secret = process.env.AUTH_SECRET;

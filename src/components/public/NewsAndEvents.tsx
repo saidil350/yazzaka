@@ -31,13 +31,13 @@ export function NewsAndEvents() {
           <div className="max-w-2xl space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EDE9FE] border border-[#DDD6FE] text-[#6D28D9] font-bold text-xs">
               <Newspaper className="h-3.5 w-3.5" />
-              <span>Kabar Terkini &amp; Agenda Akademik</span>
+              <span>Kabar Terkini &amp; Agenda Sekolah</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
-              Warta Kegiatan &amp; Agenda Kampus
+              Warta Kegiatan &amp; Agenda Sekolah
             </h2>
             <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
-              Dokumentasi dinamika kegiatan santri, wawasan parenting islami, dan agenda kegiatan penting.
+              Dokumentasi dinamika kegiatan santri, wawasan parenting islami, dan agenda kegiatan penting yayasan.
             </p>
           </div>
 

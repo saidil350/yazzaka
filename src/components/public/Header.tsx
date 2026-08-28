@@ -36,7 +36,7 @@ const primaryNavLinks: NavLinkItem[] = [
   { label: "Tentang", href: "/tentang-kami", sectionId: "tentang" },
   { label: "Program", href: "/program", sectionId: "program" },
   { label: "Fasilitas", href: "/fasilitas", sectionId: "fasilitas" },
-  { label: "Prestasi", href: "/prestasi", sectionId: "prestasi" },
+  { label: "Kontak", href: "/kontak", sectionId: "kontak" },
 ];
 
 const secondaryNavLinks = [
@@ -48,7 +48,7 @@ const secondaryNavLinks = [
     badge: "Terbaru",
   },
   {
-    label: "Agenda Kampus",
+    label: "Agenda Sekolah",
     href: "/agenda",
     desc: "Kalender event & jadwal PPDB",
     icon: Calendar,
@@ -62,7 +62,7 @@ const secondaryNavLinks = [
   {
     label: "Kontak & Sekretariat",
     href: "/kontak",
-    desc: "Lokasi kampus & nomor layanan",
+    desc: "Lokasi sekolah & nomor layanan",
     icon: MapPin,
   },
 ];
@@ -210,7 +210,7 @@ export function Header() {
             </span>
             <span className="hidden md:inline text-white/30">·</span>
             <span className="hidden md:inline text-stone-300 font-medium text-[11px]">
-              Jalur Prestasi Tahfiz &amp; Beasiswa Sains Tersedia
+              Informasi &amp; Pendaftaran Santri / Siswa Baru
             </span>
           </div>
 

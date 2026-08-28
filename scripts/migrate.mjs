@@ -501,13 +501,10 @@ async function seed() {
       ON CONFLICT (id) DO NOTHING
     `;
   }
-  console.log("✓ articles seeded (3 records)");
-
-  // === EVENTS ===
-  const events = [
-    { id: "evt-1", title: "Open House & Hari Informasi PPDB 2026/2027", description: "Kunjungi kampus Yazzaka secara langsung, temui para pengajar, dan dapatkan informasi lengkap tentang program & biaya pendidikan.", date: "2025-12-07", time: "08:00 - 14:00 WIB", location: "Kampus Utama Yazzaka, Batang", category: "Penerimaan Siswa", cover_image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=80", registration_url: "#daftar", status: "upcoming" },
-    { id: "evt-2", title: "Seminar Parenting: Mendidik Generasi Hafiz di Era Digital", description: "Seminar bersama pakar pendidikan Islam dan psikolog anak tentang strategi mendidik anak hafiz Al-Qur'an yang adaptif di era digital.", date: "2025-11-22", time: "08:30 - 12:00 WIB", location: "Aula Utama Pesantren Yazzaka", category: "Seminar & Parenting", cover_image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?auto=format&fit=crop&w=1000&q=80", registration_url: "#seminar", status: "upcoming" },
-    { id: "evt-3", title: "Wisuda & Haflah Akhirussanah ke-12 Yazzaka", description: "Perayaan wisuda santri angkatan ke-12 disertai penampilan seni, pameran karya siswa, dan penyerahan ijazah.", date: "2025-06-15", time: "07:00 - 17:00 WIB", location: "Kampus Yazzaka & Area Terbuka", category: "Wisuda & Pameran", cover_image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=80", status: "completed" },
+  console.log("✓ articl  const events = [
+    { id: "evt-1", title: "Open House & Hari Informasi PPDB 2026/2027", description: "Kunjungi sekolah Yazzakka secara langsung, temui para pengajar, dan dapatkan informasi lengkap tentang program & biaya pendidikan.", date: "2025-12-07", time: "08:00 - 14:00 WIB", location: "Kompleks Utama Yazzakka, Sigli", category: "Penerimaan Siswa", cover_image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=80", registration_url: "#daftar", status: "upcoming" },
+    { id: "evt-2", title: "Seminar Parenting: Mendidik Generasi Hafiz di Era Digital", description: "Seminar bersama pakar pendidikan Islam dan psikolog anak tentang strategi mendidik anak hafiz Al-Qur'an yang adaptif di era digital.", date: "2025-11-22", time: "08:30 - 12:00 WIB", location: "Aula Utama Yayasan Yazzakka", category: "Seminar & Parenting", cover_image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?auto=format&fit=crop&w=1000&q=80", registration_url: "#seminar", status: "upcoming" },
+    { id: "evt-3", title: "Wisuda & Haflah Akhirussanah ke-12 Yazzaka", description: "Perayaan wisuda santri angkatan ke-12 disertai penampilan seni, pameran karya siswa, dan penyerahan ijazah.", date: "2025-06-15", time: "07:00 - 17:00 WIB", location: "Sekolah Yazzakka & Area Terbuka", category: "Wisuda & Pameran", cover_image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=80", status: "completed" },
   ];
 
   for (const e of events) {
@@ -521,7 +518,7 @@ async function seed() {
 
   // === TESTIMONIALS ===
   const testimonials = [
-    { id: "test-1", quote: "Anak saya berhasil menghafal 30 juz dalam 2,5 tahun sekaligus meraih nilai UN tertinggi di kelas. Yazzaka membuktikan bahwa Islam dan sains bisa berjalan beriringan.", name: "Hj. Siti Maryam", role: "Wali Murid", photo_url: "https://images.unsplash.com/photo-1566753323558-f4e0952af115?auto=format&fit=crop&w=400&q=80", graduation_year: undefined, child_name: "Ahmad Fauzan (Kelas XII IPA)", is_featured: true },
+    { id: "test-1", quote: "Anak saya berhasil menghafal 30 juz dalam 2,5 tahun sekaligus meraih prestasi unggul di kelas. Yazzaka membuktikan bahwa Islam dan sains bisa berjalan beriringan.", name: "Hj. Siti Maryam", role: "Wali Murid", photo_url: "https://images.unsplash.com/photo-1566753323558-f4e0952af115?auto=format&fit=crop&w=400&q=80", graduation_year: undefined, child_name: "Ahmad Fauzan (Kelas Santri)", is_featured: true },
     { id: "test-2", quote: "Lingkungan Yazzaka membentuk saya menjadi pribadi yang mandiri, disiplin, dan punya visi jauh ke depan. Sekarang saya berhasil meraih beasiswa penuh ke Universitas Al-Azhar Mesir.", name: "Muhammad Ilyas Al-Farizi", role: "Alumni", photo_url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80", graduation_year: 2023, is_featured: true },
     { id: "test-3", quote: "Belajar di Yazzaka itu berbeda. Gurunya tidak hanya mengajar ilmu, tapi juga memberikan teladan akhlak setiap hari. Saya merasa sangat siap untuk jenjang berikutnya.", name: "Fathimah Azzahra Hidayat", role: "Siswa Aktif", photo_url: "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=400&q=80", is_featured: true },
   ];
@@ -561,11 +558,11 @@ async function seed() {
       id, site_title, meta_description, keywords, og_image, social_media, navigation
     ) VALUES (
       'settings-yazzaka',
-      'SMA & Pesantren Modern Yazzaka — Generasi Unggul Berkarakter',
-      'Sekolah Islam terpadu terbaik di Jawa Tengah. Program Tahfiz, Sains, Bahasa Internasional, dan Kepemimpinan untuk mencetak generasi unggul.',
-      'pesantren modern, sekolah islam, tahfiz quran, sma boarding school, yazzaka batang',
+      'Yayasan & Pesantren Yazzakka Aceh — Generasi Unggul Berkarakter',
+      'Lembaga pendidikan Islam terpadu dan sekolah formal di Sigli Aceh. Program Tahfiz, Karakter Islami, Bahasa Arab, dan Kepemimpinan untuk mencetak generasi unggul.',
+      'pesantren peradaban, sekolah islam, tahfiz quran, yayasan yazzakka aceh, sigli pidie',
       '/og-image.jpg',
-      '{"instagram":"https://instagram.com/yazzaka.official","youtube":"https://youtube.com/@YazzakaOfficial","facebook":"https://facebook.com/yazzaka.official","tiktok":"https://tiktok.com/@yazzaka.official","linkedin":""}',
+      '{"instagram":"https://instagram.com/yazzakka.official","youtube":"https://youtube.com/@YazzakaOfficial","facebook":"https://facebook.com/yazzakka.official","tiktok":"https://tiktok.com/@yazzakka.official","linkedin":""}',
       '{"headerLinks":[{"label":"Beranda","href":"/"},{"label":"Tentang Kami","href":"/tentang-kami"},{"label":"Program","href":"/program"},{"label":"Fasilitas","href":"/fasilitas"},{"label":"Prestasi","href":"/prestasi"},{"label":"Berita","href":"/berita"}],"footerLinks":[{"label":"Kebijakan Privasi","href":"/privasi"},{"label":"Sitemap","href":"/sitemap"}]}'
     ) ON CONFLICT (id) DO NOTHING
   `;
@@ -579,8 +576,7 @@ async function seed() {
     { id: "sec-programs", key: "programs", title: "Program Unggulan", subtitle: "Daftar program pendidikan", is_enabled: true, order_index: 4 },
     { id: "sec-why", key: "why", title: "Mengapa Yazzaka", subtitle: "Keunggulan kompetitif sekolah", is_enabled: true, order_index: 5 },
     { id: "sec-facilities", key: "facilities", title: "Fasilitas", subtitle: "Sarana & prasarana pendidikan", is_enabled: true, order_index: 6 },
-    { id: "sec-achievements", key: "achievements", title: "Prestasi", subtitle: "Raihan penghargaan santri", is_enabled: true, order_index: 7 },
-    { id: "sec-news", key: "news", title: "Berita & Agenda", subtitle: "Info terbaru dari kampus", is_enabled: true, order_index: 8 },
+    { id: "sec-news", key: "news", title: "Berita & Agenda", subtitle: "Info terbaru dari sekolah", is_enabled: true, order_index: 8 },
     { id: "sec-testimonials", key: "testimonials", title: "Testimoni", subtitle: "Kata wali murid & alumni", is_enabled: true, order_index: 9 },
     { id: "sec-cta", key: "cta", title: "Ajakan Pendaftaran", subtitle: "Call to action pendaftaran PPDB", is_enabled: true, order_index: 10 },
   ];

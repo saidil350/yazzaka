@@ -32,10 +32,10 @@ export default function EventsPage() {
               <span>Kalender Akademik &amp; Kegiatan</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
-              Agenda &amp; Kegiatan Kampus
+              Agenda &amp; Kegiatan Sekolah
             </h1>
             <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
-              Jadwal pelaksanaan penerimaan santri, seminar parenting, wisuda tahfiz, haflah khotmil Quran, dan kegiatan kesiswaan.
+              Jadwal pelaksanaan penerimaan santri/siswa, seminar parenting, wisuda tahfiz, haflah khotmil Quran, dan kegiatan kesiswaan.
             </p>
           </div>
         </section>

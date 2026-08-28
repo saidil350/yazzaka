@@ -78,7 +78,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setCurrentUser(null);
   };
 
-  const role: UserRole = currentUser?.role ?? "viewer";
+  const role: UserRole = currentUser?.role ?? "editor";
 
   const hasPermission = (allowedRoles: UserRole[]): boolean => {
     if (!currentUser) return false;

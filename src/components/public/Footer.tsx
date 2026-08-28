@@ -222,8 +222,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/prestasi" className="hover:text-[#FA6400] transition-colors">
-                  Galeri Prestasi Santri
+                <Link href="/pendaftaran" className="hover:text-[#FA6400] transition-colors">
+                  Pendaftaran &amp; Admisi
                 </Link>
               </li>
               <li>
