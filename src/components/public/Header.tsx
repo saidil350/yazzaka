@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useActiveSection } from "@/lib/hooks/useActiveSection";
 import {
@@ -79,12 +79,19 @@ const quickUnits = [
 export function Header() {
   const { profile } = useSchoolData();
   const pathname = usePathname();
-  const router = useRouter();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // Tutup mobile drawer otomatis saat rute berubah (pola state render React)
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setMobileMenuOpen(false);
+    setDropdownOpen(false);
+  }
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -118,12 +125,6 @@ export function Header() {
       document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
-
-  // Tutup mobile drawer otomatis saat rute berubah
-  useEffect(() => {
-    setMobileMenuOpen(false);
-    setDropdownOpen(false);
-  }, [pathname]);
 
   // Tutup dropdown dan mobile drawer saat Escape ditekan atau klik di luar
   useEffect(() => {

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { use } from "react";
 import { CheckCircle2, AlertCircle, Info, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -68,7 +69,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useToast() {
-  const context = React.useContext(ToastContext);
+  const context = use(ToastContext);
   if (!context) {
     throw new Error("useToast must be used within ToastProvider");
   }

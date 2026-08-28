@@ -26,6 +26,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   LogOut,
+  UserPlus,
 } from "lucide-react";
 
 export interface AdminSidebarProps {
@@ -86,6 +87,7 @@ export function AdminSidebar({
       icon: Layers,
       roles: ["super_admin", "editor"],
       items: [
+        { label: "Penerimaan Santri (PPDB)", href: "/admin/content/pendaftaran", icon: UserPlus },
         { label: "Program Pendidikan", href: "/admin/content/program", icon: GraduationCap },
         { label: "Fasilitas Sekolah", href: "/admin/content/fasilitas", icon: Building2 },
         { label: "Prestasi Santri", href: "/admin/content/pengumuman", icon: Trophy },
@@ -204,47 +206,6 @@ export function AdminSidebar({
           )}
         </div>
 
-        {/* ── Active User Profile Strip ─────────────────────────────── */}
-        <div
-          className={[
-            "py-2.5 border-b border-[#E8E2D8] bg-white/60 shrink-0",
-            isCollapsed ? "px-2 text-center" : "px-3.5",
-          ].join(" ")}
-        >
-          {isCollapsed ? (
-            <div
-              className="flex justify-center"
-              title={`${currentUser?.name ?? "Administrator"} (${role.replace("_", " ")})`}
-            >
-              <div className="relative">
-                <div className="h-8 w-8 rounded-full bg-[#FFF0E5] border border-[#FED7AA] flex items-center justify-center text-[#FA6400] text-xs font-extrabold shadow-2xs">
-                  {currentUser?.name?.charAt(0) ?? "A"}
-                </div>
-                <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-emerald-500 border border-white" />
-              </div>
-            </div>
-          ) : (
-            <div className="flex items-center justify-between gap-2">
-              <div className="min-w-0 flex items-center gap-2.5">
-                <div className="h-7 w-7 rounded-full bg-[#FFF0E5] border border-[#FED7AA] flex items-center justify-center text-[#FA6400] text-xs font-extrabold shrink-0 shadow-2xs">
-                  {currentUser?.name?.charAt(0) ?? "A"}
-                </div>
-                <div className="min-w-0">
-                  <p className="text-xs font-extrabold text-[#1E2330] truncate">
-                    {currentUser?.name ?? "Administrator"}
-                  </p>
-                  <p className="text-[10px] text-stone-500 font-bold capitalize truncate">
-                    {role.replace("_", " ")}
-                  </p>
-                </div>
-              </div>
-              <span
-                className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(52,211,153,0.6)] shrink-0"
-                title="Online"
-              />
-            </div>
-          )}
-        </div>
 
         {/* ── Navigation Menu (Scroll Mandiri & Bebas Bug) ──────────── */}
         <nav

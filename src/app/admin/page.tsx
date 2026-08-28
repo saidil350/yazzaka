@@ -26,6 +26,9 @@ import {
   Users,
   Award,
   BookOpen,
+  UserPlus,
+  Newspaper,
+  FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -47,6 +50,8 @@ export default function AdminDashboardOverview() {
     testimonials,
     sections,
     messages,
+    articles,
+    admission,
     toggleSection,
   } = useSchoolData();
   const { currentUser } = useAuth();
@@ -55,37 +60,27 @@ export default function AdminDashboardOverview() {
   const unreadMessages = messages.filter((m) => m.status === "new");
   const recentMessages = messages.slice(0, 5);
 
-  // 4 KPI Utama yang secara langsung terhubung ke Landing Page
+  // KPI Utama yang secara langsung terhubung ke Landing Page
   const landingKpis = [
     {
-      title: "Program Pendidikan",
-      value: programs.length,
-      unit: "Unit Jenjang",
-      desc: "Kurikulum & jenjang santri",
-      icon: GraduationCap,
-      href: "/admin/content/program",
-      badgeColor: "bg-[#E0F2FE] text-[#0369A1] border-[#BAE6FD]",
-      accentHover: "hover:border-[#0284C7]/50",
-    },
-    {
-      title: "Fasilitas Sekolah",
-      value: facilities.length,
-      unit: "Sarana Aktif",
-      desc: "Gedung, asrama & lab",
-      icon: Building2,
-      href: "/admin/content/fasilitas",
+      title: "Penerimaan Santri (PPDB)",
+      value: admission.isOpen ? "Aktif" : "Tutup",
+      unit: admission.academicYear,
+      desc: admission.periodName,
+      icon: UserPlus,
+      href: "/admin/content/pendaftaran",
       badgeColor: "bg-[#FFF0E5] text-[#FA6400] border-[#FED7AA]",
       accentHover: "hover:border-[#FA6400]/50",
     },
     {
-      title: "Prestasi & Medali",
-      value: achievements.length,
-      unit: "Capaian Juara",
-      desc: "Prestasi daerah & nasional",
-      icon: Trophy,
-      href: "/admin/content/pengumuman",
-      badgeColor: "bg-[#E6F4EA] text-[#15803D] border-[#BDE7CC]",
-      accentHover: "hover:border-[#16A34A]/50",
+      title: "Berita & Publikasi",
+      value: articles.length,
+      unit: "Artikel",
+      desc: "Liputan & wawasan santri",
+      icon: Newspaper,
+      href: "/admin/content/berita",
+      badgeColor: "bg-[#FEF3C7] text-[#D97706] border-[#FDE68A]",
+      accentHover: "hover:border-[#D97706]/50",
     },
     {
       title: "Testimoni Publik",
@@ -94,40 +89,33 @@ export default function AdminDashboardOverview() {
       desc: "Kesan wali santri & alumni",
       icon: Quote,
       href: "/admin/content/testimoni",
-      badgeColor: "bg-[#EDE9FE] text-[#6D28D9] border-[#DDD6FE]",
-      accentHover: "hover:border-[#7C3AED]/50",
+      badgeColor: "bg-[#F3E8FF] text-[#9333EA] border-[#E9D5FF]",
+      accentHover: "hover:border-[#9333EA]/50",
     },
   ];
 
   // Modul Pengeditan Cepat Landing Page
   const landingModules = [
     {
-      title: "Profil & Hero Utama",
-      desc: "Nama pesantren, slogan hero, sambutan pimpinan, dan visi-misi.",
+      title: "Penerimaan Santri (PPDB)",
+      desc: "Gelombang pendaftaran, tahun ajaran, rincian biaya, dan FAQ.",
+      href: "/admin/content/pendaftaran",
+      icon: UserPlus,
+      badge: "Seksi PPDB",
+    },
+    {
+      title: "Berita & Artikel Publikasi",
+      desc: "Tulis, edit, dan terbitkan artikel wawasan atau liputan kegiatan.",
+      href: "/admin/content/berita",
+      icon: Newspaper,
+      badge: "Seksi Berita",
+    },
+    {
+      title: "Profil & Identitas Lembaga",
+      desc: "Nama pesantren, slogan hero, sambutan pimpinan, dan legalitas.",
       href: "/admin/organization/profil",
       icon: Globe,
       badge: "Hero & About",
-    },
-    {
-      title: "Program & Kurikulum",
-      desc: "Daftar unit jenjang pendidikan (SMP, SMA, Tahfiz, Madrasah).",
-      href: "/admin/content/program",
-      icon: GraduationCap,
-      badge: "Seksi Program",
-    },
-    {
-      title: "Galeri Fasilitas",
-      desc: "Sarana asrama, masjid, laboratorium sains, dan fasilitas santri.",
-      href: "/admin/content/fasilitas",
-      icon: Building2,
-      badge: "Seksi Fasilitas",
-    },
-    {
-      title: "Piagam & Prestasi",
-      desc: "Daftar penghargaan santri tingkat daerah, nasional & internasional.",
-      href: "/admin/content/pengumuman",
-      icon: Trophy,
-      badge: "Seksi Prestasi",
     },
     {
       title: "Testimoni & Ulasan",
@@ -239,12 +227,12 @@ export default function AdminDashboardOverview() {
         </div>
       )}
 
-      {/* ── 3. Top Metric Cards (4 KPI Cards in Shadcn UI Standard) ── */}
+      {/* ── 3. Top Metric Cards (3 KPI Utama) ── */}
       <section aria-labelledby="kpi-section-heading">
         <h2 id="kpi-section-heading" className="sr-only">
           Statistik Konten Landing Page
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {landingKpis.map((kpi) => {
             const Icon = kpi.icon;
             return (

@@ -5,17 +5,21 @@ import { cn } from "@/lib/utils";
  * Separator — shadcn/ui standard
  * Renders a thin horizontal or vertical dividing line.
  */
-export const Separator = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & {
-    orientation?: "horizontal" | "vertical";
-    decorative?: boolean;
-  }
->(
-  (
-    { className, orientation = "horizontal", decorative = true, ...props },
-    ref
-  ) => (
+export interface SeparatorProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  orientation?: "horizontal" | "vertical";
+  decorative?: boolean;
+  ref?: React.Ref<HTMLDivElement>;
+}
+
+export function Separator({
+  ref,
+  className,
+  orientation = "horizontal",
+  decorative = true,
+  ...props
+}: SeparatorProps) {
+  return (
     <div
       ref={ref}
       role={decorative ? "none" : "separator"}
@@ -27,6 +31,5 @@ export const Separator = React.forwardRef<
       )}
       {...props}
     />
-  )
-);
-Separator.displayName = "Separator";
+  );
+}

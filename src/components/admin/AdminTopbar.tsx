@@ -13,7 +13,6 @@ import {
   Bell,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 
 export function AdminTopbar({
   isCollapsed,
@@ -25,7 +24,7 @@ export function AdminTopbar({
   onToggleMobileSidebar?: () => void;
 }) {
   const pathname = usePathname();
-  const { role } = useAuth();
+  const { role, currentUser } = useAuth();
   const { resetToDefault, messages } = useSchoolData();
   const { toast } = useToast();
 
@@ -85,13 +84,23 @@ export function AdminTopbar({
 
       {/* ── Right: Tools ──────────────────────────────── */}
       <div className="flex items-center gap-2.5 shrink-0">
-        {/* Current Role Badge (read-only, dikelola server-side) */}
-        <Badge
-          variant="secondary"
-          className="h-9 px-3 rounded-full text-xs font-extrabold uppercase border-2 border-[#E8E2D8] bg-white text-[#1E2330]"
-        >
-          {role.replace("_", " ")}
-        </Badge>
+        {/* Active User Profile Pill */}
+        <div className="flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full border-2 border-[#E8E2D8] bg-white shadow-2xs">
+          <div className="relative shrink-0">
+            <div className="h-7 w-7 rounded-full bg-[#FFF0E5] border border-[#FED7AA] flex items-center justify-center text-[#FA6400] text-xs font-extrabold shadow-2xs">
+              {currentUser?.name?.charAt(0) ?? "A"}
+            </div>
+            <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-emerald-500 border border-white" />
+          </div>
+          <div className="min-w-0 hidden sm:block text-left">
+            <p className="text-xs font-extrabold text-[#1E2330] leading-none truncate max-w-[140px]">
+              {currentUser?.name ?? "Super Admin Yazzaka"}
+            </p>
+            <p className="text-[10px] text-stone-500 font-bold capitalize leading-tight mt-0.5 truncate">
+              {role.replace("_", " ")}
+            </p>
+          </div>
+        </div>
 
         {/* Message Notification Bell */}
         {newMessages > 0 ? (

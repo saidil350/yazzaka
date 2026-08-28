@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Modal } from "@/components/ui/modal";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 export default function AdminFacilitiesPage() {
   const { facilities, addFacility, updateFacility, deleteFacility } = useSchoolData();
@@ -256,10 +257,12 @@ export default function AdminFacilitiesPage() {
             />
           </div>
 
-          <Input
-            label="URL Foto Fasilitas"
+          <ImageUpload
+            label="Foto Fasilitas"
             value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
+            onChange={(val) => setImageUrl(val)}
+            placeholder="https://images.unsplash.com/... atau unggah gambar"
+            helperText="Unggah foto fasilitas (drag & drop) atau tempelkan tautan URL gambar."
           />
 
           <Textarea

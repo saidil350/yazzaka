@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { EmptyState } from "@/components/ui/empty-state";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 export default function AdminMediaPage() {
   const { media, addMedia, deleteMedia } = useSchoolData();
@@ -255,13 +256,28 @@ export default function AdminMediaPage() {
             onChange={(e) => setFileName(e.target.value)}
           />
 
-          <Input
-            label="URL File (Link Gambar / Dokumen / Video)"
-            required
-            placeholder="https://images.unsplash.com/..."
-            value={fileUrl}
-            onChange={(e) => setFileUrl(e.target.value)}
-          />
+          {fileType === "image" ? (
+            <ImageUpload
+              label="Berkas Gambar / Foto"
+              value={fileUrl}
+              onChange={(val) => {
+                setFileUrl(val);
+                if (!fileName && val) {
+                  setFileName(`media-${Date.now()}.png`);
+                }
+              }}
+              placeholder="https://images.unsplash.com/... atau unggah berkas"
+              helperText="Unggah gambar via drag & drop atau masukkan URL gambar."
+            />
+          ) : (
+            <Input
+              label="URL File (Link Dokumen / Video URL)"
+              required
+              placeholder="https://example.com/file.pdf atau link video"
+              value={fileUrl}
+              onChange={(e) => setFileUrl(e.target.value)}
+            />
+          )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
