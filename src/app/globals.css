@@ -17,7 +17,7 @@
   --color-popover:                hsl(0 0% 100%);
   --color-popover-foreground:     hsl(222 25% 15%);
 
-  --color-primary:                hsl(23 98% 50%);     /* Headspace Signature Orange #FA6400 */
+  --color-primary:                hsl(161 72% 32%);     /* Yazzaka Garden Green */
   --color-primary-foreground:     hsl(0 0% 100%);
 
   --color-secondary:              hsl(38 30% 92%);     /* Warm Oat #F3EFE6 */
@@ -176,6 +176,23 @@
   --border:                  hsl(222 20% 22%);
   --input:                   hsl(222 20% 22%);
   --ring:                    hsl(23 98% 52%);
+}
+
+/* ── Landing polish: tactile, responsive, and intentionally playful ── */
+@layer utilities {
+  .landing-surface { background: var(--background); }
+  .landing-section { content-visibility: auto; contain-intrinsic-size: 720px; }
+  .interactive-lift { transition: transform 180ms var(--ease-standard), border-color 180ms var(--ease-standard), box-shadow 180ms var(--ease-standard); }
+  .interactive-lift:hover { transform: translateY(-4px); box-shadow: 0 12px 24px hsl(222 25% 15% / .09); }
+  .interactive-lift:active { transform: translateY(-1px); }
+}
+
+@media (max-width: 640px) {
+  .landing-section { scroll-margin-top: 5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 
 /* ── Reset & Base ────────────────────────────────────────── */

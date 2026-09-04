@@ -263,8 +263,7 @@ export function Header() {
                 alt={profile.name}
                 width={160}
                 height={40}
-                style={{ width: "auto", height: "auto" }}
-                className="h-10 w-auto object-contain"
+                className="h-10 w-[160px] object-contain object-left"
                 priority
               />
             </div>
@@ -437,8 +436,7 @@ export function Header() {
                   alt={profile.name}
                   width={140}
                   height={35}
-                  style={{ width: "auto", height: "auto" }}
-                  className="h-8 w-auto object-contain"
+                  className="h-8 w-[140px] object-contain object-left"
                 />
               </div>
               <button

@@ -25,7 +25,7 @@ export function FacilitiesSection() {
       : published.filter((f) => f.category === selectedCategory);
 
   return (
-    <section id="fasilitas" className="py-14 lg:py-16 bg-[#FFFDF9] border-b border-[#E8E2D8] scroll-mt-24">
+    <section id="fasilitas" className="landing-section py-16 lg:py-20 bg-background border-b border-border scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
         {/* Section Header */}
@@ -94,7 +94,7 @@ export function FacilitiesSection() {
             {filtered.map((fac) => (
               <div
                 key={fac.id}
-                className="bg-white rounded-3xl border-2 border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all flex flex-col justify-between group"
+                className="interactive-lift bg-card rounded-[1.25rem] border border-border overflow-hidden flex flex-col justify-between group"
               >
                 <div>
                   <div className="h-48 relative overflow-hidden bg-stone-200">
