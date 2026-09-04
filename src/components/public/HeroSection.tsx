@@ -13,7 +13,7 @@ export function HeroSection() {
     <section
       id="beranda"
       aria-labelledby="hero-heading"
-      className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8] scroll-mt-24"
+      className="landing-section relative overflow-hidden bg-background py-12 sm:py-16 lg:py-20 border-b border-border scroll-mt-24"
     >
       {/* ── Headspace Subtle Playful Background Blobs ────────────── */}
       <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[#FFEBD4]/60 blur-3xl pointer-events-none" />

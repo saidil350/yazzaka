@@ -66,7 +66,7 @@ export function ProgramsSection() {
   };
 
   return (
-    <section id="program" className="py-14 lg:py-16 bg-[#FAF6EE] border-b border-[#E8E2D8] scroll-mt-24">
+    <section id="program" className="landing-section py-16 lg:py-20 bg-secondary/35 border-b border-border scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
         {/* Section Header */}
@@ -138,7 +138,7 @@ export function ProgramsSection() {
                 <div
                   key={prog.id}
                   className={[
-                    "rounded-3xl border-2 overflow-hidden flex flex-col justify-between transition-all duration-200 group shadow-xs hover:-translate-y-1 hover:shadow-md",
+                    "interactive-lift rounded-[1.25rem] border overflow-hidden flex flex-col justify-between group shadow-xs",
                     isSpecialWakaf
                       ? "bg-[#FFF9F2] border-[#FA6400] ring-2 ring-[#FA6400]/20"
                       : "bg-white border-[#E8E2D8] hover:border-[#FA6400]/50",
