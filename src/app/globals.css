@@ -7,9 +7,9 @@
    ============================================================ */
 
 @theme {
-  /* ── Core Semantic Variables (Headspace Warm Cream & Deep Charcoal) ─ */
-  --color-background:             hsl(40 45% 97.5%);   /* Warm Cream / Vanilla #FCF8F1 */
-  --color-foreground:             hsl(222 25% 15%);     /* Deep Mindful Charcoal #1E2330 */
+  /* ── Yazzaka Aceh: clean, warm, academic brand system ─ */
+  --color-background:             hsl(0 0% 100%);      /* #FFFFFF */
+  --color-foreground:             hsl(0 0% 11%);       /* #1C1C1C */
 
   --color-card:                   hsl(0 0% 100%);
   --color-card-foreground:        hsl(222 25% 15%);
@@ -17,7 +17,7 @@
   --color-popover:                hsl(0 0% 100%);
   --color-popover-foreground:     hsl(222 25% 15%);
 
-  --color-primary:                hsl(161 72% 32%);     /* Yazzaka Garden Green */
+  --color-primary:                hsl(14 84% 55%);      /* Yazzaka Orange #EE6D2B */
   --color-primary-foreground:     hsl(0 0% 100%);
 
   --color-secondary:              hsl(38 30% 92%);     /* Warm Oat #F3EFE6 */
@@ -113,8 +113,17 @@
   --ring:                    hsl(23 98% 50%);
   --radius:                  1.5rem;
 
-  /* Brand aliases */
-  --brand:                   hsl(23 98% 50%);
+  /* Yazzaka Aceh brand aliases */
+  --brand-orange:            #EE6D2B;
+  --brand-orange-dark:       #D95B1F;
+  --brand-orange-light:      #FFF1E9;
+  --brand-teal:              #008080;
+  --brand-teal-bright:       #06A6B2;
+  --brand-teal-light:        #EAF9F9;
+  --brand-dark:              #1C1C1C;
+  --surface-warm:            #FFF9F5;
+  --surface-teal:            #F0FAFA;
+  --brand:                   hsl(14 84% 55%);
   --brand-hover:             hsl(23 95% 44%);
   --brand-light:             hsl(28 100% 94%);
   --brand-dark:              hsl(222 30% 12%);
