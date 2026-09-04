@@ -17,7 +17,7 @@
   --color-popover:                hsl(0 0% 100%);
   --color-popover-foreground:     hsl(222 25% 15%);
 
-  --color-primary:                hsl(180 100% 25%);     /* Yazzakka Teal #008080 */
+  --color-primary:                hsl(14 84% 55%);      /* Yazzaka Orange #EE6D2B */
   --color-primary-foreground:     hsl(0 0% 100%);
 
   --color-secondary:              hsl(38 30% 92%);     /* Warm Oat #F3EFE6 */
@@ -34,10 +34,10 @@
 
   --color-border:                 hsl(38 25% 88%);
   --color-input:                  hsl(38 25% 88%);
-  --color-ring:                   hsl(180 100% 25%);
+  --color-ring:                   hsl(23 98% 50%);
 
   /* ── Headspace Brand & Category Color Palette ────────────── */
-  --color-brand:                  hsl(180 100% 25%);     /* Yazzakka Teal */
+  --color-brand:                  hsl(23 98% 50%);     /* Headspace Orange */
   --color-brand-hover:            hsl(23 95% 44%);
   --color-brand-light:            hsl(28 100% 94%);    /* Peach Glow */
   --color-brand-dark:             hsl(222 30% 12%);    /* Deep Mindful Navy */
@@ -92,19 +92,19 @@
 
 /* ── CSS Custom Properties (Root & Semantic Aliases) ────── */
 :root {
-  --background:              hsl(180 25% 97%);
+  --background:              hsl(40 45% 97.5%);
   --foreground:              hsl(222 25% 15%);
   --card:                    hsl(0 0% 100%);
   --card-foreground:         hsl(222 25% 15%);
   --popover:                 hsl(0 0% 100%);
   --popover-foreground:      hsl(222 25% 15%);
-  --primary:                 hsl(180 100% 25%);
+  --primary:                 hsl(23 98% 50%);
   --primary-foreground:      hsl(0 0% 100%);
   --secondary:               hsl(38 30% 92%);
   --secondary-foreground:    hsl(222 25% 15%);
   --muted:                   hsl(38 25% 93%);
   --muted-foreground:        hsl(220 13% 46%);
-  --accent:                  hsl(180 100% 25%);
+  --accent:                  hsl(23 98% 50%);
   --accent-foreground:       hsl(0 0% 100%);
   --destructive:             hsl(6 85% 58%);
   --destructive-foreground:  hsl(0 0% 100%);
@@ -154,9 +154,9 @@
   --border-strong:           hsl(38 25% 78%);
   --border-inverse:          rgba(255, 255, 255, 0.12);
   --color-heading:           hsl(222 25% 15%);     /* Deep Charcoal #1E2330 for headings */
-  --color-primary:           hsl(180 100% 25%);     /* Yazzakka Teal #008080 */
+  --color-primary:           hsl(23 98% 50%);      /* Headspace Signature Orange #FA6400 */
   --color-primary-dark:      hsl(23 95% 40%);
-  --color-accent:            hsl(180 100% 25%);     /* Yazzakka Teal for accents */
+  --color-accent:            hsl(23 98% 50%);      /* Headspace Orange for accents */
   --color-accent-hover:      hsl(23 95% 44%);
   --color-accent-light:      hsl(28 100% 94%);
   --color-danger:            hsl(6 85% 58%);

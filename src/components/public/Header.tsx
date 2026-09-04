@@ -200,13 +200,13 @@ export function Header() {
     <>
       {/* ── Top Announcement Sub-Bar ───────────── */}
       <div
-        className="bg-[#1C1C1C] text-[#FAF6EE] border-b border-white/10 relative z-50"
+        className="bg-[#262B35] text-[#FAF6EE] border-b border-white/10 relative z-50"
         role="banner"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between text-xs">
           <div className="flex items-center gap-2.5">
             {admission.isOpen ? (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#008080]/25 text-[#FFB07A] font-bold text-[11px]">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FA6400]/25 text-[#FFB07A] font-bold text-[11px]">
                 <Sparkles className="h-3 w-3 animate-spin" style={{ animationDuration: "6s" }} />
                 PPDB {admission.academicYear || "2026/2027"} Dibuka
               </span>
@@ -245,8 +245,8 @@ export function Header() {
         className={[
           "sticky top-0 z-40 backdrop-blur-md transition-all duration-200",
           isScrolled
-            ? "bg-[#FFFFFF]/95 shadow-[0_4px_20px_rgba(30,35,48,0.06)] border-b border-[#E8E2D8]"
-            : "bg-[#FFFFFF]/90 border-b border-[#E8E2D8]/80",
+            ? "bg-[#FCF8F1]/95 shadow-[0_4px_20px_rgba(30,35,48,0.06)] border-b border-[#E8E2D8]"
+            : "bg-[#FCF8F1]/90 border-b border-[#E8E2D8]/80",
         ].join(" ")}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
@@ -282,7 +282,7 @@ export function Header() {
                   className={[
                     "px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 whitespace-nowrap",
                     active
-                      ? "bg-white text-[#008080] shadow-xs"
+                      ? "bg-white text-[#FA6400] shadow-xs"
                       : "text-stone-600 hover:text-[#1E2330] hover:bg-white/60",
                   ].join(" ")}
                 >
@@ -301,14 +301,14 @@ export function Header() {
                 className={[
                   "px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 whitespace-nowrap flex items-center gap-1 cursor-pointer",
                   isSecondaryActive || dropdownOpen
-                    ? "bg-white text-[#008080] shadow-xs"
+                    ? "bg-white text-[#FA6400] shadow-xs"
                     : "text-stone-600 hover:text-[#1E2330] hover:bg-white/60",
                 ].join(" ")}
               >
                 <span>Informasi</span>
                 <ChevronDown
                   className={`h-3.5 w-3.5 transition-transform duration-200 ${
-                    dropdownOpen ? "rotate-180 text-[#008080]" : "text-stone-400"
+                    dropdownOpen ? "rotate-180 text-[#FA6400]" : "text-stone-400"
                   }`}
                 />
               </button>
@@ -328,13 +328,13 @@ export function Header() {
                           className={[
                             "flex items-start gap-2.5 p-2.5 rounded-xl transition-all",
                             isCurrent
-                              ? "bg-[#FFF0E5] text-[#008080]"
+                              ? "bg-[#FFF0E5] text-[#FA6400]"
                               : "text-[#1E2330] hover:bg-[#FAF6EE]",
                           ].join(" ")}
                         >
                           <div
                             className={`p-1.5 rounded-lg shrink-0 mt-0.5 ${
-                              isCurrent ? "bg-[#008080] text-white" : "bg-[#FAF6EE] text-[#008080]"
+                              isCurrent ? "bg-[#FA6400] text-white" : "bg-[#FAF6EE] text-[#FA6400]"
                             }`}
                           >
                             <Icon className="h-4 w-4" />
@@ -343,7 +343,7 @@ export function Header() {
                             <div className="flex items-center justify-between gap-1">
                               <span className="text-xs font-bold truncate">{item.label}</span>
                               {item.badge && (
-                                <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-full bg-[#008080] text-white">
+                                <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-full bg-[#FA6400] text-white">
                                   {item.badge}
                                 </span>
                               )}
@@ -392,7 +392,7 @@ export function Header() {
         {/* ── Scroll Progress Bar directly under header ──── */}
         <div className="w-full h-[2.5px] bg-transparent overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-[#008080] via-[#FF7A1A] to-[#008080] transition-all duration-150 ease-out"
+            className="h-full bg-gradient-to-r from-[#FA6400] via-[#FF7A1A] to-[#FA6400] transition-all duration-150 ease-out"
             style={{ width: `${scrollProgress}%` }}
             role="progressbar"
             aria-valuenow={Math.round(scrollProgress)}
@@ -422,7 +422,7 @@ export function Header() {
           <div
             ref={mobileMenuRef}
             id="mobile-menu"
-            className="absolute inset-y-0 right-0 w-[min(320px,86vw)] bg-[#FFFFFF] flex flex-col overflow-y-auto border-l border-[#E8E2D8] shadow-2xl p-5 animate-slide-in-right"
+            className="absolute inset-y-0 right-0 w-[min(320px,86vw)] bg-[#FCF8F1] flex flex-col overflow-y-auto border-l border-[#E8E2D8] shadow-2xl p-5 animate-slide-in-right"
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between pb-3.5 border-b border-[#E8E2D8] shrink-0">
@@ -470,7 +470,7 @@ export function Header() {
                       className={[
                         "flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-bold transition-all",
                         active
-                          ? "bg-[#008080] text-white shadow-xs"
+                          ? "bg-[#FA6400] text-white shadow-xs"
                           : "text-stone-700 hover:bg-[#F3EFE6]",
                       ].join(" ")}
                     >
@@ -501,11 +501,11 @@ export function Header() {
                       className={[
                         "flex items-center gap-2.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all",
                         isCurrent
-                          ? "bg-[#FFF0E5] text-[#008080]"
+                          ? "bg-[#FFF0E5] text-[#FA6400]"
                           : "text-stone-700 hover:bg-[#F3EFE6]",
                       ].join(" ")}
                     >
-                      <Icon className="h-3.5 w-3.5 text-[#008080] shrink-0" />
+                      <Icon className="h-3.5 w-3.5 text-[#FA6400] shrink-0" />
                       <span className="truncate">{item.label}</span>
                     </Link>
                   );
@@ -525,7 +525,7 @@ export function Header() {
                         key={u.href}
                         href={u.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold text-stone-600 hover:text-[#008080] hover:bg-white transition-colors"
+                        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold text-stone-600 hover:text-[#FA6400] hover:bg-white transition-colors"
                       >
                         <Icon className="h-3 w-3 text-stone-400" />
                         <span className="truncate">{u.label}</span>
