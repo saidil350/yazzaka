@@ -1,0 +1,12 @@
+
+> landing-yazzaka@0.1.0 dev
+> next dev --port 3000
+
+▲ Next.js 16.3.2 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.56.1:3000
+- Environments: .env.local
+✓ Ready in 7.3s
+✓ Running next.config.ts took 749ms
+Creating turbopack project { dir: 'D:\\landing-yazzaka', testMode: true }
+

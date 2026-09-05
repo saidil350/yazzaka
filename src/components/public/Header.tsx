@@ -36,7 +36,7 @@ const primaryNavLinks: NavLinkItem[] = [
   { label: "Tentang", href: "/tentang-kami", sectionId: "tentang" },
   { label: "Program", href: "/program", sectionId: "program" },
   { label: "Fasilitas", href: "/fasilitas", sectionId: "fasilitas" },
-  { label: "Kontak", href: "/kontak", sectionId: "kontak" },
+  { label: "Kontak", href: "/kontak" },
 ];
 
 const secondaryNavLinks = [
