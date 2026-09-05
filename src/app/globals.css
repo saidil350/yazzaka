@@ -254,10 +254,7 @@
     border-radius: 9999px;
   }
 
-  ::selection {
-    background-color: var(--brand-light);
-    color: var(--brand);
-  }
+
 }
 
 /* ── Utility & Headspace Helper Classes ──────────────────── */
