@@ -64,7 +64,7 @@ export function Input({
             "font-medium text-[#1E2330]",
             "placeholder:text-stone-400 placeholder:font-normal",
             "hover:border-stone-400 hover:bg-white",
-            "focus-visible:outline-none focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-[#FA6400] focus-visible:ring-offset-2 focus-visible:border-[#FA6400]",
+            "focus-visible:outline-none focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-yazzaka-teal focus-visible:ring-offset-2 focus-visible:border-yazzaka-teal-dark",
             "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[#FAF6EE]",
             error && "border-rose-500 focus-visible:ring-rose-500/10 focus-visible:border-rose-500",
             className

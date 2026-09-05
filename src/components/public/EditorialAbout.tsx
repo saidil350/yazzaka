@@ -17,7 +17,7 @@ export function EditorialAbout() {
         {/* Section Title Header */}
         <div className="max-w-3xl space-y-2">
           <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
-            <Sparkles className="h-3 w-3 text-[#FA6400]" />
+            <Sparkles className="h-3 w-3 text-yazzaka-teal-dark" />
             <span>Sambutan Pimpinan &amp; Filosofi</span>
           </Badge>
           <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
@@ -48,7 +48,7 @@ export function EditorialAbout() {
 
               {/* Message Quote */}
               <div className="relative bg-white rounded-xl p-4 border border-[#E8E2D8] shadow-xs">
-                <Quote className="h-5 w-5 text-[#FA6400]/40 mb-1.5" />
+                <Quote className="h-5 w-5 text-yazzaka-teal/50 mb-1.5" />
                 <p className="text-stone-700 text-xs sm:text-sm italic leading-relaxed whitespace-pre-line font-medium">
                   &ldquo;{profile.principal.welcomeMessage}&rdquo;
                 </p>
@@ -100,9 +100,9 @@ export function EditorialAbout() {
                 {profile.mission.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-3 rounded-xl bg-[#FAF6EE] border border-[#E8E2D8] flex items-start gap-3 transition-all hover:bg-white hover:border-[#FA6400]/40"
+                    className="p-3 rounded-xl bg-[#FAF6EE] border border-[#E8E2D8] flex items-start gap-3 transition-all hover:bg-white hover:border-yazzaka-teal/40"
                   >
-                    <div className="h-6 w-6 rounded-full bg-[#FFF0E5] text-[#FA6400] border border-[#FED7AA] flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+                    <div className="h-6 w-6 rounded-full bg-yazzaka-teal-soft text-yazzaka-teal-dark border border-yazzaka-teal-border flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
                       0{idx + 1}
                     </div>
                     <p className="text-xs sm:text-sm text-stone-700 font-medium leading-relaxed">
@@ -122,9 +122,9 @@ export function EditorialAbout() {
                 {profile.values.slice(0, 3).map((val, idx) => (
                   <div
                     key={idx}
-                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-4 transition-all hover:-translate-y-0.5 hover:border-[#FA6400]/40 hover:shadow-xs"
+                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-4 transition-all hover:-translate-y-0.5 hover:border-yazzaka-teal/40 hover:shadow-xs"
                   >
-                    <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#FA6400] block mb-1">
+                    <span className="text-[9px] font-extrabold uppercase tracking-widest text-yazzaka-teal-dark block mb-1">
                       Pilar 0{idx + 1}
                     </span>
                     <h4 className="font-bold text-xs sm:text-sm text-[#1E2330] mb-1">

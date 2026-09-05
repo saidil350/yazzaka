@@ -89,7 +89,7 @@ export function WhyUsSection() {
         {/* Section Header */}
         <div className="max-w-3xl space-y-2">
           <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
-            <Landmark className="h-3.5 w-3.5 text-[#FA6400]" strokeWidth={1.8} />
+            <Landmark className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
             <span>Mengapa Memilih {profile.name}?</span>
           </Badge>
           <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
@@ -107,11 +107,11 @@ export function WhyUsSection() {
             return (
               <div
                 key={idx}
-                className="bg-white border border-[#E8E2D8] rounded-lg p-6 transition-all duration-200 hover:-translate-y-1 hover:border-[#FA6400]/50 hover:shadow-md flex flex-col justify-between group"
+                className="bg-white border border-[#E8E2D8] rounded-lg p-6 transition-all duration-200 hover:-translate-y-1 hover:border-yazzaka-teal/50 hover:shadow-md flex flex-col justify-between group"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="h-11 w-11 border-l-2 border-[#FA6400] text-[#1E2330] flex items-center justify-center">
+                    <div className="h-11 w-11 border-l-2 border-yazzaka-teal text-[#1E2330] flex items-center justify-center">
                       <Icon className="h-5 w-5" strokeWidth={1.7} />
                     </div>
                     <span className="text-[11px] font-extrabold px-2 py-1 text-stone-400">
@@ -120,7 +120,7 @@ export function WhyUsSection() {
                   </div>
 
                   <div className="space-y-2">
-                    <h3 className="text-base sm:text-lg font-bold text-[#1E2330] leading-snug group-hover:text-[#FA6400] transition-colors">
+                    <h3 className="text-base sm:text-lg font-bold text-[#1E2330] leading-snug group-hover:text-yazzaka-teal-dark transition-colors">
                       {adv.title}
                     </h3>
 

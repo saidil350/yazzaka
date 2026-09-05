@@ -19,18 +19,17 @@ import {
   YoutubeIcon,
   FacebookIcon,
 } from "@/components/public/SocialIcons";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 export function Footer() {
   const { profile, settings } = useSchoolData();
 
   return (
-    <footer className="relative bg-[#FFFDF9] text-stone-700 pt-12 pb-10 rounded-t-[2.5rem] lg:rounded-t-[3.5rem] border-t-2 border-[#E8E2D8] overflow-hidden shadow-sm">
+    <footer className="relative bg-yazzaka-teal-soft text-stone-700 pt-12 pb-10 rounded-t-[2.5rem] lg:rounded-t-[3.5rem] border-t-2 border-yazzaka-teal-border overflow-hidden shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 relative z-10">
 
         {/* ── Main 4-Column Structured Grid ─────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-10 border-b border-[#E8E2D8]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-10 border-b border-yazzaka-teal-border">
 
           {/* Col 1: Brand, Description, Legal Badges & Social (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
@@ -56,11 +55,11 @@ export function Footer() {
             {/* Legal and Leader Badges */}
             <div className="flex flex-wrap gap-2 pt-1">
               <Badge variant="outline" className="gap-1.5 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-[11px] font-semibold border-stone-200">
-                <ShieldCheck className="h-3.5 w-3.5 text-[#FA6400] shrink-0" />
+                <ShieldCheck className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
                 <span>SK Kemenkumham: {profile.npsn}</span>
               </Badge>
               <Badge variant="outline" className="gap-1.5 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-[11px] font-semibold border-stone-200">
-                <Award className="h-3.5 w-3.5 text-[#FA6400] shrink-0" />
+                <Award className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
                 <span>Binaan Dr. Amri Fatmi</span>
               </Badge>
             </div>
@@ -120,7 +119,7 @@ export function Footer() {
           {/* Col 2: 6 Educational Units (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FA6400]"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-yazzaka-teal-dark"></span>
               <span>Unit Pendidikan &amp; Program</span>
             </h4>
             <ul className="space-y-2 text-xs text-stone-600 font-medium">
@@ -155,7 +154,7 @@ export function Footer() {
                 </Link>
               </li>
               <li className="pt-1.5 border-t border-[#E8E2D8]">
-                <Link href="/program/pesantren-peradaban-60" className="text-[#FA6400] hover:text-[#C2410C] font-bold transition-colors flex items-center justify-between">
+                <Link href="/program/pesantren-peradaban-60" className="text-yazzaka-orange-dark hover:text-yazzaka-orange font-bold transition-colors flex items-center justify-between">
                   <span>6. Wakaf Pesantren 6.0</span>
                   <ArrowUpRight className="h-3.5 w-3.5" />
                 </Link>
@@ -211,24 +210,24 @@ export function Footer() {
             </h4>
             <div className="space-y-2.5 text-xs text-stone-600 leading-relaxed font-medium">
               <div className="flex items-start gap-2.5">
-                <MapPin className="h-4 w-4 text-[#FA6400] shrink-0 mt-0.5" />
+                <MapPin className="h-4 w-4 text-yazzaka-teal-dark shrink-0 mt-0.5" />
                 <span>
                   {profile.address}, {profile.city}, {profile.province}
                 </span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Phone className="h-4 w-4 text-[#FA6400] shrink-0" />
+                <Phone className="h-4 w-4 text-yazzaka-teal-dark shrink-0" />
                 <a href={`tel:${profile.phone}`} className="hover:text-[#FA6400] transition-colors font-semibold text-stone-700">
                   {profile.phone}
                 </a>
               </div>
               <div className="flex items-center gap-2.5">
-                <Mail className="h-4 w-4 text-[#FA6400] shrink-0" />
+                <Mail className="h-4 w-4 text-yazzaka-teal-dark shrink-0" />
                 <a href={`mailto:${profile.email}`} className="hover:text-[#FA6400] transition-colors font-semibold text-stone-700">
                   {profile.email}
                 </a>
               </div>
-              <div className="flex items-start gap-2.5 pt-1.5 border-t border-[#E8E2D8] text-[11px] text-stone-500">
+              <div className="flex items-start gap-2.5 pt-1.5 border-t border-yazzaka-teal-border text-[11px] text-stone-500">
                 <Clock className="h-3.5 w-3.5 text-stone-400 shrink-0 mt-0.5" />
                 <span>Senin – Sabtu: 08:00 – 16:30 WIB</span>
               </div>
