@@ -74,7 +74,6 @@ export function Header() {
   const pathname = usePathname();
 
   const [isScrolled, setIsScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -93,17 +92,12 @@ export function Header() {
   const sectionIds = ["beranda", "statistik", "tentang", "program", "keunggulan", "prestasi", "testimoni"];
   const { activeSection, scrollToSection } = useActiveSection(sectionIds, 90);
 
-  // Deteksi scroll untuk elevation shadow & scroll progress bar
+  // Deteksi scroll untuk elevation shadow header
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       setIsScrolled(scrollY > 16);
 
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        const progress = Math.min(100, Math.max(0, (scrollY / totalHeight) * 100));
-        setScrollProgress(progress);
-      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -380,17 +374,6 @@ export function Header() {
         </div>
 
         {/* ── Scroll Progress Bar directly under header ──── */}
-        <div className="w-full h-[2.5px] bg-transparent overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-yazzaka-teal via-yazzaka-teal-dark to-yazzaka-orange transition-all duration-150 ease-out"
-            style={{ width: `${scrollProgress}%` }}
-            role="progressbar"
-            aria-valuenow={Math.round(scrollProgress)}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-label="Progres gulir halaman"
-          />
-        </div>
       </header>
 
       {/* ── Mobile Navigation Drawer ─────────────────────── */}

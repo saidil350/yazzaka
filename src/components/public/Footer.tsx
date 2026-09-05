@@ -25,11 +25,11 @@ export function Footer() {
   const { profile, settings } = useSchoolData();
 
   return (
-    <footer className="relative bg-yazzaka-teal-soft text-stone-700 pt-12 pb-10 rounded-t-[2.5rem] lg:rounded-t-[3.5rem] border-t-2 border-yazzaka-teal-border overflow-hidden shadow-sm">
+    <footer className="relative bg-[#FFFDF9] text-stone-700 pt-12 pb-10 rounded-t-[2.5rem] lg:rounded-t-[3.5rem] border-t-2 border-[#E8E2D8] overflow-hidden shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 relative z-10">
 
         {/* ── Main 4-Column Structured Grid ─────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-10 border-b border-yazzaka-teal-border">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-10 border-b border-[#E8E2D8]">
 
           {/* Col 1: Brand, Description, Legal Badges & Social (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
@@ -227,7 +227,7 @@ export function Footer() {
                   {profile.email}
                 </a>
               </div>
-              <div className="flex items-start gap-2.5 pt-1.5 border-t border-yazzaka-teal-border text-[11px] text-stone-500">
+              <div className="flex items-start gap-2.5 pt-1.5 border-t border-[#E8E2D8] text-[11px] text-stone-500">
                 <Clock className="h-3.5 w-3.5 text-stone-400 shrink-0 mt-0.5" />
                 <span>Senin – Sabtu: 08:00 – 16:30 WIB</span>
               </div>
