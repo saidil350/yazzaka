@@ -171,8 +171,19 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch('/api/school-data');
-        if (!res.ok) throw new Error("Gagal load data");
+        // A cold database connection can briefly fail during local/dev and serverless starts.
+        // Retry once and preserve the API status/body in the console for actionable diagnosis.
+        let res = await fetch('/api/school-data', { cache: 'no-store' });
+        if (!res.ok) {
+          await new Promise((resolve) => setTimeout(resolve, 700));
+          res = await fetch('/api/school-data', { cache: 'no-store' });
+        }
+        if (!res.ok) {
+          const detail = await res.text().catch(() => '');
+          throw new Error(
+            `Gagal load data (HTTP ${res.status})${detail ? `: ${detail.slice(0, 240)}` : ''}`
+          );
+        }
         const data = await res.json();
         
         if (data.profile) setProfile(data.profile);
