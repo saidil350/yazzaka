@@ -17,7 +17,7 @@
   --color-popover:                hsl(0 0% 100%);
   --color-popover-foreground:     hsl(222 25% 15%);
 
-  --color-primary:                hsl(161 72% 32%);     /* Yazzaka Garden Green */
+  --color-primary:                #057984;              /* Yazzaka Teal, accessible primary */
   --color-primary-foreground:     hsl(0 0% 100%);
 
   --color-secondary:              hsl(38 30% 92%);     /* Warm Oat #F3EFE6 */
@@ -26,7 +26,7 @@
   --color-muted:                  hsl(38 25% 93%);
   --color-muted-foreground:       hsl(220 13% 46%);
 
-  --color-accent:                 hsl(23 98% 50%);
+  --color-accent:                 #EE6D2B;              /* Yazzaka Orange, action accent */
   --color-accent-foreground:      hsl(0 0% 100%);
 
   --color-destructive:            hsl(6 85% 58%);
@@ -34,7 +34,16 @@
 
   --color-border:                 hsl(38 25% 88%);
   --color-input:                  hsl(38 25% 88%);
-  --color-ring:                   hsl(23 98% 50%);
+  --color-ring:                   #057984;
+
+  /* Yazzaka identity palette: calm learning + warm invitation */
+  --color-yazzaka-teal:           #06A6B2;
+  --color-yazzaka-teal-dark:      #057984;
+  --color-yazzaka-teal-soft:      #E6F7F8;
+  --color-yazzaka-teal-border:    #A9E2E6;
+  --color-yazzaka-orange:         #EE6D2B;
+  --color-yazzaka-orange-dark:    #B94D1E;
+  --color-yazzaka-orange-soft:    #FFF0E8;
 
   /* ── Headspace Brand & Category Color Palette ────────────── */
   --color-brand:                  hsl(23 98% 50%);     /* Headspace Orange */
@@ -98,25 +107,25 @@
   --card-foreground:         hsl(222 25% 15%);
   --popover:                 hsl(0 0% 100%);
   --popover-foreground:      hsl(222 25% 15%);
-  --primary:                 hsl(23 98% 50%);
+  --primary:                 #057984;
   --primary-foreground:      hsl(0 0% 100%);
   --secondary:               hsl(38 30% 92%);
   --secondary-foreground:    hsl(222 25% 15%);
   --muted:                   hsl(38 25% 93%);
   --muted-foreground:        hsl(220 13% 46%);
-  --accent:                  hsl(23 98% 50%);
+  --accent:                  #EE6D2B;
   --accent-foreground:       hsl(0 0% 100%);
   --destructive:             hsl(6 85% 58%);
   --destructive-foreground:  hsl(0 0% 100%);
   --border:                  hsl(38 25% 88%);
   --input:                   hsl(38 25% 88%);
-  --ring:                    hsl(23 98% 50%);
+  --ring:                    #057984;
   --radius:                  1.5rem;
 
   /* Brand aliases */
-  --brand:                   hsl(23 98% 50%);
-  --brand-hover:             hsl(23 95% 44%);
-  --brand-light:             hsl(28 100% 94%);
+  --brand:                   #06A6B2;
+  --brand-hover:             #057984;
+  --brand-light:             #E6F7F8;
   --brand-dark:              hsl(222 30% 12%);
   --brand-gold:              hsl(38 95% 48%);
   --brand-gold-light:        hsl(44 100% 92%);
@@ -145,11 +154,11 @@
   --border-strong:           hsl(38 25% 78%);
   --border-inverse:          rgba(255, 255, 255, 0.12);
   --color-heading:           hsl(222 25% 15%);     /* Deep Charcoal #1E2330 for headings */
-  --color-primary:           hsl(23 98% 50%);      /* Headspace Signature Orange #FA6400 */
-  --color-primary-dark:      hsl(23 95% 40%);
-  --color-accent:            hsl(23 98% 50%);      /* Headspace Orange for accents */
-  --color-accent-hover:      hsl(23 95% 44%);
-  --color-accent-light:      hsl(28 100% 94%);
+  --color-primary:           #057984;
+  --color-primary-dark:      #045D65;
+  --color-accent:            #EE6D2B;
+  --color-accent-hover:      #B94D1E;
+  --color-accent-light:      #FFF0E8;
   --color-danger:            hsl(6 85% 58%);
   --color-danger-bg:         hsl(6 90% 96%);
   --color-success:           hsl(150 70% 36%);
@@ -264,21 +273,21 @@
 
 /* Headspace Pill Button Shadow */
 .btn-headspace-primary {
-  background-color: #fa6400;
+  background-color: #ee6d2b;
   color: #ffffff;
   border-radius: 9999px;
   font-weight: 600;
   transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 3px 0 #cc5000;
+  box-shadow: 0 3px 0 #b94d1e;
 }
 .btn-headspace-primary:hover {
-  background-color: #ff7214;
+  background-color: #d85d21;
   transform: translateY(-2px);
-  box-shadow: 0 5px 0 #cc5000;
+  box-shadow: 0 5px 0 #b94d1e;
 }
 .btn-headspace-primary:active {
   transform: translateY(2px);
-  box-shadow: 0 1px 0 #cc5000;
+  box-shadow: 0 1px 0 #b94d1e;
 }
 
 .btn-headspace-secondary {
@@ -291,8 +300,8 @@
 }
 .btn-headspace-secondary:hover {
   background-color: #faf6ee;
-  border-color: #fa6400;
-  color: #fa6400;
+  border-color: #057984;
+  color: #057984;
   transform: translateY(-2px);
 }
 

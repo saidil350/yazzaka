@@ -48,7 +48,7 @@ export function Textarea({
           "placeholder:text-stone-400 placeholder:font-normal",
           "transition-colors",
           "hover:border-stone-400 hover:bg-white",
-          "focus:bg-white focus:outline-none focus:border-[#FA6400] focus:ring-2 focus:ring-[#FA6400] focus:ring-offset-2",
+          "focus:bg-white focus:outline-none focus:border-yazzaka-teal-dark focus:ring-2 focus:ring-yazzaka-teal focus:ring-offset-2",
           "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[#FAF6EE]",
           "resize-y shadow-2xs",
           error && [

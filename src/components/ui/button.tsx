@@ -19,9 +19,9 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        /** Headspace Primary Orange (Bubbly / Chunky 3D look) */
+        /** Admissions and conversion action. */
         default:
-          "bg-[#FA6400] text-white shadow-[0_3px_0_#cc5000] hover:bg-[#ff7214] hover:-translate-y-0.5 hover:shadow-[0_5px_0_#cc5000] active:translate-y-0.5 active:shadow-[0_1px_0_#cc5000]",
+          "bg-yazzaka-orange text-white shadow-[0_3px_0_#B94D1E] hover:bg-yazzaka-orange-dark hover:-translate-y-0.5 hover:shadow-[0_5px_0_#B94D1E] active:translate-y-0.5 active:shadow-[0_1px_0_#B94D1E]",
 
         /** Secondary Warm Pill */
         secondary:
@@ -29,11 +29,11 @@ const buttonVariants = cva(
 
         /** Outline Pill */
         outline:
-          "border-2 border-[#E8E2D8] bg-white text-[#1E2330] shadow-xs hover:bg-[#FAF6EE] hover:border-[#FA6400] hover:text-[#FA6400] hover:-translate-y-0.5",
+          "border-2 border-[#E8E2D8] bg-white text-[#1E2330] shadow-xs hover:bg-yazzaka-teal-soft hover:border-yazzaka-teal hover:text-yazzaka-teal-dark hover:-translate-y-0.5",
 
         /** Ghost Pill */
         ghost:
-          "text-[#1E2330] hover:bg-[#FA6400]/10 hover:text-[#FA6400]",
+          "text-[#1E2330] hover:bg-yazzaka-teal-soft hover:text-yazzaka-teal-dark",
 
         /** Destructive Pill */
         destructive:
@@ -41,11 +41,11 @@ const buttonVariants = cva(
 
         /** Link */
         link:
-          "text-[#FA6400] underline-offset-4 hover:underline",
+          "text-yazzaka-teal-dark underline-offset-4 hover:underline",
 
         /** Brand accent — Headspace Warm Orange / Amber */
         accent:
-          "bg-[#FA6400] text-white shadow-[0_3px_0_#cc5000] hover:bg-[#ff7214] hover:-translate-y-0.5 hover:shadow-[0_5px_0_#cc5000] active:translate-y-0.5 active:shadow-[0_1px_0_#cc5000]",
+          "bg-yazzaka-teal-dark text-white shadow-[0_3px_0_#045D65] hover:bg-[#045D65] hover:-translate-y-0.5 hover:shadow-[0_5px_0_#045D65] active:translate-y-0.5 active:shadow-[0_1px_0_#045D65]",
 
         /** Pastel Pill Buttons */
         mint:

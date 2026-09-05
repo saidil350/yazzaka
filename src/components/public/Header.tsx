@@ -272,7 +272,7 @@ export function Header() {
                   className={[
                     "px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 whitespace-nowrap",
                     active
-                      ? "bg-white text-[#FA6400] shadow-xs"
+                      ? "bg-white text-yazzaka-teal-dark shadow-xs"
                       : "text-stone-600 hover:text-[#1E2330] hover:bg-white/60",
                   ].join(" ")}
                 >
@@ -291,14 +291,14 @@ export function Header() {
                 className={[
                   "px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 whitespace-nowrap flex items-center gap-1 cursor-pointer",
                   isSecondaryActive || dropdownOpen
-                    ? "bg-white text-[#FA6400] shadow-xs"
+                    ? "bg-white text-yazzaka-teal-dark shadow-xs"
                     : "text-stone-600 hover:text-[#1E2330] hover:bg-white/60",
                 ].join(" ")}
               >
                 <span>Informasi</span>
                 <ChevronDown
                   className={`h-3.5 w-3.5 transition-transform duration-200 ${
-                    dropdownOpen ? "rotate-180 text-[#FA6400]" : "text-stone-400"
+                    dropdownOpen ? "rotate-180 text-yazzaka-teal-dark" : "text-stone-400"
                   }`}
                 />
               </button>
@@ -318,13 +318,13 @@ export function Header() {
                           className={[
                             "flex items-start gap-2.5 p-2.5 rounded-xl transition-all",
                             isCurrent
-                              ? "bg-[#FFF0E5] text-[#FA6400]"
+                              ? "bg-yazzaka-teal-soft text-yazzaka-teal-dark"
                               : "text-[#1E2330] hover:bg-[#FAF6EE]",
                           ].join(" ")}
                         >
                           <div
                             className={`p-1.5 rounded-lg shrink-0 mt-0.5 ${
-                              isCurrent ? "bg-[#FA6400] text-white" : "bg-[#FAF6EE] text-[#FA6400]"
+                              isCurrent ? "bg-yazzaka-teal-dark text-white" : "bg-yazzaka-teal-soft text-yazzaka-teal-dark"
                             }`}
                           >
                             <Icon className="h-4 w-4" />
@@ -382,7 +382,7 @@ export function Header() {
         {/* ── Scroll Progress Bar directly under header ──── */}
         <div className="w-full h-[2.5px] bg-transparent overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-[#FA6400] via-[#FF7A1A] to-[#FA6400] transition-all duration-150 ease-out"
+            className="h-full bg-gradient-to-r from-yazzaka-teal via-yazzaka-teal-dark to-yazzaka-orange transition-all duration-150 ease-out"
             style={{ width: `${scrollProgress}%` }}
             role="progressbar"
             aria-valuenow={Math.round(scrollProgress)}
@@ -460,7 +460,7 @@ export function Header() {
                       className={[
                         "flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-bold transition-all",
                         active
-                          ? "bg-[#FA6400] text-white shadow-xs"
+                          ? "bg-yazzaka-teal-dark text-white shadow-xs"
                           : "text-stone-700 hover:bg-[#F3EFE6]",
                       ].join(" ")}
                     >
@@ -491,11 +491,11 @@ export function Header() {
                       className={[
                         "flex items-center gap-2.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all",
                         isCurrent
-                          ? "bg-[#FFF0E5] text-[#FA6400]"
+                          ? "bg-yazzaka-teal-soft text-yazzaka-teal-dark"
                           : "text-stone-700 hover:bg-[#F3EFE6]",
                       ].join(" ")}
                     >
-                      <Icon className="h-3.5 w-3.5 text-[#FA6400] shrink-0" />
+                      <Icon className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
                       <span className="truncate">{item.label}</span>
                     </Link>
                   );
@@ -515,7 +515,7 @@ export function Header() {
                         key={u.href}
                         href={u.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold text-stone-600 hover:text-[#FA6400] hover:bg-white transition-colors"
+                        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold text-stone-600 hover:text-yazzaka-teal-dark hover:bg-white transition-colors"
                       >
                         <Icon className="h-3 w-3 text-stone-400" />
                         <span className="truncate">{u.label}</span>

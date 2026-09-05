@@ -17,7 +17,7 @@ export function HeroSection() {
       className="landing-section relative overflow-hidden bg-background py-12 sm:py-16 lg:py-20 border-b border-border scroll-mt-24"
     >
       {/* ── Headspace Subtle Playful Background Blobs ────────────── */}
-      <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[#FFEBD4]/60 blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-yazzaka-teal-soft/80 blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-8 -mb-16 w-72 h-72 rounded-full bg-[#EDE9FE]/50 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -30,7 +30,7 @@ export function HeroSection() {
 
             {/* Pill Eyebrow */}
             <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
-              <Landmark className="h-3.5 w-3.5 text-[#FA6400]" strokeWidth={1.8} />
+              <Landmark className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
               <span>Pendidikan Islam Holistik &amp; Berwawasan Global</span>
             </Badge>
 
@@ -40,7 +40,7 @@ export function HeroSection() {
               className="text-3xl sm:text-4xl lg:text-[2.65rem] font-extrabold text-[#1E2330] tracking-tight leading-[1.2]"
             >
               Belajar Lebih Tenang, <br className="hidden sm:inline" />
-              Tumbuh Berkarakter <span className="text-[#FA6400] underline decoration-[#FA6400]/30 decoration-wavy underline-offset-4">Qur&apos;ani</span>.
+              Tumbuh Berkarakter <span className="text-yazzaka-teal-dark underline decoration-yazzaka-teal/40 decoration-wavy underline-offset-4">Qur&apos;ani</span>.
             </h1>
 
             {/* Welcoming Body copy */}
@@ -65,7 +65,7 @@ export function HeroSection() {
                   size="default"
                   className="font-bold text-xs sm:text-sm h-11 px-6 w-full sm:w-auto"
                 >
-                  <BookOpen className="h-4 w-4 text-[#FA6400]" />
+                  <BookOpen className="h-4 w-4 text-yazzaka-teal-dark" />
                   <span>Jelajahi Profil</span>
                 </Button>
               </Link>
@@ -92,7 +92,7 @@ export function HeroSection() {
           <div className="lg:col-span-5 relative mt-4 lg:mt-0">
 
             {/* Decorative colored backdrop card */}
-            <div className="absolute inset-0 bg-[#FFD8BA] rounded-3xl transform rotate-2 translate-y-2 translate-x-2" />
+            <div className="absolute inset-0 bg-yazzaka-teal rounded-3xl transform rotate-2 translate-y-2 translate-x-2" />
 
             {/* Main Rounded Card */}
             <div className="relative rounded-3xl overflow-hidden border-2 border-white bg-white shadow-xl">
@@ -111,7 +111,7 @@ export function HeroSection() {
                 {/* Floating Pill Badge 1 — Top Right */}
                 <div className="absolute top-3 right-3">
                   <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs border-stone-200 text-stone-800 font-semibold text-[11px] shadow-sm">
-                    <Heart className="h-3.5 w-3.5 text-[#FA6400]" strokeWidth={1.8} />
+                    <Heart className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
                     <span>Lingkungan Nyaman</span>
                   </Badge>
                 </div>
@@ -119,7 +119,7 @@ export function HeroSection() {
                 {/* Floating Pill Badge 2 — Middle Left */}
                 <div className="absolute top-1/3 -left-2">
                   <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs border-stone-200 text-stone-800 font-semibold text-[11px] shadow-sm">
-                    <Award className="h-3.5 w-3.5 text-[#FA6400]" strokeWidth={1.8} />
+                    <Award className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
                     <span>Karakter &amp; Adab</span>
                   </Badge>
                 </div>

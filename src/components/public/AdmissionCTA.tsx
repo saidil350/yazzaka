@@ -16,7 +16,7 @@ export function AdmissionCTA() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Headspace Warm Sunset Banner */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#FA6400] via-[#FF7824] to-[#FF934A] text-white p-6 sm:p-10 lg:p-12 shadow-xl">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-yazzaka-orange-dark via-yazzaka-orange to-[#F58B51] text-white p-6 sm:p-10 lg:p-12 shadow-xl">
 
           {/* Decorative Playful Blobs */}
           <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-white/10 blur-2xl pointer-events-none" />
@@ -83,7 +83,7 @@ export function AdmissionCTA() {
               <Link href="/pendaftaran" className="block w-full">
                 <Button
                   size="default"
-                  className="w-full justify-center text-sm font-extrabold bg-white text-[#FA6400] hover:bg-[#FAF6EE] shadow-md border-2 border-white h-11 cursor-pointer"
+                  className="w-full justify-center text-sm font-extrabold bg-white text-yazzaka-orange-dark hover:bg-[#FAF6EE] shadow-md border-2 border-white h-11 cursor-pointer"
                 >
                   <span>{admission.isOpen ? "Daftar Siswa Baru" : "Lihat Informasi PPDB"}</span>
                   <ArrowRight className="h-4 w-4 ml-1" />

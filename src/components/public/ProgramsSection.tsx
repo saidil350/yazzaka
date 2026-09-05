@@ -74,7 +74,7 @@ export function ProgramsSection() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="max-w-2xl space-y-2">
             <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
-              <Sparkles className="h-3 w-3 text-[#FA6400]" />
+              <Sparkles className="h-3 w-3 text-yazzaka-teal-dark" />
               <span>Unit Pendidikan &amp; Program Strategis</span>
             </Badge>
             <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
@@ -141,8 +141,8 @@ export function ProgramsSection() {
                   className={[
                     "interactive-lift rounded-[1.25rem] border overflow-hidden flex flex-col justify-between group shadow-xs",
                     isSpecialWakaf
-                      ? "bg-[#FFF9F2] border-[#FA6400] ring-2 ring-[#FA6400]/20"
-                      : "bg-white border-[#E8E2D8] hover:border-[#FA6400]/50",
+                      ? "bg-yazzaka-teal-soft border-yazzaka-teal ring-2 ring-yazzaka-teal/20"
+                      : "bg-white border-[#E8E2D8] hover:border-yazzaka-teal/50",
                   ].join(" ")}
                 >
                   <div>
@@ -169,7 +169,7 @@ export function ProgramsSection() {
                       {/* Bottom Title on Image for special feel */}
                       <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
                         <div className="h-8 w-8 rounded-xl bg-white/95 text-[#1E2330] flex items-center justify-center shrink-0 shadow-xs">
-                          <Icon className="h-4 w-4 text-[#FA6400]" />
+                          <Icon className="h-4 w-4 text-yazzaka-teal-dark" />
                         </div>
                         <span className="text-[11px] font-bold text-white drop-shadow-xs">
                           Unit 0{idx + 1}
@@ -179,7 +179,7 @@ export function ProgramsSection() {
 
                     {/* Body Content */}
                     <div className="p-5 space-y-3">
-                      <h3 className="text-base sm:text-lg font-bold text-[#1E2330] group-hover:text-[#FA6400] transition-colors leading-snug">
+                      <h3 className="text-base sm:text-lg font-bold text-[#1E2330] group-hover:text-yazzaka-teal-dark transition-colors leading-snug">
                         {prog.title}
                       </h3>
                       <p className="text-xs text-stone-600 leading-relaxed font-medium line-clamp-3">

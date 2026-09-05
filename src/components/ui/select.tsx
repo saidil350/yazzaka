@@ -58,7 +58,7 @@ export function Select({
             "text-sm font-medium text-[#1E2330] shadow-2xs",
             "transition-all duration-200",
             "hover:border-stone-400 hover:bg-white",
-            "focus:bg-white focus:outline-none focus:ring-4 focus:ring-[#FA6400]/10 focus:border-[#FA6400]",
+            "focus:bg-white focus:outline-none focus:ring-4 focus:ring-yazzaka-teal/15 focus:border-yazzaka-teal-dark",
             "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[#FAF6EE]",
             error && "border-rose-500 focus:ring-rose-500/10 focus:border-rose-500",
             className
