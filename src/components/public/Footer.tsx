@@ -10,12 +10,9 @@ import {
   Mail,
   ShieldCheck,
   Award,
-  Sparkles,
-  ArrowRight,
   MessageCircle,
   Clock,
   ArrowUpRight,
-  Heart,
 } from "lucide-react";
 import {
   InstagramIcon,
@@ -23,6 +20,7 @@ import {
   FacebookIcon,
 } from "@/components/public/SocialIcons";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export function Footer() {
   const { profile, settings } = useSchoolData();
@@ -30,45 +28,6 @@ export function Footer() {
   return (
     <footer className="relative bg-[#FFFDF9] text-stone-700 pt-12 pb-10 rounded-t-[2.5rem] lg:rounded-t-[3.5rem] border-t-2 border-[#E8E2D8] overflow-hidden shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 relative z-10">
-
-        {/* ── Top Call-to-Action Strip ─────────────────────── */}
-        <div className="bg-[#FAF5EC] border border-[#E8DFC8] rounded-3xl p-6 sm:p-7 shadow-xs flex flex-col lg:flex-row items-center justify-between gap-5">
-          <div className="space-y-1.5 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#FFF0E5] border border-[#FED7AA] text-[#FA6400] font-bold text-[11px]">
-              <Sparkles className="h-3 w-3 text-[#FA6400]" />
-              <span>Bersama Membangun Generasi &amp; Peradaban Mulia</span>
-            </div>
-            <h3 className="text-lg sm:text-xl font-extrabold text-[#1E2330] tracking-tight">
-              Ingin Bergabung atau Berpartisipasi dalam Program Yazzakka?
-            </h3>
-            <p className="text-xs sm:text-sm text-stone-600 font-medium max-w-xl">
-              Kami membuka pendaftaran santri baru untuk jenjang TPA, TKIT, &amp; PKBM, serta peluang amal jariyah wakaf pembangunan Pesantren Peradaban 6.0 di Pidie, Aceh.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-2.5 shrink-0">
-            <Link href="/pendaftaran">
-              <Button size="default" className="bg-[#FA6400] hover:bg-[#E05A00] text-white font-bold text-xs h-10 px-5 shadow-xs">
-                <span>Pendaftaran Santri</span>
-                <ArrowRight className="h-3.5 w-3.5 ml-1" />
-              </Button>
-            </Link>
-            <Link href="/program/pesantren-peradaban-60">
-              <Button variant="outline" size="default" className="bg-white hover:bg-stone-50 border-[#D8CFBF] text-[#1E2330] font-bold text-xs h-10 px-4 shadow-xs">
-                <span>Info Wakaf Pesantren</span>
-              </Button>
-            </Link>
-            <a
-              href={`https://wa.me/${profile.whatsapp}?text=Assalamu'alaikum%20Admin%20Yazzakka`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-800 font-bold text-xs transition-colors h-10 shadow-xs"
-            >
-              <MessageCircle className="h-4 w-4 text-emerald-600" />
-              <span>WhatsApp CS</span>
-            </a>
-          </div>
-        </div>
 
         {/* ── Main 4-Column Structured Grid ─────────────────── */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-10 border-b border-[#E8E2D8]">
@@ -96,14 +55,14 @@ export function Footer() {
 
             {/* Legal and Leader Badges */}
             <div className="flex flex-wrap gap-2 pt-1">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FFF0E5] text-[#C2410C] text-[11px] font-bold border border-[#FED7AA]">
+              <Badge variant="outline" className="gap-1.5 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-[11px] font-semibold border-stone-200">
                 <ShieldCheck className="h-3.5 w-3.5 text-[#FA6400] shrink-0" />
                 <span>SK Kemenkumham: {profile.npsn}</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#E0F2FE] text-[#0369A1] text-[11px] font-bold border border-[#BAE6FD]">
-                <Award className="h-3.5 w-3.5 text-[#0284C7] shrink-0" />
+              </Badge>
+              <Badge variant="outline" className="gap-1.5 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-[11px] font-semibold border-stone-200">
+                <Award className="h-3.5 w-3.5 text-[#FA6400] shrink-0" />
                 <span>Binaan Dr. Amri Fatmi</span>
-              </span>
+              </Badge>
             </div>
 
             {/* Social Media Links */}

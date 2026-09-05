@@ -177,7 +177,7 @@ export default function AdminFacilitiesPage() {
                       {fac.capacity || "-"}
                     </td>
                     <td className="p-4 sm:px-6">
-                      <Badge variant={fac.status === "published" ? "success" : "secondary"}>
+                      <Badge variant={fac.status === "published" ? "default" : "secondary"}>
                         {fac.status === "published" ? "Aktif" : "Draf"}
                       </Badge>
                     </td>

@@ -514,7 +514,7 @@ export default function AdminDashboardOverview() {
                 <CardTitle className="text-base font-bold text-[#1E2330]">
                   Profil &amp; Legalitas Lembaga
                 </CardTitle>
-                <Badge variant="success" className="text-[10px] font-bold">
+                <Badge variant="outline" className="text-[10px] font-bold border-emerald-300 bg-emerald-50 text-emerald-800">
                   Akreditasi {profile.accreditation}
                 </Badge>
               </div>

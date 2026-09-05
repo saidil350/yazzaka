@@ -262,7 +262,7 @@ export default function AdminProgramsCrudPage() {
                       </ul>
                     </td>
                     <td className="p-4 sm:px-6">
-                      <Badge variant={prog.status === "published" ? "success" : "secondary"}>
+                      <Badge variant={prog.status === "published" ? "default" : "secondary"}>
                         {prog.status === "published" ? "Aktif" : "Draf"}
                       </Badge>
                     </td>

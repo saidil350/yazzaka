@@ -6,6 +6,7 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { formatDateIndonesian } from "@/lib/utils";
 import { ArrowRight, Clock, Newspaper, Calendar, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 
 export function NewsAndEvents() {
@@ -29,10 +30,10 @@ export function NewsAndEvents() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="max-w-2xl space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EDE9FE] border border-[#DDD6FE] text-[#6D28D9] font-bold text-xs">
-              <Newspaper className="h-3.5 w-3.5" />
+            <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
+              <Newspaper className="h-3.5 w-3.5 text-[#FA6400]" />
               <span>Kabar Terkini &amp; Agenda Sekolah</span>
-            </div>
+            </Badge>
             <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
               Warta Kegiatan &amp; Agenda Sekolah
             </h2>
@@ -81,9 +82,9 @@ export function NewsAndEvents() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute top-3 left-3">
-                        <span className="px-2.5 py-0.5 rounded-full bg-[#FA6400] text-white text-[11px] font-bold shadow-xs">
+                        <Badge variant="outline" className="px-2.5 py-0.5 rounded-full bg-stone-900 text-white border-transparent text-[11px] font-bold shadow-xs">
                           {leadArticle.category}
-                        </span>
+                        </Badge>
                       </div>
                     </div>
 
@@ -126,9 +127,9 @@ export function NewsAndEvents() {
                       >
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className="px-2 py-0.5 rounded-full bg-white border border-[#E8E2D8] text-[9px] font-bold text-[#FA6400]">
+                            <Badge variant="outline" className="px-2 py-0.5 rounded-full bg-white border-stone-200 text-[9px] font-bold text-stone-700">
                               {art.category}
-                            </span>
+                            </Badge>
                             <span className="text-[11px] text-stone-500 font-medium">
                               {formatDateIndonesian(art.publishedDate)}
                             </span>
@@ -202,9 +203,9 @@ export function NewsAndEvents() {
                     </div>
 
                     <div className="space-y-0.5 text-xs">
-                      <span className="px-2 py-0.5 rounded-full bg-[#E0F2FE] text-[#0369A1] font-bold text-[9px] inline-block">
+                      <Badge variant="outline" className="px-2 py-0.5 rounded-full bg-stone-100 border-stone-200 text-stone-700 font-bold text-[9px] inline-block">
                         {evt.category}
-                      </span>
+                      </Badge>
                       <h4 className="text-xs font-bold text-[#1E2330] leading-snug">
                         {evt.title}
                       </h4>
@@ -220,9 +221,9 @@ export function NewsAndEvents() {
 
             {/* Official Admission Notice Box */}
             <div className="rounded-2xl border-2 border-[#FED7AA] bg-[#FFF0E5] p-5 space-y-2.5 shadow-xs">
-              <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#FA6400] text-white text-[10px] font-bold shadow-xs">
+              <Badge variant="default" className="inline-block px-2.5 py-0.5 rounded-full bg-[#FA6400] hover:bg-[#FA6400] text-white border-transparent text-[10px] font-bold shadow-xs">
                 Pemberitahuan Resmi PPDB
-              </span>
+              </Badge>
               <p className="text-xs text-stone-700 leading-relaxed font-medium">
                 Pendaftaran santri baru jalur beasiswa tahfiz 10 juz dan olimpiade sains ditutup sesuai kuota gelombang 1.
               </p>

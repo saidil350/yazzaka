@@ -24,6 +24,7 @@ import {
   Globe,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 interface NavLinkItem {
   label: string;
@@ -206,15 +207,15 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between text-xs">
           <div className="flex items-center gap-2.5">
             {admission.isOpen ? (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FA6400]/25 text-[#FFB07A] font-bold text-[11px]">
+              <Badge variant="outline" className="gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FA6400]/25 border-transparent text-[#FFB07A] font-bold text-[11px]">
                 <Sparkles className="h-3 w-3 animate-spin" style={{ animationDuration: "6s" }} />
                 PPDB {admission.academicYear || "2026/2027"} Dibuka
-              </span>
+              </Badge>
             ) : (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-stone-700/80 text-stone-300 font-bold text-[11px]">
+              <Badge variant="outline" className="gap-1.5 px-2.5 py-0.5 rounded-full bg-stone-700/80 border-transparent text-stone-300 font-bold text-[11px]">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
                 PPDB {admission.academicYear || "2026/2027"} Ditutup
-              </span>
+              </Badge>
             )}
             <span className="hidden md:inline text-white/30">·</span>
             <span className="hidden md:inline text-stone-300 font-medium text-[11px]">
@@ -343,9 +344,9 @@ export function Header() {
                             <div className="flex items-center justify-between gap-1">
                               <span className="text-xs font-bold truncate">{item.label}</span>
                               {item.badge && (
-                                <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-full bg-[#FA6400] text-white">
+                                <Badge variant="default" className="text-[9px] font-extrabold uppercase px-1.5 py-0 rounded-full bg-[#FA6400] hover:bg-[#FA6400] text-white border-transparent shadow-none">
                                   {item.badge}
-                                </span>
+                                </Badge>
                               )}
                             </div>
                             <p className="text-[11px] text-stone-500 line-clamp-1 mt-0.5 font-medium">

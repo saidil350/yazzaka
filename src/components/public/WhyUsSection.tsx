@@ -3,61 +3,30 @@
 import React from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import {
-  Sparkles,
-  BookOpen,
-  Heart,
+  HeartHandshake,
   GraduationCap,
   Users,
   ShieldCheck,
-  Globe,
-  Award,
+  Landmark,
+  ScrollText,
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export function WhyUsSection() {
   const { profile } = useSchoolData();
 
   const iconPalette = [
     {
-      icon: Award,
-      cardBg: "bg-[#FFF7F0]",
-      border: "border-[#FED7AA]",
-      iconBg: "bg-[#FA6400] text-white",
-      badge: "bg-[#FA6400]/10 text-[#C2410C] border-[#FED7AA]",
+      icon: ScrollText,
     },
     {
-      icon: Heart,
-      cardBg: "bg-[#F0F9FF]",
-      border: "border-[#BAE6FD]",
-      iconBg: "bg-[#0284C7] text-white",
-      badge: "bg-[#0284C7]/10 text-[#0369A1] border-[#BAE6FD]",
+      icon: HeartHandshake,
     },
+    { icon: GraduationCap },
+    { icon: Users },
+    { icon: ShieldCheck },
     {
-      icon: GraduationCap,
-      cardBg: "bg-[#F5F3FF]",
-      border: "border-[#DDD6FE]",
-      iconBg: "bg-[#7C3AED] text-white",
-      badge: "bg-[#7C3AED]/10 text-[#6D28D9] border-[#DDD6FE]",
-    },
-    {
-      icon: Users,
-      cardBg: "bg-[#F0FDF4]",
-      border: "border-[#BBF7D0]",
-      iconBg: "bg-[#16A34A] text-white",
-      badge: "bg-[#16A34A]/10 text-[#15803D] border-[#BBF7D0]",
-    },
-    {
-      icon: ShieldCheck,
-      cardBg: "bg-[#FEFCE8]",
-      border: "border-[#FEF08A]",
-      iconBg: "bg-[#CA8A04] text-white",
-      badge: "bg-[#CA8A04]/10 text-[#A16207] border-[#FEF08A]",
-    },
-    {
-      icon: Globe,
-      cardBg: "bg-[#FFF1F2]",
-      border: "border-[#FECDD3]",
-      iconBg: "bg-[#E11D48] text-white",
-      badge: "bg-[#E11D48]/10 text-[#BE123C] border-[#FECDD3]",
+      icon: Landmark,
     },
   ];
 
@@ -66,39 +35,22 @@ export function WhyUsSection() {
     profile.values && profile.values.length > 0
       ? profile.values.map((v, idx) => {
           const style = iconPalette[idx % iconPalette.length];
-          return {
-            icon: style.icon,
-            num: String(idx + 1).padStart(2, "0"),
-            title: v.title,
-            description: v.description,
-            cardBg: style.cardBg,
-            border: style.border,
-            iconBg: style.iconBg,
-            badge: style.badge,
-          };
+          return { icon: style.icon, num: String(idx + 1).padStart(2, "0"), title: v.title, description: v.description };
         })
       : [
           {
-            icon: Award,
+            icon: ScrollText,
             num: "01",
             title: "Bimbingan Ulama Al-Azhar Kairo",
             description:
               "Kurikulum dan nilai pembinaan dibimbing langsung oleh Dr. Amri Fatmi, Lc., M.A. (Doktor Akidah Filsafat Al-Azhar Kairo Summa Cum Laude).",
-            cardBg: "bg-[#FFF7F0]",
-            border: "border-[#FED7AA]",
-            iconBg: "bg-[#FA6400] text-white",
-            badge: "bg-[#FA6400]/10 text-[#C2410C] border-[#FED7AA]",
           },
           {
-            icon: Heart,
+            icon: HeartHandshake,
             num: "02",
             title: "Pendidikan Fitrah & Akhlakul Karimah",
             description:
               "Fokus utama pada penanaman akidah yang kokoh, adab islami dalam kehidupan sehari-hari, serta pembentukan karakter santri yang santun dan berbudi luhur.",
-            cardBg: "bg-[#F0F9FF]",
-            border: "border-[#BAE6FD]",
-            iconBg: "bg-[#0284C7] text-white",
-            badge: "bg-[#0284C7]/10 text-[#0369A1] border-[#BAE6FD]",
           },
           {
             icon: GraduationCap,
@@ -106,10 +58,6 @@ export function WhyUsSection() {
             title: "Ekosistem Pendidikan Berjenjang",
             description:
               "Menaungi jenjang usia dini (TPA & TKIT), pembinaan karakter (Sekolah Anak Shalih), kesetaraan masyarakat (PKBM), hingga tahfiz Al-Qur'an 30 juz (Darul Quran).",
-            cardBg: "bg-[#F5F3FF]",
-            border: "border-[#DDD6FE]",
-            iconBg: "bg-[#7C3AED] text-white",
-            badge: "bg-[#7C3AED]/10 text-[#6D28D9] border-[#DDD6FE]",
           },
           {
             icon: Users,
@@ -117,10 +65,6 @@ export function WhyUsSection() {
             title: "Ketahanan & Edukasi Keluarga",
             description:
               "Menjadikan keluarga sebagai pilar utama pembinaan melalui program parenting berkala, kajian tematik, dan sinergi aktif antara asatizah dan orang tua.",
-            cardBg: "bg-[#F0FDF4]",
-            border: "border-[#BBF7D0]",
-            iconBg: "bg-[#16A34A] text-white",
-            badge: "bg-[#16A34A]/10 text-[#15803D] border-[#BBF7D0]",
           },
           {
             icon: ShieldCheck,
@@ -128,21 +72,13 @@ export function WhyUsSection() {
             title: "Legalitas Resmi SK Kemenkumham RI",
             description:
               "Lembaga berbadan hukum resmi dengan SK Kemenkumham RI No. AHU-0005614.AH.01.04. Tahun 2022, menjamin tata kelola yayasan yang amanah dan akuntabel.",
-            cardBg: "bg-[#FEFCE8]",
-            border: "border-[#FEF08A]",
-            iconBg: "bg-[#CA8A04] text-white",
-            badge: "bg-[#CA8A04]/10 text-[#A16207] border-[#FEF08A]",
           },
           {
-            icon: Globe,
+            icon: Landmark,
             num: "06",
             title: "Kawasan Pesantren Peradaban 6.0",
             description:
               "Inisiasi strategis pembangunan pesantren peradaban modern di Cot Rheng, Pidie, guna mencetak generasi ulama dan cendekiawan berwawasan global.",
-            cardBg: "bg-[#FFF1F2]",
-            border: "border-[#FECDD3]",
-            iconBg: "bg-[#E11D48] text-white",
-            badge: "bg-[#E11D48]/10 text-[#BE123C] border-[#FECDD3]",
           },
         ];
 
@@ -152,10 +88,10 @@ export function WhyUsSection() {
 
         {/* Section Header */}
         <div className="max-w-3xl space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0E5] border border-[#FED7AA] text-[#FA6400] font-bold text-xs shadow-xs">
-            <Sparkles className="h-3.5 w-3.5 text-[#FA6400]" />
+          <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
+            <Landmark className="h-3.5 w-3.5 text-[#FA6400]" strokeWidth={1.8} />
             <span>Mengapa Memilih {profile.name}?</span>
-          </div>
+          </Badge>
           <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
             Keunggulan &amp; Nilai Pokok Lembaga
           </h2>
@@ -171,14 +107,14 @@ export function WhyUsSection() {
             return (
               <div
                 key={idx}
-                className={`${adv.cardBg} ${adv.border} border-2 rounded-3xl p-6 transition-all duration-200 hover:-translate-y-1.5 hover:shadow-md flex flex-col justify-between group shadow-xs`}
+                className="bg-white border border-[#E8E2D8] rounded-lg p-6 transition-all duration-200 hover:-translate-y-1 hover:border-[#FA6400]/50 hover:shadow-md flex flex-col justify-between group"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className={`h-11 w-11 rounded-2xl ${adv.iconBg} flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform`}>
-                      <Icon className="h-5 w-5" />
+                    <div className="h-11 w-11 border-l-2 border-[#FA6400] text-[#1E2330] flex items-center justify-center">
+                      <Icon className="h-5 w-5" strokeWidth={1.7} />
                     </div>
-                    <span className={`text-[11px] font-extrabold px-3 py-1 rounded-full border ${adv.badge}`}>
+                    <span className="text-[11px] font-extrabold px-2 py-1 text-stone-400">
                       Poin {adv.num}
                     </span>
                   </div>

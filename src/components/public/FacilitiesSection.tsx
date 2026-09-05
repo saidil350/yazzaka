@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Building, Users } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 
@@ -31,10 +32,10 @@ export function FacilitiesSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="max-w-2xl space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DCFCE7] border border-[#BBF7D0] text-[#15803D] font-bold text-xs">
-              <Building className="h-3.5 w-3.5 text-[#16A34A]" />
+            <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
+              <Building className="h-3.5 w-3.5 text-[#FA6400]" />
               <span>Sarana &amp; Lingkungan Terpadu</span>
-            </div>
+            </Badge>
             <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
               Fasilitas Sekolah &amp; Pembelajaran Terpadu
             </h2>
@@ -104,13 +105,13 @@ export function FacilitiesSection() {
                       alt={fac.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs text-[#1E2330] px-2.5 py-0.5 rounded-full text-[11px] font-bold shadow-xs border border-white">
+                    <Badge variant="outline" className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs text-[#1E2330] px-2.5 py-0.5 rounded-full text-[11px] font-bold shadow-xs border-white">
                       {fac.category}
-                    </div>
+                    </Badge>
                     {fac.capacity && (
-                      <div className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-xs text-[#1E2330] px-2.5 py-0.5 rounded-full text-[11px] font-bold border border-[#E8E2D8] shadow-xs">
+                      <Badge variant="outline" className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-xs text-[#1E2330] px-2.5 py-0.5 rounded-full text-[11px] font-bold border-[#E8E2D8] shadow-xs">
                         {fac.capacity}
-                      </div>
+                      </Badge>
                     )}
                   </div>
 

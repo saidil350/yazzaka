@@ -4,15 +4,10 @@ import React from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { MessageSquareHeart, Star, Quote, MessageSquare } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
+import { Badge } from "@/components/ui/badge";
 
 export function TestimonialsSection() {
   const { testimonials, profile } = useSchoolData();
-
-  const cardTints = [
-    { bg: "bg-[#FFF0E5]", border: "border-[#FED7AA]", quote: "text-[#FA6400]/40", badge: "bg-[#FA6400] text-white" },
-    { bg: "bg-[#EDE9FE]", border: "border-[#DDD6FE]", quote: "text-[#7C3AED]/40", badge: "bg-[#7C3AED] text-white" },
-    { bg: "bg-[#DCFCE7]", border: "border-[#BBF7D0]", quote: "text-[#16A34A]/40", badge: "bg-[#16A34A] text-white" },
-  ];
 
   return (
     <section id="testimoni" className="py-14 lg:py-16 bg-[#FAF6EE] border-b border-[#E8E2D8] scroll-mt-24">
@@ -20,10 +15,10 @@ export function TestimonialsSection() {
 
         {/* Section Header */}
         <div className="max-w-3xl space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0E5] border border-[#FED7AA] text-[#C2410C] font-bold text-xs">
+          <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
             <MessageSquareHeart className="h-3.5 w-3.5 text-[#FA6400]" />
             <span>Kisah Nyata &amp; Pengalaman</span>
-          </div>
+          </Badge>
           <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
             Kesan Hangat Wali Santri &amp; Alumni
           </h2>
@@ -41,18 +36,17 @@ export function TestimonialsSection() {
           />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((test, idx) => {
-              const tint = cardTints[idx % cardTints.length];
+            {testimonials.map((test) => {
               return (
                 <div
                   key={test.id}
-                  className={`${tint.bg} ${tint.border} border-2 rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200`}
+                  className="bg-white border-2 border-[#E8E2D8] rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-xs hover:shadow-md hover:border-[#FA6400]/40 hover:-translate-y-0.5 transition-all duration-200"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className={`px-2.5 py-0.5 rounded-full ${tint.badge} text-[10px] font-bold shadow-xs`}>
+                      <Badge variant="outline" className="px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-700 border-stone-200 text-[10px] font-bold shadow-2xs">
                         {test.role}
-                      </span>
+                      </Badge>
                       <div className="flex items-center gap-0.5 text-amber-500">
                         {[...Array(5)].map((_, i) => (
                           <Star key={i} className="h-3 w-3 fill-amber-400 text-amber-400" />
@@ -60,7 +54,7 @@ export function TestimonialsSection() {
                       </div>
                     </div>
 
-                    <Quote className={`h-6 w-6 ${tint.quote}`} />
+                    <Quote className="h-6 w-6 text-stone-300" />
 
                     <p className="text-stone-800 text-xs sm:text-sm leading-relaxed italic font-medium">
                       &ldquo;{test.quote}&rdquo;
