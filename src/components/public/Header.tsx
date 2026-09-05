@@ -13,7 +13,6 @@ import {
   ArrowRight,
   Sparkles,
   ChevronDown,
-  Newspaper,
   Calendar,
   Image as ImageIcon,
   MapPin,
@@ -36,18 +35,11 @@ const primaryNavLinks: NavLinkItem[] = [
   { label: "Beranda", href: "/", sectionId: "beranda" },
   { label: "Tentang", href: "/tentang-kami", sectionId: "tentang" },
   { label: "Program", href: "/program", sectionId: "program" },
-  { label: "Fasilitas", href: "/fasilitas", sectionId: "fasilitas" },
+  { label: "Warta & Berita", href: "/berita" },
   { label: "Kontak", href: "/kontak" },
 ];
 
-const secondaryNavLinks = [
-  {
-    label: "Warta & Berita",
-    href: "/berita",
-    desc: "Kabar kegiatan, opini & artikel",
-    icon: Newspaper,
-    badge: "Terbaru",
-  },
+const secondaryNavLinks: { label: string; href: string; desc: string; icon: React.ElementType; badge?: string }[] = [
   {
     label: "Agenda Sekolah",
     href: "/agenda",
@@ -98,7 +90,7 @@ export function Header() {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   // Hook Scrollspy untuk deteksi seksi aktif saat di halaman beranda
-  const sectionIds = ["beranda", "statistik", "tentang", "program", "keunggulan", "fasilitas", "prestasi", "testimoni"];
+  const sectionIds = ["beranda", "statistik", "tentang", "program", "keunggulan", "prestasi", "testimoni"];
   const { activeSection, scrollToSection } = useActiveSection(sectionIds, 90);
 
   // Deteksi scroll untuk elevation shadow & scroll progress bar
@@ -161,9 +153,6 @@ export function Header() {
       }
       if (link.sectionId === "program") {
         return activeSection === "program" || activeSection === "keunggulan";
-      }
-      if (link.sectionId === "fasilitas") {
-        return activeSection === "fasilitas";
       }
       if (link.sectionId === "prestasi") {
         return activeSection === "prestasi" || activeSection === "testimoni";
