@@ -1,44 +1,153 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
-import { ArrowUpRight, BookOpen, ChevronDown } from "lucide-react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Button } from "@/components/ui/button";
+import { ArrowRight, Sparkles, BookOpen, CheckCircle2, Heart, Award, Globe } from "lucide-react";
 
 export function HeroSection() {
   const { profile, admission } = useSchoolData();
+
   return (
-    <section id="beranda" aria-labelledby="hero-heading" className="landing-section border-b border-border bg-primary text-primary-foreground">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-[1.08fr_.92fr]">
-        <div className="flex flex-col justify-center px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
-          <p className="mb-7 flex items-center gap-3 text-xs font-semibold uppercase tracking-[.24em] text-accent">
-            <span className="h-px w-10 bg-accent" /> Yayasan Bina Iman Akhlak Yazzakka
-          </p>
-          <h1 id="hero-heading" className="max-w-3xl font-editorial text-5xl font-medium leading-[.98] tracking-[-.045em] text-primary-foreground sm:text-7xl lg:text-[5.9rem]">
-            Membina iman.<br /><em className="text-accent">Mencetak</em> peradaban.
-          </h1>
-          <p className="mt-8 max-w-xl text-base leading-8 text-primary-foreground/70 sm:text-lg">
-            {profile.tagline} Kami menumbuhkan generasi yang kokoh akidahnya, luas ilmunya, dan siap memberi manfaat bagi umat.
-          </p>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button asChild size="lg" className="h-12 rounded-sm bg-accent px-6 font-semibold text-accent-foreground hover:bg-accent/90">
-              <Link href="/pendaftaran">{admission.isOpen ? "Mulai pendaftaran" : "Lihat informasi"}<ArrowUpRight data-icon="inline-end" /></Link>
-            </Button>
-            <Button asChild variant="ghost" size="lg" className="h-12 justify-start rounded-sm px-4 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
-              <Link href="/tentang-kami"><BookOpen data-icon="inline-start" /> Mengenal Yazzakka</Link>
-            </Button>
+    <section
+      id="beranda"
+      aria-labelledby="hero-heading"
+      className="landing-section relative overflow-hidden bg-background py-12 sm:py-16 lg:py-20 border-b border-border scroll-mt-24"
+    >
+      {/* ── Headspace Subtle Playful Background Blobs ────────────── */}
+      <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[#FFEBD4]/60 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-8 -mb-16 w-72 h-72 rounded-full bg-[#EDE9FE]/50 blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+
+          {/* ── Left: Friendly Headline & Mission (7 cols) ─────── */}
+          <div className="lg:col-span-7 space-y-4 sm:space-y-5">
+
+            {/* Pill Eyebrow */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0E5] border border-[#FED7AA] text-[#C2410C] font-bold text-xs shadow-xs">
+              <Sparkles className="h-3.5 w-3.5 text-[#FA6400]" />
+              <span>Pendidikan Islam Holistik &amp; Berwawasan Global</span>
+            </div>
+
+            {/* Proportional Friendly Headline */}
+            <h1
+              id="hero-heading"
+              className="text-3xl sm:text-4xl lg:text-[2.65rem] font-extrabold text-[#1E2330] tracking-tight leading-[1.2]"
+            >
+              Belajar Lebih Tenang, <br className="hidden sm:inline" />
+              Tumbuh Berkarakter <span className="text-[#FA6400] underline decoration-[#FA6400]/30 decoration-wavy underline-offset-4">Qur&apos;ani</span>.
+            </h1>
+
+            {/* Welcoming Body copy */}
+            <p className="text-sm sm:text-base text-stone-600 leading-relaxed max-w-xl">
+              {profile.tagline} Di <strong className="font-bold text-[#1E2330]">{profile.name}</strong>, proses pendidikan memadukan kedalaman tradisi keilmuan Islam, tahfiz Al-Qur&apos;an 30 juz bersanad, penguasaan bahasa Arab &amp; Inggris aktif, serta kurikulum sains modern berbasis riset.
+            </p>
+
+            {/* Pill Action CTAs */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+              <Link href="/pendaftaran">
+                <Button
+                  size="default"
+                  className="font-bold text-xs sm:text-sm h-11 px-6 w-full sm:w-auto shadow-sm"
+                >
+                  <span>{admission.isOpen ? "Daftar Santri Baru" : "Informasi PPDB"}</span>
+                  <ArrowRight className="h-4 w-4 ml-1" />
+                </Button>
+              </Link>
+              <Link href="/tentang-kami">
+                <Button
+                  variant="outline"
+                  size="default"
+                  className="font-bold text-xs sm:text-sm h-11 px-6 w-full sm:w-auto"
+                >
+                  <BookOpen className="h-4 w-4 text-[#FA6400]" />
+                  <span>Jelajahi Profil</span>
+                </Button>
+              </Link>
+            </div>
+
+            {/* Quick Benefits in Pill Badges */}
+            <div className="pt-4 border-t border-[#E8E2D8] flex flex-wrap items-center gap-2 sm:gap-3">
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
+                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                <span>Akreditasi A Unggul</span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
+                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                <span>Tahfiz 30 Juz Bersanad</span>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
+                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                <span>Bahasa Arab &amp; Inggris 24 Jam</span>
+              </div>
+            </div>
           </div>
-          <div className="mt-16 flex items-center gap-6 border-t border-primary-foreground/15 pt-6 text-xs text-primary-foreground/60">
-            <span className="font-semibold text-primary-foreground">Sigli, Aceh</span><span className="h-1 w-1 rounded-full bg-accent" /><span>Est. 2022</span><span className="h-1 w-1 rounded-full bg-accent" /><span>Terdaftar resmi</span>
+
+          {/* ── Right: Playful Media Card with Floating Chips (5 cols) ── */}
+          <div className="lg:col-span-5 relative mt-4 lg:mt-0">
+
+            {/* Decorative colored backdrop card */}
+            <div className="absolute inset-0 bg-[#FFD8BA] rounded-3xl transform rotate-2 translate-y-2 translate-x-2" />
+
+            {/* Main Rounded Card */}
+            <div className="relative rounded-3xl overflow-hidden border-2 border-white bg-white shadow-xl">
+              <div className="aspect-[4/3] sm:aspect-[16/11] relative max-h-[340px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80"
+                  alt="Aktivitas santri ceria di Pesantren Yazzaka"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                />
+
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1E2330]/80 via-transparent to-black/10" />
+
+                {/* Floating Pill Badge 1 — Top Right (Lilac) */}
+                <div className="absolute top-3 right-3 animate-float">
+                  <div className="px-3 py-1 rounded-xl bg-[#EDE9FE]/95 backdrop-blur-xs border border-[#DDD6FE] text-[#6D28D9] font-bold text-[11px] shadow-md flex items-center gap-1.5">
+                    <Heart className="h-3.5 w-3.5 fill-violet-500 text-violet-500" />
+                    <span>Lingkungan Nyaman</span>
+                  </div>
+                </div>
+
+                {/* Floating Pill Badge 2 — Middle Left (Mint) */}
+                <div className="absolute top-1/3 -left-2 animate-float-delayed">
+                  <div className="px-3 py-1 rounded-xl bg-[#DCFCE7]/95 backdrop-blur-xs border border-[#BBF7D0] text-[#15803D] font-bold text-[11px] shadow-md flex items-center gap-1.5">
+                    <Award className="h-3.5 w-3.5 text-emerald-600" />
+                    <span>Karakter &amp; Adab</span>
+                  </div>
+                </div>
+
+                {/* Floating Pill Badge 3 — Bottom Content Bar */}
+                <div className="absolute inset-x-3 bottom-3 p-3 rounded-2xl bg-white/95 backdrop-blur-xs border border-white shadow-lg">
+                  <div className="flex items-center justify-between gap-2">
+                    <div>
+                      <span className="inline-block px-2 py-0.5 rounded-full bg-[#FFF0E5] text-[#FA6400] text-[9px] font-extrabold uppercase tracking-wide">
+                        Sekolah Terpadu
+                      </span>
+                      <h4 className="text-xs font-bold text-[#1E2330] mt-0.5">
+                        Sekolah Formal &amp; Pesantren Yazzakka
+                      </h4>
+                      <p className="text-[10px] text-stone-500">
+                        Mendidik generasi Qur&apos;ani berkarakter mulia
+                      </p>
+                    </div>
+                    <div className="h-8 w-8 rounded-xl bg-[#FA6400] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                      <Globe className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
           </div>
-        </div>
-        <div className="relative min-h-[460px] overflow-hidden border-t border-primary-foreground/10 lg:min-h-[700px] lg:border-l lg:border-t-0">
-          <img src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1400&q=85" alt="Santri belajar Al-Qur'an bersama" className="absolute inset-0 h-full w-full object-cover grayscale-[.12]" />
-          <div className="absolute inset-0 bg-primary/15" />
-          <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-5 bg-gradient-to-t from-primary/90 to-transparent px-6 pb-8 pt-32 sm:px-10">
-            <div><p className="text-xs font-semibold uppercase tracking-[.2em] text-accent">Ruang tumbuh</p><p className="mt-2 max-w-xs font-editorial text-2xl leading-tight text-primary-foreground">Tradisi ilmu untuk masa depan yang lebih baik.</p></div>
-            <span className="hidden size-12 shrink-0 items-center justify-center rounded-full border border-primary-foreground/40 text-primary-foreground sm:flex"><ChevronDown /></span>
-          </div>
+
         </div>
       </div>
     </section>
