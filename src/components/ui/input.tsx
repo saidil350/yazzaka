@@ -1,4 +1,5 @@
 import * as React from "react";
+import { CircleAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -58,13 +59,12 @@ export function Input({
             error ? `${inputId}-error` : helperText ? `${inputId}-hint` : undefined
           }
           className={cn(
-            "flex h-10 w-full rounded-xl border border-[#E8E2D8] bg-[#FCFBF7] px-3.5 py-2",
+            "flex h-9 w-full rounded-md border border-[#E8E2D8] bg-[#FCFBF7] px-3 py-1 text-base shadow-sm transition-colors md:text-sm",
             leftIcon && "pl-9",
-            "text-sm font-medium text-[#1E2330] shadow-2xs",
+            "font-medium text-[#1E2330]",
             "placeholder:text-stone-400 placeholder:font-normal",
-            "transition-all duration-200",
             "hover:border-stone-400 hover:bg-white",
-            "focus-visible:outline-none focus-visible:bg-white focus-visible:ring-4 focus-visible:ring-[#FA6400]/10 focus-visible:border-[#FA6400]",
+            "focus-visible:outline-none focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-[#FA6400] focus-visible:ring-offset-2 focus-visible:border-[#FA6400]",
             "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[#FAF6EE]",
             error && "border-rose-500 focus-visible:ring-rose-500/10 focus-visible:border-rose-500",
             className
@@ -78,9 +78,7 @@ export function Input({
           role="alert"
           className="flex items-center gap-1.5 text-xs text-rose-500 font-medium"
         >
-          <svg className="h-3.5 w-3.5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-          </svg>
+          <CircleAlert className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
           {error}
         </p>
       )}

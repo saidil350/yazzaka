@@ -235,7 +235,7 @@ export default function AdminNewsPage() {
                       <span className="text-stone-500">{formatDateIndonesian(art.publishedDate)}</span>
                     </td>
                     <td className="p-4 sm:px-6">
-                      <Badge variant={art.status === "published" ? "success" : "secondary"}>
+                      <Badge variant={art.status === "published" ? "default" : "secondary"}>
                         {art.status === "published" ? "Terbit" : "Draf"}
                       </Badge>
                     </td>

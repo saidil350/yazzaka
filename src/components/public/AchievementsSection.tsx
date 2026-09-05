@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { ArrowRight, Trophy, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 
 export function AchievementsSection() {
@@ -17,10 +18,10 @@ export function AchievementsSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="max-w-2xl space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FEF9C3] border border-[#FEF08A] text-[#A16207] font-bold text-xs">
-              <Trophy className="h-3 w-3 text-[#CA8A04]" />
+            <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
+              <Trophy className="h-3 w-3 text-[#FA6400]" />
               <span>Rekam Jejak Keberhasilan</span>
-            </div>
+            </Badge>
             <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
               Prestasi Santri &amp; Siswa Unggulan
             </h2>
@@ -67,17 +68,17 @@ export function AchievementsSection() {
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                   <div className="absolute top-2.5 left-2.5">
-                    <span className="px-2 py-0.5 rounded-full bg-[#FA6400] text-white text-[10px] font-bold shadow-xs">
+                    <Badge variant="outline" className="px-2.5 py-0.5 rounded-full bg-stone-900 text-white border-transparent text-[10px] font-bold shadow-xs">
                       Tingkat {ach.level}
-                    </span>
+                    </Badge>
                   </div>
                 </div>
 
                 <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
                   <div>
-                    <span className="inline-block px-2 py-0.5 rounded-full bg-[#FFF0E5] text-[#C2410C] text-[9px] font-bold uppercase tracking-wider mb-1.5">
+                    <Badge variant="outline" className="inline-block px-2 py-0.5 rounded-full bg-stone-100 border-stone-200 text-stone-700 text-[9px] font-bold uppercase tracking-wider mb-1.5">
                       {ach.category} • {ach.year}
-                    </span>
+                    </Badge>
                     <h4 className="text-sm font-bold text-[#1E2330] leading-snug line-clamp-2">
                       {ach.title}
                     </h4>

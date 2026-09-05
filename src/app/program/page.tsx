@@ -8,6 +8,7 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { Program } from "@/lib/types";
 import { ArrowRight, CheckCircle2, Sparkles, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 
 export default function ProgramsDirectoryPage() {
@@ -40,21 +41,21 @@ export default function ProgramsDirectoryPage() {
       return { tag: "Wakaf Pembangunan", target: "Program Strategis Umat", color: "bg-[#FA6400] text-white border-[#FA6400]" };
     }
     if (cat.includes("tahfiz") || slug.includes("darul-quran")) {
-      return { tag: "Tahfiz 30 Juz Bersanad", target: "Santri & Pelajar Formal", color: "bg-[#FEF9C3] text-[#A16207] border-[#FEF08A]" };
+      return { tag: "Tahfiz 30 Juz Bersanad", target: "Santri & Pelajar Formal", color: "bg-white/95 text-stone-800 border-stone-200" };
     }
     if (slug.includes("tpa")) {
-      return { tag: "Pendidikan Al-Qur'an", target: "Usia 4–12 Tahun", color: "bg-[#FFF0E5] text-[#FA6400] border-[#FED7AA]" };
+      return { tag: "Pendidikan Al-Qur'an", target: "Usia 4–12 Tahun", color: "bg-white/95 text-stone-800 border-stone-200" };
     }
     if (slug.includes("tkit")) {
-      return { tag: "TK Islam Terpadu", target: "Usia 4–6 Tahun", color: "bg-[#EDE9FE] text-[#7C3AED] border-[#DDD6FE]" };
+      return { tag: "TK Islam Terpadu", target: "Usia 4–6 Tahun", color: "bg-white/95 text-stone-800 border-stone-200" };
     }
     if (slug.includes("pkbm")) {
-      return { tag: "Kesetaraan & Vokasi", target: "Paket A / B / C Resmi", color: "bg-[#E0F2FE] text-[#0284C7] border-[#BAE6FD]" };
+      return { tag: "Kesetaraan & Vokasi", target: "Paket A / B / C Resmi", color: "bg-white/95 text-stone-800 border-stone-200" };
     }
     if (slug.includes("anak-shalih") || slug.includes("karakter")) {
-      return { tag: "Pembinaan Karakter", target: "Santri Cilik & Remaja", color: "bg-[#DCFCE7] text-[#16A34A] border-[#BBF7D0]" };
+      return { tag: "Pembinaan Karakter", target: "Santri Cilik & Remaja", color: "bg-white/95 text-stone-800 border-stone-200" };
     }
-    return { tag: prog.category || "Program Unggulan", target: "Pendidikan Terpadu", color: "bg-[#FFF0E5] text-[#FA6400] border-[#FED7AA]" };
+    return { tag: prog.category || "Program Unggulan", target: "Pendidikan Terpadu", color: "bg-white/95 text-stone-800 border-stone-200" };
   };
 
   return (
@@ -65,10 +66,10 @@ export default function ProgramsDirectoryPage() {
         {/* ── Headspace Warm Page Hero Banner ─────────── */}
         <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] text-[#0369A1] font-bold text-xs mb-3 shadow-xs">
-              <Sparkles className="h-3.5 w-3.5 text-[#0284C7]" />
+            <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs mb-3 shadow-2xs">
+              <Sparkles className="h-3.5 w-3.5 text-[#FA6400]" />
               <span>Unit Pendidikan &amp; Program Strategis</span>
-            </div>
+            </Badge>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
               Struktur Pendidikan {profile.name}
             </h1>
@@ -150,12 +151,12 @@ export default function ProgramsDirectoryPage() {
 
                           {/* Badges on Image */}
                           <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-                            <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider border shadow-xs ${badgeInfo.color}`}>
+                            <Badge variant="outline" className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider border shadow-xs ${badgeInfo.color}`}>
                               {badgeInfo.tag}
-                            </span>
-                            <span className="px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold">
+                            </Badge>
+                            <Badge variant="outline" className="px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-xs text-white border-transparent text-[10px] font-bold">
                               {badgeInfo.target}
-                            </span>
+                            </Badge>
                           </div>
 
                           <div className="absolute bottom-3 left-3 text-white text-xs font-bold drop-shadow-xs">

@@ -330,7 +330,7 @@ export default function AdminUsersManagementPage() {
                       {item.title}
                     </div>
                     {isCurrent && (
-                      <Badge variant="accent" className="text-[10px] font-bold">
+                      <Badge variant="outline" className="text-[10px] font-bold border-amber-300 bg-amber-50 text-amber-800">
                         Peran Anda
                       </Badge>
                     )}

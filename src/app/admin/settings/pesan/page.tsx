@@ -31,7 +31,7 @@ const STATUS_CONFIG: Record<
   ContactMessage["status"],
   {
     label: string;
-    badgeVariant: "destructive" | "success" | "secondary" | "warning";
+    badgeVariant: "destructive" | "default" | "secondary" | "outline";
     chipClass: string;
   }
 > = {
@@ -47,12 +47,12 @@ const STATUS_CONFIG: Record<
   },
   replied: {
     label: "Sudah Dibalas",
-    badgeVariant: "success",
+    badgeVariant: "default",
     chipClass: "bg-emerald-500/10 text-emerald-700 border-emerald-200",
   },
   archived: {
     label: "Diarsipkan",
-    badgeVariant: "warning",
+    badgeVariant: "outline",
     chipClass: "bg-amber-500/10 text-amber-700 border-amber-200",
   },
 };

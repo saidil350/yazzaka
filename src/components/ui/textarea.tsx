@@ -42,13 +42,13 @@ export function Textarea({
         aria-invalid={!!error}
         aria-describedby={error ? `${textareaId}-error` : helperText ? `${textareaId}-hint` : undefined}
         className={cn(
-          "flex min-h-[90px] w-full rounded-xl border border-[#E8E2D8] px-3.5 py-2.5",
+          "flex min-h-[90px] w-full rounded-md border border-[#E8E2D8] px-3 py-2",
           "bg-[#FCFBF7] text-[#1E2330]",
           "text-sm font-medium leading-relaxed",
           "placeholder:text-stone-400 placeholder:font-normal",
-          "transition-all duration-200",
+          "transition-colors",
           "hover:border-stone-400 hover:bg-white",
-          "focus:bg-white focus:outline-none focus:border-[#FA6400] focus:ring-4 focus:ring-[#FA6400]/10",
+          "focus:bg-white focus:outline-none focus:border-[#FA6400] focus:ring-2 focus:ring-[#FA6400] focus:ring-offset-2",
           "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[#FAF6EE]",
           "resize-y shadow-2xs",
           error && [

@@ -21,6 +21,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionItem } from "@/components/ui/accordion";
@@ -67,25 +68,25 @@ export default function AdmissionPage() {
       step: "01",
       title: "Pengisian Formulir Online",
       desc: "Mengisi data diri calon santri dan mengunggah dokumen persyaratan dasar melalui portal SPMB resmi.",
-      badge: "bg-[#FFF0E5] text-[#FA6400] border-[#FED7AA]",
+      badge: "bg-white text-stone-800 border-stone-200 shadow-2xs",
     },
     {
       step: "02",
       title: "Observasi & Ujian Seleksi",
       desc: "Mengikuti tes potensi akademik, tes membaca dan hafalan Al-Qur'an, serta wawancara komitmen orang tua/wali.",
-      badge: "bg-[#E0F2FE] text-[#0284C7] border-[#BAE6FD]",
+      badge: "bg-white text-stone-800 border-stone-200 shadow-2xs",
     },
     {
       step: "03",
       title: "Pengumuman Kelulusan",
       desc: "Hasil seleksi diumumkan secara resmi melalui laman SPMB dan notifikasi resmi WhatsApp dari panitia.",
-      badge: "bg-[#EDE9FE] text-[#7C3AED] border-[#DDD6FE]",
+      badge: "bg-white text-stone-800 border-stone-200 shadow-2xs",
     },
     {
       step: "04",
       title: "Daftar Ulang & Orientasi",
       desc: "Penyelesaian administrasi biaya pendidikan dan penyerahan kit santri menjelang masa Orientasi Asrama.",
-      badge: "bg-[#DCFCE7] text-[#16A34A] border-[#BBF7D0]",
+      badge: "bg-white text-stone-800 border-stone-200 shadow-2xs",
     },
   ];
 
@@ -98,28 +99,28 @@ export default function AdmissionPage() {
         <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl space-y-3">
             <div className="flex flex-wrap items-center justify-center gap-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0E5] border border-[#FED7AA] text-[#FA6400] font-bold text-xs shadow-xs">
+              <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-[#FFF0E5] border-[#FED7AA] text-[#FA6400] font-bold text-xs shadow-xs">
                 <Sparkles className="h-3.5 w-3.5" />
                 <span>{admission.periodName} ({admission.academicYear})</span>
-              </div>
+              </Badge>
 
               {admission.isOpen ? (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/90 border border-emerald-300 text-emerald-800 font-bold text-xs shadow-xs">
+                <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-emerald-100/90 border-emerald-300 text-emerald-800 font-bold text-xs shadow-xs">
                   <Unlock className="h-3 w-3" />
                   Pendaftaran Dibuka
-                </span>
+                </Badge>
               ) : (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-200 border border-stone-300 text-stone-700 font-bold text-xs shadow-xs">
+                <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-stone-200 border-stone-300 text-stone-700 font-bold text-xs shadow-xs">
                   <Lock className="h-3 w-3" />
                   Pendaftaran Ditutup
-                </span>
+                </Badge>
               )}
 
               {admission.startDate && admission.endDate && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-[#E8E2D8] text-stone-700 font-semibold text-xs shadow-xs">
+                <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white/90 border-[#E8E2D8] text-stone-700 font-semibold text-xs shadow-xs">
                   <Calendar className="h-3.5 w-3.5 text-[#FA6400]" />
                   <span>{formatDateIndonesian(admission.startDate)} – {formatDateIndonesian(admission.endDate)}</span>
-                </span>
+                </Badge>
               )}
             </div>
 
@@ -169,9 +170,9 @@ export default function AdmissionPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             <div className="max-w-3xl space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#FFF0E5] text-[#FA6400] font-bold text-xs border border-[#FED7AA]">
+              <Badge variant="outline" className="gap-2 px-3 py-0.5 rounded-full bg-stone-100 border-stone-200 text-stone-700 font-semibold text-xs">
                 Alur &amp; Prosedur
-              </div>
+              </Badge>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
                 Tahapan Pendaftaran &amp; Seleksi Masuk
               </h2>
@@ -184,9 +185,9 @@ export default function AdmissionPage() {
                   className="bg-[#FAF6EE] p-5 rounded-2xl border-2 border-[#E8E2D8] space-y-3 flex flex-col justify-between shadow-xs hover:border-[#FA6400]/40 transition-all"
                 >
                   <div className="space-y-2">
-                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${s.badge}`}>
+                    <Badge variant="outline" className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${s.badge}`}>
                       Tahap {s.step}
-                    </span>
+                    </Badge>
                     <h3 className="text-base font-bold text-[#1E2330]">
                       {s.title}
                     </h3>

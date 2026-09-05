@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Quote, Sparkles, Compass } from "lucide-react";
 
 export function EditorialAbout() {
@@ -15,10 +16,10 @@ export function EditorialAbout() {
 
         {/* Section Title Header */}
         <div className="max-w-3xl space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EDE9FE] border border-[#DDD6FE] text-[#6D28D9] font-bold text-xs">
-            <Sparkles className="h-3 w-3" />
+          <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
+            <Sparkles className="h-3 w-3 text-[#FA6400]" />
             <span>Sambutan Pimpinan &amp; Filosofi</span>
-          </div>
+          </Badge>
           <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
             Membentuk Karakter Melalui Keteladanan, Adab, &amp; Kedalaman Ilmu
           </h2>
@@ -40,9 +41,9 @@ export function EditorialAbout() {
                   alt={profile.principal.name}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute bottom-2.5 left-2.5 bg-white/95 backdrop-blur-xs px-3 py-1 rounded-full border border-stone-200 text-xs font-bold text-[#1E2330] shadow-xs">
+                <Badge variant="outline" className="absolute bottom-2.5 left-2.5 bg-white/95 backdrop-blur-xs px-3 py-1 rounded-full border-stone-200 text-xs font-bold text-[#1E2330] shadow-xs">
                   {profile.principal.name}
-                </div>
+                </Badge>
               </div>
 
               {/* Message Quote */}
@@ -53,7 +54,9 @@ export function EditorialAbout() {
                 </p>
                 <div className="mt-2.5 pt-2.5 border-t border-stone-100 flex items-center justify-between">
                   <span className="text-[11px] font-bold text-stone-500">{profile.principal.title}</span>
-                  <span className="text-[10px] font-bold text-[#FA6400] bg-[#FFF0E5] px-2 py-0.5 rounded-full">Pimpinan Pesantren</span>
+                  <Badge variant="outline" className="text-[10px] font-bold text-stone-700 bg-stone-100 border-stone-200 px-2 py-0.5 rounded-full">
+                    Pimpinan Pesantren
+                  </Badge>
                 </div>
               </div>
             </div>
@@ -73,13 +76,13 @@ export function EditorialAbout() {
           {/* Right Column: Vision, Mission & Values */}
           <div className="lg:col-span-7 space-y-6">
 
-            {/* Vision Card (Lilac Pastel) */}
-            <div className="bg-[#EDE9FE]/80 border-2 border-[#DDD6FE] rounded-2xl p-5 sm:p-6 shadow-xs">
+            {/* Vision Card — Neutral Stone Elegant */}
+            <div className="bg-[#FAF6EE] border-2 border-[#E8E2D8] rounded-2xl p-5 sm:p-6 shadow-xs">
               <div className="flex items-center gap-2 mb-2">
-                <div className="h-7 w-7 rounded-full bg-[#7C3AED] text-white flex items-center justify-center">
+                <div className="h-7 w-7 rounded-full bg-[#1E2330] text-white flex items-center justify-center">
                   <Compass className="h-3.5 w-3.5" />
                 </div>
-                <span className="text-xs font-bold uppercase tracking-wider text-[#6D28D9]">
+                <span className="text-xs font-bold uppercase tracking-wider text-stone-600">
                   Visi Utama Lembaga
                 </span>
               </div>
@@ -116,30 +119,22 @@ export function EditorialAbout() {
                 Pilar Karakter Santri
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {profile.values.slice(0, 3).map((val, idx) => {
-                  const colors = [
-                    { bg: "bg-[#FFF0E5]", border: "border-[#FED7AA]", text: "text-[#C2410C]" },
-                    { bg: "bg-[#E0F2FE]", border: "border-[#BAE6FD]", text: "text-[#0369A1]" },
-                    { bg: "bg-[#DCFCE7]", border: "border-[#BBF7D0]", text: "text-[#15803D]" },
-                  ][idx % 3];
-
-                  return (
-                    <div
-                      key={idx}
-                      className={`${colors.bg} ${colors.border} border-2 rounded-2xl p-4 transition-all hover:-translate-y-0.5`}
-                    >
-                      <span className={`text-[9px] font-extrabold uppercase tracking-widest ${colors.text} block mb-1`}>
-                        Pilar 0{idx + 1}
-                      </span>
-                      <h4 className="font-bold text-xs sm:text-sm text-[#1E2330] mb-1">
-                        {val.title}
-                      </h4>
-                      <p className="text-[11px] text-stone-600 leading-relaxed font-medium">
-                        {val.description}
-                      </p>
-                    </div>
-                  );
-                })}
+                {profile.values.slice(0, 3).map((val, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-4 transition-all hover:-translate-y-0.5 hover:border-[#FA6400]/40 hover:shadow-xs"
+                  >
+                    <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#FA6400] block mb-1">
+                      Pilar 0{idx + 1}
+                    </span>
+                    <h4 className="font-bold text-xs sm:text-sm text-[#1E2330] mb-1">
+                      {val.title}
+                    </h4>
+                    <p className="text-[11px] text-stone-600 leading-relaxed font-medium">
+                      {val.description}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
 

@@ -188,7 +188,7 @@ export default function AdminEventsPage() {
                       {evt.location}
                     </td>
                     <td className="p-4 sm:px-6">
-                      <Badge variant={evt.status === "upcoming" ? "success" : "secondary"}>
+                      <Badge variant={evt.status === "upcoming" ? "default" : "secondary"}>
                         {evt.status === "upcoming" ? "Akan Datang" : "Selesai"}
                       </Badge>
                     </td>

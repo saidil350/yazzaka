@@ -4,7 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, BookOpen, CheckCircle2, Heart, Award, Globe } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { ArrowRight, BookOpen, CheckCircle2, Heart, Award, Globe, Landmark } from "lucide-react";
 
 export function HeroSection() {
   const { profile, admission } = useSchoolData();
@@ -28,10 +29,10 @@ export function HeroSection() {
           <div className="lg:col-span-7 space-y-4 sm:space-y-5">
 
             {/* Pill Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0E5] border border-[#FED7AA] text-[#C2410C] font-bold text-xs shadow-xs">
-              <Sparkles className="h-3.5 w-3.5 text-[#FA6400]" />
+            <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
+              <Landmark className="h-3.5 w-3.5 text-[#FA6400]" strokeWidth={1.8} />
               <span>Pendidikan Islam Holistik &amp; Berwawasan Global</span>
-            </div>
+            </Badge>
 
             {/* Proportional Friendly Headline */}
             <h1
@@ -72,18 +73,18 @@ export function HeroSection() {
 
             {/* Quick Benefits in Pill Badges */}
             <div className="pt-4 border-t border-[#E8E2D8] flex flex-wrap items-center gap-2 sm:gap-3">
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
+              <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
                 <span>Akreditasi A Unggul</span>
-              </div>
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
+              </Badge>
+              <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
                 <span>Tahfiz 30 Juz Bersanad</span>
-              </div>
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
+              </Badge>
+              <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
                 <span>Bahasa Arab &amp; Inggris 24 Jam</span>
-              </div>
+              </Badge>
             </div>
           </div>
 
@@ -107,29 +108,29 @@ export function HeroSection() {
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1E2330]/80 via-transparent to-black/10" />
 
-                {/* Floating Pill Badge 1 — Top Right (Lilac) */}
-                <div className="absolute top-3 right-3 animate-float">
-                  <div className="px-3 py-1 rounded-xl bg-[#EDE9FE]/95 backdrop-blur-xs border border-[#DDD6FE] text-[#6D28D9] font-bold text-[11px] shadow-md flex items-center gap-1.5">
-                    <Heart className="h-3.5 w-3.5 fill-violet-500 text-violet-500" />
+                {/* Floating Pill Badge 1 — Top Right */}
+                <div className="absolute top-3 right-3">
+                  <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs border-stone-200 text-stone-800 font-semibold text-[11px] shadow-sm">
+                    <Heart className="h-3.5 w-3.5 text-[#FA6400]" strokeWidth={1.8} />
                     <span>Lingkungan Nyaman</span>
-                  </div>
+                  </Badge>
                 </div>
 
-                {/* Floating Pill Badge 2 — Middle Left (Mint) */}
-                <div className="absolute top-1/3 -left-2 animate-float-delayed">
-                  <div className="px-3 py-1 rounded-xl bg-[#DCFCE7]/95 backdrop-blur-xs border border-[#BBF7D0] text-[#15803D] font-bold text-[11px] shadow-md flex items-center gap-1.5">
-                    <Award className="h-3.5 w-3.5 text-emerald-600" />
+                {/* Floating Pill Badge 2 — Middle Left */}
+                <div className="absolute top-1/3 -left-2">
+                  <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs border-stone-200 text-stone-800 font-semibold text-[11px] shadow-sm">
+                    <Award className="h-3.5 w-3.5 text-[#FA6400]" strokeWidth={1.8} />
                     <span>Karakter &amp; Adab</span>
-                  </div>
+                  </Badge>
                 </div>
 
                 {/* Floating Pill Badge 3 — Bottom Content Bar */}
-                <div className="absolute inset-x-3 bottom-3 p-3 rounded-2xl bg-white/95 backdrop-blur-xs border border-white shadow-lg">
+                <div className="absolute inset-x-3 bottom-3 p-3 rounded-2xl bg-white/95 backdrop-blur-xs border border-stone-200 shadow-lg">
                   <div className="flex items-center justify-between gap-2">
                     <div>
-                      <span className="inline-block px-2 py-0.5 rounded-full bg-[#FFF0E5] text-[#FA6400] text-[9px] font-extrabold uppercase tracking-wide">
+                      <Badge variant="outline" className="px-2 py-0.5 rounded-full bg-stone-100 border-stone-200 text-stone-700 text-[9px] font-bold uppercase tracking-wide">
                         Sekolah Terpadu
-                      </span>
+                      </Badge>
                       <h4 className="text-xs font-bold text-[#1E2330] mt-0.5">
                         Sekolah Formal &amp; Pesantren Yazzakka
                       </h4>
@@ -137,8 +138,8 @@ export function HeroSection() {
                         Mendidik generasi Qur&apos;ani berkarakter mulia
                       </p>
                     </div>
-                    <div className="h-8 w-8 rounded-xl bg-[#FA6400] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
-                      <Globe className="h-4 w-4" />
+                    <div className="h-8 w-8 rounded-md bg-[#1E2330] text-white flex items-center justify-center font-bold text-xs shrink-0">
+                      <Globe className="h-4 w-4" strokeWidth={1.8} />
                     </div>
                   </div>
                 </div>

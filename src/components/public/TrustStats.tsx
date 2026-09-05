@@ -14,10 +14,8 @@ export function TrustStats() {
       value: `${profile.establishedYear}`,
       suffix: " M",
       desc: "14+ tahun berkiprah mencetak kader pemimpin",
-      cardBg: "bg-[#FFF0E5]",
-      borderBg: "border-[#FED7AA]",
-      iconBg: "bg-[#FA6400] text-white",
-      textColor: "text-[#C2410C]",
+      iconBg: "text-[#FA6400]",
+      textColor: "text-[#FA6400]",
     },
     {
       icon: Users,
@@ -25,10 +23,8 @@ export function TrustStats() {
       value: `${profile.studentCount}`,
       suffix: "+",
       desc: "Santri berprestasi dari seluruh Indonesia",
-      cardBg: "bg-[#E0F2FE]",
-      borderBg: "border-[#BAE6FD]",
-      iconBg: "bg-[#0284C7] text-white",
-      textColor: "text-[#0369A1]",
+      iconBg: "text-[#FA6400]",
+      textColor: "text-[#FA6400]",
     },
     {
       icon: BookOpenCheck,
@@ -36,10 +32,8 @@ export function TrustStats() {
       value: `${profile.hafizCount}`,
       suffix: "+",
       desc: "Lulus dengan ujian tasmi' bil ghaib bersanad",
-      cardBg: "bg-[#EDE9FE]",
-      borderBg: "border-[#DDD6FE]",
-      iconBg: "bg-[#7C3AED] text-white",
-      textColor: "text-[#6D28D9]",
+      iconBg: "text-[#FA6400]",
+      textColor: "text-[#FA6400]",
     },
     {
       icon: GraduationCap,
@@ -47,10 +41,8 @@ export function TrustStats() {
       value: `${profile.teacherCount}`,
       suffix: " Asatidz",
       desc: "Alumnus universitas ternama dalam & luar negeri",
-      cardBg: "bg-[#DCFCE7]",
-      borderBg: "border-[#BBF7D0]",
-      iconBg: "bg-[#16A34A] text-white",
-      textColor: "text-[#15803D]",
+      iconBg: "text-[#FA6400]",
+      textColor: "text-[#FA6400]",
     },
   ];
 
@@ -63,14 +55,14 @@ export function TrustStats() {
             return (
               <div
                 key={idx}
-                className={`${stat.cardBg} ${stat.borderBg} border-2 rounded-2xl p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-md flex flex-col justify-between`}
+                className="bg-white border border-[#E8E2D8] rounded-lg p-5 transition-all duration-200 hover:-translate-y-1 hover:border-[#FA6400]/50 hover:shadow-md flex flex-col justify-between"
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-stone-600">
                     {stat.label}
                   </span>
-                  <div className={`h-8 w-8 rounded-xl ${stat.iconBg} flex items-center justify-center shadow-xs`}>
-                    <Icon className="h-4 w-4" />
+                  <div className={`h-8 w-8 border-l-2 border-[#FA6400] ${stat.iconBg} flex items-center justify-center`}>
+                    <Icon className="h-4 w-4" strokeWidth={1.8} />
                   </div>
                 </div>
 
