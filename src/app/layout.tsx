@@ -12,8 +12,6 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 const newsreader = Newsreader({
   subsets: ["latin"],
   variable: "--font-newsreader",
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
