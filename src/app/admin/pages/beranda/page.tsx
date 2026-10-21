@@ -5,15 +5,8 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowUp,
-  ArrowDown,
-  Layout,
-  CheckCircle2,
-  Eye,
-  EyeOff,
-  Sparkles,
-} from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { ArrowUp, ArrowDown } from "lucide-react";
 
 export default function AdminHomepageSectionsPage() {
   const { sections, toggleSection, reorderSections } = useSchoolData();
@@ -43,40 +36,40 @@ export default function AdminHomepageSectionsPage() {
     <div className="max-w-5xl mx-auto space-y-8">
       {/* Header */}
       <div>
-        <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
           Pages / Beranda
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
           Manajemen Tata Letak Beranda (Homepage)
         </h1>
-        <p className="text-xs sm:text-sm text-stone-500 mt-1">
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
           Atur urutan (reorder) dan aktifkan/nonaktifkan seksi konten yang tampil pada halaman Beranda utama situs publik.
         </p>
       </div>
 
       {/* Sections List */}
-      <div className="bg-white rounded-xl border border-[#E8E2D8] shadow-xs overflow-hidden divide-y divide-[#E8E2D8]">
+      <Card className="overflow-hidden divide-y divide-border">
         {sections.map((sec, idx) => (
           <div
             key={sec.id}
             className={`p-4 sm:p-5 flex items-center justify-between gap-4 transition-colors ${
-              sec.isEnabled ? "bg-white hover:bg-[#FFF9F2]" : "bg-[#FAF6EE]/50 opacity-60"
+              sec.isEnabled ? "hover:bg-muted" : "bg-muted/50 opacity-60"
             }`}
           >
             <div className="flex items-center gap-4">
-              <span className="h-8 w-8 rounded-xl bg-[#FFF0E5] text-[#FA6400] border border-[#FED7AA] font-extrabold text-xs flex items-center justify-center shrink-0 shadow-2xs">
+              <span className="h-8 w-8 rounded-md bg-primary/10 text-primary border border-primary/20 font-medium text-xs flex items-center justify-center shrink-0">
                 0{idx + 1}
               </span>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-sm text-[#1E2330]">
+                  <h3 className="font-semibold text-sm text-foreground">
                     {sec.title}
                   </h3>
-                  <span className="text-[10px] font-mono text-stone-400">
+                  <span className="text-[10px] font-mono text-muted-foreground">
                     ({sec.key})
                   </span>
                 </div>
-                <p className="text-xs text-stone-500">{sec.subtitle}</p>
+                <p className="text-xs text-muted-foreground">{sec.subtitle}</p>
               </div>
             </div>
 
@@ -99,30 +92,36 @@ export default function AdminHomepageSectionsPage() {
               </div>
 
               {/* Order Controls */}
-              <div className="flex items-center gap-1 pl-3 border-l border-[#E8E2D8]">
-                <button
+              <div className="flex items-center gap-1 pl-3 border-l border-border">
+                <Button
                   type="button"
+                  variant="ghost"
+                  size="icon-sm"
                   disabled={idx === 0}
                   onClick={() => handleMoveUp(idx)}
-                  className="p-1.5 rounded-lg text-stone-500 hover:bg-[#FAF6EE] hover:text-[#FA6400] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+                  className="text-muted-foreground hover:text-primary"
                   title="Pindah ke Atas"
+                  aria-label="Pindah ke Atas"
                 >
-                  <ArrowUp className="h-4 w-4" />
-                </button>
-                <button
+                  <ArrowUp className="h-4 w-4" aria-hidden="true" />
+                </Button>
+                <Button
                   type="button"
+                  variant="ghost"
+                  size="icon-sm"
                   disabled={idx === sections.length - 1}
                   onClick={() => handleMoveDown(idx)}
-                  className="p-1.5 rounded-lg text-stone-500 hover:bg-[#FAF6EE] hover:text-[#FA6400] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+                  className="text-muted-foreground hover:text-primary"
                   title="Pindah ke Bawah"
+                  aria-label="Pindah ke Bawah"
                 >
-                  <ArrowDown className="h-4 w-4" />
-                </button>
+                  <ArrowDown className="h-4 w-4" aria-hidden="true" />
+                </Button>
               </div>
             </div>
           </div>
         ))}
-      </div>
+      </Card>
     </div>
   );
 }

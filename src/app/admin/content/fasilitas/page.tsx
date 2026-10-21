@@ -12,6 +12,16 @@ import { Modal } from "@/components/ui/modal";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
+import { Select } from "@/components/ui/select";
+import { Card } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export default function AdminFacilitiesPage() {
   const { facilities, addFacility, updateFacility, deleteFacility } = useSchoolData();
@@ -103,25 +113,25 @@ export default function AdminFacilitiesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
             Content / Fasilitas Sekolah
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
             Manajemen Fasilitas &amp; Sarpras
           </h1>
-          <p className="text-xs sm:text-sm text-stone-500 mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             Kelola data dan foto sarana prasarana kelas, laboratorium, asrama, masjid, dan sarana olahraga.
           </p>
         </div>
 
-        <Button onClick={handleOpenAdd} variant="default" size="default" className="shrink-0 font-extrabold h-11 px-6 rounded-full shadow-[0_3px_0_#cc5000] active:translate-y-0.5 active:shadow-none transition-all">
+        <Button onClick={handleOpenAdd} className="shrink-0">
           <Plus className="h-4 w-4" />
           <span>Tambah Fasilitas Baru</span>
         </Button>
       </div>
 
       {/* Facilities Table */}
-      <div className="bg-white rounded-xl border border-[#E8E2D8] overflow-hidden shadow-xs">
+      <Card className="overflow-hidden">
         {facilities.length === 0 ? (
           <div className="p-8">
             <EmptyState
@@ -137,73 +147,76 @@ export default function AdminFacilitiesPage() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-[#FAF6EE] border-b border-[#E8E2D8] text-xs font-bold uppercase text-stone-500">
+            <Table className="text-left">
+              <TableHeader>
                 <tr>
-                  <th className="p-4 sm:px-6">Nama Fasilitas &amp; Foto</th>
-                  <th className="p-4 sm:px-6">Kategori</th>
-                  <th className="p-4 sm:px-6">Kapasitas</th>
-                  <th className="p-4 sm:px-6">Status</th>
-                  <th className="p-4 sm:px-6 text-right">Aksi</th>
+                  <TableHead className="p-4 sm:px-6">Nama Fasilitas &amp; Foto</TableHead>
+                  <TableHead className="p-4 sm:px-6">Kategori</TableHead>
+                  <TableHead className="p-4 sm:px-6">Kapasitas</TableHead>
+                  <TableHead className="p-4 sm:px-6">Status</TableHead>
+                  <TableHead className="p-4 sm:px-6 text-right">Aksi</TableHead>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-[#E8E2D8] text-stone-700 bg-white">
+              </TableHeader>
+              <TableBody>
                 {facilities.map((fac) => (
-                  <tr key={fac.id} className="hover:bg-[#FFF9F2] transition-colors">
-                    <td className="p-4 sm:px-6">
+                  <TableRow key={fac.id}>
+                    <TableCell className="p-4 sm:px-6">
                       <div className="flex items-center gap-3 max-w-sm">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={fac.imageUrl}
                           alt={fac.name}
-                          className="h-12 w-16 object-cover rounded-xl shrink-0 border border-[#E8E2D8] bg-[#FAF6EE]"
+                          className="h-12 w-16 object-cover rounded-md shrink-0 border border-border bg-muted"
                         />
                         <div>
-                          <h4 className="font-bold text-sm text-[#1E2330] leading-snug">
+                          <h4 className="font-semibold text-sm text-foreground leading-snug">
                             {fac.name}
                           </h4>
-                          <p className="text-xs text-stone-500 line-clamp-1 mt-0.5 font-medium">
+                          <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
                             {fac.description}
                           </p>
                         </div>
                       </div>
-                    </td>
-                    <td className="p-4 sm:px-6">
-                      <span className="px-3 py-1 rounded-full bg-[#FFF0E5] text-[#FA6400] border border-[#FED7AA] text-xs font-bold shadow-2xs">
-                        {fac.category}
-                      </span>
-                    </td>
-                    <td className="p-4 sm:px-6 text-xs font-bold text-stone-600">
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6">
+                      <Badge variant="secondary">{fac.category}</Badge>
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6 text-xs font-medium text-muted-foreground">
                       {fac.capacity || "-"}
-                    </td>
-                    <td className="p-4 sm:px-6">
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6">
                       <Badge variant={fac.status === "published" ? "default" : "secondary"}>
                         {fac.status === "published" ? "Aktif" : "Draf"}
                       </Badge>
-                    </td>
-                    <td className="p-4 sm:px-6 text-right space-x-2">
-                      <button
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6 text-right space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
                         onClick={() => handleOpenEdit(fac)}
-                        className="p-2 rounded-xl text-stone-600 hover:bg-[#FFF0E5] hover:text-[#FA6400] transition-colors cursor-pointer"
                         title="Edit Fasilitas"
+                        aria-label="Edit Fasilitas"
                       >
-                        <Edit2 className="h-4 w-4" />
-                      </button>
-                      <button
+                        <Edit2 className="h-4 w-4" aria-hidden="true" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
                         onClick={() => handleDelete(fac.id, fac.name)}
-                        className="p-2 rounded-xl text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                        className="text-destructive hover:text-destructive"
                         title="Hapus Fasilitas"
+                        aria-label="Hapus Fasilitas"
                       >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </td>
-                  </tr>
+                        <Trash2 className="h-4 w-4" aria-hidden="true" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
         )}
-      </div>
+      </Card>
 
       {/* Modal */}
       <Modal
@@ -232,22 +245,17 @@ export default function AdminFacilitiesPage() {
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] block">
-                Kategori
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value as Facility["category"])}
-                className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-sm bg-white text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]/25 focus:border-[#FA6400] shadow-xs"
-              >
-                {categories.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <Select
+              label="Kategori"
+              value={category}
+              onChange={(e) => setCategory(e.target.value as Facility["category"])}
+            >
+              {categories.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </Select>
 
             <Input
               label="Kapasitas (Opsional)"
@@ -273,19 +281,14 @@ export default function AdminFacilitiesPage() {
             onChange={(e) => setDescription(e.target.value)}
           />
 
-          <div className="space-y-1.5">
-            <label className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] block">
-              Status Tampilan
-            </label>
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value as "published" | "draft")}
-              className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-sm bg-white text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]/25 focus:border-[#FA6400] shadow-xs"
-            >
-              <option value="published">Tampilkan di Website (Published)</option>
-              <option value="draft">Sembunyikan (Draft)</option>
-            </select>
-          </div>
+          <Select
+            label="Status Tampilan"
+            value={status}
+            onChange={(e) => setStatus(e.target.value as "published" | "draft")}
+          >
+            <option value="published">Tampilkan di Website (Published)</option>
+            <option value="draft">Sembunyikan (Draft)</option>
+          </Select>
         </form>
       </Modal>
     </div>

@@ -51,15 +51,15 @@ export default function AdminLayout({
   // State loading sementara saat verifikasi sesi inisialisasi
   if (!isInitialized || !isAuthenticated) {
     return (
-      <div className="h-screen w-screen flex flex-col items-center justify-center bg-[#FCF8F1] text-[#1E2330] gap-3">
-        <div className="h-7 w-7 rounded-full border-2 border-[#FA6400] border-t-transparent animate-spin" />
-        <p className="text-xs font-semibold text-stone-500">Memverifikasi sesi pengelola...</p>
+      <div className="h-screen w-screen flex flex-col items-center justify-center bg-background text-foreground gap-3">
+        <div className="h-7 w-7 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+        <p className="text-xs font-semibold text-muted-foreground">Memverifikasi sesi pengelola...</p>
       </div>
     );
   }
 
   return (
-    <div className="h-screen w-screen overflow-hidden bg-[#FCF8F1] text-[#1E2330] flex selection:bg-[#FFF0E5] selection:text-[#FA6400]">
+    <div className="h-screen w-screen overflow-hidden bg-background text-foreground flex">
       {/* Sidebar Navigasi Independen & Bebas Bug Scroll */}
       <AdminSidebar
         isMobileOpen={isMobileOpen}

@@ -1,0 +1,23 @@
+#!/bin/sh
+# post-checkout hook — sinkronkan git branch dengan Neon branch.
+# Aktifkan sekali per clone:
+#   git config core.hooksPath .githooks
+#
+# Aturan:
+#   git main/master -> Neon production (.env.production.local)
+#   git <nama>      -> Neon <nama>     (.env.<nama>.local), jika file ada
+#
+# $3 = 1 saat checkout branch (bukan checkout file), hanya itu yang diproses.
+
+[ "$3" = "1" ] || exit 0
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+case "$branch" in
+  main|master|prod|production) name="production" ;;
+  *) name="$branch" ;;
+esac
+
+[ -f ".env.${name}.local" ] || exit 0
+
+node scripts/use-neon-env.mjs "$name"
