@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, use, useState, useEffect } from "react";
+import React, { createContext, use, useCallback, useEffect, useState } from "react";
+import { authClient } from "@/lib/auth/client";
 import { User, UserRole } from "@/lib/types";
 
 interface AuthContextType {
@@ -18,60 +19,65 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+function mapUser(betterUser: {
+  id: string;
+  name: string;
+  email: string;
+  role?: string;
+  image?: string | null;
+} | null | undefined): User | null {
+  if (!betterUser) return null;
+  return {
+    id: betterUser.id,
+    name: betterUser.name,
+    email: betterUser.email,
+    role: (betterUser.role as UserRole) ?? "editor",
+    avatarUrl: betterUser.image ?? undefined,
+    createdAt: "",
+  };
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
 
-  useEffect(() => {
-    let active = true;
-    fetch("/api/auth/session", { cache: "no-store" })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (active) setCurrentUser(data?.user ?? null);
-      })
-      .catch(() => {})
-      .finally(() => {
-        if (active) setIsInitialized(true);
-      });
-    return () => {
-      active = false;
-    };
+  const refreshSession = useCallback(async () => {
+    try {
+      const res = await fetch("/api/auth/get-session", { cache: "no-store" });
+      const data = res.ok ? await res.json().catch(() => null) : null;
+      setCurrentUser(mapUser(data?.user));
+    } catch {
+      // Biarkan state sesudahnya; jangan logout paksa saat jaringan gagal
+    } finally {
+      setIsInitialized(true);
+    }
   }, []);
+
+  useEffect(() => {
+    refreshSession();
+  }, [refreshSession]);
 
   const loginWithCredentials = async (
     email: string,
     password: string
   ): Promise<{ success: boolean; error?: string }> => {
-    try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json().catch(() => null);
-
-      if (res.ok && data?.user) {
-        setCurrentUser(data.user);
-        return { success: true };
-      }
-
+    const { error } = await authClient.signIn.email({ email, password });
+    if (error) {
       return {
         success: false,
         error:
-          data?.error ||
-          "Kombinasi email atau kata sandi tidak valid. Silakan periksa kembali.",
-      };
-    } catch {
-      return {
-        success: false,
-        error: "Terjadi gangguan saat menghubungi server. Silakan coba kembali.",
+          error.status === 401 || error.status === 403
+            ? "Email atau kata sandi tidak valid. Silakan periksa kembali kredensial Anda."
+            : "Terjadi gangguan saat menghubungi server. Silakan coba kembali.",
       };
     }
+    await refreshSession();
+    return { success: true };
   };
 
   const logout = async () => {
     try {
-      await fetch("/api/auth/logout", { method: "POST" });
+      await authClient.signOut();
     } catch {
       // Tetap bersihkan state lokal meski request logout gagal
     }

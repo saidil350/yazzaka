@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getDb } from "@/lib/db/neon";
-import { verifySessionToken, SESSION_COOKIE } from "@/lib/auth/session";
+import { auth } from "@/lib/auth/server";
 import type { UserRole } from "@/lib/types";
 
-function getSession(request: NextRequest) {
-  const token = request.cookies.get(SESSION_COOKIE)?.value;
-  return verifySessionToken(token);
+async function getSession(request: NextRequest) {
+  return auth.api.getSession({ headers: request.headers });
 }
 
 // ─── PATCH /api/users/[id] — Ubah Peran ─────────────────────────────────────
@@ -16,11 +15,11 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = getSession(request);
+    const session = await getSession(request);
     if (!session) {
       return NextResponse.json({ error: "Tidak terautentikasi." }, { status: 401 });
     }
-    if (session.role !== "super_admin") {
+    if (session.user.role !== "super_admin") {
       return NextResponse.json(
         { error: "Hanya super admin yang dapat mengubah peran pengguna." },
         { status: 403 }
@@ -30,7 +29,7 @@ export async function PATCH(
     const { id } = await params;
 
     // Tidak boleh ubah role diri sendiri
-    if (session.sub === id) {
+    if (session.user.id === id) {
       return NextResponse.json(
         { error: "Anda tidak dapat mengubah peran akun Anda sendiri." },
         { status: 400 }
@@ -90,6 +89,62 @@ export async function PATCH(
   }
 }
 
+// ─── GET /api/users/[id] — Detail Pengguna ──────────────────────────────────
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await getSession(request);
+    if (!session) {
+      return NextResponse.json({ error: "Tidak terautentikasi." }, { status: 401 });
+    }
+    if (session.user.role !== "super_admin") {
+      return NextResponse.json(
+        { error: "Hanya super admin yang dapat melihat detail pengguna." },
+        { status: 403 }
+      );
+    }
+
+    const { id } = await params;
+
+    const sql = getDb();
+    const rows = await sql`
+      SELECT id, name, email, role, avatar_url, created_at
+      FROM users WHERE id = ${id}
+    `;
+
+    if (rows.length === 0) {
+      return NextResponse.json({ error: "Pengguna tidak ditemukan." }, { status: 404 });
+    }
+
+    const u = rows[0];
+    return NextResponse.json({
+      user: {
+        id: u.id,
+        name: u.name,
+        email: u.email,
+        role: u.role as UserRole,
+        avatarUrl: (u.avatar_url as string | null) ?? undefined,
+        createdAt: u.created_at
+          ? new Date(u.created_at as string).toLocaleDateString("id-ID", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })
+          : "",
+      },
+    });
+  } catch (error) {
+    console.error("GET /api/users/[id] error:", error);
+    return NextResponse.json(
+      { error: "Gagal memuat detail pengguna." },
+      { status: 500 }
+    );
+  }
+}
+
 // ─── DELETE /api/users/[id] — Hapus Pengguna ────────────────────────────────
 
 export async function DELETE(
@@ -97,11 +152,11 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = getSession(request);
+    const session = await getSession(request);
     if (!session) {
       return NextResponse.json({ error: "Tidak terautentikasi." }, { status: 401 });
     }
-    if (session.role !== "super_admin") {
+    if (session.user.role !== "super_admin") {
       return NextResponse.json(
         { error: "Hanya super admin yang dapat menghapus pengguna." },
         { status: 403 }
@@ -111,7 +166,7 @@ export async function DELETE(
     const { id } = await params;
 
     // Tidak boleh hapus diri sendiri
-    if (session.sub === id) {
+    if (session.user.id === id) {
       return NextResponse.json(
         { error: "Anda tidak dapat menghapus akun Anda sendiri." },
         { status: 400 }
@@ -119,6 +174,9 @@ export async function DELETE(
     }
 
     const sql = getDb();
+    // Hapus dulu baris turunan Better Auth agar user benar-benar bersih
+    await sql`DELETE FROM "session" WHERE "userId" = ${id}`;
+    await sql`DELETE FROM "account" WHERE "userId" = ${id}`;
     const rows = await sql`
       DELETE FROM users WHERE id = ${id} RETURNING id
     `;
