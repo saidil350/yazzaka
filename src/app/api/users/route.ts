@@ -1,36 +1,26 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { scryptSync, randomBytes } from "crypto";
+import { randomBytes } from "crypto";
 import { getDb } from "@/lib/db/neon";
-import { verifySessionToken, SESSION_COOKIE } from "@/lib/auth/session";
+import { auth } from "@/lib/auth/server";
+import { hashPassword } from "@/lib/auth/password";
 import type { UserRole } from "@/lib/types";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
-function getSessionOrFail(request: NextRequest) {
-  const token = request.cookies.get(SESSION_COOKIE)?.value;
-  return verifySessionToken(token);
-}
-
-/** Hash password dengan format scrypt:N:r:p:salt:hash */
-function hashPassword(password: string): string {
-  const N = 16384;
-  const r = 8;
-  const p = 1;
-  const salt = randomBytes(16);
-  const derived = scryptSync(password, salt, 64, { N, r, p });
-  return `scrypt:${N}:${r}:${p}:${salt.toString("hex")}:${derived.toString("hex")}`;
+async function getSession(request: NextRequest) {
+  return auth.api.getSession({ headers: request.headers });
 }
 
 // ─── GET /api/users ──────────────────────────────────────────────────────────
 
 export async function GET(request: NextRequest) {
   try {
-    const session = getSessionOrFail(request);
+    const session = await getSession(request);
     if (!session) {
       return NextResponse.json({ error: "Tidak terautentikasi." }, { status: 401 });
     }
-    if (session.role !== "super_admin") {
+    if (session.user.role !== "super_admin") {
       return NextResponse.json(
         { error: "Hanya super admin yang dapat mengakses daftar pengguna." },
         { status: 403 }
@@ -63,7 +53,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("GET /api/users error:", error);
     return NextResponse.json(
-      { error: "Gagal mengambil data pengguna." },
+      { error: "Gagal memuat daftar pengguna." },
       { status: 500 }
     );
   }
@@ -73,11 +63,11 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = getSessionOrFail(request);
+    const session = await getSession(request);
     if (!session) {
       return NextResponse.json({ error: "Tidak terautentikasi." }, { status: 401 });
     }
-    if (session.role !== "super_admin") {
+    if (session.user.role !== "super_admin") {
       return NextResponse.json(
         { error: "Hanya super admin yang dapat menambah pengguna." },
         { status: 403 }
@@ -138,6 +128,12 @@ export async function POST(request: NextRequest) {
       INSERT INTO users (id, name, email, role, password_hash)
       VALUES (${id}, ${name}, ${email}, ${role}, ${passwordHash})
       RETURNING id, name, email, role, avatar_url, created_at
+    `;
+
+    // Credential Better Auth: hash disalin ke accounts agar bisa login
+    await sql`
+      INSERT INTO "account" ("id", "accountId", "providerId", "userId", "password", "createdAt", "updatedAt")
+      VALUES (${"acct-" + randomBytes(12).toString("hex")}, ${id}, 'credential', ${id}, ${passwordHash}, now(), now())
     `;
 
     const u = rows[0];

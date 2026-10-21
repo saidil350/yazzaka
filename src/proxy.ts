@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { verifySessionToken, SESSION_COOKIE, ADMIN_ROLES } from "@/lib/auth/session";
-import type { SessionPayload } from "@/lib/auth/session";
+import { auth, ADMIN_ROLES } from "@/lib/auth/server";
+import type { UserRole } from "@/lib/types";
 
 const PUBLIC_MUTATION_ROUTES: { prefix: string; methods: string[] }[] = [
   // Form kontak publik boleh diakses tanpa sesi
@@ -36,22 +36,20 @@ function forbidden(): NextResponse {
   );
 }
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const method = request.method.toUpperCase();
 
   const isApiRoute = pathname.startsWith("/api/");
   const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
-  const isAuthApi =
-    pathname.startsWith("/api/auth/login") ||
-    pathname.startsWith("/api/auth/logout") ||
-    pathname.startsWith("/api/auth/session");
+  // Route Better Auth (/api/auth/*) menangani autentikasinya sendiri
+  const isAuthApi = pathname.startsWith("/api/auth/");
 
   if (!isAdminRoute && !(isApiRoute && !isAuthApi)) {
     return NextResponse.next();
   }
 
-  const session = verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value);
+  const session = await auth.api.getSession({ headers: request.headers });
 
   // ── Proteksi halaman admin ────────────────────────────────────────────
   if (isAdminRoute) {
@@ -61,7 +59,7 @@ export function proxy(request: NextRequest) {
       return NextResponse.redirect(loginUrl);
     }
     // Halaman manajemen pengguna hanya untuk super_admin/admin (server-side)
-    if (pathname.startsWith("/admin/users") && !ADMIN_ROLES.includes(session.role)) {
+    if (pathname.startsWith("/admin/users") && !ADMIN_ROLES.includes(session.user.role as UserRole)) {
       return NextResponse.redirect(new URL("/admin", request.url));
     }
     return NextResponse.next();
@@ -80,7 +78,7 @@ export function proxy(request: NextRequest) {
     const needsAdmin = ADMIN_ONLY_MUTATION_PREFIXES.some((prefix) =>
       pathname.startsWith(prefix)
     );
-    if (needsAdmin && !ADMIN_ROLES.includes(session.role)) {
+    if (needsAdmin && !ADMIN_ROLES.includes(session.user.role as UserRole)) {
       return forbidden();
     }
   }
