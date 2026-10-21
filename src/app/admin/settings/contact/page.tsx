@@ -5,6 +5,7 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import {
   Phone,
@@ -21,13 +22,17 @@ export default function AdminContactSettingsPage() {
   const [phone, setPhone] = useState(profile.phone);
   const [whatsapp, setWhatsapp] = useState(profile.whatsapp);
   const [email, setEmail] = useState(profile.email);
+  const [address, setAddress] = useState(profile.address);
+  const [city, setCity] = useState(profile.city);
+  const [province, setProvince] = useState(profile.province);
+  const [mapsEmbedUrl, setMapsEmbedUrl] = useState(profile.mapsEmbedUrl);
   const [isSaving, setIsSaving] = useState(false);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
     setTimeout(() => {
-      updateProfile({ phone, whatsapp, email });
+      updateProfile({ phone, whatsapp, email, address, city, province, mapsEmbedUrl });
       setIsSaving(false);
       toast("Informasi kontak berhasil disimpan.", "success");
     }, 200);
@@ -46,7 +51,8 @@ export default function AdminContactSettingsPage() {
           Informasi Kontak Lembaga
         </h1>
         <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-          Kelola nomor hotline, WhatsApp admisi, dan alamat email resmi sekolah.
+          Kelola nomor hotline, WhatsApp admisi, email resmi, alamat fisik, dan
+          sematan peta Google Maps sekolah.
         </p>
       </div>
 
@@ -127,6 +133,49 @@ export default function AdminContactSettingsPage() {
                 Email utama yang menerima salinan notifikasi pesan masuk.
               </p>
             </div>
+          </div>
+
+          <div className="space-y-5 border-t border-border pt-6">
+            <div>
+              <h3 className="font-semibold text-base text-foreground">Alamat &amp; Lokasi</h3>
+              <p className="text-xs text-muted-foreground mt-1">
+                Ditampilkan pada halaman kontak publik beserta sematan peta.
+              </p>
+            </div>
+
+            <Input
+              id="input-address"
+              label="Alamat Jalan Lengkap"
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Input
+                id="input-city"
+                label="Kota / Kabupaten"
+                type="text"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+              <Input
+                id="input-province"
+                label="Provinsi & Kode Pos"
+                type="text"
+                value={province}
+                onChange={(e) => setProvince(e.target.value)}
+              />
+            </div>
+
+            <Textarea
+              id="input-maps"
+              label="Google Maps Embed URL (Iframe Source)"
+              rows={3}
+              value={mapsEmbedUrl}
+              onChange={(e) => setMapsEmbedUrl(e.target.value)}
+              helperText="Dapatkan URL ini dari menu Share > Embed a map di Google Maps."
+            />
           </div>
 
           <div className="flex justify-end pt-4 border-t border-border">

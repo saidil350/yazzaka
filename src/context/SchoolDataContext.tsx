@@ -119,9 +119,6 @@ interface SchoolDataContextType {
   updateUserRole: (id: string, role: UserRole) => Promise<void>;
   deleteUser: (id: string) => Promise<void>;
   refreshUsers: () => Promise<void>;
-
-  // Reset to initial
-  resetToDefault: () => void;
 }
 
 const SchoolDataContext = createContext<SchoolDataContextType | undefined>(undefined);
@@ -477,12 +474,7 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
     }
   };
 
-  const resetToDefault = () => {
-    console.warn("Reset to default is disabled when using DB");
-  };
-
-  return (
-    <SchoolDataContext.Provider
+  return (    <SchoolDataContext.Provider
       value={{
         profile, programs, facilities, achievements, articles, events, media,
         organization, testimonials, admission, messages, settings, users, sections, logs,
@@ -500,7 +492,6 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
         addContactMessage, updateMessageStatus, deleteMessage,
         toggleSection, reorderSections, updateSection,
         addUser, updateUserRole, deleteUser, refreshUsers,
-        resetToDefault,
       }}
     >
       {children}

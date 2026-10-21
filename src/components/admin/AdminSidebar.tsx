@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -13,21 +13,10 @@ import {
   Settings,
   Users,
   ChevronRight,
-  ExternalLink,
   SlidersHorizontal,
-  GraduationCap,
-  Building2,
-  Trophy,
-  Quote,
-  FileText,
-  PhoneCall,
-  Globe,
-  Mail,
   PanelLeftClose,
   PanelLeftOpen,
   LogOut,
-  UserPlus,
-  Compass,
 } from "lucide-react";
 
 export interface AdminSidebarProps {
@@ -45,7 +34,7 @@ export function AdminSidebar({
 }: AdminSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { role, currentUser, logout } = useAuth();
+  const { role, logout } = useAuth();
   const { messages, profile } = useSchoolData();
 
   const handleLogout = async () => {
@@ -55,6 +44,19 @@ export function AdminSidebar({
   };
 
   const newMessagesCount = messages.filter((m) => m.status === "new").length;
+
+  // Mode collapse hanya berlaku di desktop; drawer mobile selalu menampilkan label.
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => setIsDesktop(mq.matches);
+    onChange();
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  const collapsed = isCollapsed && isDesktop;
 
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(() => {
     if (pathname.includes("/admin/content") || pathname.includes("/admin/organization/tim")) return "content";
@@ -88,13 +90,13 @@ export function AdminSidebar({
       icon: Layers,
       roles: ["super_admin", "editor"],
       items: [
-        { label: "Penerimaan Santri (PPDB)", href: "/admin/content/pendaftaran", icon: UserPlus },
-        { label: "Program Pendidikan", href: "/admin/content/program", icon: GraduationCap },
-        { label: "Fasilitas Sekolah", href: "/admin/content/fasilitas", icon: Building2 },
-        { label: "Prestasi Santri", href: "/admin/content/pengumuman", icon: Trophy },
-        { label: "Pimpinan & Dewan Asatidz", href: "/admin/organization/tim", icon: Users },
-        { label: "Testimoni Wali & Alumni", href: "/admin/content/testimoni", icon: Quote },
-        { label: "Berita & Artikel", href: "/admin/content/berita", icon: FileText },
+        { label: "Penerimaan Santri (PPDB)", href: "/admin/content/pendaftaran" },
+        { label: "Program Pendidikan", href: "/admin/content/program" },
+        { label: "Fasilitas Sekolah", href: "/admin/content/fasilitas" },
+        { label: "Prestasi Santri", href: "/admin/content/pengumuman" },
+        { label: "Pimpinan & Dewan Asatidz", href: "/admin/organization/tim" },
+        { label: "Testimoni Wali & Alumni", href: "/admin/content/testimoni" },
+        { label: "Berita & Artikel", href: "/admin/content/berita" },
       ],
     },
     {
@@ -104,16 +106,15 @@ export function AdminSidebar({
       icon: Settings,
       roles: ["super_admin"],
       items: [
-        { label: "Profil & Slogan", href: "/admin/organization/profil", icon: Globe },
-        { label: "Visi & Misi", href: "/admin/organization/visi-misi", icon: Compass },
-        { label: "Kontak & Sosmed", href: "/admin/settings/contact", icon: PhoneCall },
+        { label: "Profil & Slogan", href: "/admin/organization/profil" },
+        { label: "Visi & Misi", href: "/admin/organization/visi-misi" },
+        { label: "Kontak & Sosmed", href: "/admin/settings/contact" },
         {
           label: "Pesan Masuk",
           href: "/admin/settings/pesan",
-          icon: Mail,
           badge: newMessagesCount > 0 ? `${newMessagesCount}` : undefined,
         },
-        { label: "SEO Global", href: "/admin/settings/seo", icon: Settings },
+        { label: "SEO Global", href: "/admin/settings/seo" },
       ],
     },
     {
@@ -160,18 +161,18 @@ export function AdminSidebar({
           isCollapsed ? "lg:w-20" : "lg:w-64",
         ].join(" ")}
       >
-        {/* ── Brand Header (Full Logo Clean) ──────────────────────── */}
+        {/* ── Brand Header ────────────────────────────────────────── */}
         <div
           className={[
-            "h-16 px-4 flex items-center border-b border-border bg-card shrink-0",
-            isCollapsed ? "justify-center" : "justify-between gap-2",
+            "h-16 px-4 flex items-center border-b border-border shrink-0",
+            collapsed ? "justify-center" : "justify-between gap-2",
           ].join(" ")}
         >
           <Link
             href="/admin"
             className={[
               "flex items-center group py-1 min-w-0 flex-1",
-              isCollapsed ? "justify-center" : "justify-start",
+              collapsed ? "justify-center" : "justify-start",
             ].join(" ")}
             title="Dashboard Yazzakka"
           >
@@ -188,7 +189,7 @@ export function AdminSidebar({
                 style={{ width: "auto", height: "auto" }}
                 className={[
                   "w-auto object-contain transition-all duration-200",
-                  isCollapsed ? "h-7 max-w-[36px]" : "h-8 max-w-[160px]",
+                  collapsed ? "h-7 max-w-[36px]" : "h-8 max-w-[160px]",
                 ].join(" ")}
                 priority
               />
@@ -196,13 +197,13 @@ export function AdminSidebar({
           </Link>
 
           {/* Desktop Toggle Collapse Button */}
-          {!isCollapsed && onToggleCollapse && (
+          {!collapsed && onToggleCollapse && (
             <button
               type="button"
               onClick={onToggleCollapse}
               aria-label="Kecilkan sidebar"
               title="Kecilkan sidebar"
-              className="hidden lg:inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer shrink-0"
+              className="hidden lg:inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-card transition-colors cursor-pointer shrink-0"
             >
               <PanelLeftClose className="h-4 w-4" />
             </button>
@@ -210,12 +211,12 @@ export function AdminSidebar({
         </div>
 
 
-        {/* ── Navigation Menu (Scroll Mandiri & Bebas Bug) ──────────── */}
+        {/* ── Navigation Menu ──────────────────────────────────────── */}
         <nav
           aria-label="Menu Utama CMS"
           className={[
-            "flex-1 py-3 space-y-1.5 overflow-y-auto overflow-x-hidden",
-            isCollapsed ? "px-2" : "px-3",
+            "flex-1 py-3 space-y-1 overflow-y-auto overflow-x-hidden",
+            collapsed ? "px-2" : "px-3",
           ].join(" ")}
         >
           {navGroups.map((group) => {
@@ -233,12 +234,12 @@ export function AdminSidebar({
                   href={group.href!}
                   onClick={onMobileClose}
                   aria-current={isActive ? "page" : undefined}
-                  title={isCollapsed ? group.title : undefined}
+                  title={collapsed ? group.title : undefined}
                   className={[
-                    "flex items-center rounded-md text-xs font-medium transition-colors duration-150 group",
-                    isCollapsed
+                    "flex items-center rounded-md text-sm font-medium transition-colors duration-150 group",
+                    collapsed
                       ? "justify-center h-11 w-11 mx-auto"
-                      : "gap-3 px-3.5 py-2 w-full",
+                      : "gap-3 px-3 py-2 w-full",
                     isActive
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:text-foreground hover:bg-card",
@@ -250,7 +251,7 @@ export function AdminSidebar({
                       isActive ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground",
                     ].join(" ")}
                   />
-                  {!isCollapsed && <span>{group.title}</span>}
+                  {!collapsed && <span>{group.title}</span>}
                 </Link>
               );
             }
@@ -263,7 +264,7 @@ export function AdminSidebar({
             );
 
             // Tampilan saat Collapsed (Mode Ikon Ringkas)
-            if (isCollapsed) {
+            if (collapsed) {
               return (
                 <div key={group.key} className="space-y-1 flex flex-col items-center">
                   <button
@@ -275,9 +276,9 @@ export function AdminSidebar({
                     title={`${group.title} (Klik untuk buka)`}
                     aria-label={group.title}
                     className={[
-                      "flex items-center justify-center h-11 w-11 rounded-md text-xs font-medium transition-colors duration-150 group cursor-pointer",
+                      "flex items-center justify-center h-11 w-11 rounded-md text-sm font-medium transition-colors duration-150 group cursor-pointer",
                       hasActiveChild
-                        ? "text-primary bg-card border border-primary/20"
+                        ? "text-primary bg-primary/10"
                         : "text-muted-foreground hover:text-foreground hover:bg-card",
                     ].join(" ")}
                   >
@@ -300,10 +301,10 @@ export function AdminSidebar({
                   onClick={() => toggleSubmenu(group.key!)}
                   aria-expanded={isGroupOpen}
                   className={[
-                    "w-full flex items-center justify-between px-3.5 py-2 rounded-md text-xs font-medium",
+                    "w-full flex items-center justify-between px-3 py-2 rounded-md text-sm font-medium",
                     "transition-colors duration-150 cursor-pointer group",
                     hasActiveChild
-                      ? "text-primary bg-card border border-primary/20"
+                      ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground hover:bg-card",
                   ].join(" ")}
                 >
@@ -311,24 +312,23 @@ export function AdminSidebar({
                     <Icon
                       className={[
                         "h-4 w-4 shrink-0 transition-colors",
-                        hasActiveChild ? "text-primary" : "text-muted-foreground group-hover:text-foreground",
+                        hasActiveChild ? "text-foreground" : "text-muted-foreground group-hover:text-foreground",
                       ].join(" ")}
                     />
                     <span>{group.title}</span>
                   </span>
                   <ChevronRight
                     className={[
-                      "h-3.5 w-3.5 text-muted-foreground transition-transform duration-200 shrink-0",
-                      isGroupOpen ? "rotate-90 text-primary" : "",
+                      "h-4 w-4 text-muted-foreground transition-transform duration-200 shrink-0",
+                      isGroupOpen ? "rotate-90" : "",
                     ].join(" ")}
                   />
                 </button>
 
                 {isGroupOpen && (
-                  <div className="ml-4 pl-3 py-1 space-y-1 border-l-2 border-border">
+                  <div className="ml-4 pl-3 py-1 space-y-0.5">
                     {group.items?.map((item) => {
                       const isActive = pathname === item.href;
-                      const SubIcon = item.icon;
                       return (
                         <Link
                           key={item.href}
@@ -336,26 +336,16 @@ export function AdminSidebar({
                           onClick={onMobileClose}
                           aria-current={isActive ? "page" : undefined}
                           className={[
-                            "flex items-center justify-between px-3 py-1.5 rounded-md text-xs",
-                            "transition-colors duration-150 group",
+                            "flex items-center justify-between rounded-md px-3 py-1.5 text-sm",
+                            "transition-colors duration-150",
                             isActive
-                              ? "bg-primary/10 text-primary font-medium border border-primary/20"
-                              : "text-muted-foreground hover:text-foreground hover:bg-card font-medium",
+                              ? "bg-primary/10 text-primary font-medium"
+                              : "text-muted-foreground hover:text-foreground hover:bg-card font-normal",
                           ].join(" ")}
                         >
-                          <span className="flex items-center gap-2 truncate">
-                            {SubIcon && (
-                              <SubIcon
-                                className={[
-                                  "h-3.5 w-3.5 shrink-0",
-                                  isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground",
-                                ].join(" ")}
-                              />
-                            )}
-                            <span className="truncate">{item.label}</span>
-                          </span>
+                          <span className="truncate">{item.label}</span>
                           {item.badge && (
-                            <span className="ml-2 flex h-4 min-w-4 px-1.5 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground shrink-0">
+                            <span className="ml-2 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground shrink-0">
                               {item.badge}
                             </span>
                           )}
@@ -372,18 +362,18 @@ export function AdminSidebar({
         {/* ── Footer Logout & Sidebar Toggle ───────────────────────── */}
         <div
           className={[
-            "border-t border-border bg-card shrink-0",
-            isCollapsed ? "p-2 text-center space-y-2" : "p-3 space-y-2",
+            "border-t border-border shrink-0",
+            collapsed ? "p-2" : "p-3",
           ].join(" ")}
         >
-          {isCollapsed ? (
+          {collapsed ? (
             <div className="flex flex-col items-center gap-2">
               <button
                 type="button"
                 onClick={handleLogout}
                 title="Keluar dari CMS (Logout)"
                 aria-label="Keluar dari CMS"
-                className="flex items-center justify-center h-10 w-10 rounded-md bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground border border-destructive/20 transition-colors cursor-pointer"
+                className="flex items-center justify-center h-9 w-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-card transition-colors cursor-pointer"
               >
                 <LogOut className="h-4 w-4" />
               </button>
@@ -393,7 +383,7 @@ export function AdminSidebar({
                   onClick={onToggleCollapse}
                   title="Besarkan sidebar"
                   aria-label="Besarkan sidebar"
-                  className="hidden lg:flex items-center justify-center h-8 w-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                  className="hidden lg:flex items-center justify-center h-8 w-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-card transition-colors cursor-pointer"
                 >
                   <PanelLeftOpen className="h-4 w-4" />
                 </button>
@@ -404,13 +394,13 @@ export function AdminSidebar({
               type="button"
               onClick={handleLogout}
               className={[
-                "w-full flex items-center justify-between px-4 py-2.5 rounded-md text-xs font-medium",
-                "bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground border border-destructive/20",
-                "transition-colors duration-150 group cursor-pointer",
+                "w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium",
+                "text-muted-foreground hover:text-foreground hover:bg-card",
+                "transition-colors duration-150 cursor-pointer",
               ].join(" ")}
             >
-              <span>Keluar (Logout)</span>
-              <LogOut className="h-3.5 w-3.5 shrink-0 text-destructive group-hover:text-destructive-foreground transition-colors" />
+              <LogOut className="h-4 w-4 shrink-0" />
+              <span>Keluar</span>
             </button>
           )}
         </div>

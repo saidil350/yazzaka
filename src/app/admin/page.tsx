@@ -8,7 +8,6 @@ import { useToast } from "@/components/ui/toast";
 import {
   MessageSquare,
   ArrowUpRight,
-  Sparkles,
   PhoneCall,
   SlidersHorizontal,
   ChevronRight,
@@ -35,18 +34,16 @@ import {
 export default function AdminDashboardOverview() {
   const {
     profile,
-    programs,
-    facilities,
-    achievements,
     testimonials,
     sections,
     messages,
     articles,
     admission,
-    organization,
     toggleSection,
   } = useSchoolData();
-  const { currentUser } = useAuth();
+  const { role } = useAuth();
+
+  const isSuperAdmin = role === "super_admin";
   const { toast } = useToast();
 
   const unreadMessages = messages.filter((m) => m.status === "new");
@@ -140,17 +137,6 @@ export default function AdminDashboardOverview() {
       {/* ── 1. Page Header ── */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-6">
         <div className="space-y-1.5">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-              <Sparkles className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
-              Pusat Kendali Landing Page
-            </span>
-            <Badge variant="outline" className="bg-success-bg border-success/20 text-success gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-success animate-pulse" aria-hidden="true" />
-              Live Sync
-            </Badge>
-          </div>
-
           <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
             Dashboard Ikhtisar {profile.name}
           </h1>
@@ -185,8 +171,8 @@ export default function AdminDashboardOverview() {
         </div>
       </div>
 
-      {/* ── 2. Alert Kotak Masuk Baru (Tampil dinamis jika ada leads masuk) ── */}
-      {unreadMessages.length > 0 && (
+      {/* ── 2. Alert Kotak Masuk Baru (super_admin — halaman Pesan Masuk terbatas) ── */}
+      {isSuperAdmin && unreadMessages.length > 0 && (
         <div
           role="alert"
           aria-live="polite"
