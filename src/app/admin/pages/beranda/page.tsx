@@ -76,6 +76,9 @@ export default function AdminHomepageSectionsPage() {
             <div className="flex items-center gap-3">
               {/* Toggle Enable */}
               <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground">
+                  {sec.isEnabled ? "Aktif" : "Nonaktif"}
+                </span>
                 <Switch
                   checked={sec.isEnabled}
                   onCheckedChange={() => {
@@ -87,7 +90,7 @@ export default function AdminHomepageSectionsPage() {
                       "info"
                     );
                   }}
-                  label={sec.isEnabled ? "Aktif" : "Nonaktif"}
+                  aria-label={`Aktifkan atau nonaktifkan seksi ${sec.title}`}
                 />
               </div>
 

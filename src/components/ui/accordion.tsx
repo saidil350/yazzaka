@@ -20,26 +20,26 @@ export function AccordionItem({
   return (
     <div
       className={cn(
-        "rounded-lg border border-slate-200 bg-white transition-all overflow-hidden",
-        isOpen && "border-slate-300 shadow-xs",
+        "rounded-lg border border-border bg-card transition-colors overflow-hidden",
+        isOpen && "shadow-xs",
         className
       )}
     >
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between p-4 sm:p-5 text-left text-base font-semibold text-slate-900 transition-all hover:bg-slate-50/80 cursor-pointer"
+        className="flex w-full items-center justify-between p-4 sm:p-5 text-left text-base font-semibold text-foreground transition-colors hover:bg-muted/50 cursor-pointer"
       >
         <span>{title}</span>
         <ChevronDown
           className={cn(
-            "h-5 w-5 shrink-0 text-slate-500 transition-transform duration-200",
-            isOpen && "rotate-180 text-[var(--color-primary)]"
+            "h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200",
+            isOpen && "rotate-180 text-primary"
           )}
         />
       </button>
       {isOpen && (
-        <div className="px-4 pb-5 pt-0 sm:px-5 text-sm text-slate-600 leading-relaxed border-t border-slate-100 mt-1">
+        <div className="px-4 pb-5 pt-0 sm:px-5 text-sm text-muted-foreground leading-relaxed border-t border-border mt-1">
           <div className="pt-3">{children}</div>
         </div>
       )}

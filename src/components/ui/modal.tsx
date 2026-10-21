@@ -86,18 +86,18 @@ export function Modal({
       >
         {/* Backdrop */}
         <div
-          className="fixed inset-0 bg-[var(--surface-inverse)]/60 backdrop-blur-[2px] transition-opacity"
+          className="fixed inset-0 bg-black/50 transition-opacity"
           aria-hidden="true"
           onClick={onClose}
         />
 
-        {/* Panel — floating elevation shadow */}
+        {/* Panel */}
         <div
           className={cn(
             "relative z-10 w-full flex flex-col max-h-[88vh]",
-            "bg-white rounded-3xl",
-            "border border-[#E8E2D8]",
-            "shadow-[0_4px_25px_rgba(0,0,0,0.08)]",
+            "bg-card rounded-lg",
+            "border border-border",
+            "shadow-lg",
             maxWidthClass[maxWidth] ?? "max-w-lg",
             className
           )}
@@ -135,7 +135,7 @@ export function ModalHeader({
   return (
     <div
       className={cn(
-        "flex items-start justify-between px-6 pt-5 pb-4 border-b border-[#E8E2D8] bg-[#FAF6EE] rounded-t-3xl shrink-0",
+        "flex items-start justify-between px-6 pt-5 pb-4 border-b border-border shrink-0",
         className
       )}
     >
@@ -155,7 +155,7 @@ export function ModalTitle({
   return (
     <h2
       id={ctx?.titleId}
-      className={cn("text-lg font-bold text-[#1E2330] leading-snug", className)}
+      className={cn("text-lg font-semibold text-foreground leading-none tracking-tight", className)}
     >
       {children}
     </h2>
@@ -173,7 +173,7 @@ export function ModalDescription({
   return (
     <p
       id={ctx?.descId}
-      className={cn("text-xs sm:text-sm text-stone-500 leading-relaxed", className)}
+      className={cn("text-sm text-muted-foreground leading-relaxed", className)}
     >
       {children}
     </p>
@@ -195,12 +195,12 @@ export function ModalClose({
       autoFocus
       aria-label="Tutup dialog"
       className={cn(
-        "h-8 w-8 rounded-full flex items-center justify-center shrink-0 mt-0.5",
-        "text-stone-500 border border-transparent",
-        "transition-all duration-150",
-        "hover:bg-[#FFF0E5] hover:text-[#FA6400] hover:border-[#FED7AA]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400]/30",
-        "active:scale-95 cursor-pointer",
+        "h-8 w-8 rounded-md flex items-center justify-center shrink-0 mt-0.5",
+        "text-muted-foreground",
+        "transition-colors duration-150",
+        "hover:bg-muted hover:text-foreground",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
+        "cursor-pointer",
         className
       )}
     >
@@ -233,7 +233,7 @@ export function ModalFooter({
   return (
     <div
       className={cn(
-        "flex items-center justify-end gap-3 px-6 pt-4 pb-5 border-t border-[#E8E2D8] bg-[#FAF6EE] rounded-b-3xl shrink-0",
+        "flex items-center justify-end gap-3 px-6 pt-4 pb-5 border-t border-border shrink-0",
         className
       )}
     >

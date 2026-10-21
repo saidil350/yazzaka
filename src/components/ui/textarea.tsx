@@ -27,12 +27,12 @@ export function Textarea({
       {label && (
         <label
           htmlFor={textareaId}
-          className="flex items-center gap-1.5 text-xs font-bold text-stone-700"
+          className="flex items-center gap-1.5 text-sm font-medium text-foreground"
         >
-          {icon && <span className="text-stone-400">{icon}</span>}
+          {icon && <span className="text-muted-foreground">{icon}</span>}
           <span>{label}</span>
           {props.required && (
-            <span className="text-rose-500" aria-label="wajib diisi">*</span>
+            <span className="text-destructive" aria-label="wajib diisi">*</span>
           )}
         </label>
       )}
@@ -42,30 +42,30 @@ export function Textarea({
         aria-invalid={!!error}
         aria-describedby={error ? `${textareaId}-error` : helperText ? `${textareaId}-hint` : undefined}
         className={cn(
-          "flex min-h-[90px] w-full rounded-md border border-[#E8E2D8] px-3 py-2",
-          "bg-[#FCFBF7] text-[#1E2330]",
-          "text-sm font-medium leading-relaxed",
-          "placeholder:text-stone-400 placeholder:font-normal",
-          "transition-colors",
-          "hover:border-stone-400 hover:bg-white",
-          "focus:bg-white focus:outline-none focus:border-yazzaka-teal-dark focus:ring-2 focus:ring-yazzaka-teal focus:ring-offset-2",
-          "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[#FAF6EE]",
-          "resize-y shadow-2xs",
+          "flex min-h-[90px] w-full rounded-md border border-input px-3 py-2",
+          "bg-card text-foreground",
+          "text-sm leading-relaxed",
+          "placeholder:text-muted-foreground",
+          "transition-colors shadow-xs",
+          "hover:border-muted-foreground/40",
+          "focus:outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30",
+          "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-muted",
+          "resize-y",
           error && [
-            "border-rose-500",
-            "focus:border-rose-500 focus:ring-rose-500/10",
+            "border-destructive",
+            "focus-visible:border-destructive focus-visible:ring-destructive/20",
           ],
           className
         )}
         {...props}
       />
       {error && (
-        <p id={`${textareaId}-error`} role="alert" className="flex items-center gap-1 text-xs text-rose-500 font-medium">
+        <p id={`${textareaId}-error`} role="alert" className="flex items-center gap-1 text-xs text-destructive font-medium">
           {error}
         </p>
       )}
       {helperText && !error && (
-        <p id={`${textareaId}-hint`} className="text-xs text-stone-500">{helperText}</p>
+        <p id={`${textareaId}-hint`} className="text-xs text-muted-foreground">{helperText}</p>
       )}
     </div>
   );

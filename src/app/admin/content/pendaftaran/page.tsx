@@ -285,7 +285,7 @@ export default function AdminAdmissionPage() {
 
                 <Button
                   type="button"
-                  variant={isOpen ? "destructive" : "mint"}
+                  variant={isOpen ? "destructive" : "default"}
                   size="sm"
                   onClick={() => setIsOpen(!isOpen)}
                   className="shrink-0"

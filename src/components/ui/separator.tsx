@@ -1,35 +1,28 @@
+"use client";
+
 import * as React from "react";
+import { Separator as SeparatorPrimitive } from "radix-ui";
+
 import { cn } from "@/lib/utils";
 
-/**
- * Separator — shadcn/ui standard
- * Renders a thin horizontal or vertical dividing line.
- */
-export interface SeparatorProps
-  extends React.HTMLAttributes<HTMLDivElement> {
-  orientation?: "horizontal" | "vertical";
-  decorative?: boolean;
-  ref?: React.Ref<HTMLDivElement>;
-}
-
-export function Separator({
-  ref,
+function Separator({
   className,
   orientation = "horizontal",
   decorative = true,
   ...props
-}: SeparatorProps) {
+}: React.ComponentProps<typeof SeparatorPrimitive.Root>) {
   return (
-    <div
-      ref={ref}
-      role={decorative ? "none" : "separator"}
-      aria-orientation={decorative ? undefined : orientation}
+    <SeparatorPrimitive.Root
+      data-slot="separator"
+      decorative={decorative}
+      orientation={orientation}
       className={cn(
-        "shrink-0 bg-border",
-        orientation === "horizontal" ? "h-px w-full" : "h-full w-px",
+        "bg-border shrink-0 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px",
         className
       )}
       {...props}
     />
   );
 }
+
+export { Separator };
