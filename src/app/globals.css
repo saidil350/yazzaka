@@ -83,12 +83,12 @@
   --font-serif:  var(--font-newsreader), Georgia, Cambria, serif;
   --font-mono:   "JetBrains Mono", "Fira Code", Menlo, monospace;
 
-  /* ── Border Radius (Super-rounded Headspace Vibe) ────────── */
-  --radius:      1.5rem;   /* 24px default */
-  --radius-sm:   0.75rem;  /* 12px */
-  --radius-md:   1.25rem;  /* 20px */
-  --radius-lg:   1.75rem;  /* 28px */
-  --radius-xl:   2.25rem;  /* 36px */
+  /* ── Border Radius (shadcn/ui default scale) ────────────── */
+  --radius:      0.625rem;                          /* 10px default */
+  --radius-sm:   calc(var(--radius) - 4px);         /* 6px */
+  --radius-md:   calc(var(--radius) - 2px);         /* 8px */
+  --radius-lg:   var(--radius);                     /* 10px */
+  --radius-xl:   calc(var(--radius) + 4px);         /* 14px */
   --radius-full: 9999px;   /* Pill shape */
 
   /* ── Motion ─────────────────────────────────────────────── */
@@ -120,7 +120,7 @@
   --border:                  hsl(38 25% 88%);
   --input:                   hsl(38 25% 88%);
   --ring:                    #057984;
-  --radius:                  1.5rem;
+  --radius:                  0.625rem;
 
   /* Brand aliases */
   --brand:                   #06A6B2;

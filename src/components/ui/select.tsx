@@ -35,12 +35,12 @@ export function Select({
       {label && (
         <label
           htmlFor={selectId}
-          className="flex items-center gap-1.5 text-xs font-bold text-stone-700"
+          className="flex items-center gap-1.5 text-sm font-medium text-foreground"
         >
-          {icon && <span className="text-stone-400">{icon}</span>}
+          {icon && <span className="text-muted-foreground">{icon}</span>}
           <span>{label}</span>
           {props.required && (
-            <span className="text-rose-500" aria-label="wajib diisi">*</span>
+            <span className="text-destructive" aria-label="wajib diisi">*</span>
           )}
         </label>
       )}
@@ -54,31 +54,31 @@ export function Select({
             error ? `${selectId}-error` : helperText ? `${selectId}-hint` : undefined
           }
           className={cn(
-            "w-full appearance-none rounded-xl border border-[#E8E2D8] bg-[#FCFBF7] px-3.5 py-2.5 pr-10",
-            "text-sm font-medium text-[#1E2330] shadow-2xs",
-            "transition-all duration-200",
-            "hover:border-stone-400 hover:bg-white",
-            "focus:bg-white focus:outline-none focus:ring-4 focus:ring-yazzaka-teal/15 focus:border-yazzaka-teal-dark",
-            "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[#FAF6EE]",
-            error && "border-rose-500 focus:ring-rose-500/10 focus:border-rose-500",
+            "w-full appearance-none rounded-md border border-input bg-card px-3 py-2 pr-9",
+            "text-sm text-foreground shadow-xs",
+            "transition-colors",
+            "hover:border-muted-foreground/40",
+            "focus:outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30",
+            "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-muted",
+            error && "border-destructive focus-visible:border-destructive focus-visible:ring-destructive/20",
             className
           )}
           {...props}
         >
           {children}
         </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-stone-400">
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground">
           <ChevronDown className="h-4 w-4" />
         </div>
       </div>
 
       {error && (
-        <p id={`${selectId}-error`} role="alert" className="text-xs text-rose-500 font-medium">
+        <p id={`${selectId}-error`} role="alert" className="text-xs text-destructive font-medium">
           {error}
         </p>
       )}
       {helperText && !error && (
-        <p id={`${selectId}-hint`} className="text-xs text-stone-500">
+        <p id={`${selectId}-hint`} className="text-xs text-muted-foreground">
           {helperText}
         </p>
       )}

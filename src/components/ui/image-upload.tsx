@@ -101,20 +101,20 @@ export function ImageUpload({
       {/* Header & Mode Switcher */}
       <div className="flex items-center justify-between">
         {label && (
-          <label className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] flex items-center gap-1">
+          <label className="text-sm font-medium text-foreground flex items-center gap-1">
             {label}
-            {required && <span className="text-red-500">*</span>}
+            {required && <span className="text-destructive">*</span>}
           </label>
         )}
 
-        <div className="inline-flex p-0.5 rounded-lg bg-[#FAF6EE] border border-[#E8E2D8] text-[11px] font-bold">
+        <div className="inline-flex p-0.5 rounded-md bg-muted border border-border text-xs font-medium">
           <button
             type="button"
             onClick={() => setMode("upload")}
-            className={`px-2.5 py-1 rounded-md transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 rounded-sm transition-colors cursor-pointer flex items-center gap-1.5 ${
               mode === "upload"
-                ? "bg-white text-[#FA6400] shadow-xs"
-                : "text-stone-500 hover:text-[#1E2330]"
+                ? "bg-card text-foreground shadow-xs"
+                : "text-muted-foreground hover:text-foreground"
             }`}
           >
             <Upload className="h-3 w-3" />
@@ -123,10 +123,10 @@ export function ImageUpload({
           <button
             type="button"
             onClick={() => setMode("url")}
-            className={`px-2.5 py-1 rounded-md transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 rounded-sm transition-colors cursor-pointer flex items-center gap-1.5 ${
               mode === "url"
-                ? "bg-white text-[#FA6400] shadow-xs"
-                : "text-stone-500 hover:text-[#1E2330]"
+                ? "bg-card text-foreground shadow-xs"
+                : "text-muted-foreground hover:text-foreground"
             }`}
           >
             <LinkIcon className="h-3 w-3" />
@@ -137,31 +137,32 @@ export function ImageUpload({
 
       {/* Preview if image exists */}
       {value ? (
-        <div className="relative group rounded-2xl overflow-hidden border-2 border-[#E8E2D8] bg-[#FAF6EE] p-2 flex items-center gap-4">
+        <div className="relative group rounded-lg overflow-hidden border border-border bg-card p-2 flex items-center gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={value}
             alt="Preview"
-            className="h-20 w-28 object-cover rounded-xl border border-[#E8E2D8] bg-white shrink-0"
+            className="h-20 w-28 object-cover rounded-md border border-border bg-white shrink-0"
             onError={(e) => {
               (e.target as HTMLImageElement).src =
                 "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=200&auto=format&fit=crop&q=60";
             }}
           />
           <div className="flex-1 min-w-0 pr-2">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 mb-1">
+            <div className="flex items-center gap-1.5 text-xs font-medium text-success mb-1">
               <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
               <span>Gambar Siap Digunakan</span>
             </div>
-            <p className="text-[11px] text-stone-500 truncate font-mono bg-white px-2 py-1 rounded-lg border border-[#E8E2D8]">
+            <p className="text-xs text-muted-foreground truncate font-mono bg-muted px-2 py-1 rounded-md border border-border">
               {value.startsWith("data:") ? `Data Gambar Lokal (${value.substring(0, 30)}...)` : value}
             </p>
           </div>
           <button
             type="button"
             onClick={handleClear}
-            className="h-8 w-8 rounded-full bg-white border border-[#E8E2D8] text-stone-500 hover:text-red-500 hover:border-red-200 hover:bg-red-50 flex items-center justify-center transition-colors shadow-xs cursor-pointer mr-2 shrink-0"
+            className="h-8 w-8 rounded-md bg-card border border-border text-muted-foreground hover:text-destructive hover:bg-muted flex items-center justify-center transition-colors shadow-xs cursor-pointer mr-2 shrink-0"
             title="Hapus Gambar"
+            aria-label="Hapus gambar"
           >
             <X className="h-4 w-4" />
           </button>
@@ -175,10 +176,10 @@ export function ImageUpload({
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
-              className={`relative border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all duration-200 ${
+              className={`relative border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
                 isDragging
-                  ? "border-[#FA6400] bg-[#FFF0E5]/50 scale-[0.99]"
-                  : "border-[#E8E2D8] bg-[#FAF6EE]/50 hover:bg-[#FFF9F2] hover:border-[#FA6400]/50"
+                  ? "border-ring bg-muted"
+                  : "border-input bg-muted/40 hover:bg-muted"
               }`}
             >
               <input
@@ -190,19 +191,19 @@ export function ImageUpload({
               />
               <div className="flex flex-col items-center justify-center gap-2">
                 <div
-                  className={`h-11 w-11 rounded-2xl flex items-center justify-center transition-colors shadow-xs ${
+                  className={`h-10 w-10 rounded-lg flex items-center justify-center transition-colors ${
                     isDragging
-                      ? "bg-[#FA6400] text-white"
-                      : "bg-white text-[#FA6400] border border-[#FED7AA]"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-card text-muted-foreground border border-border"
                   }`}
                 >
                   <Upload className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-xs sm:text-sm font-bold text-[#1E2330]">
-                    Tarik &amp; lepas gambar ke sini, atau <span className="text-[#FA6400] underline">pilih berkas</span>
+                  <p className="text-xs sm:text-sm font-medium text-foreground">
+                    Tarik &amp; lepas gambar ke sini, atau <span className="text-primary underline">pilih berkas</span>
                   </p>
-                  <p className="text-[11px] text-stone-500 mt-0.5">
+                  <p className="text-xs text-muted-foreground mt-0.5">
                     Mendukung JPG, PNG, WEBP, GIF (Maksimal {maxSizeMB} MB)
                   </p>
                 </div>
@@ -211,7 +212,7 @@ export function ImageUpload({
           ) : (
             <div className="space-y-1.5">
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-foreground">
                   <ImageIcon className="h-4 w-4" />
                 </div>
                 <input
@@ -222,10 +223,10 @@ export function ImageUpload({
                     onChange(e.target.value);
                   }}
                   placeholder={placeholder}
-                  className="w-full h-11 pl-9 pr-3 rounded-xl border border-[#E8E2D8] bg-white text-xs sm:text-sm text-[#1E2330] placeholder:text-stone-400 font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]/25 focus:border-[#FA6400] shadow-xs"
+                  className="w-full h-9 pl-9 pr-3 rounded-md border border-input bg-card text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30 shadow-xs"
                 />
               </div>
-              <p className="text-[11px] text-stone-500 font-medium">
+              <p className="text-xs text-muted-foreground">
                 Tempelkan URL tautan gambar publik (Unsplash, CDN, atau cloud hosting).
               </p>
             </div>
@@ -235,7 +236,7 @@ export function ImageUpload({
 
       {/* Error Feedback */}
       {errorMsg && (
-        <div className="flex items-center gap-1.5 text-xs text-red-600 font-semibold mt-1">
+        <div className="flex items-center gap-1.5 text-xs text-destructive font-medium mt-1">
           <AlertCircle className="h-3.5 w-3.5 shrink-0" />
           <span>{errorMsg}</span>
         </div>
@@ -243,7 +244,7 @@ export function ImageUpload({
 
       {/* Helper Text */}
       {helperText && !errorMsg && (
-        <p className="text-[11px] text-stone-500">{helperText}</p>
+        <p className="text-xs text-muted-foreground">{helperText}</p>
       )}
     </div>
   );

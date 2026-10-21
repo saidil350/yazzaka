@@ -42,11 +42,11 @@ export function EmptyState({
         className={cn(
           "flex flex-col items-center justify-center text-center",
           variant === "compact" &&
-            "p-6 rounded-2xl bg-[#FAF6EE] border border-[#E8E2D8] text-stone-600",
+            "p-6 rounded-lg bg-muted border border-border text-muted-foreground",
           variant === "card" &&
-            "py-12 px-4 sm:px-6 rounded-3xl bg-white border-2 border-[#E8E2D8] shadow-xs",
+            "py-12 px-4 sm:px-6 rounded-lg bg-card border border-border shadow-xs",
           variant === "default" &&
-            "py-12 px-4 sm:px-6 rounded-3xl bg-[#FAF6EE] border-2 border-dashed border-[#E8E2D8]",
+            "py-12 px-4 sm:px-6 rounded-lg bg-muted/50 border border-dashed border-border",
           className
         )}
       >
@@ -60,7 +60,7 @@ export function EmptyState({
     return (
       <div
         className={cn(
-          "flex flex-col items-center justify-center p-6 text-center rounded-2xl bg-[#FAF6EE] border border-[#E8E2D8] text-stone-600",
+          "flex flex-col items-center justify-center p-6 text-center rounded-lg bg-muted border border-border text-muted-foreground",
           className
         )}
       >
@@ -73,8 +73,8 @@ export function EmptyState({
           <EmptyStateActions className="mt-3">
             {action.href ? (
               <Link href={action.href}>
-                <Button size="sm" variant="outline" className="text-xs font-bold h-8">
-                  {action.icon && <action.icon className="h-3.5 w-3.5 mr-1" />}
+                <Button size="sm" variant="outline" className="text-xs h-8">
+                  {action.icon && <action.icon className="h-3.5 w-3.5" />}
                   <span>{action.label}</span>
                 </Button>
               </Link>
@@ -83,9 +83,9 @@ export function EmptyState({
                 size="sm"
                 variant="outline"
                 onClick={action.onClick}
-                className="text-xs font-bold h-8"
+                className="text-xs h-8"
               >
-                {action.icon && <action.icon className="h-3.5 w-3.5 mr-1" />}
+                {action.icon && <action.icon className="h-3.5 w-3.5" />}
                 <span>{action.label}</span>
               </Button>
             )}
@@ -99,10 +99,10 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center py-12 px-4 sm:px-6 text-center rounded-3xl",
+        "flex flex-col items-center justify-center py-12 px-4 sm:px-6 text-center rounded-lg",
         variant === "card"
-          ? "bg-white border-2 border-[#E8E2D8] shadow-xs"
-          : "bg-[#FAF6EE] border-2 border-dashed border-[#E8E2D8]",
+          ? "bg-card border border-border shadow-xs"
+          : "bg-muted/50 border border-dashed border-border",
         className
       )}
     >
@@ -113,8 +113,8 @@ export function EmptyState({
         <EmptyStateActions className="mt-5">
           {action.href ? (
             <Link href={action.href}>
-              <Button size="default" className="font-bold text-xs shadow-xs h-9 px-5">
-                {action.icon && <action.icon className="h-3.5 w-3.5 mr-1.5" />}
+              <Button size="default" className="text-xs h-9 px-5">
+                {action.icon && <action.icon className="h-3.5 w-3.5" />}
                 <span>{action.label}</span>
               </Button>
             </Link>
@@ -122,9 +122,9 @@ export function EmptyState({
             <Button
               size="default"
               onClick={action.onClick}
-              className="font-bold text-xs shadow-xs h-9 px-5"
+              className="text-xs h-9 px-5"
             >
-              {action.icon && <action.icon className="h-3.5 w-3.5 mr-1.5" />}
+              {action.icon && <action.icon className="h-3.5 w-3.5" />}
               <span>{action.label}</span>
             </Button>
           )}
@@ -146,12 +146,12 @@ export function EmptyStateIcon({
   return (
     <div
       className={cn(
-        "rounded-2xl bg-[#FFF0E5] border border-[#FED7AA] text-[#FA6400] flex items-center justify-center shadow-xs shrink-0",
-        size === "sm" ? "h-10 w-10 mb-2.5" : "h-14 w-14 mb-3.5",
+        "rounded-lg bg-muted text-muted-foreground flex items-center justify-center shrink-0",
+        size === "sm" ? "h-10 w-10 mb-2.5" : "h-12 w-12 mb-3.5",
         className
       )}
     >
-      <Icon className={size === "sm" ? "h-5 w-5" : "h-7 w-7"} />
+      <Icon className={size === "sm" ? "h-5 w-5" : "h-6 w-6"} />
     </div>
   );
 }
@@ -167,7 +167,7 @@ export function EmptyStateTitle({
 }) {
   if (size === "sm") {
     return (
-      <h4 className={cn("text-xs font-bold text-[#1E2330]", className)}>
+      <h4 className={cn("text-xs font-medium text-foreground", className)}>
         {children}
       </h4>
     );
@@ -175,7 +175,7 @@ export function EmptyStateTitle({
   return (
     <h3
       className={cn(
-        "text-base sm:text-lg font-bold text-[#1E2330]",
+        "text-base sm:text-lg font-semibold text-foreground",
         className
       )}
     >
@@ -196,8 +196,8 @@ export function EmptyStateDescription({
   return (
     <p
       className={cn(
-        "text-stone-500 font-medium leading-relaxed",
-        size === "sm" ? "text-[11px] mt-1 max-w-sm" : "text-xs sm:text-sm mt-1.5 max-w-md",
+        "text-muted-foreground leading-relaxed",
+        size === "sm" ? "text-xs mt-1 max-w-sm" : "text-sm mt-1.5 max-w-md",
         className
       )}
     >

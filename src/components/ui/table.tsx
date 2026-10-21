@@ -28,7 +28,7 @@ export function TableHeader({ className, ref, ...props }: TableHeaderProps) {
   return (
     <thead
       ref={ref}
-      className={cn("[&_tr]:border-b border-[#E8E2D8] bg-[#FAF6EE]", className)}
+      className={cn("[&_tr]:border-b bg-muted/50", className)}
       {...props}
     />
   );
@@ -42,7 +42,7 @@ export function TableBody({ className, ref, ...props }: TableBodyProps) {
   return (
     <tbody
       ref={ref}
-      className={cn("[&_tr:last-child]:border-0 bg-white", className)}
+      className={cn("[&_tr:last-child]:border-0", className)}
       {...props}
     />
   );
@@ -57,7 +57,7 @@ export function TableFooter({ className, ref, ...props }: TableFooterProps) {
     <tfoot
       ref={ref}
       className={cn(
-        "border-t border-[#E8E2D8] bg-[#FAF6EE] font-medium [&>tr]:last:border-b-0",
+        "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
         className
       )}
       {...props}
@@ -74,7 +74,7 @@ export function TableRow({ className, ref, ...props }: TableRowProps) {
     <tr
       ref={ref}
       className={cn(
-        "border-b border-[#E8E2D8] transition-colors hover:bg-[#FFF9F2] data-[state=selected]:bg-[#FFF0E5]",
+        "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
         className
       )}
       {...props}
@@ -91,7 +91,7 @@ export function TableHead({ className, ref, ...props }: TableHeadProps) {
     <th
       ref={ref}
       className={cn(
-        "h-11 px-4 text-left align-middle text-xs font-bold text-[#1E2330]",
+        "h-12 px-4 text-left align-middle text-sm font-medium text-muted-foreground",
         "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
@@ -109,7 +109,7 @@ export function TableCell({ className, ref, ...props }: TableCellProps) {
     <td
       ref={ref}
       className={cn(
-        "p-4 align-middle text-sm text-[#1E2330] font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        "p-4 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
       {...props}

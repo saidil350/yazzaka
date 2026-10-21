@@ -35,18 +35,18 @@ export function Input({
       {label && (
         <label
           htmlFor={inputId}
-          className="flex items-center gap-1.5 text-xs font-bold text-stone-700 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          className="flex items-center gap-1.5 text-sm font-medium text-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
-          {icon && <span className="text-stone-400">{icon}</span>}
+          {icon && <span className="text-muted-foreground">{icon}</span>}
           <span>{label}</span>
           {props.required && (
-            <span className="text-rose-500" aria-label="wajib diisi">*</span>
+            <span className="text-destructive" aria-label="wajib diisi">*</span>
           )}
         </label>
       )}
       <div className="relative">
         {leftIcon && (
-          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-stone-400">
+          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
             {leftIcon}
           </div>
         )}
@@ -59,14 +59,14 @@ export function Input({
             error ? `${inputId}-error` : helperText ? `${inputId}-hint` : undefined
           }
           className={cn(
-            "flex h-9 w-full rounded-md border border-[#E8E2D8] bg-[#FCFBF7] px-3 py-1 text-base shadow-sm transition-colors md:text-sm",
+            "flex h-9 w-full rounded-md border border-input bg-card px-3 py-1 text-base shadow-xs transition-colors md:text-sm",
             leftIcon && "pl-9",
-            "font-medium text-[#1E2330]",
-            "placeholder:text-stone-400 placeholder:font-normal",
-            "hover:border-stone-400 hover:bg-white",
-            "focus-visible:outline-none focus-visible:bg-white focus-visible:ring-2 focus-visible:ring-yazzaka-teal focus-visible:ring-offset-2 focus-visible:border-yazzaka-teal-dark",
-            "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[#FAF6EE]",
-            error && "border-rose-500 focus-visible:ring-rose-500/10 focus-visible:border-rose-500",
+            "text-foreground",
+            "placeholder:text-muted-foreground",
+            "hover:border-muted-foreground/40",
+            "focus-visible:outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30",
+            "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-muted",
+            error && "border-destructive focus-visible:border-destructive focus-visible:ring-destructive/20",
             className
           )}
           {...props}
@@ -76,14 +76,14 @@ export function Input({
         <p
           id={`${inputId}-error`}
           role="alert"
-          className="flex items-center gap-1.5 text-xs text-rose-500 font-medium"
+          className="flex items-center gap-1.5 text-xs text-destructive font-medium"
         >
           <CircleAlert className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
           {error}
         </p>
       )}
       {helperText && !error && (
-        <p id={`${inputId}-hint`} className="text-xs text-stone-500">
+        <p id={`${inputId}-hint`} className="text-xs text-muted-foreground">
           {helperText}
         </p>
       )}

@@ -50,7 +50,7 @@ export function TabsList({
   return (
     <div
       className={cn(
-        "inline-flex h-12 items-center justify-center rounded-2xl bg-[#FAF6EE] p-1.5 text-stone-600 border border-[#E8E2D8] overflow-x-auto max-w-full shadow-2xs",
+        "inline-flex h-9 w-fit items-center justify-center rounded-lg bg-muted p-[2px] text-muted-foreground overflow-x-auto max-w-full",
         className
       )}
     >
@@ -78,10 +78,10 @@ export function TabsTrigger({
       type="button"
       onClick={() => context.setActiveTab(value)}
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-xl px-4 py-2 text-xs sm:text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yazzaka-teal disabled:pointer-events-none disabled:opacity-50 cursor-pointer",
+        "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 cursor-pointer",
         isActive
-          ? "bg-white text-yazzaka-teal-dark shadow-xs border border-yazzaka-teal-border font-bold"
-          : "hover:bg-white/60 text-stone-600 hover:text-[#1E2330]",
+          ? "bg-card text-foreground shadow-xs"
+          : "text-muted-foreground hover:text-foreground",
         className
       )}
     >
@@ -106,10 +106,7 @@ export function TabsContent({
 
   return (
     <div
-      className={cn(
-        "mt-2 ring-offset-white focus-visible:outline-none animate-in fade-in-50 duration-200",
-        className
-      )}
+      className={cn("mt-2 focus-visible:outline-none", className)}
     >
       {children}
     </div>
