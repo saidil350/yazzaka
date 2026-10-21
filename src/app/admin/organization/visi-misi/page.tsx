@@ -5,7 +5,9 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Save, Plus, Trash2, Compass, Target, Sparkles } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Save, Plus, Trash2, Compass, Target } from "lucide-react";
 
 export default function AdminVisionMissionPage() {
   const { profile, updateProfile } = useSchoolData();
@@ -41,40 +43,42 @@ export default function AdminVisionMissionPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
-        <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
           Organization / Visi &amp; Misi
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
           Visi &amp; Misi Lembaga
         </h1>
-        <p className="text-xs sm:text-sm text-stone-500 mt-1">
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
           Kelola visi jangka panjang dan butir-butir misi strategis penyelenggaraan pendidikan Yazzakka.
         </p>
       </div>
 
       {/* Vision */}
-      <form onSubmit={handleSaveVision} className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-4">
-        <div className="flex items-center gap-2 text-[#FA6400] font-extrabold text-sm uppercase tracking-wide">
-          <Compass className="h-4 w-4" />
-          <span>Visi Lembaga</span>
-        </div>
-        <Textarea
-          rows={3}
-          value={vision}
-          onChange={(e) => setVision(e.target.value)}
-        />
-        <div className="flex justify-end pt-2">
-          <Button type="submit" variant="default" size="sm" className="font-bold rounded-full px-5 shadow-xs">
-            <Save className="h-4 w-4" />
-            Simpan Visi
-          </Button>
-        </div>
-      </form>
+      <Card className="p-6">
+        <form onSubmit={handleSaveVision} className="space-y-4">
+          <div className="flex items-center gap-2 font-semibold text-sm uppercase tracking-wide text-foreground">
+            <Compass className="h-4 w-4 text-primary" />
+            <span>Visi Lembaga</span>
+          </div>
+          <Textarea
+            rows={3}
+            value={vision}
+            onChange={(e) => setVision(e.target.value)}
+          />
+          <div className="flex justify-end pt-2">
+            <Button type="submit" size="sm">
+              <Save className="h-4 w-4" />
+              Simpan Visi
+            </Button>
+          </div>
+        </form>
+      </Card>
 
       {/* Mission List */}
-      <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-6">
-        <div className="flex items-center gap-2 text-[#FA6400] font-extrabold text-sm uppercase tracking-wide">
-          <Target className="h-4 w-4" />
+      <Card className="p-6 space-y-6">
+        <div className="flex items-center gap-2 font-semibold text-sm uppercase tracking-wide text-foreground">
+          <Target className="h-4 w-4 text-primary" />
           <span>Butir-Butir Misi Strategis</span>
         </div>
 
@@ -82,39 +86,42 @@ export default function AdminVisionMissionPage() {
           {missionList.map((item, idx) => (
             <div
               key={idx}
-              className="flex items-start justify-between gap-3 p-4 rounded-lg bg-[#FAF6EE] border border-[#E8E2D8] text-xs sm:text-sm text-[#1E2330] font-medium"
+              className="flex items-start justify-between gap-3 p-4 rounded-lg bg-muted border border-border text-xs sm:text-sm text-foreground font-medium"
             >
               <div className="flex items-start gap-3">
-                <span className="h-6 w-6 rounded-full bg-[#FA6400] text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+                <span className="h-6 w-6 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center shrink-0 mt-0.5">
                   {idx + 1}
                 </span>
                 <span className="leading-relaxed">{item}</span>
               </div>
-              <button
+              <Button
+                variant="ghost"
+                size="icon-sm"
                 onClick={() => handleDeleteMission(idx)}
-                className="p-1 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg shrink-0 transition-colors cursor-pointer"
+                className="text-destructive hover:text-destructive"
                 title="Hapus Butir Misi"
+                aria-label="Hapus Butir Misi"
               >
-                <Trash2 className="h-4 w-4" />
-              </button>
+                <Trash2 className="h-4 w-4" aria-hidden="true" />
+              </Button>
             </div>
           ))}
         </div>
 
-        <form onSubmit={handleAddMission} className="pt-4 border-t border-[#E8E2D8] flex gap-3">
-          <input
+        <form onSubmit={handleAddMission} className="pt-4 border-t border-border flex gap-3">
+          <Input
             type="text"
             placeholder="Tambahkan butir misi baru..."
             value={newMissionItem}
             onChange={(e) => setNewMissionItem(e.target.value)}
-            className="flex-1 h-11 rounded-xl border border-[#E8E2D8] px-4 text-xs sm:text-sm bg-white text-[#1E2330] placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#FA6400]"
+            className="flex-1"
           />
-          <Button type="submit" variant="default" size="default" className="shrink-0 font-bold h-11 px-6 shadow-sm">
+          <Button type="submit" className="shrink-0">
             <Plus className="h-4 w-4" />
             Tambah
           </Button>
         </form>
-      </div>
+      </Card>
     </div>
   );
 }

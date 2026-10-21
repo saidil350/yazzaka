@@ -6,6 +6,7 @@ import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Card } from "@/components/ui/card";
 import { Save } from "lucide-react";
 
 export default function AdminSEOSettingsPage() {
@@ -36,23 +37,23 @@ export default function AdminSEOSettingsPage() {
     <div className="max-w-4xl mx-auto space-y-8">
       {/* ── Page Header ────────────────────────────────────────────── */}
       <div>
-        <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
           Website Settings / SEO Global
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+        <h1 className="text-2xl sm:text-3xl font-semibold text-foreground">
           Pengaturan Mesin Pencari (SEO) &amp; Metadata
         </h1>
-        <p className="text-xs sm:text-sm text-stone-500 mt-1">
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
           Optimalkan metadata judul, deskripsi pencarian Google, kata kunci (keywords), dan gambar OpenGraph untuk preview media sosial.
         </p>
       </div>
 
       {/* ── SEO Form Card ────────────────────────────── */}
       <form onSubmit={handleSave}>
-        <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-6">
+        <Card className="p-6 space-y-6">
           <div>
-            <h3 className="font-bold text-base text-[#1E2330]">Metadata Mesin Pencari</h3>
-            <p className="text-xs text-stone-500 mt-1 font-medium">
+            <h3 className="font-semibold text-base text-foreground">Metadata Mesin Pencari</h3>
+            <p className="text-xs text-muted-foreground mt-1">
               Konfigurasi tag metadata yang terbaca oleh robot perayap Google, Bing, dan platform media sosial.
             </p>
           </div>
@@ -94,13 +95,13 @@ export default function AdminSEOSettingsPage() {
             />
           </div>
 
-          <div className="flex justify-end pt-4 border-t border-[#E8E2D8]">
-            <Button type="submit" variant="default" className="font-extrabold h-11 px-6 rounded-full shadow-[0_3px_0_#cc5000] active:translate-y-0.5 active:shadow-none transition-all">
+          <div className="flex justify-end pt-4 border-t border-border">
+            <Button type="submit" variant="default">
               <Save className="h-4 w-4" aria-hidden="true" />
               Simpan Pengaturan SEO
             </Button>
           </div>
-        </div>
+        </Card>
       </form>
     </div>
   );

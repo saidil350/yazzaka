@@ -137,7 +137,7 @@ export function AdminSidebar({
       {/* Mobile Backdrop Overlay */}
       {isMobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 lg:hidden backdrop-blur-xs transition-opacity duration-300"
+          className="fixed inset-0 z-40 bg-black/60 lg:hidden transition-opacity duration-300"
           aria-hidden="true"
           onClick={onMobileClose}
         />
@@ -148,12 +148,12 @@ export function AdminSidebar({
         aria-label="Navigasi CMS Landing Page"
         className={[
           "fixed inset-y-0 left-0 z-50 flex flex-col h-screen",
-          "bg-[#FAF6EE] text-[#1E2330]",
-          "border-r border-[#E8E2D8]",
-          "transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shrink-0",
+          "bg-muted text-foreground",
+          "border-r border-border",
+          "transition-all duration-300 shrink-0",
           // Mobile state
           isMobileOpen
-            ? "translate-x-0 w-64 shadow-2xl"
+            ? "translate-x-0 w-64 shadow-lg"
             : "-translate-x-full lg:translate-x-0",
           // Desktop state
           "lg:static lg:z-30 lg:shadow-none",
@@ -163,7 +163,7 @@ export function AdminSidebar({
         {/* ── Brand Header (Full Logo Clean) ──────────────────────── */}
         <div
           className={[
-            "h-16 px-4 flex items-center border-b border-[#E8E2D8] bg-white shrink-0",
+            "h-16 px-4 flex items-center border-b border-border bg-card shrink-0",
             isCollapsed ? "justify-center" : "justify-between gap-2",
           ].join(" ")}
         >
@@ -187,7 +187,7 @@ export function AdminSidebar({
                 height={40}
                 style={{ width: "auto", height: "auto" }}
                 className={[
-                  "w-auto object-contain transition-all duration-200 group-hover:scale-[1.02]",
+                  "w-auto object-contain transition-all duration-200",
                   isCollapsed ? "h-7 max-w-[36px]" : "h-8 max-w-[160px]",
                 ].join(" ")}
                 priority
@@ -202,7 +202,7 @@ export function AdminSidebar({
               onClick={onToggleCollapse}
               aria-label="Kecilkan sidebar"
               title="Kecilkan sidebar"
-              className="hidden lg:inline-flex h-8 w-8 items-center justify-center rounded-full text-stone-400 hover:text-[#FA6400] hover:bg-[#FFF0E5] transition-colors cursor-pointer shrink-0"
+              className="hidden lg:inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer shrink-0"
             >
               <PanelLeftClose className="h-4 w-4" />
             </button>
@@ -235,19 +235,19 @@ export function AdminSidebar({
                   aria-current={isActive ? "page" : undefined}
                   title={isCollapsed ? group.title : undefined}
                   className={[
-                    "flex items-center rounded-full text-xs font-bold transition-all duration-150 group",
+                    "flex items-center rounded-md text-xs font-medium transition-colors duration-150 group",
                     isCollapsed
                       ? "justify-center h-11 w-11 mx-auto"
                       : "gap-3 px-3.5 py-2 w-full",
                     isActive
-                      ? "bg-[#FA6400] text-white shadow-[0_3px_0_#cc5000] active:translate-y-0.5"
-                      : "text-stone-700 hover:text-[#1E2330] hover:bg-white shadow-2xs hover:shadow-xs",
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground hover:bg-card",
                   ].join(" ")}
                 >
                   <Icon
                     className={[
                       "h-4 w-4 shrink-0 transition-colors",
-                      isActive ? "text-white" : "text-stone-500 group-hover:text-[#FA6400]",
+                      isActive ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground",
                     ].join(" ")}
                   />
                   {!isCollapsed && <span>{group.title}</span>}
@@ -275,16 +275,16 @@ export function AdminSidebar({
                     title={`${group.title} (Klik untuk buka)`}
                     aria-label={group.title}
                     className={[
-                      "flex items-center justify-center h-11 w-11 rounded-full text-xs font-bold transition-all duration-150 group cursor-pointer",
+                      "flex items-center justify-center h-11 w-11 rounded-md text-xs font-medium transition-colors duration-150 group cursor-pointer",
                       hasActiveChild
-                        ? "text-[#FA6400] bg-white border border-[#FED7AA] shadow-xs"
-                        : "text-stone-700 hover:text-[#FA6400] hover:bg-white",
+                        ? "text-primary bg-card border border-primary/20"
+                        : "text-muted-foreground hover:text-foreground hover:bg-card",
                     ].join(" ")}
                   >
                     <Icon
                       className={[
                         "h-4 w-4 shrink-0 transition-colors",
-                        hasActiveChild ? "text-[#FA6400]" : "text-stone-500 group-hover:text-[#FA6400]",
+                        hasActiveChild ? "text-primary" : "text-muted-foreground group-hover:text-foreground",
                       ].join(" ")}
                     />
                   </button>
@@ -300,32 +300,32 @@ export function AdminSidebar({
                   onClick={() => toggleSubmenu(group.key!)}
                   aria-expanded={isGroupOpen}
                   className={[
-                    "w-full flex items-center justify-between px-3.5 py-2 rounded-full text-xs font-bold",
-                    "transition-all duration-150 cursor-pointer group",
+                    "w-full flex items-center justify-between px-3.5 py-2 rounded-md text-xs font-medium",
+                    "transition-colors duration-150 cursor-pointer group",
                     hasActiveChild
-                      ? "text-[#FA6400] bg-white border border-[#FED7AA] shadow-xs"
-                      : "text-stone-700 hover:text-[#1E2330] hover:bg-white",
+                      ? "text-primary bg-card border border-primary/20"
+                      : "text-muted-foreground hover:text-foreground hover:bg-card",
                   ].join(" ")}
                 >
                   <span className="flex items-center gap-3">
                     <Icon
                       className={[
                         "h-4 w-4 shrink-0 transition-colors",
-                        hasActiveChild ? "text-[#FA6400]" : "text-stone-500 group-hover:text-[#FA6400]",
+                        hasActiveChild ? "text-primary" : "text-muted-foreground group-hover:text-foreground",
                       ].join(" ")}
                     />
                     <span>{group.title}</span>
                   </span>
                   <ChevronRight
                     className={[
-                      "h-3.5 w-3.5 text-stone-400 transition-transform duration-200 shrink-0",
-                      isGroupOpen ? "rotate-90 text-[#FA6400]" : "",
+                      "h-3.5 w-3.5 text-muted-foreground transition-transform duration-200 shrink-0",
+                      isGroupOpen ? "rotate-90 text-primary" : "",
                     ].join(" ")}
                   />
                 </button>
 
                 {isGroupOpen && (
-                  <div className="ml-4 pl-3 py-1 space-y-1 border-l-2 border-[#E8E2D8]">
+                  <div className="ml-4 pl-3 py-1 space-y-1 border-l-2 border-border">
                     {group.items?.map((item) => {
                       const isActive = pathname === item.href;
                       const SubIcon = item.icon;
@@ -336,11 +336,11 @@ export function AdminSidebar({
                           onClick={onMobileClose}
                           aria-current={isActive ? "page" : undefined}
                           className={[
-                            "flex items-center justify-between px-3 py-1.5 rounded-full text-xs",
-                            "transition-all duration-150 group",
+                            "flex items-center justify-between px-3 py-1.5 rounded-md text-xs",
+                            "transition-colors duration-150 group",
                             isActive
-                              ? "bg-[#FFF0E5] text-[#FA6400] font-extrabold border border-[#FED7AA] shadow-2xs"
-                              : "text-stone-600 hover:text-[#FA6400] hover:bg-white font-medium",
+                              ? "bg-primary/10 text-primary font-medium border border-primary/20"
+                              : "text-muted-foreground hover:text-foreground hover:bg-card font-medium",
                           ].join(" ")}
                         >
                           <span className="flex items-center gap-2 truncate">
@@ -348,14 +348,14 @@ export function AdminSidebar({
                               <SubIcon
                                 className={[
                                   "h-3.5 w-3.5 shrink-0",
-                                  isActive ? "text-[#FA6400]" : "text-stone-400 group-hover:text-[#FA6400]",
+                                  isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground",
                                 ].join(" ")}
                               />
                             )}
                             <span className="truncate">{item.label}</span>
                           </span>
                           {item.badge && (
-                            <span className="ml-2 flex h-4 min-w-4 px-1.5 items-center justify-center rounded-full bg-[#FA6400] text-[10px] font-bold text-white shrink-0 shadow-xs">
+                            <span className="ml-2 flex h-4 min-w-4 px-1.5 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground shrink-0">
                               {item.badge}
                             </span>
                           )}
@@ -372,7 +372,7 @@ export function AdminSidebar({
         {/* ── Footer Logout & Sidebar Toggle ───────────────────────── */}
         <div
           className={[
-            "border-t border-[#E8E2D8] bg-white shrink-0",
+            "border-t border-border bg-card shrink-0",
             isCollapsed ? "p-2 text-center space-y-2" : "p-3 space-y-2",
           ].join(" ")}
         >
@@ -383,7 +383,7 @@ export function AdminSidebar({
                 onClick={handleLogout}
                 title="Keluar dari CMS (Logout)"
                 aria-label="Keluar dari CMS"
-                className="flex items-center justify-center h-10 w-10 rounded-full bg-rose-50 text-rose-600 hover:bg-rose-500 hover:text-white border border-rose-200 transition-all shadow-2xs cursor-pointer"
+                className="flex items-center justify-center h-10 w-10 rounded-md bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground border border-destructive/20 transition-colors cursor-pointer"
               >
                 <LogOut className="h-4 w-4" />
               </button>
@@ -393,7 +393,7 @@ export function AdminSidebar({
                   onClick={onToggleCollapse}
                   title="Besarkan sidebar"
                   aria-label="Besarkan sidebar"
-                  className="hidden lg:flex items-center justify-center h-8 w-8 rounded-full text-stone-400 hover:text-[#FA6400] hover:bg-[#FAF6EE] transition-colors cursor-pointer"
+                  className="hidden lg:flex items-center justify-center h-8 w-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
                 >
                   <PanelLeftOpen className="h-4 w-4" />
                 </button>
@@ -404,13 +404,13 @@ export function AdminSidebar({
               type="button"
               onClick={handleLogout}
               className={[
-                "w-full flex items-center justify-between px-4 py-2.5 rounded-full text-xs font-extrabold",
-                "bg-rose-50 text-rose-700 hover:bg-rose-500 hover:text-white border border-rose-200",
-                "transition-all duration-150 shadow-2xs group cursor-pointer active:scale-95",
+                "w-full flex items-center justify-between px-4 py-2.5 rounded-md text-xs font-medium",
+                "bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground border border-destructive/20",
+                "transition-colors duration-150 group cursor-pointer",
               ].join(" ")}
             >
               <span>Keluar (Logout)</span>
-              <LogOut className="h-3.5 w-3.5 shrink-0 text-rose-500 group-hover:text-white transition-colors" />
+              <LogOut className="h-3.5 w-3.5 shrink-0 text-destructive group-hover:text-destructive-foreground transition-colors" />
             </button>
           )}
         </div>

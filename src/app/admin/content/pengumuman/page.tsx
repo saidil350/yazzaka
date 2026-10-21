@@ -5,7 +5,7 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { Achievement } from "@/lib/types";
 import { formatDateIndonesian } from "@/lib/utils";
-import { Plus, Edit2, Trash2, Award, Trophy, Medal } from "lucide-react";
+import { Plus, Edit2, Trash2, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,6 +13,16 @@ import { Modal } from "@/components/ui/modal";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
+import { Select } from "@/components/ui/select";
+import { Card } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export default function AdminAchievementsPage() {
   const { achievements, addAchievement, updateAchievement, deleteAchievement } = useSchoolData();
@@ -125,25 +135,25 @@ export default function AdminAchievementsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
             Content / Prestasi &amp; Piagam
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
             Manajemen Prestasi Siswa &amp; Santri
           </h1>
-          <p className="text-xs sm:text-sm text-stone-500 mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             Dokumentasikan medali, kejuaraan, piagam, dan piala yang diraih santri dan civitas akademika Yazzakka.
           </p>
         </div>
 
-        <Button onClick={handleOpenAdd} variant="default" size="default" className="shrink-0 font-extrabold h-11 px-6 rounded-full shadow-[0_3px_0_#cc5000] active:translate-y-0.5 active:shadow-none transition-all">
+        <Button onClick={handleOpenAdd} className="shrink-0">
           <Plus className="h-4 w-4" />
           <span>Tambah Prestasi Baru</span>
         </Button>
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-[#E8E2D8] overflow-hidden shadow-xs">
+      <Card className="overflow-hidden">
         {achievements.length === 0 ? (
           <div className="p-8">
             <EmptyState
@@ -159,74 +169,77 @@ export default function AdminAchievementsPage() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-[#FAF6EE] border-b border-[#E8E2D8] text-xs font-bold uppercase text-stone-500">
+            <Table className="text-left">
+              <TableHeader>
                 <tr>
-                  <th className="p-4 sm:px-6">Kejuaraan &amp; Prestasi</th>
-                  <th className="p-4 sm:px-6">Siswa / Tim</th>
-                  <th className="p-4 sm:px-6">Tingkat &amp; Kategori</th>
-                  <th className="p-4 sm:px-6">Tanggal</th>
-                  <th className="p-4 sm:px-6 text-right">Aksi</th>
+                  <TableHead className="p-4 sm:px-6">Kejuaraan &amp; Prestasi</TableHead>
+                  <TableHead className="p-4 sm:px-6">Siswa / Tim</TableHead>
+                  <TableHead className="p-4 sm:px-6">Tingkat &amp; Kategori</TableHead>
+                  <TableHead className="p-4 sm:px-6">Tanggal</TableHead>
+                  <TableHead className="p-4 sm:px-6 text-right">Aksi</TableHead>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-[#E8E2D8] text-stone-700 bg-white">
+              </TableHeader>
+              <TableBody>
                 {achievements.map((ach) => (
-                  <tr key={ach.id} className="hover:bg-[#FFF9F2] transition-colors">
-                    <td className="p-4 sm:px-6">
+                  <TableRow key={ach.id}>
+                    <TableCell className="p-4 sm:px-6">
                       <div className="flex items-center gap-3 max-w-sm">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={ach.imageUrl}
                           alt={ach.title}
-                          className="h-12 w-16 object-cover rounded-xl shrink-0 border border-[#E8E2D8] bg-[#FAF6EE]"
+                          className="h-12 w-16 object-cover rounded-md shrink-0 border border-border bg-muted"
                         />
                         <div>
-                          <h4 className="font-bold text-sm text-[#1E2330] leading-snug">
+                          <h4 className="font-semibold text-sm text-foreground leading-snug">
                             {ach.title}
                           </h4>
-                          <p className="text-xs text-stone-500 line-clamp-1 mt-0.5 font-medium">
+                          <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
                             {ach.competitionName}
                           </p>
                         </div>
                       </div>
-                    </td>
-                    <td className="p-4 sm:px-6 text-xs font-bold text-[#1E2330]">
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6 text-xs font-medium text-foreground">
                       {ach.studentName}
-                    </td>
-                    <td className="p-4 sm:px-6">
-                      <span className="px-3 py-1 rounded-full bg-[#E6F4EA] text-[#15803D] border border-[#BDE7CC] text-xs font-bold mr-1 shadow-2xs">
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6">
+                      <Badge variant="secondary" className="mr-1">
                         {ach.level}
-                      </span>
-                      <span className="text-xs text-stone-500 font-medium">{ach.category}</span>
-                    </td>
-                    <td className="p-4 sm:px-6 text-xs text-stone-500 font-medium">
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">{ach.category}</span>
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6 text-xs text-muted-foreground">
                       {formatDateIndonesian(ach.date)}
-                    </td>
-                    <td className="p-4 sm:px-6 text-right space-x-2">
-                      <button
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6 text-right space-x-2">
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
                         onClick={() => handleOpenEdit(ach)}
-                        className="p-2 rounded-full text-stone-600 hover:bg-[#FFF0E5] hover:text-[#FA6400] transition-colors cursor-pointer"
                         title="Edit Prestasi"
                         aria-label="Edit Prestasi"
                       >
                         <Edit2 className="h-4 w-4" aria-hidden="true" />
-                      </button>
-                      <button
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
                         onClick={() => handleDelete(ach.id, ach.title)}
-                        className="p-2 rounded-full text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                        className="text-destructive hover:text-destructive"
                         title="Hapus Prestasi"
                         aria-label="Hapus Prestasi"
                       >
                         <Trash2 className="h-4 w-4" aria-hidden="true" />
-                      </button>
-                    </td>
-                  </tr>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
         )}
-      </div>
+      </Card>
 
       {/* Modal */}
       <Modal
@@ -272,39 +285,29 @@ export default function AdminAchievementsPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] block">
-                Kategori
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value as Achievement["category"])}
-                className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-sm bg-white text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]/25 focus:border-[#FA6400] shadow-xs"
-              >
-                {categories.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <Select
+              label="Kategori"
+              value={category}
+              onChange={(e) => setCategory(e.target.value as Achievement["category"])}
+            >
+              {categories.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </Select>
 
-            <div className="space-y-1.5">
-              <label className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] block">
-                Tingkat
-              </label>
-              <select
-                value={level}
-                onChange={(e) => setLevel(e.target.value as Achievement["level"])}
-                className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-sm bg-white text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]/25 focus:border-[#FA6400] shadow-xs"
-              >
-                {levels.map((l) => (
-                  <option key={l} value={l}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <Select
+              label="Tingkat"
+              value={level}
+              onChange={(e) => setLevel(e.target.value as Achievement["level"])}
+            >
+              {levels.map((l) => (
+                <option key={l} value={l}>
+                  {l}
+                </option>
+              ))}
+            </Select>
 
             <Input
               label="Tahun"

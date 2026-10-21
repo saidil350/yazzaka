@@ -21,7 +21,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select } from "@/components/ui/select";
 import { Modal } from "@/components/ui/modal";
+import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
 
@@ -268,23 +270,18 @@ export default function AdminTeamMembersPage() {
       {/* ── Page Header ─────────────────────────────── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
             Konten Landing Page / Struktur Pendidik
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
             Manajemen Pimpinan &amp; Dewan Asatidz
           </h1>
-          <p className="text-xs sm:text-sm text-stone-500 mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             Kelola profil lengkap pimpinan yayasan, kepala sekolah, asatidz pengasuh, dan dewan guru berdasarkan unit pendidikan Yazzakka.
           </p>
         </div>
 
-        <Button
-          onClick={handleOpenAdd}
-          variant="default"
-          size="default"
-          className="shrink-0 font-bold h-11 px-6 shadow-sm bg-[#FA6400] hover:bg-[#E05A00] text-white cursor-pointer"
-        >
+        <Button onClick={handleOpenAdd} className="shrink-0">
           <Plus className="h-4 w-4 mr-1.5" />
           <span>Tambah Pengajar Baru</span>
         </Button>
@@ -292,93 +289,86 @@ export default function AdminTeamMembersPage() {
 
       {/* ── Statistik Ringkas ────────────────────────── */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-xl border border-[#E8E2D8] shadow-xs">
-          <div className="flex items-center gap-2 text-stone-500 text-xs font-bold mb-1">
-            <Users className="h-4 w-4 text-[#FA6400]" />
+        <Card className="p-4">
+          <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
+            <Users className="h-4 w-4 text-primary" />
             <span>Total Pengajar</span>
           </div>
-          <p className="text-2xl font-black text-[#1E2330]">{organization.length}</p>
-          <span className="text-[11px] text-stone-400">Seluruh unit yayasan</span>
-        </div>
+          <p className="text-2xl font-medium text-foreground">{organization.length}</p>
+          <span className="text-[11px] text-muted-foreground">Seluruh unit yayasan</span>
+        </Card>
 
-        <div className="bg-white p-4 rounded-xl border border-[#E8E2D8] shadow-xs">
-          <div className="flex items-center gap-2 text-stone-500 text-xs font-bold mb-1">
-            <Building2 className="h-4 w-4 text-emerald-600" />
+        <Card className="p-4">
+          <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
+            <Building2 className="h-4 w-4 text-primary" />
             <span>TPA &amp; TKIT</span>
           </div>
-          <p className="text-2xl font-black text-[#1E2330]">{countTpaTkit}</p>
-          <span className="text-[11px] text-stone-400">Pendidikan Usia Dini &amp; Quran</span>
-        </div>
+          <p className="text-2xl font-medium text-foreground">{countTpaTkit}</p>
+          <span className="text-[11px] text-muted-foreground">Pendidikan Usia Dini &amp; Quran</span>
+        </Card>
 
-        <div className="bg-white p-4 rounded-xl border border-[#E8E2D8] shadow-xs">
-          <div className="flex items-center gap-2 text-stone-500 text-xs font-bold mb-1">
-            <GraduationCap className="h-4 w-4 text-blue-600" />
+        <Card className="p-4">
+          <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
+            <GraduationCap className="h-4 w-4 text-primary" />
             <span>PKBM &amp; Anak Shalih</span>
           </div>
-          <p className="text-2xl font-black text-[#1E2330]">{countPkbmSekolah}</p>
-          <span className="text-[11px] text-stone-400">Sekolah &amp; Kesetaraan</span>
-        </div>
+          <p className="text-2xl font-medium text-foreground">{countPkbmSekolah}</p>
+          <span className="text-[11px] text-muted-foreground">Sekolah &amp; Kesetaraan</span>
+        </Card>
 
-        <div className="bg-white p-4 rounded-xl border border-[#E8E2D8] shadow-xs">
-          <div className="flex items-center gap-2 text-stone-500 text-xs font-bold mb-1">
-            <Shield className="h-4 w-4 text-purple-600" />
+        <Card className="p-4">
+          <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
+            <Shield className="h-4 w-4 text-primary" />
             <span>Darul Quran &amp; Pimpinan</span>
           </div>
-          <p className="text-2xl font-black text-[#1E2330]">{countDarulQuran}</p>
-          <span className="text-[11px] text-stone-400">Pesantren &amp; Yayasan</span>
-        </div>
+          <p className="text-2xl font-medium text-foreground">{countDarulQuran}</p>
+          <span className="text-[11px] text-muted-foreground">Pesantren &amp; Yayasan</span>
+        </Card>
       </div>
 
       {/* ── Pengaturan Header Seksi Publik ──────────── */}
-      <form
-        onSubmit={handleSaveSectionHeader}
-        className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-4"
-      >
-        <div className="flex items-center justify-between gap-2 pb-2 border-b border-[#E8E2D8]">
-          <div className="flex items-center gap-2">
-            <Sliders className="h-4 w-4 text-[#FA6400]" />
-            <h3 className="font-bold text-sm text-[#1E2330]">
-              Teks Judul &amp; Deskripsi Seksi Publik (Halaman Tentang Kami)
-            </h3>
+      <Card className="p-6">
+        <form onSubmit={handleSaveSectionHeader} className="space-y-4">
+          <div className="flex items-center justify-between gap-2 pb-2 border-b border-border">
+            <div className="flex items-center gap-2">
+              <Sliders className="h-4 w-4 text-primary" />
+              <h3 className="font-semibold text-sm text-foreground">
+                Teks Judul &amp; Deskripsi Seksi Publik (Halaman Tentang Kami)
+              </h3>
+            </div>
+            <span className="text-[11px] text-success bg-success-bg px-2 py-0.5 rounded-md border border-success/20">
+              Tersinkronisasi ke Landing Page
+            </span>
           </div>
-          <span className="text-[11px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-bold">
-            Tersinkronisasi ke Landing Page
-          </span>
-        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="sm:col-span-1">
-            <Input
-              label="Judul Utama Seksi"
-              placeholder="Contoh: Pimpinan & Dewan Asatidz"
-              value={sectionTitle}
-              onChange={(e) => setSectionTitle(e.target.value)}
-              required
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="sm:col-span-1">
+              <Input
+                label="Judul Utama Seksi"
+                placeholder="Contoh: Pimpinan & Dewan Asatidz"
+                value={sectionTitle}
+                onChange={(e) => setSectionTitle(e.target.value)}
+                required
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <Input
+                label="Sub-judul / Penjelasan Seksi"
+                placeholder="Contoh: Pendidik berdedikasi tinggi yang memadukan..."
+                value={sectionSubtitle}
+                onChange={(e) => setSectionSubtitle(e.target.value)}
+              />
+            </div>
           </div>
-          <div className="sm:col-span-2">
-            <Input
-              label="Sub-judul / Penjelasan Seksi"
-              placeholder="Contoh: Pendidik berdedikasi tinggi yang memadukan..."
-              value={sectionSubtitle}
-              onChange={(e) => setSectionSubtitle(e.target.value)}
-            />
-          </div>
-        </div>
 
-        <div className="flex justify-end pt-1">
-          <Button
-            type="submit"
-            disabled={isSavingHeader}
-            variant="default"
-            size="sm"
-            className="font-bold bg-[#1E2330] hover:bg-black text-white cursor-pointer shadow-2xs"
-          >
-            <Save className="h-3.5 w-3.5 mr-1.5" />
-            <span>{isSavingHeader ? "Menyimpan..." : "Simpan Teks Seksi"}</span>
-          </Button>
-        </div>
-      </form>
+          <div className="flex justify-end pt-1">
+            <Button type="submit" disabled={isSavingHeader} size="sm">
+              <Save className="h-3.5 w-3.5 mr-1.5" />
+              <span>{isSavingHeader ? "Menyimpan..." : "Simpan Teks Seksi"}</span>
+            </Button>
+          </div>
+        </form>
+      </Card>
 
       {/* ── Toolbar: Filter & Pencarian ──────────────── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -388,10 +378,10 @@ export default function AdminTeamMembersPage() {
             <button
               key={dept}
               onClick={() => setSelectedDept(dept)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-md text-xs whitespace-nowrap transition-colors cursor-pointer ${
                 selectedDept === dept
-                  ? "bg-[#1E2330] text-white shadow-2xs"
-                  : "bg-white text-stone-600 border border-[#E8E2D8] hover:bg-[#FAF6EE]"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-card text-muted-foreground border border-border hover:bg-muted"
               }`}
             >
               {dept}
@@ -400,21 +390,21 @@ export default function AdminTeamMembersPage() {
         </div>
 
         {/* Search input */}
-        <div className="relative w-full sm:w-72">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-stone-400" />
-          <input
+        <div className="w-full sm:w-72">
+          <Input
             type="text"
+            leftIcon={<Search className="h-4 w-4" />}
             placeholder="Cari nama, gelar, atau jabatan..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-10 pl-10 pr-4 rounded-xl border border-[#E8E2D8] bg-white text-xs text-[#1E2330] placeholder:text-stone-400 focus:outline-none focus:border-[#FA6400] transition-colors"
+            aria-label="Cari nama, gelar, atau jabatan"
           />
         </div>
       </div>
 
       {/* ── Grid Daftar Pengajar ─────────────────────── */}
       {filteredMembers.length === 0 ? (
-        <div className="bg-white rounded-xl p-8 border border-[#E8E2D8] shadow-xs">
+        <Card className="p-8">
           <EmptyState
             icon={Users}
             title={
@@ -429,88 +419,97 @@ export default function AdminTeamMembersPage() {
               icon: Plus,
             }}
           />
-        </div>
+        </Card>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {filteredMembers.map((m, idx) => (
-            <div
+            <Card
               key={m.id}
-              className="bg-white rounded-xl border border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all duration-200 flex flex-col justify-between group"
+              className="overflow-hidden flex flex-col justify-between"
             >
               <div>
                 {/* Photo */}
-                <div className="h-52 relative overflow-hidden bg-[#FAF6EE]">
+                <div className="h-52 relative overflow-hidden bg-muted">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={m.photoUrl}
                     alt={m.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover"
                   />
                 </div>
 
                 {/* Content */}
                 <div className="p-4 space-y-2">
-                  <span className="text-[10px] font-extrabold text-[#FA6400] uppercase tracking-wider block truncate">
+                  <span className="text-[10px] font-medium text-primary uppercase tracking-wider block truncate">
                     {normalizeDepartment(m.department)}
                   </span>
-                  <h4 className="font-bold text-sm text-[#1E2330] leading-snug line-clamp-2 min-h-[2.5rem]">
+                  <h4 className="font-semibold text-sm text-foreground leading-snug line-clamp-2 min-h-[2.5rem]">
                     {m.name}
                   </h4>
-                  <p className="text-xs text-stone-600 font-bold">
+                  <p className="text-xs text-muted-foreground">
                     {m.roleTitle}
                   </p>
                   {m.qualifications && (
-                    <p className="text-[10px] text-stone-500 italic bg-[#FAF6EE] p-1.5 rounded-lg border border-[#E8E2D8]/60 line-clamp-2 font-medium">
+                    <p className="text-[10px] text-muted-foreground italic bg-muted p-1.5 rounded-md border border-border line-clamp-2 font-medium">
                       🎓 {m.qualifications}
                     </p>
                   )}
-                  <p className="text-[11px] text-stone-500 line-clamp-2 pt-2 border-t border-[#E8E2D8] font-medium leading-relaxed">
+                  <p className="text-[11px] text-muted-foreground line-clamp-2 pt-2 border-t border-border font-medium leading-relaxed">
                     {m.bio}
                   </p>
                 </div>
               </div>
 
               {/* Action Toolbar */}
-              <div className="p-3 bg-[#FAF6EE]/50 border-t border-[#E8E2D8] flex items-center justify-between gap-1">
+              <div className="p-3 bg-muted/50 border-t border-border flex items-center justify-between gap-1">
                 {/* Reorder buttons */}
                 <div className="flex items-center gap-1">
-                  <button
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
                     onClick={() => handleMove(idx, "up")}
                     disabled={idx === 0}
-                    className="p-1.5 rounded-lg text-stone-500 hover:bg-white hover:text-[#FA6400] disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-stone-500 transition-colors cursor-pointer"
                     title="Pindahkan ke Atas"
+                    aria-label="Pindahkan ke Atas"
                   >
-                    <ArrowUp className="h-3.5 w-3.5" />
-                  </button>
-                  <button
+                    <ArrowUp className="h-4 w-4" aria-hidden="true" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
                     onClick={() => handleMove(idx, "down")}
                     disabled={idx === filteredMembers.length - 1}
-                    className="p-1.5 rounded-lg text-stone-500 hover:bg-white hover:text-[#FA6400] disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-stone-500 transition-colors cursor-pointer"
                     title="Pindahkan ke Bawah"
+                    aria-label="Pindahkan ke Bawah"
                   >
-                    <ArrowDown className="h-3.5 w-3.5" />
-                  </button>
+                    <ArrowDown className="h-4 w-4" aria-hidden="true" />
+                  </Button>
                 </div>
 
                 {/* Edit & Delete */}
                 <div className="flex items-center gap-1">
-                  <button
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
                     onClick={() => handleOpenEdit(m)}
-                    className="p-1.5 rounded-lg text-stone-600 hover:bg-[#FFF0E5] hover:text-[#FA6400] transition-colors cursor-pointer"
                     title="Edit Profil Pengajar"
+                    aria-label="Edit Profil Pengajar"
                   >
-                    <Edit2 className="h-3.5 w-3.5" />
-                  </button>
-                  <button
+                    <Edit2 className="h-4 w-4" aria-hidden="true" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
                     onClick={() => handleDelete(m.id, m.name)}
-                    className="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                    className="text-destructive hover:text-destructive"
                     title="Hapus Pengajar"
+                    aria-label="Hapus Pengajar"
                   >
-                    <Trash2 className="h-3.5 w-3.5" />
-                  </button>
+                    <Trash2 className="h-4 w-4" aria-hidden="true" />
+                  </Button>
                 </div>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       )}
@@ -526,11 +525,7 @@ export default function AdminTeamMembersPage() {
             <Button variant="ghost" onClick={() => setModalOpen(false)}>
               Batal
             </Button>
-            <Button
-              variant="accent"
-              onClick={handleSubmit}
-              className="font-bold bg-[#FA6400] hover:bg-[#E05A00] text-white cursor-pointer"
-            >
+            <Button variant="accent" onClick={handleSubmit}>
               {editingId ? "Simpan Perubahan" : "Tambahkan Pengajar"}
             </Button>
           </>
@@ -553,22 +548,17 @@ export default function AdminTeamMembersPage() {
               value={roleTitle}
               onChange={(e) => setRoleTitle(e.target.value)}
             />
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-700 block">
-                Departemen / Unit
-              </label>
-              <select
-                value={department}
-                onChange={(e) => handleDepartmentChange(e.target.value)}
-                className="w-full h-10 rounded-md border border-slate-300 px-3 text-sm bg-white focus:outline-none focus:border-[#FA6400]"
-              >
-                {PRESET_DEPARTMENTS.map((d) => (
-                  <option key={d} value={d}>
-                    {d}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <Select
+              label="Departemen / Unit"
+              value={department}
+              onChange={(e) => handleDepartmentChange(e.target.value)}
+            >
+              {PRESET_DEPARTMENTS.map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </Select>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-start">

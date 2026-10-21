@@ -17,9 +17,19 @@ import {
   Check,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@/components/ui/table";
 
 // ─── Tipe ──────────────────────────────────────────────────────────────────
 
@@ -30,17 +40,17 @@ type ModalMode = "tambah" | "ubah-peran" | "hapus" | null;
 function RoleBadge({ role }: { role: UserRole }) {
   if (role === "super_admin") {
     return (
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#FFF0E5] text-[#FA6400] border border-[#FED7AA]">
+      <Badge variant="default" className="gap-1.5">
         <Shield className="h-3 w-3" />
         Super Admin
-      </span>
+      </Badge>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#EBF5FB] text-[#2E86C1] border border-[#AED6F1]">
+    <Badge variant="secondary" className="gap-1.5">
       <Pencil className="h-3 w-3" />
       Editor
-    </span>
+    </Badge>
   );
 }
 
@@ -60,14 +70,14 @@ function UserAvatar({ name, avatarUrl }: { name: string; avatarUrl?: string }) {
       <img
         src={avatarUrl}
         alt={name}
-        className="h-9 w-9 rounded-full object-cover border-2 border-[#E8E2D8] shadow-2xs shrink-0"
+        className="h-9 w-9 rounded-full object-cover border border-border shrink-0"
       />
     );
   }
 
   return (
-    <div className="h-9 w-9 rounded-full bg-[#FA6400]/10 border-2 border-[#FED7AA] flex items-center justify-center shrink-0">
-      <span className="text-[10px] font-extrabold text-[#FA6400]">{initials}</span>
+    <div className="h-9 w-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+      <span className="text-[10px] font-medium">{initials}</span>
     </div>
   );
 }
@@ -223,18 +233,18 @@ export default function AdminUsersManagementPage() {
       role: "super_admin",
       title: "Super Admin",
       icon: <Shield className="h-4 w-4" />,
-      color: "text-[#FA6400]",
-      bg: "bg-[#FFF0E5] border-[#FED7AA]",
-      activeBg: "bg-[#FFF0E5] border-[#FED7AA] ring-2 ring-[#FA6400]/20",
+      color: "text-primary",
+      bg: "bg-muted border-border",
+      activeBg: "bg-muted border-border ring-2 ring-primary/20",
       desc: "Akses mutlak ke seluruh modul CMS, pengaturan identitas lembaga, SEO, database & manajemen pengguna.",
     },
     {
       role: "editor",
       title: "Editor Konten",
       icon: <Pencil className="h-4 w-4" />,
-      color: "text-[#2E86C1]",
-      bg: "bg-[#EBF5FB] border-[#AED6F1]",
-      activeBg: "bg-[#EBF5FB] border-[#AED6F1] ring-2 ring-[#2E86C1]/20",
+      color: "text-info",
+      bg: "bg-muted border-border",
+      activeBg: "bg-muted border-border ring-2 ring-info/20",
       desc: "Mengelola konten publikasi seperti program pendidikan, fasilitas, prestasi, testimoni, berita & agenda kegiatan.",
     },
   ];
@@ -246,10 +256,10 @@ export default function AdminUsersManagementPage() {
       {/* Toast Notifikasi */}
       {toast && (
         <div
-          className={`fixed top-5 right-5 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-lg shadow-lg border text-sm font-semibold transition-all animate-in slide-in-from-top-2 ${
+          className={`fixed top-5 right-5 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-lg shadow-lg border text-sm font-semibold transition-colors animate-in slide-in-from-top-2 ${
             toast.type === "success"
-              ? "bg-[#E6F4EA] border-[#BDE7CC] text-[#15803D]"
-              : "bg-[#FEE2E2] border-[#FCA5A5] text-[#B91C1C]"
+              ? "bg-success-bg border-success/20 text-success"
+              : "bg-danger-bg border-destructive/20 text-destructive"
           }`}
         >
           {toast.type === "success" ? (
@@ -264,13 +274,13 @@ export default function AdminUsersManagementPage() {
       {/* Header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
             Users &amp; Access Control
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-foreground">
             Manajemen Pengguna &amp; Hak Akses (RBAC)
           </h1>
-          <p className="text-xs sm:text-sm text-stone-500 mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             Daftar staf pengelola CMS dengan peran dan izin yang disesuaikan menurut
             tupoksi masing-masing.
           </p>
@@ -302,12 +312,12 @@ export default function AdminUsersManagementPage() {
       </div>
 
       {/* Role Matrix Card */}
-      <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-4">
+      <Card className="p-6 space-y-4">
         <div>
-          <h3 className="font-bold text-base text-[#1E2330]">
+          <h3 className="font-semibold text-base text-foreground">
             Hak Akses per Peran (RBAC)
           </h3>
-          <p className="text-xs text-stone-500 font-medium mt-0.5">
+          <p className="text-xs text-muted-foreground mt-0.5">
             Peran ditetapkan oleh administrator dan divalidasi di sisi server. Perubahan
             peran hanya dapat dilakukan oleh Super Admin.
           </p>
@@ -319,23 +329,23 @@ export default function AdminUsersManagementPage() {
             return (
               <div
                 key={item.role}
-                className={`p-5 rounded-lg border transition-all flex flex-col justify-between space-y-3 ${
+                className={`p-5 rounded-lg border transition-colors flex flex-col justify-between space-y-3 ${
                   isCurrent ? item.activeBg : item.bg
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <div className={`flex items-center gap-2 font-bold text-sm text-[#1E2330]`}>
+                    <div className={`flex items-center gap-2 font-medium text-sm text-foreground`}>
                       <span className={item.color}>{item.icon}</span>
                       {item.title}
                     </div>
                     {isCurrent && (
-                      <Badge variant="outline" className="text-[10px] font-bold border-amber-300 bg-amber-50 text-amber-800">
+                      <Badge variant="outline" className="text-[10px] bg-warning-bg border-warning/20 text-warning">
                         Peran Anda
                       </Badge>
                     )}
                   </div>
-                  <p className="text-xs text-stone-600 mt-2 leading-relaxed font-medium">
+                  <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
@@ -343,20 +353,20 @@ export default function AdminUsersManagementPage() {
             );
           })}
         </div>
-      </div>
+      </Card>
 
       {/* Tabel Pengguna */}
-      <div className="bg-white rounded-xl border border-[#E8E2D8] overflow-hidden shadow-xs">
-        <div className="p-5 sm:p-6 border-b border-[#E8E2D8] bg-[#FAF6EE] flex items-center justify-between">
+      <Card className="overflow-hidden">
+        <div className="p-5 sm:p-6 border-b border-border bg-muted flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-lg bg-[#FFF0E5] border border-[#FED7AA] flex items-center justify-center">
-              <Users className="h-4.5 w-4.5 text-[#FA6400]" />
+            <div className="h-9 w-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <Users className="h-4.5 w-4.5" />
             </div>
             <div>
-              <h3 className="font-bold text-base text-[#1E2330]">
+              <h3 className="font-semibold text-base text-foreground">
                 Daftar Akun Pengguna Terdaftar
               </h3>
-              <p className="text-xs text-stone-400 font-medium">
+              <p className="text-xs text-muted-foreground">
                 {users.length} pengguna terdaftar
               </p>
             </div>
@@ -365,15 +375,15 @@ export default function AdminUsersManagementPage() {
 
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-16 gap-3">
-            <div className="h-7 w-7 rounded-full border-2 border-[#FA6400] border-t-transparent animate-spin" />
-            <p className="text-xs font-semibold text-stone-400">
+            <div className="h-7 w-7 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+            <p className="text-xs font-medium text-muted-foreground">
               Memuat data pengguna dari database…
             </p>
           </div>
         ) : users.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16 gap-3 text-stone-400">
+          <div className="flex flex-col items-center justify-center py-16 gap-3 text-muted-foreground">
             <Users className="h-10 w-10 opacity-30" />
-            <p className="text-sm font-semibold">Belum ada pengguna terdaftar.</p>
+            <p className="text-sm font-medium">Belum ada pengguna terdaftar.</p>
             {isSuperAdmin && (
               <Button size="sm" onClick={openTambah}>
                 <UserPlus className="h-4 w-4" />
@@ -382,95 +392,95 @@ export default function AdminUsersManagementPage() {
             )}
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-[#FAF6EE] border-b border-[#E8E2D8] text-xs font-bold uppercase text-stone-500">
-                <tr>
-                  <th className="p-4 sm:px-6">Pengguna</th>
-                  <th className="p-4 sm:px-6">Email</th>
-                  <th className="p-4 sm:px-6">Peran (Role)</th>
-                  <th className="p-4 sm:px-6">Terdaftar Sejak</th>
-                  {isSuperAdmin && (
-                    <th className="p-4 sm:px-6 text-right">Aksi</th>
-                  )}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#E8E2D8] text-stone-700 bg-white">
-                {users.map((u) => {
-                  const isSelf = currentUser?.id === u.id;
-                  return (
-                    <tr
-                      key={u.id}
-                      className="hover:bg-[#FFF9F2] transition-colors"
-                    >
-                      {/* Pengguna */}
-                      <td className="p-4 sm:px-6">
-                        <div className="flex items-center gap-3">
-                          <UserAvatar name={u.name} avatarUrl={u.avatarUrl} />
-                          <div>
-                            <span className="font-bold text-[#1E2330] block text-sm">
-                              {u.name}
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="p-4 sm:px-6">Pengguna</TableHead>
+                <TableHead className="p-4 sm:px-6">Email</TableHead>
+                <TableHead className="p-4 sm:px-6">Peran (Role)</TableHead>
+                <TableHead className="p-4 sm:px-6">Terdaftar Sejak</TableHead>
+                {isSuperAdmin && (
+                  <TableHead className="p-4 sm:px-6 text-right">Aksi</TableHead>
+                )}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {users.map((u) => {
+                const isSelf = currentUser?.id === u.id;
+                return (
+                  <TableRow key={u.id}>
+                    {/* Pengguna */}
+                    <TableCell className="p-4 sm:px-6">
+                      <div className="flex items-center gap-3">
+                        <UserAvatar name={u.name} avatarUrl={u.avatarUrl} />
+                        <div>
+                          <span className="font-medium text-foreground block text-sm">
+                            {u.name}
+                          </span>
+                          {isSelf && (
+                            <span className="text-[10px] font-medium text-primary uppercase tracking-wider">
+                              Akun Anda
                             </span>
-                            {isSelf && (
-                              <span className="text-[10px] font-bold text-[#FA6400] uppercase tracking-wider">
-                                Akun Anda
-                              </span>
-                            )}
-                          </div>
+                          )}
                         </div>
-                      </td>
+                      </div>
+                    </TableCell>
 
-                      {/* Email */}
-                      <td className="p-4 sm:px-6 text-xs font-mono text-stone-600">
-                        {u.email}
-                      </td>
+                    {/* Email */}
+                    <TableCell className="p-4 sm:px-6 text-xs font-mono text-muted-foreground">
+                      {u.email}
+                    </TableCell>
 
-                      {/* Peran */}
-                      <td className="p-4 sm:px-6">
-                        <RoleBadge role={u.role} />
-                      </td>
+                    {/* Peran */}
+                    <TableCell className="p-4 sm:px-6">
+                      <RoleBadge role={u.role} />
+                    </TableCell>
 
-                      {/* Terdaftar */}
-                      <td className="p-4 sm:px-6 text-xs text-stone-500 font-medium whitespace-nowrap">
-                        {u.createdAt || "—"}
-                      </td>
+                    {/* Terdaftar */}
+                    <TableCell className="p-4 sm:px-6 text-xs text-muted-foreground whitespace-nowrap">
+                      {u.createdAt || "—"}
+                    </TableCell>
 
-                      {/* Aksi */}
-                      {isSuperAdmin && (
-                        <td className="p-4 sm:px-6">
-                          <div className="flex items-center justify-end gap-2">
-                            {/* Ubah Peran */}
-                            <button
-                              onClick={() => openUbahPeran(u)}
-                              disabled={isSelf}
-                              title={isSelf ? "Tidak dapat mengubah peran sendiri" : "Ubah peran"}
-                              id={`btn-ubah-peran-${u.id}`}
-                              className="h-8 w-8 rounded-xl flex items-center justify-center border border-[#E8E2D8] bg-white text-stone-500 transition-all hover:bg-[#EBF5FB] hover:text-[#2E86C1] hover:border-[#AED6F1] disabled:opacity-30 disabled:cursor-not-allowed"
-                            >
-                              <Pencil className="h-3.5 w-3.5" />
-                            </button>
+                    {/* Aksi */}
+                    {isSuperAdmin && (
+                      <TableCell className="p-4 sm:px-6">
+                        <div className="flex items-center justify-end gap-2">
+                          {/* Ubah Peran */}
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => openUbahPeran(u)}
+                            disabled={isSelf}
+                            title={isSelf ? "Tidak dapat mengubah peran sendiri" : "Ubah peran"}
+                            aria-label={isSelf ? "Tidak dapat mengubah peran sendiri" : "Ubah peran"}
+                            id={`btn-ubah-peran-${u.id}`}
+                          >
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
 
-                            {/* Hapus */}
-                            <button
-                              onClick={() => openHapus(u)}
-                              disabled={isSelf}
-                              title={isSelf ? "Tidak dapat menghapus akun sendiri" : "Hapus pengguna"}
-                              id={`btn-hapus-${u.id}`}
-                              className="h-8 w-8 rounded-xl flex items-center justify-center border border-[#E8E2D8] bg-white text-stone-500 transition-all hover:bg-[#FEE2E2] hover:text-[#B91C1C] hover:border-[#FCA5A5] disabled:opacity-30 disabled:cursor-not-allowed"
-                            >
-                              <Trash2 className="h-3.5 w-3.5" />
-                            </button>
-                          </div>
-                        </td>
-                      )}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                          {/* Hapus */}
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => openHapus(u)}
+                            disabled={isSelf}
+                            title={isSelf ? "Tidak dapat menghapus akun sendiri" : "Hapus pengguna"}
+                            aria-label={isSelf ? "Tidak dapat menghapus akun sendiri" : "Hapus pengguna"}
+                            id={`btn-hapus-${u.id}`}
+                            className="text-destructive hover:text-destructive"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    )}
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
         )}
-      </div>
+      </Card>
 
       {/* ═══════════════════════════════════════════════════════════════════════
           MODAL — TAMBAH PENGGUNA
@@ -506,54 +516,35 @@ export default function AdminUsersManagementPage() {
           noValidate
         >
           {/* Nama */}
-          <div className="space-y-1.5">
-            <label
-              htmlFor="input-nama"
-              className="text-xs font-bold text-[#1E2330] uppercase tracking-wide"
-            >
-              Nama Lengkap <span className="text-[#FA6400]">*</span>
-            </label>
-            <Input
-              id="input-nama"
-              type="text"
-              placeholder="cth. Ahmad Fauzan"
-              value={formName}
-              onChange={(e) => setFormName(e.target.value)}
-              required
-              autoComplete="name"
-            />
-          </div>
+          <Input
+            id="input-nama"
+            label="Nama Lengkap"
+            type="text"
+            placeholder="cth. Ahmad Fauzan"
+            value={formName}
+            onChange={(e) => setFormName(e.target.value)}
+            required
+            autoComplete="name"
+          />
 
           {/* Email */}
-          <div className="space-y-1.5">
-            <label
-              htmlFor="input-email"
-              className="text-xs font-bold text-[#1E2330] uppercase tracking-wide"
-            >
-              Alamat Email <span className="text-[#FA6400]">*</span>
-            </label>
-            <Input
-              id="input-email"
-              type="email"
-              placeholder="cth. ahmad@yazzakka.id"
-              value={formEmail}
-              onChange={(e) => setFormEmail(e.target.value)}
-              required
-              autoComplete="email"
-            />
-          </div>
+          <Input
+            id="input-email"
+            label="Alamat Email"
+            type="email"
+            placeholder="cth. ahmad@yazzakka.id"
+            value={formEmail}
+            onChange={(e) => setFormEmail(e.target.value)}
+            required
+            autoComplete="email"
+          />
 
           {/* Password */}
           <div className="space-y-1.5">
-            <label
-              htmlFor="input-password"
-              className="text-xs font-bold text-[#1E2330] uppercase tracking-wide"
-            >
-              Kata Sandi <span className="text-[#FA6400]">*</span>
-            </label>
             <div className="relative">
               <Input
                 id="input-password"
+                label="Kata Sandi"
                 type={showPassword ? "text" : "password"}
                 placeholder="Minimal 8 karakter"
                 value={formPassword}
@@ -565,7 +556,7 @@ export default function AdminUsersManagementPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 transition-colors"
+                className="absolute right-3 top-7 text-muted-foreground hover:text-foreground transition-colors"
                 tabIndex={-1}
                 aria-label={showPassword ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
               >
@@ -576,33 +567,26 @@ export default function AdminUsersManagementPage() {
                 )}
               </button>
             </div>
-            <p className="text-[10px] text-stone-400 font-medium">
+            <p className="text-[10px] text-muted-foreground">
               Kata sandi akan dienkripsi sebelum disimpan ke database.
             </p>
           </div>
 
           {/* Peran */}
-          <div className="space-y-1.5">
-            <label
-              htmlFor="select-role"
-              className="text-xs font-bold text-[#1E2330] uppercase tracking-wide"
-            >
-              Peran (Role) <span className="text-[#FA6400]">*</span>
-            </label>
-            <select
-              id="select-role"
-              value={formRole}
-              onChange={(e) => setFormRole(e.target.value as UserRole)}
-              className="w-full h-10 px-3.5 rounded-xl border border-[#E8E2D8] bg-white text-sm text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]/30 focus:border-[#FA6400] transition-all"
-            >
-              <option value="editor">Editor Konten</option>
-              <option value="super_admin">Super Admin</option>
-            </select>
-          </div>
+          <Select
+            id="select-role"
+            label="Peran (Role)"
+            required
+            value={formRole}
+            onChange={(e) => setFormRole(e.target.value as UserRole)}
+          >
+            <option value="editor">Editor Konten</option>
+            <option value="super_admin">Super Admin</option>
+          </Select>
 
           {/* Error */}
           {formError && (
-            <div className="flex items-start gap-2.5 p-3.5 rounded-xl bg-[#FEE2E2] border border-[#FCA5A5] text-xs font-semibold text-[#B91C1C]">
+            <div className="flex items-start gap-2.5 p-3.5 rounded-lg bg-danger-bg border border-destructive/20 text-xs font-medium text-destructive">
               <AlertTriangle className="h-4 w-4 shrink-0 mt-px" />
               <span>{formError}</span>
             </div>
@@ -642,11 +626,11 @@ export default function AdminUsersManagementPage() {
       >
         <div className="space-y-4">
           {/* Peran saat ini */}
-          <div className="flex items-center gap-3 p-4 rounded-xl bg-[#FAF6EE] border border-[#E8E2D8]">
+          <div className="flex items-center gap-3 p-4 rounded-lg bg-muted border border-border">
             <UserAvatar name={selectedUser?.name || ""} avatarUrl={selectedUser?.avatarUrl} />
             <div>
-              <p className="text-sm font-bold text-[#1E2330]">{selectedUser?.name}</p>
-              <p className="text-xs text-stone-500 font-mono">{selectedUser?.email}</p>
+              <p className="text-sm font-medium text-foreground">{selectedUser?.name}</p>
+              <p className="text-xs text-muted-foreground font-mono">{selectedUser?.email}</p>
             </div>
           </div>
 
@@ -658,20 +642,20 @@ export default function AdminUsersManagementPage() {
                 type="button"
                 onClick={() => setNewRole(r)}
                 id={`role-option-${r}`}
-                className={`w-full flex items-center justify-between p-4 rounded-xl border text-left transition-all ${
+                className={`w-full flex items-center justify-between p-4 rounded-lg border text-left transition-colors ${
                   newRole === r
                     ? r === "super_admin"
-                      ? "bg-[#FFF0E5] border-[#FED7AA] ring-2 ring-[#FA6400]/20"
-                      : "bg-[#EBF5FB] border-[#AED6F1] ring-2 ring-[#2E86C1]/20"
-                    : "bg-[#FAF6EE] border-[#E8E2D8] hover:bg-white"
+                      ? "bg-primary/10 border-primary/20 ring-2 ring-primary/20"
+                      : "bg-info/10 border-info/20 ring-2 ring-info/20"
+                    : "bg-muted border-border hover:bg-card"
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className={`h-9 w-9 rounded-xl flex items-center justify-center ${
+                    className={`h-9 w-9 rounded-lg flex items-center justify-center ${
                       r === "super_admin"
-                        ? "bg-[#FA6400]/10 text-[#FA6400]"
-                        : "bg-[#2E86C1]/10 text-[#2E86C1]"
+                        ? "bg-primary/10 text-primary"
+                        : "bg-info/10 text-info"
                     }`}
                   >
                     {r === "super_admin" ? (
@@ -681,10 +665,10 @@ export default function AdminUsersManagementPage() {
                     )}
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-[#1E2330]">
+                    <p className="text-sm font-medium text-foreground">
                       {r === "super_admin" ? "Super Admin" : "Editor Konten"}
                     </p>
-                    <p className="text-xs text-stone-400 font-medium">
+                    <p className="text-xs text-muted-foreground">
                       {r === "super_admin"
                         ? "Akses penuh ke seluruh CMS"
                         : "Kelola konten publikasi"}
@@ -694,7 +678,7 @@ export default function AdminUsersManagementPage() {
                 {newRole === r && (
                   <Check
                     className={`h-5 w-5 shrink-0 ${
-                      r === "super_admin" ? "text-[#FA6400]" : "text-[#2E86C1]"
+                      r === "super_admin" ? "text-primary" : "text-info"
                     }`}
                   />
                 )}
@@ -703,7 +687,7 @@ export default function AdminUsersManagementPage() {
           </div>
 
           {formError && (
-            <div className="flex items-start gap-2.5 p-3.5 rounded-xl bg-[#FEE2E2] border border-[#FCA5A5] text-xs font-semibold text-[#B91C1C]">
+            <div className="flex items-start gap-2.5 p-3.5 rounded-lg bg-danger-bg border border-destructive/20 text-xs font-medium text-destructive">
               <AlertTriangle className="h-4 w-4 shrink-0 mt-px" />
               <span>{formError}</span>
             </div>
@@ -740,27 +724,27 @@ export default function AdminUsersManagementPage() {
       >
         <div className="space-y-4">
           {/* Peringatan */}
-          <div className="flex items-start gap-3 p-4 rounded-xl bg-[#FEF9E7] border border-[#F9E79F]">
-            <AlertTriangle className="h-5 w-5 text-[#D68910] shrink-0 mt-0.5" />
-            <p className="text-xs font-semibold text-[#7D6608] leading-relaxed">
+          <div className="flex items-start gap-3 p-4 rounded-lg bg-warning-bg border border-warning/20">
+            <AlertTriangle className="h-5 w-5 text-warning shrink-0 mt-0.5" />
+            <p className="text-xs font-medium text-foreground leading-relaxed">
               Anda akan menghapus pengguna berikut secara permanen dari sistem.
             </p>
           </div>
 
           {/* Info pengguna */}
           {selectedUser && (
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-[#FAF6EE] border border-[#E8E2D8]">
+            <div className="flex items-center gap-3 p-4 rounded-lg bg-muted border border-border">
               <UserAvatar name={selectedUser.name} avatarUrl={selectedUser.avatarUrl} />
               <div>
-                <p className="text-sm font-bold text-[#1E2330]">{selectedUser.name}</p>
-                <p className="text-xs text-stone-500 font-mono">{selectedUser.email}</p>
+                <p className="text-sm font-medium text-foreground">{selectedUser.name}</p>
+                <p className="text-xs text-muted-foreground font-mono">{selectedUser.email}</p>
                 <RoleBadge role={selectedUser.role} />
               </div>
             </div>
           )}
 
           {formError && (
-            <div className="flex items-start gap-2.5 p-3.5 rounded-xl bg-[#FEE2E2] border border-[#FCA5A5] text-xs font-semibold text-[#B91C1C]">
+            <div className="flex items-start gap-2.5 p-3.5 rounded-lg bg-danger-bg border border-destructive/20 text-xs font-medium text-destructive">
               <AlertTriangle className="h-4 w-4 shrink-0 mt-px" />
               <span>{formError}</span>
             </div>

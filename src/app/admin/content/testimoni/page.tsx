@@ -4,13 +4,16 @@ import React, { useState } from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { Testimonial } from "@/lib/types";
-import { Plus, Edit2, Trash2, Quote, Star, MessageSquare } from "lucide-react";
+import { Plus, Edit2, Trash2, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Modal } from "@/components/ui/modal";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { Select } from "@/components/ui/select";
 
 export default function AdminTestimonialsPage() {
   const { testimonials, addTestimonial, updateTestimonial, deleteTestimonial } = useSchoolData();
@@ -101,18 +104,18 @@ export default function AdminTestimonialsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
             Content / Testimoni &amp; Ulasan
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
             Manajemen Testimoni &amp; Pengalaman
           </h1>
-          <p className="text-xs sm:text-sm text-stone-500 mt-1">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
             Ulasan dan pengalaman nyata dari wali murid, alumni, dan tokoh masyarakat.
           </p>
         </div>
 
-        <Button onClick={handleOpenAdd} variant="default" size="default" className="shrink-0 font-extrabold h-11 px-6 rounded-full shadow-[0_3px_0_#cc5000] active:translate-y-0.5 active:shadow-none transition-all">
+        <Button onClick={handleOpenAdd} className="shrink-0">
           <Plus className="h-4 w-4" />
           <span>Tambah Testimoni</span>
         </Button>
@@ -120,7 +123,7 @@ export default function AdminTestimonialsPage() {
 
       {/* Grid or EmptyState */}
       {testimonials.length === 0 ? (
-        <div className="bg-white rounded-xl p-8 border border-[#E8E2D8] shadow-xs">
+        <Card className="p-8">
           <EmptyState
             icon={MessageSquare}
             title="Belum Ada Testimoni"
@@ -131,61 +134,62 @@ export default function AdminTestimonialsPage() {
               icon: Plus,
             }}
           />
-        </div>
+        </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((test) => (
-            <div
+            <Card
               key={test.id}
-              className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs hover:border-[#FA6400]/40 hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-4"
+              className="p-6 flex flex-col justify-between space-y-4"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full bg-[#EDE9FE] text-[#6D28D9] border border-[#DDD6FE] text-[11px] font-bold shadow-2xs">
-                    {test.role}
-                  </span>
+                  <Badge variant="secondary">{test.role}</Badge>
                   <div className="flex items-center gap-1">
-                    <button
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
                       onClick={() => handleOpenEdit(test)}
-                      className="p-1.5 rounded-full text-stone-500 hover:text-[#FA6400] hover:bg-[#FFF0E5] transition-colors cursor-pointer"
                       title="Edit Testimoni"
                       aria-label="Edit Testimoni"
                     >
                       <Edit2 className="h-4 w-4" aria-hidden="true" />
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
                       onClick={() => handleDelete(test.id, test.name)}
-                      className="p-1.5 rounded-full text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition-colors cursor-pointer"
+                      className="text-destructive hover:text-destructive"
                       title="Hapus Testimoni"
                       aria-label="Hapus Testimoni"
                     >
                       <Trash2 className="h-4 w-4" aria-hidden="true" />
-                    </button>
+                    </Button>
                   </div>
                 </div>
 
-                <p className="text-xs sm:text-sm text-stone-700 leading-relaxed italic font-medium">
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed italic font-medium">
                   &ldquo;{test.quote}&rdquo;
                 </p>
               </div>
 
-              <div className="flex items-center gap-3 pt-4 border-t border-[#E8E2D8]">
+              <div className="flex items-center gap-3 pt-4 border-t border-border">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={test.photoUrl}
                   alt={test.name}
-                  className="h-11 w-11 rounded-full object-cover border-2 border-[#E8E2D8] shadow-2xs"
+                  className="h-11 w-11 rounded-full object-cover border-2 border-border"
                 />
                 <div>
-                  <h4 className="font-bold text-xs sm:text-sm text-[#1E2330]">
+                  <h4 className="font-semibold text-xs sm:text-sm text-foreground">
                     {test.name}
                   </h4>
-                  <p className="text-[11px] text-stone-500 font-medium">
+                  <p className="text-[11px] text-muted-foreground font-medium">
                     {test.childName || (test.graduationYear ? `Alumni ${test.graduationYear}` : "")}
                   </p>
                 </div>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       )}
@@ -216,22 +220,17 @@ export default function AdminTestimonialsPage() {
             onChange={(e) => setName(e.target.value)}
           />
 
-          <div className="space-y-1.5">
-            <label className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] block">
-              Peran / Hubungan
-            </label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value as Testimonial["role"])}
-              className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-sm bg-white text-[#1E2330] font-medium focus:outline-none focus:ring-2 focus:ring-[#FA6400]/25 focus:border-[#FA6400] shadow-xs"
-            >
-              {roles.map((r) => (
-                <option key={r} value={r}>
-                  {r}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select
+            label="Peran / Hubungan"
+            value={role}
+            onChange={(e) => setRole(e.target.value as Testimonial["role"])}
+          >
+            {roles.map((r) => (
+              <option key={r} value={r}>
+                {r}
+              </option>
+            ))}
+          </Select>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input

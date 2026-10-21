@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ImageUpload } from "@/components/ui/image-upload";
-import { Save, Building2, User } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Save } from "lucide-react";
 
 export default function AdminOrgProfilePage() {
   const { profile, updateProfile } = useSchoolData();
@@ -54,21 +55,21 @@ export default function AdminOrgProfilePage() {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       <div>
-        <span className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
+        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
           Organization / Profil Lembaga
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
           Profil Resmi & Identitas Sekolah
         </h1>
-        <p className="text-xs sm:text-sm text-stone-500 mt-1">
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
           Kelola nama resmi lembaga, NPSN, akreditasi, data statistik kunci, serta informasi pimpinan sekolah.
         </p>
       </div>
 
       <form onSubmit={handleSave} className="space-y-8">
         {/* Basic Identity */}
-        <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-6">
-          <h3 className="text-base font-bold text-[#1E2330]">
+        <Card className="p-6 space-y-6">
+          <h3 className="text-base font-semibold text-foreground">
             Identitas Pokok & Akreditasi
           </h3>
 
@@ -106,8 +107,8 @@ export default function AdminOrgProfilePage() {
           </div>
 
           {/* Statistics Key Numbers */}
-          <div className="pt-4 border-t border-[#E8E2D8]">
-            <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#FA6400] mb-4 block">
+          <div className="pt-4 border-t border-border">
+            <h4 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-4 block">
               Metrik Kunci Sekolah (Tampil di Trust Section)
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -137,11 +138,11 @@ export default function AdminOrgProfilePage() {
               />
             </div>
           </div>
-        </div>
+        </Card>
 
         {/* Principal Info */}
-        <div className="bg-white rounded-xl p-6 border border-[#E8E2D8] shadow-xs space-y-6">
-          <h3 className="text-base font-bold text-[#1E2330]">
+        <Card className="p-6 space-y-6">
+          <h3 className="text-base font-semibold text-foreground">
             Data Pimpinan / Kepala Sekolah
           </h3>
 
@@ -173,13 +174,13 @@ export default function AdminOrgProfilePage() {
             onChange={(e) => setPrincipalWelcome(e.target.value)}
           />
 
-          <div className="flex justify-end pt-4 border-t border-[#E8E2D8]">
-            <Button type="submit" variant="default" size="default" className="font-extrabold h-11 px-6 rounded-full shadow-[0_3px_0_#cc5000] active:translate-y-0.5 active:shadow-none transition-all">
+          <div className="flex justify-end pt-4 border-t border-border">
+            <Button type="submit">
               <Save className="h-4 w-4" />
               Simpan Profil Lembaga
             </Button>
           </div>
-        </div>
+        </Card>
       </form>
     </div>
   );
