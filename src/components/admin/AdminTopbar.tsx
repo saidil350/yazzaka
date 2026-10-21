@@ -5,37 +5,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useSchoolData } from "@/context/SchoolDataContext";
-import { useToast } from "@/components/ui/toast";
-import {
-  Menu,
-  RotateCcw,
-  ExternalLink,
-  Bell,
-} from "lucide-react";
+import { Menu, ExternalLink, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function AdminTopbar({
-  isCollapsed,
-  onToggleCollapse,
   onToggleMobileSidebar,
 }: {
-  isCollapsed?: boolean;
-  onToggleCollapse?: () => void;
   onToggleMobileSidebar?: () => void;
 }) {
   const pathname = usePathname();
   const { role, currentUser } = useAuth();
-  const { resetToDefault, messages } = useSchoolData();
-  const { toast } = useToast();
-
-  const handleReset = () => {
-    if (confirm("Apakah Anda yakin ingin mereset seluruh data simulasi ke pengaturan awal sekolah?")) {
-      resetToDefault();
-      toast("Seluruh data berhasil direset ke seed awal!", "success");
-    }
-  };
+  const { messages } = useSchoolData();
 
   const newMessages = messages.filter((m) => m.status === "new").length;
+  const isSuperAdmin = role === "super_admin";
 
   const getBreadcrumb = () => {
     const parts = pathname.replace("/admin", "").split("/").filter(Boolean);
@@ -62,17 +45,6 @@ export function AdminTopbar({
           <Menu className="h-4 w-4" />
         </button>
 
-        {/* Desktop Collapse Toggle */}
-        <button
-          type="button"
-          onClick={onToggleCollapse}
-          aria-label={isCollapsed ? "Besarkan sidebar" : "Kecilkan sidebar"}
-          title={isCollapsed ? "Besarkan sidebar" : "Kecilkan sidebar"}
-          className="hidden lg:inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card text-muted-foreground hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
-        >
-          <Menu className="h-4 w-4" />
-        </button>
-
         <div className="min-w-0">
           <div className="flex items-center gap-2 text-xs">
             <span className="font-medium text-muted-foreground">CMS Panel</span>
@@ -84,13 +56,10 @@ export function AdminTopbar({
 
       {/* ── Right: Tools ──────────────────────────────── */}
       <div className="flex items-center gap-2.5 shrink-0">
-        {/* Active User Profile Pill */}
-        <div className="flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full border border-border bg-card">
-          <div className="relative shrink-0">
-            <div className="h-7 w-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary text-xs font-medium">
-              {currentUser?.name?.charAt(0) ?? "A"}
-            </div>
-            <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-success border border-card" />
+        {/* Active User */}
+        <div className="flex items-center gap-2">
+          <div className="h-7 w-7 rounded-full bg-muted flex items-center justify-center text-xs font-medium text-muted-foreground shrink-0">
+            {currentUser?.name?.charAt(0) ?? "A"}
           </div>
           <div className="min-w-0 hidden sm:block text-left">
             <p className="text-xs font-medium text-foreground leading-none truncate max-w-[140px]">
@@ -102,35 +71,21 @@ export function AdminTopbar({
           </div>
         </div>
 
-        {/* Message Notification Bell */}
-        {newMessages > 0 ? (
-          <Link href="/admin/settings/pesan" aria-label={`${newMessages} pesan baru`}>
-            <div className="relative h-9 w-9 inline-flex items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-primary hover:bg-primary/20 transition-colors cursor-pointer">
-              <Bell className="h-4 w-4" />
-              <span className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center rounded-full bg-primary text-[9px] font-medium text-primary-foreground">
+        {/* Message Notification Bell — menu Pesan Masuk hanya untuk super_admin */}
+        {isSuperAdmin && (
+          <Link
+            href="/admin/settings/pesan"
+            aria-label={newMessages > 0 ? `${newMessages} pesan baru` : "Kotak pesan masuk"}
+            className="relative h-9 w-9 inline-flex items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+          >
+            <Bell className="h-4 w-4" />
+            {newMessages > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 h-4 min-w-4 px-1 flex items-center justify-center rounded-full bg-primary text-[10px] font-medium text-primary-foreground">
                 {newMessages}
               </span>
-            </div>
-          </Link>
-        ) : (
-          <Link href="/admin/settings/pesan" aria-label="Kotak pesan masuk">
-            <div className="h-9 w-9 inline-flex items-center justify-center rounded-full border border-border bg-card text-muted-foreground hover:bg-muted hover:text-foreground transition-colors cursor-pointer">
-              <Bell className="h-4 w-4" />
-            </div>
+            )}
           </Link>
         )}
-
-        {/* Reset Demo Data */}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleReset}
-          title="Reset Data Demo ke Seed Awal"
-          aria-label="Reset data demo"
-          className="hidden xl:inline-flex h-9 w-9 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-        >
-          <RotateCcw className="h-3.5 w-3.5" />
-        </Button>
 
         {/* Live Preview Button */}
         <Link href="/" target="_blank" rel="noopener noreferrer">
