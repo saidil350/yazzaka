@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Newsreader } from "next/font/google";
+import { Plus_Jakarta_Sans, Newsreader, Public_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { getSeoSettings, normalizeGoogleVerification } from "@/lib/seo-settings";
@@ -13,6 +13,12 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 const newsreader = Newsreader({
   subsets: ["latin"],
   variable: "--font-newsreader",
+});
+
+// Font panel CMS — hanya direferensikan oleh .admin-scope di globals.css.
+const publicSans = Public_Sans({
+  subsets: ["latin"],
+  variable: "--font-public-sans",
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -63,7 +69,7 @@ export default function RootLayout({
     <html
       lang="id"
       data-scroll-behavior="smooth"
-      className={`${plusJakartaSans.variable} ${newsreader.variable} font-sans scroll-smooth`}
+      className={`${plusJakartaSans.variable} ${newsreader.variable} ${publicSans.variable} font-sans scroll-smooth`}
       suppressHydrationWarning
     >
       <body

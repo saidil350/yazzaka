@@ -102,7 +102,7 @@ export default function LoginPage() {
       : "/yazzakka.png";
 
   return (
-    <div className="min-h-screen bg-[#FCF8F1] flex flex-col justify-between text-[#1E2330] selection:bg-[#FFF0E5] selection:text-[#FA6400]">
+    <div className="admin-scope min-h-screen bg-[#FCF8F1] flex flex-col justify-between text-[#1E2330] selection:bg-[#FFF0E5] selection:text-[#FA6400]">
       {/* ── Top Header Bar ────────────────────────────────────────── */}
       <header className="w-full border-b border-[#E8E2D8] bg-white/80 backdrop-blur-xs py-3 px-4 sm:px-8">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
