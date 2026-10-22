@@ -8,6 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   Lock,
   Mail,
@@ -144,9 +145,9 @@ export default function LoginPage() {
                 />
               </div>
               <div>
-                <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#FA6400] bg-[#FFF0E5] px-2.5 py-0.5 rounded-full border border-[#FED7AA]/60 mb-1.5">
+                <Badge variant="secondary" className="mb-1.5">
                   Content Management System
-                </span>
+                </Badge>
                 <h1 className="text-xl sm:text-2xl font-extrabold text-[#1E2330] tracking-tight">
                   Masuk ke Panel CMS
                 </h1>

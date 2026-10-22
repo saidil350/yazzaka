@@ -8,6 +8,7 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { formatDateIndonesian } from "@/lib/utils";
 import { Calendar, Clock, MapPin, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 
 export default function EventsPage() {
@@ -27,10 +28,10 @@ export default function EventsPage() {
         {/* ── Headspace Warm Page Hero Banner ─────────── */}
         <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0E5] border border-[#FED7AA] text-[#FA6400] font-bold text-xs mb-3 shadow-xs">
-              <Calendar className="h-3.5 w-3.5" />
+            <Badge variant="secondary" className="gap-2 mb-3">
+              <Calendar className="h-3.5 w-3.5 text-yazzaka-orange" />
               <span>Kalender Akademik &amp; Kegiatan</span>
-            </div>
+            </Badge>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
               Agenda &amp; Kegiatan Sekolah
             </h1>
@@ -45,40 +46,21 @@ export default function EventsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             {/* Filter */}
-            <div className="flex items-center gap-2 p-1 rounded-full bg-[#FAF6EE] border border-[#E8E2D8] w-fit">
-              <button
-                onClick={() => setFilterStatus("all")}
-                className={[
-                  "px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-150 cursor-pointer",
-                  filterStatus === "all"
-                    ? "bg-[#FA6400] text-white shadow-xs"
-                    : "text-stone-600 hover:text-[#1E2330] hover:bg-white",
-                ].join(" ")}
-              >
-                Semua Agenda
-              </button>
-              <button
-                onClick={() => setFilterStatus("upcoming")}
-                className={[
-                  "px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-150 cursor-pointer",
-                  filterStatus === "upcoming"
-                    ? "bg-[#FA6400] text-white shadow-xs"
-                    : "text-stone-600 hover:text-[#1E2330] hover:bg-white",
-                ].join(" ")}
-              >
-                Akan Datang
-              </button>
-              <button
-                onClick={() => setFilterStatus("completed")}
-                className={[
-                  "px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-150 cursor-pointer",
-                  filterStatus === "completed"
-                    ? "bg-[#FA6400] text-white shadow-xs"
-                    : "text-stone-600 hover:text-[#1E2330] hover:bg-white",
-                ].join(" ")}
-              >
-                Telah Selesai
-              </button>
+            <div className="flex items-center gap-2">
+              {([
+                ["all", "Semua Agenda"],
+                ["upcoming", "Akan Datang"],
+                ["completed", "Telah Selesai"],
+              ] as const).map(([status, label]) => (
+                <Button
+                  key={status}
+                  variant={filterStatus === status ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setFilterStatus(status)}
+                >
+                  {label}
+                </Button>
+              ))}
             </div>
 
             {/* Event List or EmptyState */}
@@ -113,9 +95,9 @@ export default function EventsPage() {
                           alt={evt.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
-                        <div className="absolute top-3 left-3 bg-[#FA6400] text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold shadow-xs">
+                        <Badge variant="default" className="absolute top-3 left-3">
                           {evt.category}
-                        </div>
+                        </Badge>
                       </div>
 
                       <div className="p-5 space-y-3">

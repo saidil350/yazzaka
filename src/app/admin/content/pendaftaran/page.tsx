@@ -387,7 +387,7 @@ export default function AdminAdmissionPage() {
                       Sembunyikan Formulir Pendaftaran / Konsultasi Saat Ditutup
                     </span>
                     {hideFormWhenClosed && (
-                      <Badge variant="secondary" className="text-[10px] px-2">
+                      <Badge variant="secondary">
                         Auto-Hide Aktif
                       </Badge>
                     )}

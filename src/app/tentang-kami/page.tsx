@@ -6,6 +6,7 @@ import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Compass, Sparkles, Users } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
+import { Badge } from "@/components/ui/badge";
 import { OrganizationMember } from "@/lib/types";
 
 // ── Sub-component: Philosophy Value Card (Panca Jiwa) ────────────────────────
@@ -139,10 +140,10 @@ export default function AboutPage() {
         {/* ── Page Hero Banner ─────────────────────────── */}
         <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EDE9FE] border border-[#DDD6FE] text-[#6D28D9] font-bold text-xs mb-3 shadow-xs">
-              <Sparkles className="h-3.5 w-3.5" />
+            <Badge variant="secondary" className="gap-2 mb-3">
+              <Sparkles className="h-3.5 w-3.5 text-yazzaka-teal-dark" />
               <span>Profil &amp; Filosofi Lembaga</span>
-            </div>
+            </Badge>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
               Tentang {profile.name}
             </h1>
@@ -158,9 +159,9 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
               <div className="lg:col-span-6 space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#FFF0E5] text-[#FA6400] font-bold text-xs border border-[#FED7AA]">
+                <Badge variant="secondary">
                   Identitas &amp; Landasan
-                </div>
+                </Badge>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330] leading-snug">
                   Memadukan Kebeningan Sanad Pesantren dan Keunggulan Sains Kontemporer
                 </h2>
@@ -205,9 +206,9 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             <div className="max-w-3xl space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#E0F2FE] text-[#0369A1] font-bold text-xs border border-[#BAE6FD]">
+              <Badge variant="secondary">
                 Arah &amp; Tujuan
-              </div>
+              </Badge>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
                 Visi &amp; Misi Strategis Lembaga
               </h2>
@@ -259,9 +260,9 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             <div className="max-w-3xl space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#FFF0E5] text-[#FA6400] font-bold text-xs border border-[#FED7AA]">
+              <Badge variant="secondary">
                 Nilai Filosofis
-              </div>
+              </Badge>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
                 Panca Jiwa Pondok Pesantren {profile.name}
               </h2>
@@ -287,9 +288,9 @@ export default function AboutPage() {
 
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="max-w-3xl space-y-2">
-                <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#DCFCE7] text-[#15803D] font-bold text-xs border border-[#BBF7D0]">
+                <Badge variant="secondary">
                   Struktur &amp; Keteladanan
-                </div>
+                </Badge>
                 <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
                   {sectionTitle}
                 </h2>

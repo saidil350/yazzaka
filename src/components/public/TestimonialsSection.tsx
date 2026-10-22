@@ -15,8 +15,8 @@ export function TestimonialsSection() {
 
         {/* Section Header */}
         <div className="max-w-3xl space-y-2">
-          <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
-            <MessageSquareHeart className="h-3.5 w-3.5 text-[#FA6400]" />
+          <Badge variant="secondary" className="gap-2">
+            <MessageSquareHeart className="h-3.5 w-3.5 text-yazzaka-orange" />
             <span>Kisah Nyata &amp; Pengalaman</span>
           </Badge>
           <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
@@ -44,7 +44,7 @@ export function TestimonialsSection() {
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <Badge variant="outline" className="px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-700 border-stone-200 text-[10px] font-bold shadow-2xs">
+                      <Badge variant="secondary">
                         {test.role}
                       </Badge>
                       <div className="flex items-center gap-0.5 text-amber-500">

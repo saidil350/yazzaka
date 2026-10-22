@@ -60,11 +60,11 @@ export function Footer() {
 
             {/* Legal and Leader Badges */}
             <div className="flex flex-wrap gap-2 pt-1">
-              <Badge variant="outline" className="gap-1.5 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-[11px] font-semibold border-stone-200">
+              <Badge variant="secondary" className="gap-1.5">
                 <ShieldCheck className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
                 <span>SK Kemenkumham: {profile.npsn}</span>
               </Badge>
-              <Badge variant="outline" className="gap-1.5 px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-[11px] font-semibold border-stone-200">
+              <Badge variant="secondary" className="gap-1.5">
                 <Award className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
                 <span>Binaan Dr. Amri Fatmi</span>
               </Badge>

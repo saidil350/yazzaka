@@ -33,7 +33,7 @@ export function HeroSection() {
           <div className="lg:col-span-7 space-y-4 sm:space-y-5">
 
             {/* Pill Eyebrow */}
-            <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
+            <Badge variant="secondary" className="gap-2">
               <Landmark className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
               <span>{hero.eyebrow}</span>
             </Badge>
@@ -77,7 +77,7 @@ export function HeroSection() {
             {/* Quick Benefits in Pill Badges */}
             <div className="pt-4 border-t border-[#E8E2D8] flex flex-wrap items-center gap-2 sm:gap-3">
               {hero.badges.map((badge) => (
-                <Badge key={badge} variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
+                <Badge key={badge} variant="outline" className="gap-1.5">
                   <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
                   <span>{badge}</span>
                 </Badge>
@@ -107,7 +107,7 @@ export function HeroSection() {
 
                 {/* Floating Pill Badge 1 — Top Right */}
                 <div className="absolute top-3 right-3">
-                  <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs border-stone-200 text-stone-800 font-semibold text-[11px] shadow-sm">
+                  <Badge variant="outline" className="gap-1.5 bg-background/95 backdrop-blur-xs text-foreground">
                     <Heart className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
                     <span>Lingkungan Nyaman</span>
                   </Badge>
@@ -115,7 +115,7 @@ export function HeroSection() {
 
                 {/* Floating Pill Badge 2 — Middle Left */}
                 <div className="absolute top-1/3 -left-2">
-                  <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs border-stone-200 text-stone-800 font-semibold text-[11px] shadow-sm">
+                  <Badge variant="outline" className="gap-1.5 bg-background/95 backdrop-blur-xs text-foreground">
                     <Award className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
                     <span>Karakter &amp; Adab</span>
                   </Badge>
@@ -125,7 +125,7 @@ export function HeroSection() {
                 <div className="absolute inset-x-3 bottom-3 p-3 rounded-2xl bg-white/95 backdrop-blur-xs border border-stone-200 shadow-lg">
                   <div className="flex items-center justify-between gap-2">
                     <div>
-                      <Badge variant="outline" className="px-2 py-0.5 rounded-full bg-stone-100 border-stone-200 text-stone-700 text-[9px] font-bold uppercase tracking-wide">
+                      <Badge variant="secondary">
                         Sekolah Terpadu
                       </Badge>
                       <h4 className="text-xs font-bold text-[#1E2330] mt-0.5">

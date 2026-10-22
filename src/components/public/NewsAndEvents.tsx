@@ -30,8 +30,8 @@ export function NewsAndEvents() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="max-w-2xl space-y-2">
-            <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
-              <Newspaper className="h-3.5 w-3.5 text-[#FA6400]" />
+            <Badge variant="secondary" className="gap-2">
+              <Newspaper className="h-3.5 w-3.5 text-yazzaka-orange" />
               <span>Kabar Terkini &amp; Agenda Sekolah</span>
             </Badge>
             <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
@@ -87,11 +87,9 @@ export function NewsAndEvents() {
                           <Newspaper className="h-10 w-10 text-stone-400" aria-hidden="true" />
                         </div>
                       )}
-                      <div className="absolute top-3 left-3">
-                        <Badge variant="outline" className="px-2.5 py-0.5 rounded-full bg-stone-900 text-white border-transparent text-[11px] font-bold shadow-xs">
+                        <Badge variant="default" className="absolute top-3 left-3">
                           {leadArticle.category}
                         </Badge>
-                      </div>
                     </div>
 
                     <div className="flex-1 p-5 md:p-6 flex flex-col justify-between space-y-3">
@@ -133,7 +131,7 @@ export function NewsAndEvents() {
                       >
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <Badge variant="outline" className="px-2 py-0.5 rounded-full bg-white border-stone-200 text-[9px] font-bold text-stone-700">
+                            <Badge variant="secondary">
                               {art.category}
                             </Badge>
                             <span className="text-[11px] text-stone-500 font-medium">
@@ -209,7 +207,7 @@ export function NewsAndEvents() {
                     </div>
 
                     <div className="space-y-0.5 text-xs">
-                      <Badge variant="outline" className="px-2 py-0.5 rounded-full bg-stone-100 border-stone-200 text-stone-700 font-bold text-[9px] inline-block">
+                      <Badge variant="secondary">
                         {evt.category}
                       </Badge>
                       <h4 className="text-xs font-bold text-[#1E2330] leading-snug">
@@ -227,7 +225,7 @@ export function NewsAndEvents() {
 
             {/* Official Admission Notice Box */}
             <div className="rounded-2xl border-2 border-[#FED7AA] bg-[#FFF0E5] p-5 space-y-2.5 shadow-xs">
-              <Badge variant="default" className="inline-block px-2.5 py-0.5 rounded-full bg-[#FA6400] hover:bg-[#FA6400] text-white border-transparent text-[10px] font-bold shadow-xs">
+              <Badge variant="default">
                 Pemberitahuan Resmi PPDB
               </Badge>
               <p className="text-xs text-stone-700 leading-relaxed font-medium">

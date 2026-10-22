@@ -32,8 +32,8 @@ export function FacilitiesSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="max-w-2xl space-y-2">
-            <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
-              <Building className="h-3.5 w-3.5 text-[#FA6400]" />
+            <Badge variant="secondary" className="gap-2">
+              <Building className="h-3.5 w-3.5 text-yazzaka-orange" />
               <span>Sarana &amp; Lingkungan Terpadu</span>
             </Badge>
             <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
@@ -58,24 +58,17 @@ export function FacilitiesSection() {
 
         {/* Headspace Pill Filter Bar */}
         {categories.length > 1 && (
-          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-full bg-[#FAF6EE] border border-[#E8E2D8] w-fit">
-            {categories.map((cat) => {
-              const isActive = selectedCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={[
-                    "px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-150 cursor-pointer",
-                    isActive
-                      ? "bg-[#FA6400] text-white shadow-xs"
-                      : "text-stone-600 hover:text-[#1E2330] hover:bg-white",
-                  ].join(" ")}
-                >
-                  {cat}
-                </button>
-              );
-            })}
+          <div className="flex flex-wrap items-center gap-2">
+            {categories.map((cat) => (
+              <Button
+                key={cat}
+                variant={selectedCategory === cat ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedCategory(cat)}
+              >
+                {cat}
+              </Button>
+            ))}
           </div>
         )}
 
@@ -105,11 +98,11 @@ export function FacilitiesSection() {
                       alt={fac.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <Badge variant="outline" className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs text-[#1E2330] px-2.5 py-0.5 rounded-full text-[11px] font-bold shadow-xs border-white">
+                    <Badge variant="secondary" className="absolute top-3 left-3 bg-background/95 backdrop-blur-xs text-foreground">
                       {fac.category}
                     </Badge>
                     {fac.capacity && (
-                      <Badge variant="outline" className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-xs text-[#1E2330] px-2.5 py-0.5 rounded-full text-[11px] font-bold border-[#E8E2D8] shadow-xs">
+                      <Badge variant="secondary" className="absolute bottom-3 right-3 bg-background/95 backdrop-blur-xs text-foreground">
                         {fac.capacity}
                       </Badge>
                     )}

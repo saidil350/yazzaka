@@ -88,7 +88,7 @@ export function WhyUsSection() {
 
         {/* Section Header */}
         <div className="max-w-3xl space-y-2">
-          <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
+          <Badge variant="secondary" className="gap-2">
             <Landmark className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
             <span>Mengapa Memilih {profile.name}?</span>
           </Badge>

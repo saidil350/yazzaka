@@ -6,6 +6,8 @@ import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Image as ImageIcon, FileText, X, Sparkles } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export default function GalleryPage() {
   const { media, profile } = useSchoolData();
@@ -31,10 +33,10 @@ export default function GalleryPage() {
         {/* ── Headspace Warm Page Hero Banner ─────────── */}
         <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EDE9FE] border border-[#DDD6FE] text-[#6D28D9] font-bold text-xs mb-3 shadow-xs">
-              <Sparkles className="h-3.5 w-3.5" />
+            <Badge variant="secondary" className="gap-2 mb-3">
+              <Sparkles className="h-3.5 w-3.5 text-yazzaka-teal-dark" />
               <span>Dokumentasi Visual &amp; Multimedia</span>
-            </div>
+            </Badge>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
               Galeri Kegiatan {profile.name}
             </h1>
@@ -49,24 +51,17 @@ export default function GalleryPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             {/* Filter Tabs */}
-            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-full bg-[#FAF6EE] border border-[#E8E2D8] w-fit">
-              {categories.map((cat) => {
-                const isActive = selectedCategory === cat;
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={[
-                      "px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-150 cursor-pointer",
-                      isActive
-                        ? "bg-[#FA6400] text-white shadow-xs"
-                        : "text-stone-600 hover:text-[#1E2330] hover:bg-white",
-                    ].join(" ")}
-                  >
-                    {cat}
-                  </button>
-                );
-              })}
+            <div className="flex flex-wrap items-center gap-2">
+              {categories.map((cat) => (
+                <Button
+                  key={cat}
+                  variant={selectedCategory === cat ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedCategory(cat)}
+                >
+                  {cat}
+                </Button>
+              ))}
             </div>
 
             {/* Media Grid */}
@@ -96,9 +91,9 @@ export default function GalleryPage() {
                       </div>
                     )}
 
-                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs text-[#1E2330] px-2.5 py-0.5 rounded-full text-[10px] font-bold shadow-xs border border-white">
+                    <Badge variant="secondary" className="absolute top-3 left-3 bg-background/95 backdrop-blur-xs text-foreground">
                       {item.category}
-                    </div>
+                    </Badge>
                   </div>
 
                   <div className="p-4 bg-white flex items-center justify-between">

@@ -4,6 +4,7 @@ import { Calendar, ChevronLeft, ChevronRight, Clock, Newspaper, Search } from "l
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { EmptyState } from "@/components/ui/empty-state";
+import { Badge } from "@/components/ui/badge";
 import { listArticles, listCategories } from "@/lib/news/service";
 import { getSchoolProfile } from "@/lib/school-profile";
 import { formatDateIndonesian } from "@/lib/utils";
@@ -66,10 +67,10 @@ export default async function BeritaPage({
         {/* Hero */}
         <section className="border-b border-border bg-card py-10 lg:py-14">
           <div className="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs font-semibold text-muted-foreground">
+            <Badge variant="secondary" className="gap-2 mb-3">
               <Newspaper className="size-3.5" aria-hidden="true" />
               <span>Warta &amp; Kabar Terkini</span>
-            </div>
+            </Badge>
             <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-4xl">
               Warta &amp; Publikasi {schoolName}
             </h1>

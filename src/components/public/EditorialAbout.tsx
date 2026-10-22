@@ -16,7 +16,7 @@ export function EditorialAbout() {
 
         {/* Section Title Header */}
         <div className="max-w-3xl space-y-2">
-          <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
+          <Badge variant="secondary" className="gap-2">
             <Sparkles className="h-3 w-3 text-yazzaka-teal-dark" />
             <span>Sambutan Pimpinan &amp; Filosofi</span>
           </Badge>
@@ -41,7 +41,7 @@ export function EditorialAbout() {
                   alt={profile.principal.name}
                   className="w-full h-full object-cover"
                 />
-                <Badge variant="outline" className="absolute bottom-2.5 left-2.5 bg-white/95 backdrop-blur-xs px-3 py-1 rounded-full border-stone-200 text-xs font-bold text-[#1E2330] shadow-xs">
+                <Badge variant="secondary" className="absolute bottom-2.5 left-2.5 bg-background/95 backdrop-blur-xs text-foreground">
                   {profile.principal.name}
                 </Badge>
               </div>
@@ -54,7 +54,7 @@ export function EditorialAbout() {
                 </p>
                 <div className="mt-2.5 pt-2.5 border-t border-stone-100 flex items-center justify-between">
                   <span className="text-[11px] font-bold text-stone-500">{profile.principal.title}</span>
-                  <Badge variant="outline" className="text-[10px] font-bold text-stone-700 bg-stone-100 border-stone-200 px-2 py-0.5 rounded-full">
+                  <Badge variant="secondary">
                     Pimpinan Pesantren
                   </Badge>
                 </div>

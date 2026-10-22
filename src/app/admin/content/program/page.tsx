@@ -448,7 +448,7 @@ export default function AdminProgramsCrudPage() {
                 <div className="flex items-center justify-between">
                   <label className="flex items-center gap-1.5 text-xs font-medium text-foreground">
                     <span>Fitur &amp; Keunggulan Utama</span>
-                    <Badge variant="secondary" className="text-[10px] px-1.5">
+                    <Badge variant="secondary">
                       {featuresList.filter((f) => f.trim()).length} Poin
                     </Badge>
                   </label>
@@ -500,7 +500,7 @@ export default function AdminProgramsCrudPage() {
                 <div className="flex items-center justify-between">
                   <label className="flex items-center gap-1.5 text-xs font-medium text-foreground">
                     <span>Target Capaian &amp; Kompetensi</span>
-                    <Badge variant="secondary" className="text-[10px] px-1.5">
+                    <Badge variant="secondary">
                       {competenciesList.filter((c) => c.trim()).length} Poin
                     </Badge>
                   </label>
