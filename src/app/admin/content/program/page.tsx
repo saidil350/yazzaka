@@ -138,7 +138,7 @@ export default function AdminProgramsCrudPage() {
     setCompetenciesList(competenciesList.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !shortDesc.trim()) {
       toast("Judul dan deskripsi program wajib diisi.", "error");
@@ -148,44 +148,50 @@ export default function AdminProgramsCrudPage() {
     const featureArray = featuresList.map((f) => f.trim()).filter(Boolean);
     const compArray = competenciesList.map((c) => c.trim()).filter(Boolean);
 
-    if (editingId) {
-      updateProgram(editingId, {
-        title: title.trim(),
-        slug: slugify(title),
-        category,
-        shortDesc: shortDesc.trim(),
-        fullDesc: fullDesc.trim(),
-        imageUrl: imageUrl.trim(),
-        iconName,
-        features: featureArray,
-        targetCompetencies: compArray,
-        status,
-      });
-      toast("Program kurikulum berhasil diperbarui!", "success");
-    } else {
-      addProgram({
-        title: title.trim(),
-        slug: slugify(title),
-        category,
-        shortDesc: shortDesc.trim(),
-        fullDesc: fullDesc.trim(),
-        imageUrl: imageUrl.trim(),
-        iconName,
-        features: featureArray,
-        targetCompetencies: compArray,
-        status,
-        orderIndex: programs.length + 1,
-      });
-      toast("Program baru berhasil ditambahkan!", "success");
+    try {
+      if (editingId) {
+        await updateProgram(editingId, {
+          title: title.trim(),
+          slug: slugify(title),
+          category,
+          shortDesc: shortDesc.trim(),
+          fullDesc: fullDesc.trim(),
+          imageUrl: imageUrl.trim(),
+          iconName,
+          features: featureArray,
+          targetCompetencies: compArray,
+          status,
+        });
+        toast("Program kurikulum berhasil diperbarui!", "success");
+      } else {
+        await addProgram({
+          title: title.trim(),
+          slug: slugify(title),
+          category,
+          shortDesc: shortDesc.trim(),
+          fullDesc: fullDesc.trim(),
+          imageUrl: imageUrl.trim(),
+          iconName,
+          features: featureArray,
+          targetCompetencies: compArray,
+          status,
+          orderIndex: programs.length + 1,
+        });
+        toast("Program baru berhasil ditambahkan!", "success");
+      }
+      setModalOpen(false);
+    } catch {
+      toast("Gagal menyimpan program. Data tidak tersimpan — coba lagi.", "error");
     }
-
-    setModalOpen(false);
   };
 
-  const handleDelete = (id: string, progTitle: string) => {
-    if (confirm(`Hapus program "${progTitle}"?`)) {
-      deleteProgram(id);
+  const handleDelete = async (id: string, progTitle: string) => {
+    if (!confirm(`Hapus program "${progTitle}"?`)) return;
+    try {
+      await deleteProgram(id);
       toast("Program telah dihapus.", "info");
+    } catch {
+      toast("Gagal menghapus program. Coba lagi.", "error");
     }
   };
 

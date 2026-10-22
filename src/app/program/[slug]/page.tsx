@@ -1,72 +1,73 @@
-"use client";
-
-import React, { use } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Header } from "@/components/public/Header";
-import { Footer } from "@/components/public/Footer";
-import { useSchoolData } from "@/context/SchoolDataContext";
 import {
   ArrowLeft,
   ArrowRight,
   CheckCircle2,
-  BookOpen,
-  Clock,
-  Users,
+  MessageCircle,
   Sparkles,
   Heart,
-  Phone,
-  MessageCircle,
   Building2,
   ShieldCheck,
 } from "lucide-react";
+import { Header } from "@/components/public/Header";
+import { Footer } from "@/components/public/Footer";
 import { Button } from "@/components/ui/button";
+import {
+  getAdmissionOpen,
+  getProgramBySlug,
+  getProgramPageProfile,
+  listOtherPublishedPrograms,
+} from "@/lib/programs";
 
-export default function ProgramDetailPage({
+type Params = Promise<{ slug: string }>;
+
+export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
-}) {
-  const resolvedParams = use(params);
-  const { programs, profile, admission, isLoading } = useSchoolData();
+  params: Params;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const program = await getProgramBySlug(slug);
 
-  const program = programs.find((p) => p.slug === resolvedParams.slug);
-
-  // If loading and program is not resolved from initial data yet, show skeleton loader
-  if (isLoading && !program) {
-    return (
-      <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
-        <Header />
-        <main className="flex-1 py-14">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-pulse">
-            <div className="h-5 w-48 bg-stone-200 rounded-full" />
-            <div className="h-10 w-3/4 bg-stone-300 rounded-2xl" />
-            <div className="h-6 w-1/2 bg-stone-200 rounded-xl" />
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6">
-              <div className="lg:col-span-8 space-y-6">
-                <div className="aspect-video bg-stone-200 rounded-3xl" />
-                <div className="h-32 bg-stone-200 rounded-2xl" />
-              </div>
-              <div className="lg:col-span-4">
-                <div className="h-72 bg-stone-200 rounded-3xl" />
-              </div>
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
+  if (!program) {
+    return { title: "Program tidak ditemukan" };
   }
 
-  // Only trigger 404 if data has finished loading and no matching program found
+  const title = `${program.title} — Yazzakka`;
+  const description = program.shortDesc || `Program pendidikan ${program.title}.`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `/program/${program.slug}` },
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      url: `/program/${program.slug}`,
+      images: program.imageUrl ? [{ url: program.imageUrl, alt: program.title }] : undefined,
+    },
+  };
+}
+
+export default async function ProgramDetailPage({ params }: { params: Params }) {
+  const { slug } = await params;
+  const [program, profile, admissionOpen] = await Promise.all([
+    getProgramBySlug(slug),
+    getProgramPageProfile(),
+    getAdmissionOpen(),
+  ]);
+
+  // Draft / slug tak dikenal → 404 HTTP asli.
   if (!program) {
     notFound();
   }
 
+  const otherPrograms = await listOtherPublishedPrograms(program.slug, 4);
+
   const isWakaf = program.slug === "pesantren-peradaban-60";
-  const otherPrograms = programs
-    .filter((p) => p.slug !== program.slug && p.status === "published")
-    .slice(0, 4);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
@@ -136,7 +137,7 @@ export default function ProgramDetailPage({
                     {isWakaf ? "Pilar Strategis Pembangunan:" : "Target Capaian & Keunggulan Khusus:"}
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {program.features.map((feat, idx) => (
+                    {(program.features ?? []).map((feat, idx) => (
                       <div key={idx} className="flex items-start gap-2 text-xs text-stone-700 font-semibold">
                         <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
                         <span>{feat}</span>
@@ -211,7 +212,7 @@ export default function ProgramDetailPage({
                         <span>
                           {isWakaf
                             ? "Hubungi Sekretariat Wakaf"
-                            : admission.isOpen
+                            : admissionOpen
                             ? "Daftar Santri Baru"
                             : "Informasi PPDB (Ditutup)"}
                         </span>

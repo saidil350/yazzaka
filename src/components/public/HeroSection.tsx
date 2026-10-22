@@ -5,10 +5,14 @@ import Link from "next/link";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { DEFAULT_HERO } from "@/lib/data/initialData";
 import { ArrowRight, BookOpen, CheckCircle2, Heart, Award, Globe, Landmark } from "lucide-react";
 
 export function HeroSection() {
   const { profile, admission } = useSchoolData();
+  // hero di DB bersifat parsial (JSONB default '{}') — gabungkan dengan default
+  // agar seksi tetap tampil utuh sebelum konten diisi dari CMS.
+  const hero = { ...DEFAULT_HERO, ...profile.hero };
 
   return (
     <section
@@ -31,7 +35,7 @@ export function HeroSection() {
             {/* Pill Eyebrow */}
             <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
               <Landmark className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
-              <span>Pendidikan Islam Holistik &amp; Berwawasan Global</span>
+              <span>{hero.eyebrow}</span>
             </Badge>
 
             {/* Proportional Friendly Headline */}
@@ -39,13 +43,12 @@ export function HeroSection() {
               id="hero-heading"
               className="text-3xl sm:text-4xl lg:text-[2.65rem] font-extrabold text-[#1E2330] tracking-tight leading-[1.2]"
             >
-              Belajar Lebih Tenang, <br className="hidden sm:inline" />
-              Tumbuh Berkarakter <span className="text-yazzaka-teal-dark underline decoration-yazzaka-teal/40 decoration-wavy underline-offset-4">Qur&apos;ani</span>.
+              {hero.headline}
             </h1>
 
             {/* Welcoming Body copy */}
             <p className="text-sm sm:text-base text-stone-600 leading-relaxed max-w-xl">
-              {profile.tagline} Di <strong className="font-bold text-[#1E2330]">{profile.name}</strong>, proses pendidikan memadukan kedalaman tradisi keilmuan Islam, tahfiz Al-Qur&apos;an 30 juz bersanad, penguasaan bahasa Arab &amp; Inggris aktif, serta kurikulum sains modern berbasis riset.
+              {hero.body}
             </p>
 
             {/* Pill Action CTAs */}
@@ -73,18 +76,12 @@ export function HeroSection() {
 
             {/* Quick Benefits in Pill Badges */}
             <div className="pt-4 border-t border-[#E8E2D8] flex flex-wrap items-center gap-2 sm:gap-3">
-              <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                <span>Akreditasi A Unggul</span>
-              </Badge>
-              <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                <span>Tahfiz 30 Juz Bersanad</span>
-              </Badge>
-              <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                <span>Bahasa Arab &amp; Inggris 24 Jam</span>
-              </Badge>
+              {hero.badges.map((badge) => (
+                <Badge key={badge} variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white border-[#E8E2D8] text-[11px] font-bold text-stone-700 shadow-xs">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                  <span>{badge}</span>
+                </Badge>
+              ))}
             </div>
           </div>
 
@@ -99,8 +96,8 @@ export function HeroSection() {
               <div className="aspect-[4/3] sm:aspect-[16/11] relative max-h-[340px]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80"
-                  alt="Aktivitas santri ceria di Pesantren Yazzaka"
+                  src={hero.imageUrl}
+                  alt={`Aktivitas santri di ${profile.name}`}
                   className="w-full h-full object-cover"
                   loading="eager"
                 />

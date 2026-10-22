@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { OrganizationMember } from "@/lib/types";
@@ -85,6 +85,13 @@ export default function AdminTeamMembersPage() {
   const [sectionTitle, setSectionTitle] = useState(teamSection.title);
   const [sectionSubtitle, setSectionSubtitle] = useState(teamSection.subtitle);
   const [isSavingHeader, setIsSavingHeader] = useState(false);
+
+  // useState hanya membaca nilai awal — sinkronkan form header saat sections
+  // selesai dimuat dari DB agar Simpan tidak menimpa DB dengan data fallback.
+  useEffect(() => {
+    setSectionTitle(teamSection.title);
+    setSectionSubtitle(teamSection.subtitle);
+  }, [teamSection.title, teamSection.subtitle]);
 
   // State pencarian & filter departemen
   const [searchQuery, setSearchQuery] = useState("");
@@ -190,15 +197,24 @@ export default function AdminTeamMembersPage() {
     }
   };
 
-  const handleDelete = (id: string, mName: string) => {
-    if (confirm(`Apakah Anda yakin ingin menghapus data "${mName}"?`)) {
-      deleteMember(id);
+  const handleDelete = async (id: string, mName: string) => {
+    if (!confirm(`Apakah Anda yakin ingin menghapus data "${mName}"?`)) return;
+    try {
+      await deleteMember(id);
       toast("Data pengajar telah dihapus dari sistem.", "info");
+    } catch {
+      toast("Gagal menghapus data pengajar. Coba lagi.", "error");
     }
   };
 
-  // Reordering handler: menggeser urutan dalam daftar unit yang sedang aktif
+  // Reordering handler: menggeser urutan dalam daftar unit yang sedang aktif.
+  // Saat pencarian aktif, pasangan yang bersebelahan di layar tidak
+  // bersebelahan dalam urutan unit — reorder dinonaktifkan agar tidak kacau.
   const handleMove = async (currentIndex: number, direction: "up" | "down") => {
+    if (searchQuery.trim()) {
+      toast("Kosongkan kolom pencarian sebelum mengubah urutan.", "error");
+      return;
+    }
     const targetIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
     if (targetIndex < 0 || targetIndex >= filteredMembers.length) return;
 
@@ -208,10 +224,21 @@ export default function AdminTeamMembersPage() {
     const currentOrder = currentMember.orderIndex ?? currentIndex + 1;
     const targetOrder = targetMember.orderIndex ?? targetIndex + 1;
 
-    // Swap orderIndex
-    await updateMember(currentMember.id, { orderIndex: targetOrder });
-    await updateMember(targetMember.id, { orderIndex: currentOrder });
-    toast("Urutan pengajar berhasil diperbarui!", "success");
+    try {
+      // Swap orderIndex
+      await updateMember(currentMember.id, { orderIndex: targetOrder });
+      await updateMember(targetMember.id, { orderIndex: currentOrder });
+      toast("Urutan pengajar berhasil diperbarui!", "success");
+    } catch {
+      // Rollback best-effort ke nilai semula bila salah satu PUT gagal.
+      try {
+        await updateMember(currentMember.id, { orderIndex: currentOrder });
+        await updateMember(targetMember.id, { orderIndex: targetOrder });
+      } catch {
+        // Muat ulang halaman untuk memulihkan tampilan dari database.
+      }
+      toast("Gagal memperbarui urutan pengajar.", "error");
+    }
   };
 
   // Sort & Filter: kelompokkan per unit jika melihat 'Semua', dan urutkan berdasarkan orderIndex

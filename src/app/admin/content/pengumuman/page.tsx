@@ -85,48 +85,54 @@ export default function AdminAchievementsPage() {
     setModalOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !studentName) {
       toast("Judul prestasi dan nama siswa wajib diisi.", "error");
       return;
     }
 
-    if (editingId) {
-      updateAchievement(editingId, {
-        title,
-        category,
-        studentName,
-        competitionName,
-        level,
-        year: Number(year),
-        date,
-        imageUrl,
-        description,
-      });
-      toast("Prestasi berhasil diperbarui!", "success");
-    } else {
-      addAchievement({
-        title,
-        category,
-        studentName,
-        competitionName,
-        level,
-        year: Number(year),
-        date,
-        imageUrl,
-        description,
-      });
-      toast("Prestasi baru berhasil ditambahkan!", "success");
+    try {
+      if (editingId) {
+        await updateAchievement(editingId, {
+          title,
+          category,
+          studentName,
+          competitionName,
+          level,
+          year: Number(year),
+          date,
+          imageUrl,
+          description,
+        });
+        toast("Prestasi berhasil diperbarui!", "success");
+      } else {
+        await addAchievement({
+          title,
+          category,
+          studentName,
+          competitionName,
+          level,
+          year: Number(year),
+          date,
+          imageUrl,
+          description,
+        });
+        toast("Prestasi baru berhasil ditambahkan!", "success");
+      }
+      setModalOpen(false);
+    } catch {
+      toast("Gagal menyimpan prestasi. Data tidak tersimpan — coba lagi.", "error");
     }
-
-    setModalOpen(false);
   };
 
-  const handleDelete = (id: string, achTitle: string) => {
-    if (confirm(`Hapus prestasi "${achTitle}"?`)) {
-      deleteAchievement(id);
+  const handleDelete = async (id: string, achTitle: string) => {
+    if (!confirm(`Hapus prestasi "${achTitle}"?`)) return;
+    try {
+      await deleteAchievement(id);
       toast("Prestasi telah dihapus.", "info");
+    } catch {
+      toast("Gagal menghapus prestasi. Coba lagi.", "error");
     }
   };
 

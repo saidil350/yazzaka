@@ -78,48 +78,54 @@ export default function AdminEventsPage() {
     setModalOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !date) {
       toast("Judul dan tanggal agenda wajib diisi.", "error");
       return;
     }
 
-    if (editingId) {
-      updateEvent(editingId, {
-        title,
-        description,
-        date,
-        time,
-        location,
-        category,
-        coverImage,
-        registrationUrl,
-        status,
-      });
-      toast("Agenda kegiatan berhasil diperbarui!", "success");
-    } else {
-      addEvent({
-        title,
-        description,
-        date,
-        time,
-        location,
-        category,
-        coverImage,
-        registrationUrl,
-        status,
-      });
-      toast("Agenda kegiatan baru berhasil ditambahkan!", "success");
+    try {
+      if (editingId) {
+        await updateEvent(editingId, {
+          title,
+          description,
+          date,
+          time,
+          location,
+          category,
+          coverImage,
+          registrationUrl,
+          status,
+        });
+        toast("Agenda kegiatan berhasil diperbarui!", "success");
+      } else {
+        await addEvent({
+          title,
+          description,
+          date,
+          time,
+          location,
+          category,
+          coverImage,
+          registrationUrl,
+          status,
+        });
+        toast("Agenda kegiatan baru berhasil ditambahkan!", "success");
+      }
+      setModalOpen(false);
+    } catch {
+      toast("Gagal menyimpan agenda. Data tidak tersimpan — coba lagi.", "error");
     }
-
-    setModalOpen(false);
   };
 
-  const handleDelete = (id: string, evtTitle: string) => {
-    if (confirm(`Hapus agenda "${evtTitle}"?`)) {
-      deleteEvent(id);
+  const handleDelete = async (id: string, evtTitle: string) => {
+    if (!confirm(`Hapus agenda "${evtTitle}"?`)) return;
+    try {
+      await deleteEvent(id);
       toast("Agenda telah dihapus.", "info");
+    } catch {
+      toast("Gagal menghapus agenda. Coba lagi.", "error");
     }
   };
 

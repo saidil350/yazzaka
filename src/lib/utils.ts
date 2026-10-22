@@ -9,17 +9,22 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
- * Format tanggal ke format standar Bahasa Indonesia (contoh: 24 Agustus 2026)
+ * Format tanggal ke format standar Bahasa Indonesia (contoh: 24 Agustus 2026).
+ * String tanggal-only ("2026-08-24") diparse sebagai UTC dan diformat dengan
+ * timeZone UTC agar hasilnya identik di server maupun browser di zona waktu
+ * mana pun (tanpa ini tanggal bisa bergeser satu hari di offset negatif).
  */
 export function formatDateIndonesian(dateString: string): string {
   if (!dateString) return "-";
   try {
-    const date = new Date(dateString);
+    const isDateOnly = /^\d{4}-\d{2}-\d{2}$/.test(dateString);
+    const date = isDateOnly ? new Date(`${dateString}T00:00:00Z`) : new Date(dateString);
     if (isNaN(date.getTime())) return dateString;
     return new Intl.DateTimeFormat("id-ID", {
       day: "numeric",
       month: "long",
       year: "numeric",
+      timeZone: isDateOnly ? "UTC" : undefined,
     }).format(date);
   } catch {
     return dateString;

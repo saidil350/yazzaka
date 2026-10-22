@@ -30,6 +30,11 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  // Tahun copyright dihitung di client agar tidak memicu hydration mismatch.
+  const [year, setYear] = useState<number | null>(null);
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
 
   // Path tujuan internal setelah login (dari ?next=), divalidasi same-origin
   const resolveNextPath = () => {
@@ -272,7 +277,7 @@ export default function LoginPage() {
               </a>
             </p>
             <p className="text-[11px] text-stone-400">
-              Hak Cipta © {new Date().getFullYear()} {profile?.name || "Yayasan Yazzakka Aceh"}. Seluruh hak cipta dilindungi.
+              Hak Cipta © {year ?? ""} {profile?.name || "Yayasan Yazzakka Aceh"}. Seluruh hak cipta dilindungi.
             </p>
           </div>
         </div>

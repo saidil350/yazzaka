@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
 import { mapProgram } from "../../school-data/route";
+import { revalidateProgramPages } from "../route";
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -34,6 +35,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       return NextResponse.json({ error: "Program tidak ditemukan" }, { status: 404 });
     }
 
+    revalidateProgramPages();
     return NextResponse.json(mapProgram(result[0]));
   } catch (error) {
     console.error(`PUT /api/programs/[id] error:`, error);
@@ -52,6 +54,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
       return NextResponse.json({ error: "Program tidak ditemukan" }, { status: 404 });
     }
 
+    revalidateProgramPages();
     return NextResponse.json({ success: true, id: result[0].id });
   } catch (error) {
     console.error(`DELETE /api/programs/[id] error:`, error);

@@ -40,14 +40,17 @@ export default function AdminContactSettingsPage() {
     setMapsEmbedUrl(profile.mapsEmbedUrl);
   }, [profile]);
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
-    setTimeout(() => {
-      updateProfile({ phone, whatsapp, email, address, city, province, mapsEmbedUrl });
-      setIsSaving(false);
+    try {
+      await updateProfile({ phone, whatsapp, email, address, city, province, mapsEmbedUrl });
       toast("Informasi kontak berhasil disimpan.", "success");
-    }, 200);
+    } catch {
+      toast("Gagal menyimpan informasi kontak. Coba lagi.", "error");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const cleanWaNumber = whatsapp.replace(/\D/g, "");

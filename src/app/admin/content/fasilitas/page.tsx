@@ -68,43 +68,49 @@ export default function AdminFacilitiesPage() {
     setModalOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !description) {
       toast("Nama fasilitas dan deskripsi wajib diisi.", "error");
       return;
     }
 
-    if (editingId) {
-      updateFacility(editingId, {
-        name,
-        category,
-        description,
-        capacity,
-        imageUrl,
-        status,
-      });
-      toast("Fasilitas berhasil diperbarui!", "success");
-    } else {
-      addFacility({
-        name,
-        category,
-        description,
-        capacity,
-        imageUrl,
-        status,
-        orderIndex: facilities.length + 1,
-      });
-      toast("Fasilitas baru berhasil ditambahkan!", "success");
+    try {
+      if (editingId) {
+        await updateFacility(editingId, {
+          name,
+          category,
+          description,
+          capacity,
+          imageUrl,
+          status,
+        });
+        toast("Fasilitas berhasil diperbarui!", "success");
+      } else {
+        await addFacility({
+          name,
+          category,
+          description,
+          capacity,
+          imageUrl,
+          status,
+          orderIndex: facilities.length + 1,
+        });
+        toast("Fasilitas baru berhasil ditambahkan!", "success");
+      }
+      setModalOpen(false);
+    } catch {
+      toast("Gagal menyimpan fasilitas. Data tidak tersimpan — coba lagi.", "error");
     }
-
-    setModalOpen(false);
   };
 
-  const handleDelete = (id: string, facName: string) => {
-    if (confirm(`Hapus fasilitas "${facName}"?`)) {
-      deleteFacility(id);
+  const handleDelete = async (id: string, facName: string) => {
+    if (!confirm(`Hapus fasilitas "${facName}"?`)) return;
+    try {
+      await deleteFacility(id);
       toast("Fasilitas telah dihapus.", "info");
+    } catch {
+      toast("Gagal menghapus fasilitas. Coba lagi.", "error");
     }
   };
 

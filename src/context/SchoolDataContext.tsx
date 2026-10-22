@@ -243,6 +243,9 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
     } catch (e) {
       setProfile(old); // revert
       console.error(e);
+      // Rethrow agar caller bisa menampilkan toast gagal — tanpa ini semua
+      // try/catch di halaman jadi dead code dan sukses palsu ditampilkan.
+      throw e;
     }
   };
 
@@ -354,10 +357,11 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
     setSettings(updated);
   };
 
-  // Messages
+  // Messages — pengiriman publik via /api/contact (satu-satunya POST anonim
+  // yang di-whitelist proxy). Responsnya { success, id }, bukan objek pesan,
+  // jadi state `messages` (khusus super_admin) tidak diubah di sini.
   const addContactMessage = async (msg: Omit<ContactMessage, "id" | "submittedAt" | "status">) => {
-    const created = await apiCall('/api/messages', 'POST', msg);
-    setMessages(prev => [created, ...prev]);
+    await apiCall('/api/contact', 'POST', msg);
   };
   const updateMessageStatus = async (id: string, status: ContactMessage["status"]) => {
     const updated = await apiCall(`/api/messages/${id}`, 'PUT', { status });
@@ -410,52 +414,40 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
     addLog("Menghapus Media", id);
   };
 
-  // Sections (Persisted ke API & Neon Database)
-  const toggleSection = async (id: string) => {
-    const updated = sections.map(s => s.id === id ? { ...s, isEnabled: !s.isEnabled } : s);
+  // Sections (Persisted ke API & Neon Database) — optimistic dengan rollback
+  // dan rethrow agar caller bisa menampilkan toast gagal.
+  const saveSections = async (updated: PageSectionConfig[], previous: PageSectionConfig[], logMessage: string) => {
     setSections(updated);
     try {
-      await fetch('/api/sections', {
+      const res = await fetch('/api/sections', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sections: updated }),
       });
-      addLog("Update", `Status seksi halaman diperbarui`);
+      if (!res.ok) throw new Error(`API Error: ${res.status}`);
+      addLog("Update", logMessage);
     } catch (err) {
-      console.error("Gagal menyimpan status seksi:", err);
+      setSections(previous); // rollback optimistic
+      console.error("Gagal menyimpan konfigurasi seksi:", err);
+      throw err;
     }
+  };
+
+  const toggleSection = async (id: string) => {
+    const updated = sections.map(s => s.id === id ? { ...s, isEnabled: !s.isEnabled } : s);
+    await saveSections(updated, sections, "Status seksi halaman diperbarui");
   };
 
   const reorderSections = async (newSections: PageSectionConfig[]) => {
     const reordered = newSections.map((s, idx) => ({ ...s, orderIndex: idx + 1 }));
-    setSections(reordered);
-    try {
-      await fetch('/api/sections', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sections: reordered }),
-      });
-      addLog("Update", `Urutan seksi halaman diperbarui`);
-    } catch (err) {
-      console.error("Gagal menyimpan urutan seksi:", err);
-    }
+    await saveSections(reordered, sections, "Urutan seksi halaman diperbarui");
   };
 
   const updateSection = async (id: string, partial: Partial<PageSectionConfig>) => {
     const updated = sections.map((s) =>
       s.id === id || s.key === id ? { ...s, ...partial } : s
     );
-    setSections(updated);
-    try {
-      await fetch('/api/sections', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sections: updated }),
-      });
-      addLog("Update", `Konfigurasi seksi "${partial.title || id}" diperbarui`);
-    } catch (err) {
-      console.error("Gagal memperbarui konfigurasi seksi:", err);
-    }
+    await saveSections(updated, sections, `Konfigurasi seksi "${partial.title || id}" diperbarui`);
   };
 
   return (    <SchoolDataContext.Provider

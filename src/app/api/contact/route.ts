@@ -18,16 +18,12 @@ export async function POST(request: Request) {
     const id = generateId("msg");
     const submittedAt = new Date().toISOString();
 
-    if (db) {
-      try {
-        await db`
-          INSERT INTO contact_messages (id, name, email, phone, subject, message, submitted_at, status)
-          VALUES (${id}, ${name}, ${email || null}, ${phone}, ${subject || "Pesan Web"}, ${message}, ${submittedAt}, 'new')
-        `;
-      } catch (dbError) {
-        console.warn("Neon DB query fallback to memory:", dbError);
-      }
-    }
+    // Jangan telan kegagalan DB: form publik hanya boleh melapor sukses
+    // bila pesan benar-benar tersimpan (getDb() throw → 500 di catch bawah).
+    await db`
+      INSERT INTO contact_messages (id, name, email, phone, subject, message, submitted_at, status)
+      VALUES (${id}, ${name}, ${email || null}, ${phone}, ${subject || "Pesan Web"}, ${message}, ${submittedAt}, 'new')
+    `;
 
     return NextResponse.json({
       success: true,

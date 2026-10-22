@@ -31,6 +31,7 @@ export async function GET(request: Request) {
 /** POST /api/media — daftarkan URL eksternal (registry, alur galeri lama). */
 export async function POST(request: Request) {
   try {
+    await requireUser(request);
     const body = await request.json();
     const sql = getDb();
     const id = generateId("med");

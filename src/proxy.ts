@@ -13,7 +13,15 @@ const ADMIN_ONLY_MUTATION_PREFIXES = [
   "/api/settings",
   "/api/profile",
   "/api/organization",
-  "/api/school-data",
+  "/api/messages",
+];
+
+// Halaman admin yang hanya boleh dibuka super_admin (editor di-redirect).
+// Lapisan server untuk RBAC yang di UI hanya disembunyikan lewat sidebar.
+const SUPER_ADMIN_PAGE_PREFIXES = [
+  "/admin/organization",
+  "/admin/settings",
+  "/admin/content/hero",
 ];
 
 function isPublicMutation(pathname: string, method: string): boolean {
@@ -58,8 +66,13 @@ export async function proxy(request: NextRequest) {
       loginUrl.searchParams.set("next", pathname);
       return NextResponse.redirect(loginUrl);
     }
-    // Halaman manajemen pengguna hanya untuk super_admin/admin (server-side)
-    if (pathname.startsWith("/admin/users") && !ADMIN_ROLES.includes(session.user.role as UserRole)) {
+    const isAdmin = ADMIN_ROLES.includes(session.user.role as UserRole);
+    // Halaman manajemen pengguna & modul super_admin-only (server-side)
+    if (
+      !isAdmin &&
+      (pathname.startsWith("/admin/users") ||
+        SUPER_ADMIN_PAGE_PREFIXES.some((prefix) => pathname.startsWith(prefix)))
+    ) {
       return NextResponse.redirect(new URL("/admin", request.url));
     }
     return NextResponse.next();

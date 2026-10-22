@@ -13,7 +13,7 @@ export function TrustStats() {
       label: "Tahun Berdiri",
       value: `${profile.establishedYear}`,
       suffix: " M",
-      desc: "14+ tahun berkiprah mencetak kader pemimpin",
+      desc: `Berdiri ${profile.establishedYear}, berkiprah mencetak kader pemimpin`,
       iconBg: "text-yazzaka-teal-dark",
       textColor: "text-yazzaka-teal-dark",
     },

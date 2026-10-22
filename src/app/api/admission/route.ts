@@ -45,6 +45,13 @@ export async function PUT(request: Request) {
       RETURNING *
     `;
 
+    if (result.length === 0) {
+      return NextResponse.json(
+        { error: "Baris info pendaftaran tidak ditemukan (seed hilang)." },
+        { status: 404 }
+      );
+    }
+
     return NextResponse.json(mapAdmission(result[0]));
   } catch (error) {
     console.error("PUT /api/admission error:", error);

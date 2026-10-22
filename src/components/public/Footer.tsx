@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSchoolData } from "@/context/SchoolDataContext";
@@ -23,6 +23,12 @@ import { Badge } from "@/components/ui/badge";
 
 export function Footer() {
   const { profile, settings } = useSchoolData();
+  // Tahun copyright dihitung di client agar tidak memicu hydration mismatch
+  // saat lintas tahun antara HTML ter-prerender dan browser.
+  const [year, setYear] = useState<number | null>(null);
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
 
   return (
     <footer className="relative bg-[#FFFDF9] text-stone-700 pt-12 pb-10 rounded-t-[2.5rem] lg:rounded-t-[3.5rem] border-t-2 border-[#E8E2D8] overflow-hidden shadow-sm">
@@ -239,7 +245,7 @@ export function Footer() {
         {/* ── Bottom Bar ─────────────────────────────────── */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500 font-medium">
           <p className="flex items-center gap-1.5 text-center sm:text-left">
-            <span>© {new Date().getFullYear()} {profile.name}. Berkhidmat untuk Umat.</span>
+            <span>© {year ?? ""} {profile.name}. Berkhidmat untuk Umat.</span>
           </p>
           <div className="flex items-center gap-5">
             <Link href="/login" className="text-stone-500 hover:text-[#FA6400] transition-colors font-bold">
