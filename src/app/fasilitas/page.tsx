@@ -94,25 +94,17 @@ export default function FacilitiesPage() {
                     className="bg-white rounded-3xl border-2 border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all flex flex-col group justify-between"
                   >
                     <div>
-                      <div className="h-52 relative overflow-hidden bg-stone-200">
+                      <div className="relative aspect-[16/10] overflow-hidden bg-stone-200">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={fac.imageUrl}
                           alt={fac.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
-                        <Badge variant="secondary" className="absolute top-3 left-3 bg-background/95 backdrop-blur-xs text-foreground">
-                          {fac.category}
-                        </Badge>
-                        {fac.capacity && (
-                          <Badge variant="secondary" className="absolute bottom-3 right-3 bg-background/95 backdrop-blur-xs text-foreground">
-                            {fac.capacity}
-                          </Badge>
-                        )}
                       </div>
 
                       <div className="p-5 space-y-2">
-                        <h3 className="font-bold text-base sm:text-lg text-[#1E2330] group-hover:text-[#FA6400] transition-colors leading-snug">
+                        <h3 className="font-bold text-base sm:text-lg text-[#1E2330] leading-snug">
                           {fac.name}
                         </h3>
                         <p className="text-xs text-stone-600 leading-relaxed font-medium line-clamp-3">

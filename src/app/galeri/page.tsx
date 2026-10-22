@@ -76,7 +76,7 @@ export default function GalleryPage() {
                     }
                   }}
                 >
-                  <div className="h-60 relative overflow-hidden bg-stone-200">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-stone-200">
                     {item.fileType === "image" ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
                       <img
@@ -90,14 +90,10 @@ export default function GalleryPage() {
                         <span className="text-xs font-bold">{item.fileName}</span>
                       </div>
                     )}
-
-                    <Badge variant="secondary" className="absolute top-3 left-3 bg-background/95 backdrop-blur-xs text-foreground">
-                      {item.category}
-                    </Badge>
                   </div>
 
                   <div className="p-4 bg-white flex items-center justify-between">
-                    <p className="text-xs font-bold text-[#1E2330] truncate group-hover:text-[#FA6400] transition-colors">
+                    <p className="text-xs font-bold text-[#1E2330] truncate">
                       {item.altText || item.fileName}
                     </p>
                     <span className="text-[10px] font-semibold text-stone-400 uppercase">

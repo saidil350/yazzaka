@@ -91,18 +91,13 @@ export default function AchievementsPage() {
                     key={ach.id}
                     className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between hover:border-[#FA6400]/40 hover:shadow-md transition-all shadow-xs"
                   >
-                    <div className="h-44 relative overflow-hidden bg-stone-100">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={ach.imageUrl}
                         alt={ach.title}
                         className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                       />
-                      <div className="absolute top-2.5 left-2.5">
-                        <Badge variant="default">
-                          Tingkat {ach.level}
-                        </Badge>
-                      </div>
                     </div>
 
                     <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">

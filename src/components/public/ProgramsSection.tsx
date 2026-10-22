@@ -3,8 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useSchoolData } from "@/context/SchoolDataContext";
-import { Program } from "@/lib/types";
-import { ArrowRight, Sparkles, CheckCircle2, BookOpen, GraduationCap, Award, Globe, Heart, Layers } from "lucide-react";
+import { ArrowRight, Sparkles, CheckCircle2, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -30,41 +29,6 @@ export function ProgramsSection() {
     if (selectedFilter === "all") return true;
     return prog.slug === selectedFilter;
   });
-
-  const getUnitIcon = (iconName: string, slug: string) => {
-    if (slug.includes("tpa")) return BookOpen;
-    if (slug.includes("tkit")) return Sparkles;
-    if (slug.includes("anak-shalih") || slug.includes("karakter")) return Heart;
-    if (slug.includes("pkbm")) return GraduationCap;
-    if (slug.includes("darul-quran") || slug.includes("tahfiz")) return Award;
-    if (slug.includes("peradaban") || slug.includes("wakaf")) return Globe;
-    return BookOpen;
-  };
-
-  const getUnitBadge = (prog: Program) => {
-    const cat = (prog.category || "").toLowerCase();
-    const slug = (prog.slug || "").toLowerCase();
-
-    if (cat.includes("wakaf") || slug.includes("peradaban")) {
-      return { tag: "Wakaf Pembangunan", target: "Program Strategis Umat", variant: "default" as const };
-    }
-    if (cat.includes("tahfiz") || slug.includes("darul-quran")) {
-      return { tag: "Tahfiz 30 Juz Bersanad", target: "Santri Intensif", variant: "secondary" as const };
-    }
-    if (slug.includes("tpa")) {
-      return { tag: "Pendidikan Al-Qur'an", target: "Usia 4–12 Thn", variant: "secondary" as const };
-    }
-    if (slug.includes("tkit")) {
-      return { tag: "TK Islam Terpadu", target: "Usia 4–6 Thn", variant: "secondary" as const };
-    }
-    if (slug.includes("pkbm")) {
-      return { tag: "Kesetaraan & Vokasi", target: "Paket A / B / C", variant: "secondary" as const };
-    }
-    if (slug.includes("anak-shalih") || slug.includes("karakter")) {
-      return { tag: "Pembinaan Karakter", target: "Santri Cilik", variant: "secondary" as const };
-    }
-    return { tag: prog.category || "Program Unggulan", target: "Santri", variant: "secondary" as const };
-  };
 
   return (
     <section id="program" className="landing-section py-16 lg:py-20 bg-secondary/35 border-b border-border scroll-mt-24">
@@ -126,9 +90,7 @@ export function ProgramsSection() {
           />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPrograms.map((prog, idx) => {
-              const badgeInfo = getUnitBadge(prog);
-              const Icon = getUnitIcon(prog.iconName, prog.slug);
+            {filteredPrograms.map((prog) => {
               const isSpecialWakaf = prog.category?.toLowerCase().includes("wakaf") || prog.slug.includes("peradaban");
 
               return (
@@ -143,39 +105,18 @@ export function ProgramsSection() {
                 >
                   <div>
                     {/* Card Image Banner */}
-                    <div className="h-48 relative overflow-hidden bg-stone-200">
+                    <div className="relative aspect-[16/10] overflow-hidden bg-stone-200">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={prog.imageUrl}
                         alt={prog.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
-
-                      {/* Top Chips */}
-                      <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-                        <Badge variant={badgeInfo.variant} className={badgeInfo.variant === "secondary" ? "bg-background/95 backdrop-blur-xs text-foreground" : undefined}>
-                          {badgeInfo.tag}
-                        </Badge>
-                        <Badge variant="secondary" className="bg-black/60 backdrop-blur-xs text-white border-transparent">
-                          {badgeInfo.target}
-                        </Badge>
-                      </div>
-
-                      {/* Bottom Title on Image for special feel */}
-                      <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-xl bg-white/95 text-[#1E2330] flex items-center justify-center shrink-0 shadow-xs">
-                          <Icon className="h-4 w-4 text-yazzaka-teal-dark" />
-                        </div>
-                        <span className="text-[11px] font-bold text-white drop-shadow-xs">
-                          Unit 0{idx + 1}
-                        </span>
-                      </div>
                     </div>
 
                     {/* Body Content */}
                     <div className="p-5 space-y-3">
-                      <h3 className="text-base sm:text-lg font-bold text-[#1E2330] group-hover:text-yazzaka-teal-dark transition-colors leading-snug">
+                      <h3 className="text-base sm:text-lg font-bold text-[#1E2330] leading-snug">
                         {prog.title}
                       </h3>
                       <p className="text-xs text-stone-600 leading-relaxed font-medium line-clamp-3">
@@ -193,7 +134,7 @@ export function ProgramsSection() {
                               key={fIdx}
                               className="flex items-center gap-2 text-xs text-stone-700 font-semibold"
                             >
-                              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                              <CheckCircle2 className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
                               <span className="line-clamp-1">{feat}</span>
                             </div>
                           ))}

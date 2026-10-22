@@ -74,7 +74,7 @@ export function NewsAndEvents() {
                 {/* Lead Story Card */}
                 {leadArticle && (
                   <div className="bg-white border-2 border-[#E8E2D8] rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-200 flex flex-col md:flex-row group">
-                    <div className="md:w-1/2 h-52 md:h-auto relative overflow-hidden bg-stone-100 shrink-0">
+                    <div className="md:w-1/2 relative aspect-[16/10] md:aspect-auto overflow-hidden bg-stone-100 shrink-0">
                       {leadArticle.coverImage ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img
@@ -87,9 +87,6 @@ export function NewsAndEvents() {
                           <Newspaper className="h-10 w-10 text-stone-400" aria-hidden="true" />
                         </div>
                       )}
-                        <Badge variant="default" className="absolute top-3 left-3">
-                          {leadArticle.category}
-                        </Badge>
                     </div>
 
                     <div className="flex-1 p-5 md:p-6 flex flex-col justify-between space-y-3">
@@ -98,7 +95,7 @@ export function NewsAndEvents() {
                           {formatDateIndonesian(leadArticle.publishedDate)} • {leadArticle.readTime}
                         </span>
                         <Link href={`/berita/${leadArticle.slug}`}>
-                          <h3 className="text-lg sm:text-xl font-bold text-[#1E2330] hover:text-[#FA6400] transition-colors leading-snug">
+                          <h3 className="text-lg sm:text-xl font-bold text-[#1E2330] leading-snug">
                             {leadArticle.title}
                           </h3>
                         </Link>
@@ -140,7 +137,7 @@ export function NewsAndEvents() {
                           </div>
 
                           <Link href={`/berita/${art.slug}`}>
-                            <h4 className="text-sm sm:text-base font-bold text-[#1E2330] hover:text-[#FA6400] transition-colors line-clamp-2 leading-snug">
+                            <h4 className="text-sm sm:text-base font-bold text-[#1E2330] line-clamp-2 leading-snug">
                               {art.title}
                             </h4>
                           </Link>

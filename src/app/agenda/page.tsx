@@ -88,16 +88,13 @@ export default function EventsPage() {
                     className="bg-white rounded-3xl border-2 border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all flex flex-col justify-between group"
                   >
                     <div>
-                      <div className="h-44 relative overflow-hidden bg-stone-200">
+                      <div className="relative aspect-[16/10] overflow-hidden bg-stone-200">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={evt.coverImage}
                           alt={evt.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
-                        <Badge variant="default" className="absolute top-3 left-3">
-                          {evt.category}
-                        </Badge>
                       </div>
 
                       <div className="p-5 space-y-3">
@@ -121,7 +118,7 @@ export default function EventsPage() {
                           </div>
                         </div>
 
-                        <h2 className="text-base font-bold text-[#1E2330] group-hover:text-[#FA6400] transition-colors leading-snug">
+                        <h2 className="text-base font-bold text-[#1E2330] leading-snug">
                           {evt.title}
                         </h2>
 

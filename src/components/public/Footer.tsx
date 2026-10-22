@@ -130,37 +130,37 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-xs text-stone-600 font-medium">
               <li>
-                <Link href="/program/tpa-yazzakka" className="hover:text-[#FA6400] transition-colors flex items-center justify-between group">
-                  <span className="font-semibold text-stone-700 group-hover:text-[#FA6400]">1. TPA Yazzakka</span>
-                  <span className="text-[10px] text-stone-400 group-hover:text-[#FA6400]">Usia Dini</span>
+                <Link href="/program/tpa-yazzakka" className="flex items-center justify-between">
+                  <span className="font-semibold text-stone-700">1. TPA Yazzakka</span>
+                  <span className="text-[10px] text-stone-400">Usia Dini</span>
                 </Link>
               </li>
               <li>
-                <Link href="/program/tkit-yazzakka" className="hover:text-[#FA6400] transition-colors flex items-center justify-between group">
-                  <span className="font-semibold text-stone-700 group-hover:text-[#FA6400]">2. TKIT Yazzakka</span>
-                  <span className="text-[10px] text-stone-400 group-hover:text-[#FA6400]">TK Islam</span>
+                <Link href="/program/tkit-yazzakka" className="flex items-center justify-between">
+                  <span className="font-semibold text-stone-700">2. TKIT Yazzakka</span>
+                  <span className="text-[10px] text-stone-400">TK Islam</span>
                 </Link>
               </li>
               <li>
-                <Link href="/program/sekolah-anak-shalih" className="hover:text-[#FA6400] transition-colors flex items-center justify-between group">
-                  <span className="font-semibold text-stone-700 group-hover:text-[#FA6400]">3. Sekolah Anak Shalih</span>
-                  <span className="text-[10px] text-stone-400 group-hover:text-[#FA6400]">Karakter</span>
+                <Link href="/program/sekolah-anak-shalih" className="flex items-center justify-between">
+                  <span className="font-semibold text-stone-700">3. Sekolah Anak Shalih</span>
+                  <span className="text-[10px] text-stone-400">Karakter</span>
                 </Link>
               </li>
               <li>
-                <Link href="/program/pkbm-yazzakka" className="hover:text-[#FA6400] transition-colors flex items-center justify-between group">
-                  <span className="font-semibold text-stone-700 group-hover:text-[#FA6400]">4. PKBM Yazzakka</span>
-                  <span className="text-[10px] text-stone-400 group-hover:text-[#FA6400]">Paket A/B/C</span>
+                <Link href="/program/pkbm-yazzakka" className="flex items-center justify-between">
+                  <span className="font-semibold text-stone-700">4. PKBM Yazzakka</span>
+                  <span className="text-[10px] text-stone-400">Paket A/B/C</span>
                 </Link>
               </li>
               <li>
-                <Link href="/program/darul-quran-yazzakka" className="hover:text-[#FA6400] transition-colors flex items-center justify-between group">
-                  <span className="font-semibold text-stone-700 group-hover:text-[#FA6400]">5. Darul Quran Yazzakka</span>
-                  <span className="text-[10px] text-stone-400 group-hover:text-[#FA6400]">Tahfiz Mutqin</span>
+                <Link href="/program/darul-quran-yazzakka" className="flex items-center justify-between">
+                  <span className="font-semibold text-stone-700">5. Darul Quran Yazzakka</span>
+                  <span className="text-[10px] text-stone-400">Tahfiz Mutqin</span>
                 </Link>
               </li>
               <li className="pt-1.5 border-t border-[#E8E2D8]">
-                <Link href="/program/pesantren-peradaban-60" className="text-yazzaka-orange-dark hover:text-yazzaka-orange font-bold transition-colors flex items-center justify-between">
+                <Link href="/program/pesantren-peradaban-60" className="text-yazzaka-orange-dark font-bold flex items-center justify-between">
                   <span>6. Wakaf Pesantren 6.0</span>
                   <ArrowUpRight className="h-3.5 w-3.5" />
                 </Link>
@@ -171,39 +171,27 @@ export function Footer() {
           {/* Col 3: Profile & Information (2 cols) */}
           <div className="lg:col-span-2 space-y-3">
             <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0284C7]"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-yazzaka-teal-dark"></span>
               <span>Informasi &amp; Warta</span>
             </h4>
             <ul className="space-y-2 text-xs text-stone-600 font-medium">
               <li>
-                <Link href="/tentang-kami" className="hover:text-[#FA6400] transition-colors">
-                  Profil &amp; Visi Yayasan
-                </Link>
+                <Link href="/tentang-kami">Profil &amp; Visi Yayasan</Link>
               </li>
               <li>
-                <Link href="/fasilitas" className="hover:text-[#FA6400] transition-colors">
-                  Fasilitas &amp; Sarana
-                </Link>
+                <Link href="/fasilitas">Fasilitas &amp; Sarana</Link>
               </li>
               <li>
-                <Link href="/pendaftaran" className="hover:text-[#FA6400] transition-colors">
-                  Pendaftaran &amp; Admisi
-                </Link>
+                <Link href="/pendaftaran">Pendaftaran &amp; Admisi</Link>
               </li>
               <li>
-                <Link href="/berita" className="hover:text-[#FA6400] transition-colors">
-                  Warta &amp; Kajian Dakwah
-                </Link>
+                <Link href="/berita">Warta &amp; Kajian Dakwah</Link>
               </li>
               <li>
-                <Link href="/agenda" className="hover:text-[#FA6400] transition-colors">
-                  Agenda Tabligh Akbar
-                </Link>
+                <Link href="/agenda">Agenda Tabligh Akbar</Link>
               </li>
               <li>
-                <Link href="/galeri" className="hover:text-[#FA6400] transition-colors">
-                  Dokumentasi Foto
-                </Link>
+                <Link href="/galeri">Dokumentasi Foto</Link>
               </li>
             </ul>
           </div>
@@ -211,7 +199,7 @@ export function Footer() {
           {/* Col 4: Secretariat & Contact (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#1E2330] flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-yazzaka-teal-dark"></span>
               <span>Sekretariat Yayasan</span>
             </h4>
             <div className="space-y-2.5 text-xs text-stone-600 leading-relaxed font-medium">
@@ -223,13 +211,13 @@ export function Footer() {
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="h-4 w-4 text-yazzaka-teal-dark shrink-0" />
-                <a href={`tel:${profile.phone}`} className="hover:text-[#FA6400] transition-colors font-semibold text-stone-700">
+                <a href={`tel:${profile.phone}`} className="font-semibold text-stone-700">
                   {profile.phone}
                 </a>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="h-4 w-4 text-yazzaka-teal-dark shrink-0" />
-                <a href={`mailto:${profile.email}`} className="hover:text-[#FA6400] transition-colors font-semibold text-stone-700">
+                <a href={`mailto:${profile.email}`} className="font-semibold text-stone-700">
                   {profile.email}
                 </a>
               </div>
@@ -248,11 +236,11 @@ export function Footer() {
             <span>© {year ?? ""} {profile.name}. Berkhidmat untuk Umat.</span>
           </p>
           <div className="flex items-center gap-5">
-            <Link href="/login" className="text-stone-500 hover:text-[#FA6400] transition-colors font-bold">
+            <Link href="/login" className="text-stone-500 font-bold">
               Login Staf
             </Link>
             <span className="text-stone-300">|</span>
-            <Link href="/kontak" className="text-stone-500 hover:text-[#FA6400] transition-colors">
+            <Link href="/kontak" className="text-stone-500">
               Pusat Kontak &amp; Lokasi
             </Link>
           </div>
