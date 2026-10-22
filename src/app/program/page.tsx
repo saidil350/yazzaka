@@ -9,6 +9,7 @@ import { Program } from "@/lib/types";
 import { ArrowRight, CheckCircle2, Sparkles, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 
 export default function ProgramsDirectoryPage() {
@@ -59,31 +60,33 @@ export default function ProgramsDirectoryPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
+    <div className="flex flex-col min-h-screen bg-background">
       <Header />
       <main className="flex-1">
 
-        {/* ── Headspace Warm Page Hero Banner ─────────── */}
-        <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
-            <Badge variant="secondary" className="gap-2 mb-3">
-              <Sparkles className="h-3.5 w-3.5 text-yazzaka-orange" />
-              <span>Unit Pendidikan &amp; Program Strategis</span>
-            </Badge>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
-              Struktur Pendidikan {profile.name}
-            </h1>
-            <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
-              Menaungi {published.length} unit pendidikan formal, non-formal, tahfiz intensif Al-Qur&apos;an, serta program strategis di {profile.city}, {profile.province}.
-            </p>
+        {/* ── Page Hero ────────────────────────────────── */}
+        <section className="bg-background py-10 lg:py-14 border-b border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mx-auto text-center">
+              <Badge variant="secondary" className="gap-2 mb-3">
+                <Sparkles className="h-3.5 w-3.5 text-yazzaka-teal-dark" />
+                <span>Unit Pendidikan &amp; Program Strategis</span>
+              </Badge>
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
+                Struktur Pendidikan {profile.name}
+              </h1>
+              <p className="text-sm sm:text-base text-muted-foreground mt-3 leading-relaxed">
+                Menaungi {published.length} unit pendidikan formal, non-formal, tahfiz intensif Al-Qur&apos;an, serta program strategis di {profile.city}, {profile.province}.
+              </p>
+            </div>
           </div>
         </section>
 
         {/* ── Directory Grid with Filter ──────────────── */}
-        <section className="py-12 lg:py-14 bg-white border-b border-[#E8E2D8]">
+        <section className="py-12 lg:py-14 bg-card border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
-            {/* Filter Pills */}
+            {/* Filter */}
             {published.length > 0 && (
               <div className="flex flex-wrap items-center justify-center gap-2">
                 {filterOptions.map((opt) => (
@@ -120,91 +123,85 @@ export default function ProgramsDirectoryPage() {
               />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredPrograms.map((prog, idx) => {
+                {filteredPrograms.map((prog) => {
                   const badgeInfo = getUnitBadge(prog);
                   const isSpecialWakaf = prog.category?.toLowerCase().includes("wakaf") || prog.slug.includes("peradaban");
 
                   return (
-                    <div
+                    <Link
                       key={prog.id}
-                      className={[
-                        "border-2 rounded-3xl overflow-hidden flex flex-col justify-between hover:shadow-lg transition-all duration-200 group shadow-xs",
-                        isSpecialWakaf
-                          ? "bg-[#FFF9F2] border-[#FA6400] ring-2 ring-[#FA6400]/20"
-                          : "bg-white border-[#E8E2D8] hover:border-[#FA6400]/50",
-                      ].join(" ")}
+                      href={`/program/${prog.slug}`}
+                      className="group block h-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
-                      <div>
-                        {/* Banner Image */}
-                        <div className="h-52 relative overflow-hidden bg-stone-200">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={prog.imageUrl}
-                            alt={prog.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
-
-                          {/* Badges on Image */}
-                          <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-                            <Badge variant={badgeInfo.variant} className={badgeInfo.variant === "secondary" ? "bg-background/95 backdrop-blur-xs text-foreground" : undefined}>
-                              {badgeInfo.tag}
-                            </Badge>
-                            <Badge variant="secondary" className="bg-black/60 backdrop-blur-xs text-white border-transparent">
-                              {badgeInfo.target}
-                            </Badge>
+                      <Card
+                        className={[
+                          "h-full overflow-hidden flex flex-col justify-between interactive-lift transition-colors",
+                          isSpecialWakaf
+                            ? "border-yazzaka-teal ring-2 ring-yazzaka-teal/20"
+                            : "hover:border-yazzaka-teal/60",
+                        ].join(" ")}
+                      >
+                        <div>
+                          {/* Banner Image */}
+                          <div className="aspect-[16/10] overflow-hidden bg-muted">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={prog.imageUrl}
+                              alt={prog.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
                           </div>
 
-                          <div className="absolute bottom-3 left-3 text-white text-xs font-bold drop-shadow-xs">
-                            Unit 0{idx + 1} • {profile.name}
-                          </div>
-                        </div>
-
-                        {/* Content Body */}
-                        <div className="p-5 space-y-3">
-                          <h2 className="text-base sm:text-lg font-bold text-[#1E2330] group-hover:text-[#FA6400] transition-colors leading-snug">
-                            {prog.title}
-                          </h2>
-                          <p className="text-xs text-stone-600 leading-relaxed font-medium line-clamp-3">
-                            {prog.shortDesc}
-                          </p>
-
-                          {/* Features & Targets */}
-                          {prog.features && prog.features.length > 0 && (
-                            <div className="pt-3 border-t border-stone-100 space-y-2">
-                              <span className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider block">
-                                Fokus Kurikulum &amp; Output:
+                          {/* Content Body */}
+                          <div className="p-5 space-y-3">
+                            <div className="flex items-center justify-between gap-2 flex-wrap">
+                              <Badge variant={badgeInfo.variant}>
+                                {badgeInfo.tag}
+                              </Badge>
+                              <span className="text-xs text-muted-foreground font-medium">
+                                {badgeInfo.target}
                               </span>
-                              {prog.features.slice(0, 3).map((feat, fIdx) => (
-                                <div
-                                  key={fIdx}
-                                  className="flex items-center gap-2 text-xs text-stone-700 font-semibold"
-                                >
-                                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                                  <span className="line-clamp-1">{feat}</span>
-                                </div>
-                              ))}
                             </div>
-                          )}
-                        </div>
-                      </div>
 
-                      {/* Action Button */}
-                      <div className="p-5 pt-0">
-                        <Link href={`/program/${prog.slug}`}>
-                          <Button
-                            variant={isSpecialWakaf ? "default" : "outline"}
-                            className={[
-                              "w-full justify-between font-bold text-xs h-10",
-                              isSpecialWakaf ? "bg-[#FA6400] hover:bg-[#E05A00] text-white shadow-xs" : "",
-                            ].join(" ")}
-                          >
-                            <span>{isSpecialWakaf ? "Detail Wakaf & Masterplan" : "Rincian Kurikulum & Pendaftaran"}</span>
-                            <ArrowRight className="h-3.5 w-3.5 ml-1" />
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
+                            <CardTitle className="text-lg font-bold text-foreground tracking-tight leading-snug">
+                              {prog.title}
+                            </CardTitle>
+
+                            <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                              {prog.shortDesc}
+                            </p>
+
+                            {/* Features */}
+                            {prog.features && prog.features.length > 0 && (
+                              <div className="pt-3 border-t border-border space-y-2">
+                                <span className="text-xs font-medium text-muted-foreground block">
+                                  Fokus &amp; Capaian
+                                </span>
+                                {prog.features.slice(0, 3).map((feat, fIdx) => (
+                                  <div
+                                    key={fIdx}
+                                    className="flex items-center gap-2 text-sm text-foreground font-medium"
+                                  >
+                                    <CheckCircle2 className="h-4 w-4 text-yazzaka-teal-dark shrink-0" />
+                                    <span className="line-clamp-1">{feat}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Action Footer */}
+                        <div className="px-5 pb-5">
+                          <div className="flex items-center justify-between gap-2 border-t border-border pt-4 text-sm font-semibold text-foreground">
+                            <span>
+                              {isSpecialWakaf ? "Detail Wakaf & Masterplan" : "Rincian Kurikulum & Pendaftaran"}
+                            </span>
+                            <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
+                          </div>
+                        </div>
+                      </Card>
+                    </Link>
                   );
                 })}
               </div>

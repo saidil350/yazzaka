@@ -140,7 +140,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {(program.features ?? []).map((feat, idx) => (
                       <div key={idx} className="flex items-start gap-2 text-xs text-stone-700 font-semibold">
-                        <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-4 w-4 text-yazzaka-teal-dark shrink-0 mt-0.5" />
                         <span>{feat}</span>
                       </div>
                     ))}
@@ -149,14 +149,14 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
 
                 {/* Target Competencies */}
                 {program.targetCompetencies && program.targetCompetencies.length > 0 && (
-                  <div className="bg-[#E0F2FE]/60 p-6 rounded-3xl border-2 border-[#BAE6FD] space-y-3 shadow-xs">
-                    <h3 className="text-base font-bold text-[#0369A1]">
+                  <div className="bg-[#FAF6EE] border-[#E8E2D8] border-2 p-6 rounded-3xl space-y-3 shadow-xs">
+                    <h3 className="text-base font-bold text-yazzaka-teal-dark">
                       {isWakaf ? "Dampak Peradaban & Kemaslahatan Umat:" : "Kompetensi Kelulusan Santri:"}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {program.targetCompetencies.map((comp, idx) => (
                         <div key={idx} className="flex items-start gap-2 text-xs text-stone-800 font-semibold">
-                          <Sparkles className="h-4 w-4 text-[#0284C7] shrink-0 mt-0.5" />
+                          <Sparkles className="h-4 w-4 text-yazzaka-teal-dark shrink-0 mt-0.5" />
                           <span>{comp}</span>
                         </div>
                       ))}
@@ -228,7 +228,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                       className="block"
                     >
                       <Button variant="outline" className="w-full justify-center text-xs h-9 font-bold">
-                        <MessageCircle className="h-3.5 w-3.5 text-emerald-600 mr-1.5" />
+                        <MessageCircle className="h-3.5 w-3.5 text-yazzaka-teal-dark mr-1.5" />
                         <span>Chat WhatsApp Admisi</span>
                       </Button>
                     </a>
@@ -240,7 +240,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                       <span>{profile.address}, Sigli</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                      <ShieldCheck className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
                       <span>SK Kemenkumham: {profile.npsn}</span>
                     </div>
                   </div>
@@ -284,7 +284,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                       <Badge variant="secondary">
                         {p.category}
                       </Badge>
-                      <h3 className="text-xs font-bold text-[#1E2330] group-hover:text-[#FA6400] transition-colors line-clamp-2">
+                      <h3 className="text-xs font-bold text-[#1E2330] line-clamp-2">
                         {p.title}
                       </h3>
                       <p className="text-[11px] text-stone-500 line-clamp-2 font-medium">

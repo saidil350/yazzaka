@@ -267,7 +267,7 @@ export function Header() {
                     "px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 whitespace-nowrap",
                     active
                       ? "bg-white text-yazzaka-teal-dark shadow-xs"
-                      : "text-stone-600 hover:text-[#1E2330] hover:bg-white/60",
+                      : "text-stone-600 hover:bg-white/60",
                   ].join(" ")}
                 >
                   {link.label}
@@ -286,7 +286,7 @@ export function Header() {
                   "px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 whitespace-nowrap flex items-center gap-1 cursor-pointer",
                   isSecondaryActive || dropdownOpen
                     ? "bg-white text-yazzaka-teal-dark shadow-xs"
-                    : "text-stone-600 hover:text-[#1E2330] hover:bg-white/60",
+                    : "text-stone-600 hover:bg-white/60",
                 ].join(" ")}
               >
                 <span>Informasi</span>
@@ -448,11 +448,6 @@ export function Header() {
                       ].join(" ")}
                     >
                       <span>{link.label}</span>
-                      {active && (
-                        <Badge variant="outline" className="bg-transparent border-white/40 text-white shadow-none">
-                          Aktif
-                        </Badge>
-                      )}
                     </Link>
                   );
                 })}
@@ -498,7 +493,7 @@ export function Header() {
                         key={u.href}
                         href={u.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold text-stone-600 hover:text-yazzaka-teal-dark hover:bg-white transition-colors"
+                        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold text-stone-600 hover:bg-white transition-colors"
                       >
                         <Icon className="h-3 w-3 text-stone-400" />
                         <span className="truncate">{u.label}</span>

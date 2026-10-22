@@ -41,9 +41,6 @@ export function EditorialAbout() {
                   alt={profile.principal.name}
                   className="w-full h-full object-cover"
                 />
-                <Badge variant="secondary" className="absolute bottom-2.5 left-2.5 bg-background/95 backdrop-blur-xs text-foreground">
-                  {profile.principal.name}
-                </Badge>
               </div>
 
               {/* Message Quote */}

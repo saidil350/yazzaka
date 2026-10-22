@@ -134,7 +134,7 @@ export default function ContactPage() {
                     </div>
 
                     <div className="flex items-start gap-3">
-                      <div className="p-2.5 rounded-xl bg-[#E0F2FE] text-[#0369A1] shrink-0 border border-[#BAE6FD]">
+                      <div className="p-2.5 rounded-xl bg-yazzaka-teal-soft text-yazzaka-teal-dark shrink-0 border border-yazzaka-teal-border">
                         <Mail className="h-4 w-4" />
                       </div>
                       <div>
@@ -144,7 +144,7 @@ export default function ContactPage() {
                     </div>
 
                     <div className="flex items-start gap-3">
-                      <div className="p-2.5 rounded-xl bg-[#EDE9FE] text-[#6D28D9] shrink-0 border border-[#DDD6FE]">
+                      <div className="p-2.5 rounded-xl bg-yazzaka-teal-soft text-yazzaka-teal-dark shrink-0 border border-yazzaka-teal-border">
                         <Clock className="h-4 w-4" />
                       </div>
                       <div>

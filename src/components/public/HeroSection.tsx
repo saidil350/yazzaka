@@ -6,7 +6,7 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DEFAULT_HERO } from "@/lib/data/initialData";
-import { ArrowRight, BookOpen, CheckCircle2, Heart, Award, Globe, Landmark } from "lucide-react";
+import { ArrowRight, BookOpen, CheckCircle2, Landmark } from "lucide-react";
 
 export function HeroSection() {
   const { profile, admission } = useSchoolData();
@@ -22,7 +22,7 @@ export function HeroSection() {
     >
       {/* ── Headspace Subtle Playful Background Blobs ────────────── */}
       <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-yazzaka-teal-soft/80 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-8 -mb-16 w-72 h-72 rounded-full bg-[#EDE9FE]/50 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-8 -mb-16 w-72 h-72 rounded-full bg-yazzaka-teal-soft/50 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
@@ -78,14 +78,14 @@ export function HeroSection() {
             <div className="pt-4 border-t border-[#E8E2D8] flex flex-wrap items-center gap-2 sm:gap-3">
               {hero.badges.map((badge) => (
                 <Badge key={badge} variant="outline" className="gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                  <CheckCircle2 className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
                   <span>{badge}</span>
                 </Badge>
               ))}
             </div>
           </div>
 
-          {/* ── Right: Playful Media Card with Floating Chips (5 cols) ── */}
+          {/* ── Right: Media Card (5 cols) ── */}
           <div className="lg:col-span-5 relative mt-4 lg:mt-0">
 
             {/* Decorative colored backdrop card */}
@@ -101,45 +101,6 @@ export function HeroSection() {
                   className="w-full h-full object-cover"
                   loading="eager"
                 />
-
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1E2330]/80 via-transparent to-black/10" />
-
-                {/* Floating Pill Badge 1 — Top Right */}
-                <div className="absolute top-3 right-3">
-                  <Badge variant="outline" className="gap-1.5 bg-background/95 backdrop-blur-xs text-foreground">
-                    <Heart className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
-                    <span>Lingkungan Nyaman</span>
-                  </Badge>
-                </div>
-
-                {/* Floating Pill Badge 2 — Middle Left */}
-                <div className="absolute top-1/3 -left-2">
-                  <Badge variant="outline" className="gap-1.5 bg-background/95 backdrop-blur-xs text-foreground">
-                    <Award className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
-                    <span>Karakter &amp; Adab</span>
-                  </Badge>
-                </div>
-
-                {/* Floating Pill Badge 3 — Bottom Content Bar */}
-                <div className="absolute inset-x-3 bottom-3 p-3 rounded-2xl bg-white/95 backdrop-blur-xs border border-stone-200 shadow-lg">
-                  <div className="flex items-center justify-between gap-2">
-                    <div>
-                      <Badge variant="secondary">
-                        Sekolah Terpadu
-                      </Badge>
-                      <h4 className="text-xs font-bold text-[#1E2330] mt-0.5">
-                        Sekolah Formal &amp; Pesantren Yazzakka
-                      </h4>
-                      <p className="text-[10px] text-stone-500">
-                        Mendidik generasi Qur&apos;ani berkarakter mulia
-                      </p>
-                    </div>
-                    <div className="h-8 w-8 rounded-md bg-[#1E2330] text-white flex items-center justify-center font-bold text-xs shrink-0">
-                      <Globe className="h-4 w-4" strokeWidth={1.8} />
-                    </div>
-                  </div>
-                </div>
 
               </div>
             </div>

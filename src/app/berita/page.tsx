@@ -147,7 +147,7 @@ export default async function BeritaPage({
                       className="group flex flex-col justify-between overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary/40"
                     >
                       <div>
-                        <div className="relative h-48 overflow-hidden bg-muted">
+                        <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                           {art.coverImage ? (
                             /* eslint-disable-next-line @next/next/no-img-element */
                             <img
@@ -163,11 +163,6 @@ export default async function BeritaPage({
                               <Newspaper className="size-10 text-primary/40" />
                             </div>
                           )}
-                          {art.category ? (
-                            <div className="absolute left-3 top-3 rounded-md bg-primary px-2.5 py-0.5 text-xs font-semibold text-primary-foreground">
-                              {art.category}
-                            </div>
-                          ) : null}
                         </div>
 
                         <div className="space-y-2.5 p-5">
@@ -187,7 +182,7 @@ export default async function BeritaPage({
                           <h2 className="line-clamp-2 leading-snug">
                             <Link
                               href={`/berita/${art.slug}`}
-                              className="font-bold text-foreground transition-colors group-hover:text-primary"
+                              className="font-bold text-foreground"
                             >
                               {art.title}
                             </Link>

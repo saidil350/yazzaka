@@ -16,22 +16,12 @@ interface ValueCardProps {
   description: string;
 }
 
-const VALUE_THEMES = [
-  { bg: "bg-[#FFF0E5]", border: "border-[#FED7AA]", text: "text-[#C2410C]" },
-  { bg: "bg-[#E0F2FE]", border: "border-[#BAE6FD]", text: "text-[#0369A1]" },
-  { bg: "bg-[#EDE9FE]", border: "border-[#DDD6FE]", text: "text-[#6D28D9]" },
-  { bg: "bg-[#DCFCE7]", border: "border-[#BBF7D0]", text: "text-[#15803D]" },
-  { bg: "bg-[#FEF9C3]", border: "border-[#FEF08A]", text: "text-[#A16207]" },
-] as const;
-
 function PhilosophyCard({ index, title, description }: ValueCardProps) {
-  const theme = VALUE_THEMES[index % VALUE_THEMES.length];
-
   return (
     <div
-      className={`${theme.bg} ${theme.border} border-2 p-4 rounded-2xl space-y-1.5 shadow-xs`}
+      className="bg-[#FAF6EE] border-[#E8E2D8] border-2 p-4 rounded-2xl space-y-1.5 shadow-xs"
     >
-      <span className={`text-[10px] font-extrabold uppercase ${theme.text} block`}>
+      <span className="text-[10px] font-extrabold uppercase text-yazzaka-teal-dark block">
         Jiwa 0{index + 1}
       </span>
       <h3 className="text-sm font-bold text-[#1E2330]">{title}</h3>
@@ -50,7 +40,7 @@ interface MemberCardProps {
 function MemberCard({ member }: MemberCardProps) {
   return (
     <div className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between shadow-xs hover:border-[#FA6400]/40 transition-all">
-      <div className="h-52 relative overflow-hidden bg-stone-200">
+      <div className="relative aspect-[4/3] overflow-hidden bg-stone-200">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={member.photoUrl}
@@ -179,7 +169,7 @@ export default function AboutPage() {
                   </div>
                   <div className="p-3 rounded-xl bg-[#FAF6EE] border border-[#E8E2D8]">
                     <span className="font-extrabold text-[#1E2330] block">Akreditasi BAN-S/M:</span>
-                    <span className="text-emerald-700 font-bold">Peringkat {profile.accreditation} (Unggul)</span>
+                    <span className="text-yazzaka-teal-dark font-bold">Peringkat {profile.accreditation} (Unggul)</span>
                   </div>
                 </div>
               </div>
@@ -217,12 +207,12 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
               {/* Vision Box */}
-              <div className="lg:col-span-5 bg-[#EDE9FE] border-2 border-[#DDD6FE] p-6 rounded-3xl space-y-3 shadow-xs">
+              <div className="lg:col-span-5 bg-[#FAF6EE] border-[#E8E2D8] border-2 p-6 rounded-3xl space-y-3 shadow-xs">
                 <div className="flex items-center gap-2">
-                  <div className="h-7 w-7 rounded-full bg-[#7C3AED] text-white flex items-center justify-center">
+                  <div className="h-7 w-7 rounded-full bg-yazzaka-teal-dark text-white flex items-center justify-center">
                     <Compass className="h-3.5 w-3.5" />
                   </div>
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-[#6D28D9]">
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-yazzaka-teal-dark">
                     Visi Pokok
                   </span>
                 </div>

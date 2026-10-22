@@ -120,7 +120,7 @@ export function WhyUsSection() {
                   </div>
 
                   <div className="space-y-2">
-                    <h3 className="text-base sm:text-lg font-bold text-[#1E2330] leading-snug group-hover:text-yazzaka-teal-dark transition-colors">
+                    <h3 className="text-base sm:text-lg font-bold text-[#1E2330] leading-snug">
                       {adv.title}
                     </h3>
 

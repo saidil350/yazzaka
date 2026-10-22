@@ -220,7 +220,7 @@ export default function AdmissionPage() {
                 <div className="bg-white p-5 rounded-2xl border-2 border-[#E8E2D8] space-y-2.5 shadow-xs">
                   {admission.requirements.map((req, idx) => (
                     <div key={idx} className="flex items-start gap-2.5 text-xs text-stone-700 font-semibold">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                      <CheckCircle2 className="h-4 w-4 text-yazzaka-teal-dark shrink-0 mt-0.5" />
                       <span>{req}</span>
                     </div>
                   ))}
@@ -323,7 +323,7 @@ export default function AdmissionPage() {
                 {!admission.isOpen && (admission.hideFormWhenClosed ?? true) ? (
                   <div className="bg-[#FAF6EE] p-6 sm:p-7 rounded-3xl border-2 border-[#E8E2D8] space-y-5 shadow-xs">
                     <div className="flex items-start gap-3.5">
-                      <div className="h-11 w-11 rounded-2xl bg-amber-500/10 text-[#FA6400] border border-amber-200 flex items-center justify-center shrink-0">
+                      <div className="h-11 w-11 rounded-2xl bg-[#FFF0E5] text-[#FA6400] border border-[#FED7AA] flex items-center justify-center shrink-0">
                         <Lock className="h-5 w-5" />
                       </div>
                       <div>
