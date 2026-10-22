@@ -100,7 +100,7 @@ export default function AdmissionPage() {
             <div className="flex flex-wrap items-center justify-center gap-2">
               <Badge variant="secondary" className="gap-2">
                 <Sparkles className="h-3.5 w-3.5" />
-                <span>{admission.periodName} ({admission.academicYear})</span>
+                <span>{admission.periodName}{admission.academicYear ? ` (${admission.academicYear})` : ""}</span>
               </Badge>
 
               {admission.isOpen ? (
@@ -271,7 +271,7 @@ export default function AdmissionPage() {
                             {fee.category}
                           </td>
                           <td className="p-3.5 sm:px-5 text-right font-bold text-[#FA6400] text-sm sm:text-base">
-                            {formatRupiah(fee.amount)}
+                            {fee.amount > 0 ? formatRupiah(fee.amount) : "Hubungi Panitia"}
                           </td>
                         </tr>
                       ))}
@@ -334,7 +334,7 @@ export default function AdmissionPage() {
                           Pendaftaran Sedang Ditutup
                         </h3>
                         <p className="text-xs text-stone-500 font-medium">
-                          Periode {admission.periodName} ({admission.academicYear})
+                          Periode {admission.periodName}{admission.academicYear ? ` (${admission.academicYear})` : ""}
                         </p>
                       </div>
                     </div>

@@ -52,7 +52,7 @@ export const initialSchoolProfile: SchoolProfile = {
   principal: {
     name: "Dr. Amri Fatmi, Lc., M.A.",
     title: "Pembina & Pendiri Yayasan Bina Iman Akhlak Yazzakka",
-    photoUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
+    photoUrl: "/uploads/foto-pimpinan-amri-fatmi.jpg",
     welcomeMessage:
       "Assalamu'alaikum Warahmatullahi Wabarakatuh. Segala puji bagi Allah SWT. Selamat datang di portal resmi Yayasan Bina Iman Akhlak Yazzakka (Yazzakka Aceh). Kami hadir di bumi Serambi Mekkah dengan tekad teguh membina iman dan akhlak umat, serta melahirkan generasi yang kokoh akidahnya, mulia akhlaknya, cerdas keilmuannya, dan siap berkontribusi bagi peradaban masyarakat.",
   },
@@ -312,56 +312,9 @@ export const initialFacilities: Facility[] = [
   },
 ];
 
-export const initialAchievements: Achievement[] = [
-  {
-    id: "ach-1",
-    title: "Medali Emas Olimpiade Sains Nasional (OSN) Bidang Biologi",
-    category: "Akademik & Sains",
-    studentName: "Muhammad Farhan Al-Ghifari",
-    competitionName: "Olimpiade Sains Nasional (OSN) Kemendikbudristek",
-    level: "Nasional",
-    year: 2025,
-    date: "2025-10-18",
-    imageUrl: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&w=1000&q=80",
-    description: "Meraih nilai tertinggi praktikum sel molekuler di antara 150 finalis dari 38 provinsi se-Indonesia.",
-  },
-  {
-    id: "ach-2",
-    title: "Juara 1 Musabaqah Hifdzil Qur'an (MHQ) 30 Juz Tingkat Internasional",
-    category: "Tahfiz & Agama",
-    studentName: "Aisyah Zahira Putri",
-    competitionName: "International Quranic Memorization Award",
-    level: "Internasional",
-    year: 2025,
-    date: "2025-08-14",
-    imageUrl: "https://images.unsplash.com/photo-1576267423048-15c0040fec78?auto=format&fit=crop&w=1000&q=80",
-    description: "Menampilkan bacaan fashahah mutqin dan tajwid sempurna di ajang tahfiz bergengsi.",
-  },
-  {
-    id: "ach-3",
-    title: "Juara 1 Debat Bahasa Arab Nasional Tingkat SMA/MA",
-    category: "Bahasa & Debat",
-    studentName: "Tim Debat Bahasa Arab Yazzaka",
-    competitionName: "Festival Bahasa Timur Tengah Universitas Indonesia",
-    level: "Nasional",
-    year: 2025,
-    date: "2025-05-20",
-    imageUrl: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1000&q=80",
-    description: "Menang mutlak pada babak final melawan tim unggulan dari berbagai pesantren terkemuka.",
-  },
-  {
-    id: "ach-4",
-    title: "Juara Umum Robotika & Inovasi Teknologi IoT Remaja",
-    category: "Inovasi",
-    studentName: "Rizky Ramadhan & Hilman Hakim",
-    competitionName: "National Youth Innovation Challenge (NYIC)",
-    level: "Nasional",
-    year: 2024,
-    date: "2024-11-10",
-    imageUrl: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1000&q=80",
-    description: "Mengembangkan prototipe irigasi cerdas hemat air berbasis kecerdasan buatan untuk pesantren mandiri pangan.",
-  },
-];
+// Fallback prestasi kosong — data fiktif dihapus 2026-10-23.
+// Prestasi nyata diisi via CMS /admin/prestasi.
+export const initialAchievements: Achievement[] = [];
 
 export const initialArticles: Article[] = [
   {
@@ -568,140 +521,35 @@ export const initialOrganization: OrganizationMember[] = [
   },
 ];
 
-export const initialTestimonials: Testimonial[] = [
-  {
-    id: "test-1",
-    quote:
-      "Menyekolahkan anak di Yazzaka adalah keputusan terbaik keluarga kami. Farhan tidak hanya menguasai sains hingga meraih emas OSN, tetapi yang paling membuat kami terharu adalah hafalan 30 Juz dan kelembutan adabnya saat pulang ke rumah.",
-    name: "dr. H. Hendra Setiawan, Sp.A.",
-    role: "Wali Murid",
-    childName: "M. Farhan Al-Ghifari (Siswa Kelas 11)",
-    photoUrl: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=80",
-    isFeatured: true,
-  },
-  {
-    id: "test-2",
-    quote:
-      "Tradisi bahasa aktif dan kedisiplinan organisasi di Yazzaka menjadi bekal sangat berharga ketika saya melanjutkan kuliah di Al-Azhar Kairo. Saya mampu beradaptasi sangat cepat dengan perkuliahan bahasa Arab tingkat tinggi.",
-    name: "Ahmad Rayhan Al-Fatih, Lc.",
-    role: "Alumni",
-    graduationYear: 2022,
-    photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
-    isFeatured: true,
-  },
-  {
-    id: "test-3",
-    quote:
-      "Sistem pendampingan santri di asrama sangat humanis dan profesional. Fasilitas modern dan guru-guru yang tulus membuat anak kami merasa aman, bahagia, dan termotivasi untuk terus berprestasi setiap hari.",
-    name: "Hj. Ratna Kusumastuti, S.E.",
-    role: "Wali Murid",
-    childName: "Aisyah Zahira (Siswi Kelas 10)",
-    photoUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
-    isFeatured: true,
-  },
-];
+// Fallback testimoni kosong — testimoni fiktif dihapus 2026-10-23.
+// Testimoni nyata diisi via CMS /admin/testimoni.
+export const initialTestimonials: Testimonial[] = [];
 
+// Fallback PPDB — placeholder jujur (2026-10-23): angka biaya, jadwal, dan FAQ
+// fiktif dihapus. Konten nyata diisi via CMS /admin/content/pendaftaran.
 export const initialAdmissionInfo: AdmissionInfo = {
-  periodName: "Penerimaan Peserta Didik Baru (PPDB) 2026/2027",
-  academicYear: "2026/2027",
+  periodName: "Penerimaan Santri Baru",
+  academicYear: "",
   isOpen: true,
-  startDate: "2026-09-01",
-  endDate: "2026-11-30",
+  startDate: "",
+  endDate: "",
   hideFormWhenClosed: true,
   closedMessage: "Pendaftaran santri baru untuk periode ini sedang ditutup. Untuk informasi jadwal gelombang berikutnya atau konsultasi langsung, silakan hubungi sekretariat PPDB kami melalui WhatsApp.",
   registrationUrl: "/pendaftaran",
-  consultationWhatsapp: "6281234567890",
-  timeline: [
-    {
-      phase: "Gelombang 1 (Jalur Prestasi & Reguler)",
-      dateRange: "1 September 2026 - 30 November 2026",
-      description: "Pendaftaran online berkas portofolio prestasi dan rapor semester 1-4.",
-      isCurrent: true,
-    },
-    {
-      phase: "Ujian Seleksi & Wawancara",
-      dateRange: "6 Desember 2026",
-      description: "Tes potensi akademik online/offline, tes baca Quran/tahfiz, dan wawancara wali santri.",
-      isCurrent: false,
-    },
-    {
-      phase: "Pengumuman Hasil Seleksi",
-      dateRange: "12 Desember 2026",
-      description: "Pengumuman kelulusan resmi melalui dashboard portal pendaftar.",
-      isCurrent: false,
-    },
-    {
-      phase: "Daftar Ulang & Pengukuran Seragam",
-      dateRange: "14 Desember - 24 Desember 2026",
-      description: "Pemberkasan fisik, konfirmasi biaya masuk, dan registrasi santri.",
-      isCurrent: false,
-    },
-  ],
+  consultationWhatsapp: "6285362999090",
+  timeline: [],
   requirements: [
-    "Lulusan SMP/MTs/sederajat atau siswa kelas 9 pada tahun ajaran berjalan.",
-    "Mengisi formulir pendaftaran online secara lengkap dan benar.",
-    "Mengunggah pasfoto resmi terbaru ukuran 3x4 (latar belakang biru/merah).",
-    "Scan/Foto Rapor SMP/MTs Semester 1 sampai Semester 4.",
-    "Scan Akta Kelahiran dan Kartu Keluarga (KK).",
-    "Sertifikat piagam kejuaraan minimal tingkat kabupaten (khusus Jalur Prestasi).",
-    "Surat keterangan sehat dan bebas narkoba dari fasilitas kesehatan resmi.",
+    "Informasi persyaratan berkas akan diumumkan oleh panitia PPDB — silakan hubungi via WhatsApp.",
   ],
   fees: [
     {
-      name: "Biaya Formulir & Seleksi Masuk",
-      amount: 350000,
-      category: "Pendaftaran",
-      notes: "Dibayarkan sekali saat verifikasi pendaftaran akun.",
-    },
-    {
-      name: "Infaq Pengembangan Sarana & Prasarana",
-      amount: 14500000,
-      category: "Uang Pangkal / Sarpras",
-      notes: "Hanya sekali selama masa studi 3 tahun (Dapat diangsur 3x).",
-    },
-    {
-      name: "Paket Seragam Lengkap (5 Stel) & Kasur Asrama",
-      amount: 2800000,
-      category: "Seragam & Kit Santri",
-      notes: "Termasuk jas almamater, seragam harian, seragam olahraga, seprai & lemari santri.",
-    },
-    {
-      name: "Iuran Bulanan / SPP Terpadu",
-      amount: 1650000,
-      category: "SPP Bulanan",
-      notes: "Sudah mencakup biaya asrama ber-AC, makan 3x sehari bergizi, pengasuhan & kesehatan.",
+      name: "Rincian biaya PPDB",
+      amount: 0,
+      category: "Menyusul",
+      notes: "Informasi biaya akan diumumkan oleh panitia — silakan hubungi panitia PPDB via WhatsApp.",
     },
   ],
-  faqs: [
-    {
-      id: "faq-1",
-      category: "Pendaftaran",
-      question: "Apakah santri yang belum hafal Al-Qur'an sama sekali bisa mendaftar?",
-      answer:
-        "Tentu bisa. Untuk jalur reguler, syarat minimal adalah lancar membaca Al-Qur'an sesuai kaidah tajwid dasar. Pembimbingan hafalan tahfiz akan dimulai secara bertahap dan terstruktur dari juz 30 dengan pendampingan intensif musyrif/ah.",
-    },
-    {
-      id: "faq-2",
-      category: "Kehidupan Asrama",
-      question: "Bagaimana aturan penggunaan gadget dan komunikasi santri dengan orang tua?",
-      answer:
-        "Untuk menjaga fokus ibadah dan belajar, santri tidak diperkenankan memegang smartphone pribadi selama hari efektif. Komunikasi dengan orang tua disediakan melalui telepon resmi kepengasuhan pada jadwal berkala setiap akhir pekan. Fasilitas lab komputer berinternet tersedia terawasi untuk keperluan riset materi akademik.",
-    },
-    {
-      id: "faq-3",
-      category: "Biaya",
-      question: "Apakah tersedia program beasiswa bagi calon santri berprestasi?",
-      answer:
-        "Ya, Yazzaka menyediakan Beasiswa Kader Prestasi berupa potongan hingga 100% biaya sarana prasarana untuk santri yang memiliki hafalan 10 juz mutqin atau juara 1-3 olimpiade sains tingkat provinsi/nasional.",
-    },
-    {
-      id: "faq-4",
-      category: "Akademik",
-      question: "Apakah lulusan SMA Yazzaka dapat melanjutkan ke Perguruan Tinggi Umum (PTN)?",
-      answer:
-        "Sangat bisa. Kurikulum SMA Yazzaka terdaftar resmi di Kemendikbudristek (NPSN Terakreditasi A). Lulusan kami memiliki hak penuh mengikuti seleksi SNBP, SNBT, Kedinasan, serta seleksi beasiswa luar negeri seperti Al-Azhar Mesir, Turki, Jepang, dan negara-negara Eropa.",
-    },
-  ],
+  faqs: [],
 };
 
 export const initialContactMessages: ContactMessage[] = [

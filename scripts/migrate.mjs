@@ -1,10 +1,36 @@
-// Script untuk menjalankan schema migration dan seed data ke Neon PostgreSQL
-// Jalankan dengan: node scripts/migrate.mjs
+// Script untuk menjalankan schema migration dan seed data ke Neon PostgreSQL.
+// Jalankan per branch: npm run env:staging (atau env:production) lalu
+// node scripts/migrate.mjs — skrip membaca .env.local, TIDAK lagi menembak
+// production langsung (perilaku lama yang berbahaya sudah dihapus).
 
 import { neon } from "@neondatabase/serverless";
+import { readFileSync } from "node:fs";
+
+function loadEnvLocal() {
+  try {
+    const content = readFileSync(new URL("../.env.local", import.meta.url), "utf8");
+    for (const line of content.split("\n")) {
+      const match = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/);
+      if (match && !process.env[match[1]]) {
+        process.env[match[1]] = match[2].replace(/^["']|["']$/g, "");
+      }
+    }
+  } catch {
+    // .env.local opsional
+  }
+}
+
+loadEnvLocal();
 
 const DATABASE_URL =
-  "postgresql://neondb_owner:npg_DliS6bq9BNpd@ep-round-surf-az1urxre-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
+  process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL;
+
+if (!DATABASE_URL) {
+  console.error("✗ DATABASE_URL tidak ditemukan. Jalankan via npm run env:staging / env:production dulu.");
+  process.exit(1);
+}
+
+console.log(`Target DB: ${new URL(DATABASE_URL).hostname}`);
 
 const sql = neon(DATABASE_URL);
 
@@ -424,12 +450,8 @@ async function seed() {
   console.log("✓ facilities seeded (6 records)");
 
   // === ACHIEVEMENTS ===
-  const achievements = [
-    { id: "ach-1", title: "Medali Emas Olimpiade Sains Nasional (OSN) Bidang Biologi", category: "Akademik & Sains", student_name: "Muhammad Farhan Al-Ghifari", competition_name: "Olimpiade Sains Nasional (OSN) Kemendikbudristek", level: "Nasional", year: 2025, date: "2025-10-18", image_url: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&w=1000&q=80", description: "Meraih nilai tertinggi praktikum sel molekuler di antara 150 finalis dari 38 provinsi se-Indonesia." },
-    { id: "ach-2", title: "Juara 1 Musabaqah Hifdzil Qur'an (MHQ) 30 Juz Tingkat Internasional", category: "Tahfiz & Agama", student_name: "Aisyah Zahira Putri", competition_name: "International Quranic Memorization Award", level: "Internasional", year: 2025, date: "2025-08-14", image_url: "https://images.unsplash.com/photo-1576267423048-15c0040fec78?auto=format&fit=crop&w=1000&q=80", description: "Menampilkan bacaan fashahah mutqin dan tajwid sempurna di ajang tahfiz bergengsi." },
-    { id: "ach-3", title: "Medali Perak Olimpiade Astronomi Internasional (IAO)", category: "Akademik & Sains", student_name: "Ahmad Ridho Pratama", competition_name: "International Astronomy Olympiad", level: "Internasional", year: 2024, date: "2024-11-20", image_url: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1000&q=80", description: "Satu-satunya wakil Indonesia yang berhasil meraih medali pada IAO ke-28 di Turki." },
-    { id: "ach-4", title: "Juara 1 Debat Bahasa Arab Nasional PORSENI MA", category: "Bahasa & Debat", student_name: "Fatimah Az-Zahra & Tim", competition_name: "PORSENI MA Tingkat Nasional", level: "Nasional", year: 2025, date: "2025-04-05", image_url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80", description: "Menyisihkan 64 tim dari seluruh madrasah aliyah se-Indonesia." },
-  ];
+  // Tidak ada seed — data fiktif dihapus 2026-10-23. Isi prestasi nyata via CMS.
+  const achievements = [];
 
   for (const a of achievements) {
     await sql`
@@ -438,7 +460,7 @@ async function seed() {
       ON CONFLICT (id) DO NOTHING
     `;
   }
-  console.log("✓ achievements seeded (4 records)");
+  console.log("✓ achievements seeded (0 records — isi via CMS)");
 
   // === ARTICLES ===
   const articles = [
@@ -505,7 +527,10 @@ async function seed() {
       ON CONFLICT (id) DO NOTHING
     `;
   }
-  console.log("✓ articl  const events = [
+  console.log("✓ articles seeded (3 records)");
+
+  // === EVENTS ===
+  const events = [
     { id: "evt-1", title: "Open House & Hari Informasi PPDB 2026/2027", description: "Kunjungi sekolah Yazzakka secara langsung, temui para pengajar, dan dapatkan informasi lengkap tentang program & biaya pendidikan.", date: "2025-12-07", time: "08:00 - 14:00 WIB", location: "Kompleks Utama Yazzakka, Sigli", category: "Penerimaan Siswa", cover_image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=80", registration_url: "#daftar", status: "upcoming" },
     { id: "evt-2", title: "Seminar Parenting: Mendidik Generasi Hafiz di Era Digital", description: "Seminar bersama pakar pendidikan Islam dan psikolog anak tentang strategi mendidik anak hafiz Al-Qur'an yang adaptif di era digital.", date: "2025-11-22", time: "08:30 - 12:00 WIB", location: "Aula Utama Yayasan Yazzakka", category: "Seminar & Parenting", cover_image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?auto=format&fit=crop&w=1000&q=80", registration_url: "#seminar", status: "upcoming" },
     { id: "evt-3", title: "Wisuda & Haflah Akhirussanah ke-12 Yazzaka", description: "Perayaan wisuda santri angkatan ke-12 disertai penampilan seni, pameran karya siswa, dan penyerahan ijazah.", date: "2025-06-15", time: "07:00 - 17:00 WIB", location: "Sekolah Yazzakka & Area Terbuka", category: "Wisuda & Pameran", cover_image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=80", status: "completed" },
@@ -521,11 +546,8 @@ async function seed() {
   console.log("✓ events seeded (3 records)");
 
   // === TESTIMONIALS ===
-  const testimonials = [
-    { id: "test-1", quote: "Anak saya berhasil menghafal 30 juz dalam 2,5 tahun sekaligus meraih prestasi unggul di kelas. Yazzaka membuktikan bahwa Islam dan sains bisa berjalan beriringan.", name: "Hj. Siti Maryam", role: "Wali Murid", photo_url: "https://images.unsplash.com/photo-1566753323558-f4e0952af115?auto=format&fit=crop&w=400&q=80", graduation_year: undefined, child_name: "Ahmad Fauzan (Kelas Santri)", is_featured: true },
-    { id: "test-2", quote: "Lingkungan Yazzaka membentuk saya menjadi pribadi yang mandiri, disiplin, dan punya visi jauh ke depan. Sekarang saya berhasil meraih beasiswa penuh ke Universitas Al-Azhar Mesir.", name: "Muhammad Ilyas Al-Farizi", role: "Alumni", photo_url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80", graduation_year: 2023, is_featured: true },
-    { id: "test-3", quote: "Belajar di Yazzaka itu berbeda. Gurunya tidak hanya mengajar ilmu, tapi juga memberikan teladan akhlak setiap hari. Saya merasa sangat siap untuk jenjang berikutnya.", name: "Fathimah Azzahra Hidayat", role: "Siswa Aktif", photo_url: "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=400&q=80", is_featured: true },
-  ];
+  // Tidak ada seed — testimoni fiktif dihapus 2026-10-23. Isi via CMS.
+  const testimonials = [];
 
   for (const t of testimonials) {
     await sql`
@@ -537,24 +559,26 @@ async function seed() {
   console.log("✓ testimonials seeded (3 records)");
 
   // === ADMISSION INFO ===
+  // Placeholder jujur (2026-10-23): biaya/jadwal/FAQ fiktif tidak di-seed.
+  // Isi konten PPDB nyata via CMS /admin/content/pendaftaran.
   await sql`
     INSERT INTO admission_info (
       id, period_name, academic_year, is_open, registration_url, consultation_whatsapp,
       timeline, requirements, fees, faqs
     ) VALUES (
       'admission-yazzaka',
-      'PPDB Gelombang I',
-      '2026/2027',
+      'Penerimaan Santri Baru',
+      '',
       true,
-      'https://ppdb.yazzaka.sch.id',
-      '6281234567890',
-      '[{"phase":"Gelombang I: Pendaftaran Online","dateRange":"1 Nov - 15 Des 2025","description":"Mengisi formulir pendaftaran online, mengunggah berkas persyaratan.","isCurrent":true},{"phase":"Tes Seleksi (Akademik & Tahfiz)","dateRange":"20 - 22 Des 2025","description":"Ujian tertulis (Matematika, IPA, Bahasa Arab/Inggris) dan tes hafalan Al-Qur''an.","isCurrent":false},{"phase":"Pengumuman Kelulusan","dateRange":"28 Des 2025","description":"Hasil seleksi diumumkan via website dan WhatsApp terdaftar.","isCurrent":false},{"phase":"Daftar Ulang & Pembayaran","dateRange":"2 - 15 Jan 2026","description":"Melakukan daftar ulang dan melunasi biaya awal pendidikan.","isCurrent":false}]',
-      '["Fotokopi Ijazah / SKHUN SMP/MTs (dilegalisir)","Fotokopi Akta Kelahiran (2 lembar)","Pas Foto 3x4 Background Putih (4 lembar)","Surat Keterangan Hafalan dari Ustadz/Ustadzah (bagi jalur Tahfiz)","Fotokopi Kartu Keluarga (KK)","Rapor SMP/MTs semester 1-5","Surat Rekomendasi dari Kepala Sekolah Asal"]',
-      '[{"name":"Biaya Pendaftaran","amount":250000,"category":"Pendaftaran","notes":"Tidak dapat dikembalikan"},{"name":"Uang Pangkal (Sarpras)","amount":5000000,"category":"Uang Pangkal / Sarpras","notes":"Dibayar saat daftar ulang, dapat dicicil"},{"name":"SPP Bulanan (Termasuk Makan 3x)","amount":1500000,"category":"SPP Bulanan","notes":"Dibayar tiap tanggal 1-10"},{"name":"Seragam Lengkap & Kit Santri","amount":1200000,"category":"Seragam & Kit Santri","notes":"Diambil saat orientasi"}]',
-      '[{"id":"faq-1","question":"Apakah Yazzaka menerima santri non-hafiz?","answer":"Ya. Yazzaka membuka jalur reguler untuk siswa yang belum menghafal Al-Qur''an. Program tahfiz dimulai dari nol dengan bimbingan asatidz berpengalaman.","category":"Pendaftaran"},{"id":"faq-2","question":"Apakah ada beasiswa bagi santri berprestasi?","answer":"Ada. Yazzaka menyediakan beasiswa penuh (100% SPP) bagi santri yang memiliki hafalan minimal 10 juz serta nilai akademik di atas rata-rata, dan beasiswa parsial (50% SPP) untuk finalis olimpiade sains daerah/nasional.","category":"Biaya"}]'
+      '/pendaftaran',
+      '6285362999090',
+      '[]',
+      '["Informasi persyaratan berkas akan diumumkan oleh panitia PPDB — silakan hubungi via WhatsApp."]',
+      '[{"name":"Rincian biaya PPDB","category":"Menyusul","amount":0,"notes":"Informasi biaya akan diumumkan oleh panitia — silakan hubungi panitia PPDB via WhatsApp."}]',
+      '[]'
     ) ON CONFLICT (id) DO NOTHING
   `;
-  console.log("✓ admission_info seeded");
+  console.log("✓ admission_info seeded (placeholder — isi biaya/jadwal nyata via CMS)");
 
   // === WEBSITE SETTINGS ===
   await sql`

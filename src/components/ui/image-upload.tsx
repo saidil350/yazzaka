@@ -26,12 +26,15 @@ export function ImageUpload({
 }: ImageUploadProps) {
   const [mode, setMode] = useState<"upload" | "url">("upload");
   const [isDragging, setIsDragging] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [storageNotice, setStorageNotice] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileProcess = useCallback(
-    (file: File) => {
+    async (file: File) => {
       setErrorMsg(null);
+      setStorageNotice(null);
       // Validasi tipe file
       if (!file.type.startsWith("image/")) {
         setErrorMsg("Hanya file gambar (JPG, PNG, WEBP, GIF, SVG) yang diperbolehkan.");
@@ -42,6 +45,40 @@ export function ImageUpload({
       if (file.size > maxSizeMB * 1024 * 1024) {
         setErrorMsg(`Ukuran file maksimal adalah ${maxSizeMB} MB.`);
         return;
+      }
+
+      // Utamakan unggah ke object storage (/api/uploads → R2) agar tersimpan
+      // sebagai URL ringan. Data URL base64 hanya fallback saat storage belum
+      // dikonfigurasi — base64 ikut tersimpan ke database & payload API.
+      setIsUploading(true);
+      try {
+        const form = new FormData();
+        form.append("file", file);
+        form.append("purpose", "image");
+        const res = await fetch("/api/uploads", { method: "POST", body: form });
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.fileUrl) {
+            onChange(data.fileUrl);
+            return;
+          }
+        } else if (res.status === 503) {
+          setStorageNotice(
+            "Object storage belum aktif — gambar disimpan tersemat (base64) ke database. Untuk performa terbaik, konfigurasikan R2_* agar tersimpan sebagai berkas."
+          );
+        } else {
+          const body = await res.text().catch(() => "");
+          setErrorMsg(
+            `Gagal mengunggah ke storage (HTTP ${res.status})${body ? `: ${body.slice(0, 140)}` : ""}`
+          );
+          return;
+        }
+      } catch {
+        setStorageNotice(
+          "Gagal terhubung ke layanan unggah — gambar disimpan tersemat (base64) ke database."
+        );
+      } finally {
+        setIsUploading(false);
       }
 
       const reader = new FileReader();
@@ -77,14 +114,14 @@ export function ImageUpload({
 
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       const file = e.dataTransfer.files[0];
-      handleFileProcess(file);
+      void handleFileProcess(file);
     }
   };
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      handleFileProcess(file);
+      void handleFileProcess(file);
     }
   };
 
@@ -189,25 +226,31 @@ export function ImageUpload({
                 className="hidden"
                 onChange={handleFileInputChange}
               />
-              <div className="flex flex-col items-center justify-center gap-2">
-                <div
-                  className={`h-10 w-10 rounded-lg flex items-center justify-center transition-colors ${
-                    isDragging
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-card text-muted-foreground border border-border"
-                  }`}
-                >
-                  <Upload className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-xs sm:text-sm font-medium text-foreground">
-                    Tarik &amp; lepas gambar ke sini, atau <span className="text-primary underline">pilih berkas</span>
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Mendukung JPG, PNG, WEBP, GIF (Maksimal {maxSizeMB} MB)
-                  </p>
-                </div>
-              </div>
+          <div className="flex flex-col items-center justify-center gap-2">
+            <div
+              className={`h-10 w-10 rounded-lg flex items-center justify-center transition-colors ${
+                isUploading || isDragging
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-card text-muted-foreground border border-border"
+              }`}
+            >
+              <Upload className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-xs sm:text-sm font-medium text-foreground">
+                {isUploading
+                  ? "Mengunggah gambar..."
+                  : (
+                    <>
+                      Tarik &amp; lepas gambar ke sini, atau <span className="text-primary underline">pilih berkas</span>
+                    </>
+                  )}
+              </p>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Mendukung JPG, PNG, WEBP, GIF (Maksimal {maxSizeMB} MB)
+              </p>
+            </div>
+          </div>
             </div>
           ) : (
             <div className="space-y-1.5">
@@ -231,6 +274,14 @@ export function ImageUpload({
               </p>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Storage fallback notice (base64) */}
+      {storageNotice && !errorMsg && (
+        <div className="flex items-start gap-1.5 text-xs text-amber-600 font-medium mt-1">
+          <AlertCircle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+          <span>{storageNotice}</span>
         </div>
       )}
 

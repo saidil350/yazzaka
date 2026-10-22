@@ -151,7 +151,9 @@ export interface Testimonial {
 export interface AdmissionFeeItem {
   name: string;
   amount: number;
-  category: "Pendaftaran" | "Uang Pangkal / Sarpras" | "SPP Bulanan" | "Seragam & Kit Santri";
+  // Kategori bebas (diedit via CMS), bukan union tertutup — nilai yang
+  // tampil publik hanya sebagai teks badge/kolom tabel.
+  category: string;
   notes?: string;
 }
 
