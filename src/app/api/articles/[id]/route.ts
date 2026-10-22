@@ -1,62 +1,69 @@
 import { NextResponse } from "next/server";
-import { getDb } from "@/lib/db/neon";
-import { mapArticle } from "../../school-data/route";
+import {
+  deleteArticle,
+  getArticleById,
+  getAttachments,
+  updateArticle,
+} from "@/lib/news/service";
+import {
+  parseOrThrow,
+  revalidateNews,
+  requireUser,
+  toErrorResponse,
+} from "@/lib/news/api-helpers";
+import { articlePayloadSchema } from "@/lib/news/schemas";
 
-export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
+type RouteContext = { params: Promise<{ id: string }> };
+
+/** GET /api/articles/[id] — detail lengkap (staff, semua status). */
+export async function GET(request: Request, { params }: RouteContext) {
   try {
+    await requireUser(request);
     const id = (await params).id;
-    const body = await request.json();
-    const sql = getDb();
 
-    const tagsJson = Array.isArray(body.tags) ? JSON.stringify(body.tags) : undefined;
-
-    const result = await sql`
-      UPDATE articles
-      SET 
-        title = COALESCE(${body.title ?? null}, title),
-        excerpt = COALESCE(${body.excerpt ?? null}, excerpt),
-        content = COALESCE(${body.content ?? null}, content),
-        cover_image = COALESCE(${body.coverImage ?? null}, cover_image),
-        category = COALESCE(${body.category ?? null}, category),
-        tags = COALESCE(${tagsJson ? sql`${tagsJson}::jsonb` : null}, tags),
-        author = COALESCE(${body.author ?? null}, author),
-        author_role = COALESCE(${body.authorRole ?? null}, author_role),
-        published_date = COALESCE(${body.publishedDate ?? null}, published_date),
-        read_time = COALESCE(${body.readTime ?? null}, read_time),
-        status = COALESCE(${body.status ?? null}, status),
-        featured = COALESCE(${body.featured ?? null}, featured),
-        seo_title = COALESCE(${body.seoTitle ?? null}, seo_title),
-        seo_description = COALESCE(${body.seoDescription ?? null}, seo_description),
-        updated_at = NOW()
-      WHERE id = ${id}
-      RETURNING *
-    `;
-
-    if (result.length === 0) {
+    const article = await getArticleById(id);
+    if (!article) {
       return NextResponse.json({ error: "Artikel tidak ditemukan" }, { status: 404 });
     }
-
-    return NextResponse.json(mapArticle(result[0]));
+    const attachments = await getAttachments(id);
+    return NextResponse.json({ article, attachments });
   } catch (error) {
-    console.error(`PUT /api/articles/[id] error:`, error);
-    return NextResponse.json({ error: "Gagal memperbarui artikel" }, { status: 500 });
+    return toErrorResponse(error, "Gagal mengambil berita");
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+/** PUT /api/articles/[id] — simpan seluruh perubahan (author/super_admin). */
+export async function PUT(request: Request, { params }: RouteContext) {
   try {
+    const user = await requireUser(request);
     const id = (await params).id;
-    const sql = getDb();
-    
-    const result = await sql`DELETE FROM articles WHERE id = ${id} RETURNING id`;
-    
-    if (result.length === 0) {
-      return NextResponse.json({ error: "Artikel tidak ditemukan" }, { status: 404 });
-    }
+    const body = await request.json();
+    const payload = parseOrThrow(articlePayloadSchema, body);
 
-    return NextResponse.json({ success: true, id: result[0].id });
+    const previous = await getArticleById(id);
+    const article = await updateArticle(id, payload, user);
+
+    revalidateNews(article.slug);
+    if (previous && previous.slug !== article.slug) {
+      revalidateNews(previous.slug);
+    }
+    return NextResponse.json(article);
   } catch (error) {
-    console.error(`DELETE /api/articles/[id] error:`, error);
-    return NextResponse.json({ error: "Gagal menghapus artikel" }, { status: 500 });
+    return toErrorResponse(error, "Gagal memperbarui berita");
+  }
+}
+
+/** DELETE /api/articles/[id] — super_admin bebas, editor hanya draft miliknya. */
+export async function DELETE(request: Request, { params }: RouteContext) {
+  try {
+    const user = await requireUser(request);
+    const id = (await params).id;
+
+    const existing = await getArticleById(id);
+    await deleteArticle(id, user);
+    if (existing) revalidateNews(existing.slug);
+    return NextResponse.json({ success: true, id });
+  } catch (error) {
+    return toErrorResponse(error, "Gagal menghapus berita");
   }
 }

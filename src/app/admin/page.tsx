@@ -67,7 +67,7 @@ export default function AdminDashboardOverview() {
       unit: "Artikel",
       desc: "Liputan & wawasan santri",
       icon: Newspaper,
-      href: "/admin/content/berita",
+      href: "/admin/berita",
     },
     {
       title: "Testimoni Publik",
@@ -98,7 +98,7 @@ export default function AdminDashboardOverview() {
     {
       title: "Berita & Artikel Publikasi",
       desc: "Tulis, edit, dan terbitkan artikel wawasan atau liputan kegiatan.",
-      href: "/admin/content/berita",
+      href: "/admin/berita",
       icon: Newspaper,
       badge: "Seksi Berita",
     },

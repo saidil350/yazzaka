@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
+import { mapArticleRow } from "@/lib/news/mappers";
 
 /**
  * GET /api/school-data
  * Mengambil semua data sekolah sekaligus untuk initial load SchoolDataContext.
  * Mengurangi jumlah request saat halaman pertama kali dibuka.
+ *
+ * Catatan akses publik: endpoint ini dapat dibaca tanpa login, jadi
+ * artikel hanya dikirim berstatus published (tanpa isi/content) dan
+ * media hanya galeri — bukan berkas privat fitur berita.
  */
 export async function GET() {
   try {
@@ -31,7 +36,14 @@ export async function GET() {
       sql`SELECT * FROM programs ORDER BY order_index ASC`,
       sql`SELECT * FROM facilities ORDER BY order_index ASC`,
       sql`SELECT * FROM achievements ORDER BY year DESC, created_at DESC`,
-      sql`SELECT * FROM articles ORDER BY published_date DESC`,
+      sql`SELECT a.id, a.slug, a.title, a.excerpt, a.cover_image, a.category,
+                 a.tags, a.author, a.author_role, a.published_date, a.published_at,
+                 a.read_time, a.status, a.featured, a.seo_title, a.seo_description,
+                 a.created_at, a.updated_at, u.name AS author_name
+          FROM articles a
+          LEFT JOIN users u ON u.id = a.author_id
+          WHERE a.status = 'published'
+          ORDER BY a.published_at DESC NULLS LAST, a.published_date DESC`,
       sql`SELECT * FROM events ORDER BY date ASC`,
       sql`SELECT * FROM testimonials ORDER BY created_at ASC`,
       sql`SELECT * FROM admission_info LIMIT 1`,
@@ -40,7 +52,9 @@ export async function GET() {
       sql`SELECT * FROM organization_members ORDER BY order_index ASC`,
       sql`SELECT * FROM users ORDER BY created_at ASC`,
       sql`SELECT * FROM page_sections ORDER BY order_index ASC`,
-      sql`SELECT * FROM media_items ORDER BY created_at DESC`,
+      sql`SELECT * FROM media_items
+          WHERE storage_key IS NULL AND (kind IS NULL OR kind <> 'document')
+          ORDER BY created_at DESC`,
     ]);
 
     const profile = profiles[0] ?? null;
@@ -52,7 +66,7 @@ export async function GET() {
       programs: programs.map(mapProgram),
       facilities: facilities.map(mapFacility),
       achievements: achievements.map(mapAchievement),
-      articles: articles.map(mapArticle),
+      articles: articles.map(mapArticleRow),
       events: events.map(mapEvent),
       testimonials: testimonials.map(mapTestimonial),
       admission: admission ? mapAdmission(admission) : null,
@@ -150,27 +164,6 @@ export function mapAchievement(r: Record<string, unknown>) {
     date: r.date,
     imageUrl: r.image_url,
     description: r.description,
-  };
-}
-
-export function mapArticle(r: Record<string, unknown>) {
-  return {
-    id: r.id,
-    slug: r.slug,
-    title: r.title,
-    excerpt: r.excerpt,
-    content: r.content,
-    coverImage: r.cover_image,
-    category: r.category,
-    tags: r.tags,
-    author: r.author,
-    authorRole: r.author_role,
-    publishedDate: r.published_date,
-    readTime: r.read_time,
-    status: r.status,
-    featured: r.featured,
-    seoTitle: r.seo_title,
-    seoDescription: r.seo_description,
   };
 }
 
