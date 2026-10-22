@@ -18,8 +18,8 @@ export function AchievementsSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="max-w-2xl space-y-2">
-            <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-stone-100/90 border-stone-200 text-stone-700 font-semibold text-xs shadow-2xs">
-              <Trophy className="h-3 w-3 text-[#FA6400]" />
+            <Badge variant="secondary" className="gap-2">
+              <Trophy className="h-3 w-3 text-yazzaka-orange" />
               <span>Rekam Jejak Keberhasilan</span>
             </Badge>
             <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
@@ -68,7 +68,7 @@ export function AchievementsSection() {
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                   <div className="absolute top-2.5 left-2.5">
-                    <Badge variant="outline" className="px-2.5 py-0.5 rounded-full bg-stone-900 text-white border-transparent text-[10px] font-bold shadow-xs">
+                    <Badge variant="default">
                       Tingkat {ach.level}
                     </Badge>
                   </div>
@@ -76,7 +76,7 @@ export function AchievementsSection() {
 
                 <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
                   <div>
-                    <Badge variant="outline" className="inline-block px-2 py-0.5 rounded-full bg-stone-100 border-stone-200 text-stone-700 text-[9px] font-bold uppercase tracking-wider mb-1.5">
+                    <Badge variant="secondary" className="mb-1.5">
                       {ach.category} • {ach.year}
                     </Badge>
                     <h4 className="text-sm font-bold text-[#1E2330] leading-snug line-clamp-2">

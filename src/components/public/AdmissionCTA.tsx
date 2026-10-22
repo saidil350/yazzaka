@@ -27,12 +27,12 @@ export function AdmissionCTA() {
             {/* Left Content (8 cols) */}
             <div className="lg:col-span-8 space-y-3.5">
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs border-white/30 text-white font-extrabold text-xs shadow-xs">
+                <Badge variant="outline" className="gap-2 border-white/30 bg-white/20 backdrop-blur-xs text-white">
                   <Sparkles className="h-3.5 w-3.5 text-amber-200" />
                   <span>{admission.periodName}</span>
                 </Badge>
 
-                <Badge variant="outline" className="gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-xs border-white/20 text-white text-[11px] font-bold">
+                <Badge variant="outline" className="gap-1.5 border-white/20 bg-white/15 backdrop-blur-xs text-white">
                   {admission.isOpen ? (
                     <>
                       <Unlock className="h-3 w-3 text-emerald-300" />
@@ -47,7 +47,7 @@ export function AdmissionCTA() {
                 </Badge>
 
                 {admission.startDate && admission.endDate && (
-                  <Badge variant="outline" className="hidden sm:inline-flex gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-xs border-white/20 text-white text-[11px] font-medium">
+                  <Badge variant="outline" className="hidden sm:inline-flex gap-1.5 border-white/20 bg-white/15 backdrop-blur-xs text-white">
                     <Calendar className="h-3 w-3 text-amber-200" />
                     <span>{formatDateIndonesian(admission.startDate)} – {formatDateIndonesian(admission.endDate)}</span>
                   </Badge>

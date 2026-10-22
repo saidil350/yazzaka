@@ -71,25 +71,21 @@ export default function AdmissionPage() {
       step: "01",
       title: "Pengisian Formulir Online",
       desc: "Mengisi data diri calon santri dan mengunggah dokumen persyaratan dasar melalui portal SPMB resmi.",
-      badge: "bg-white text-stone-800 border-stone-200 shadow-2xs",
     },
     {
       step: "02",
       title: "Observasi & Ujian Seleksi",
       desc: "Mengikuti tes potensi akademik, tes membaca dan hafalan Al-Qur'an, serta wawancara komitmen orang tua/wali.",
-      badge: "bg-white text-stone-800 border-stone-200 shadow-2xs",
     },
     {
       step: "03",
       title: "Pengumuman Kelulusan",
       desc: "Hasil seleksi diumumkan secara resmi melalui laman SPMB dan notifikasi resmi WhatsApp dari panitia.",
-      badge: "bg-white text-stone-800 border-stone-200 shadow-2xs",
     },
     {
       step: "04",
       title: "Daftar Ulang & Orientasi",
       desc: "Penyelesaian administrasi biaya pendidikan dan penyerahan kit santri menjelang masa Orientasi Asrama.",
-      badge: "bg-white text-stone-800 border-stone-200 shadow-2xs",
     },
   ];
 
@@ -102,26 +98,26 @@ export default function AdmissionPage() {
         <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl space-y-3">
             <div className="flex flex-wrap items-center justify-center gap-2">
-              <Badge variant="outline" className="gap-2 px-3 py-1 rounded-full bg-[#FFF0E5] border-[#FED7AA] text-[#FA6400] font-bold text-xs shadow-xs">
+              <Badge variant="secondary" className="gap-2">
                 <Sparkles className="h-3.5 w-3.5" />
                 <span>{admission.periodName} ({admission.academicYear})</span>
               </Badge>
 
               {admission.isOpen ? (
-                <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-emerald-100/90 border-emerald-300 text-emerald-800 font-bold text-xs shadow-xs">
+                <Badge variant="secondary" className="gap-1.5">
                   <Unlock className="h-3 w-3" />
                   Pendaftaran Dibuka
                 </Badge>
               ) : (
-                <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-stone-200 border-stone-300 text-stone-700 font-bold text-xs shadow-xs">
+                <Badge variant="outline" className="gap-1.5">
                   <Lock className="h-3 w-3" />
                   Pendaftaran Ditutup
                 </Badge>
               )}
 
               {admission.startDate && admission.endDate && (
-                <Badge variant="outline" className="gap-1.5 px-3 py-1 rounded-full bg-white/90 border-[#E8E2D8] text-stone-700 font-semibold text-xs shadow-xs">
-                  <Calendar className="h-3.5 w-3.5 text-[#FA6400]" />
+                <Badge variant="outline" className="gap-1.5">
+                  <Calendar className="h-3.5 w-3.5 text-yazzaka-orange" />
                   <span>{formatDateIndonesian(admission.startDate)} – {formatDateIndonesian(admission.endDate)}</span>
                 </Badge>
               )}
@@ -173,7 +169,7 @@ export default function AdmissionPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             <div className="max-w-3xl space-y-2">
-              <Badge variant="outline" className="gap-2 px-3 py-0.5 rounded-full bg-stone-100 border-stone-200 text-stone-700 font-semibold text-xs">
+              <Badge variant="secondary" className="gap-2">
                 Alur &amp; Prosedur
               </Badge>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
@@ -188,7 +184,7 @@ export default function AdmissionPage() {
                   className="bg-[#FAF6EE] p-5 rounded-2xl border-2 border-[#E8E2D8] space-y-3 flex flex-col justify-between shadow-xs hover:border-[#FA6400]/40 transition-all"
                 >
                   <div className="space-y-2">
-                    <Badge variant="outline" className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-black border ${s.badge}`}>
+                    <Badge variant="outline">
                       Tahap {s.step}
                     </Badge>
                     <h3 className="text-base font-bold text-[#1E2330]">
@@ -213,9 +209,9 @@ export default function AdmissionPage() {
               {/* Requirements */}
               <div className="lg:col-span-5 space-y-5">
                 <div className="space-y-2">
-                  <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#E0F2FE] text-[#0369A1] font-bold text-xs border border-[#BAE6FD]">
+                  <Badge variant="secondary">
                     Dokumen Berkas
-                  </div>
+                  </Badge>
                   <h2 className="text-2xl font-extrabold text-[#1E2330]">
                     Persyaratan Administrasi
                   </h2>
@@ -243,9 +239,9 @@ export default function AdmissionPage() {
               {/* Fees Table */}
               <div className="lg:col-span-7 space-y-5">
                 <div className="space-y-2">
-                  <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#EDE9FE] text-[#6D28D9] font-bold text-xs border border-[#DDD6FE]">
+                  <Badge variant="secondary">
                     Transparansi Biaya
-                  </div>
+                  </Badge>
                   <h2 className="text-2xl font-extrabold text-[#1E2330]">
                     Rincian Biaya Pendidikan
                   </h2>
@@ -299,9 +295,9 @@ export default function AdmissionPage() {
               {/* FAQ Accordion */}
               <div className="lg:col-span-7 space-y-5">
                 <div className="space-y-2">
-                  <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#DCFCE7] text-[#15803D] font-bold text-xs border border-[#BBF7D0]">
+                  <Badge variant="secondary">
                     Tanya Jawab
-                  </div>
+                  </Badge>
                   <h2 className="text-2xl font-extrabold text-[#1E2330]">
                     Pertanyaan Seputar PPDB
                   </h2>

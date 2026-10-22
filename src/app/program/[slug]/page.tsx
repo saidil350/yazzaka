@@ -14,6 +14,7 @@ import {
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   getAdmissionOpen,
   getProgramBySlug,
@@ -86,12 +87,12 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
             </Link>
 
             <div className="flex flex-wrap items-center gap-2 mb-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#FFF0E5] text-[#FA6400] font-bold text-xs border border-[#FED7AA]">
+              <Badge variant="secondary">
                 {program.category}
-              </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-[#EDE9FE] text-[#6D28D9] font-bold text-xs border border-[#DDD6FE]">
+              </Badge>
+              <Badge variant="outline">
                 {profile.name}
-              </span>
+              </Badge>
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
@@ -280,9 +281,9 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                     className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-4 space-y-2.5 flex flex-col justify-between group shadow-xs hover:border-[#FA6400]/40 transition-all"
                   >
                     <div className="space-y-2">
-                      <span className="text-[10px] font-bold text-[#FA6400] bg-[#FFF0E5] px-2 py-0.5 rounded-full inline-block">
+                      <Badge variant="secondary">
                         {p.category}
-                      </span>
+                      </Badge>
                       <h3 className="text-xs font-bold text-[#1E2330] group-hover:text-[#FA6400] transition-colors line-clamp-2">
                         {p.title}
                       </h3>

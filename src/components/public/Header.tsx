@@ -190,12 +190,12 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between text-xs">
           <div className="flex items-center gap-2.5">
             {admission.isOpen ? (
-              <Badge variant="outline" className="gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FA6400]/25 border-transparent text-[#FFB07A] font-bold text-[11px]">
+              <Badge variant="secondary" className="gap-1.5">
                 <Sparkles className="h-3 w-3 animate-spin" style={{ animationDuration: "6s" }} />
                 PPDB {admission.academicYear || "2026/2027"} Dibuka
               </Badge>
             ) : (
-              <Badge variant="outline" className="gap-1.5 px-2.5 py-0.5 rounded-full bg-stone-700/80 border-transparent text-stone-300 font-bold text-[11px]">
+              <Badge variant="secondary" className="gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
                 PPDB {admission.academicYear || "2026/2027"} Ditutup
               </Badge>
@@ -327,7 +327,7 @@ export function Header() {
                             <div className="flex items-center justify-between gap-1">
                               <span className="text-xs font-bold truncate">{item.label}</span>
                               {item.badge && (
-                                <Badge variant="default" className="text-[9px] font-extrabold uppercase px-1.5 py-0 rounded-full bg-[#FA6400] hover:bg-[#FA6400] text-white border-transparent shadow-none">
+                                <Badge variant="default">
                                   {item.badge}
                                 </Badge>
                               )}
@@ -449,9 +449,9 @@ export function Header() {
                     >
                       <span>{link.label}</span>
                       {active && (
-                        <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-full">
+                        <Badge variant="outline" className="bg-transparent border-white/40 text-white shadow-none">
                           Aktif
-                        </span>
+                        </Badge>
                       )}
                     </Link>
                   );

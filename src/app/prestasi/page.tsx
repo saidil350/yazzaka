@@ -6,6 +6,8 @@ import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Trophy, Award } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export default function AchievementsPage() {
   const { achievements, profile } = useSchoolData();
@@ -30,10 +32,10 @@ export default function AchievementsPage() {
         {/* ── Headspace Warm Page Hero Banner ─────────── */}
         <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FEF9C3] border border-[#FEF08A] text-[#A16207] font-bold text-xs mb-3 shadow-xs">
-              <Trophy className="h-3.5 w-3.5 text-[#CA8A04]" />
+            <Badge variant="secondary" className="gap-2 mb-3">
+              <Trophy className="h-3.5 w-3.5 text-yazzaka-orange" />
               <span>Rekam Jejak Keberhasilan</span>
-            </div>
+            </Badge>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
               Prestasi &amp; Penghargaan Santri
             </h1>
@@ -49,24 +51,17 @@ export default function AchievementsPage() {
 
             {/* Headspace Pill Filter Bar */}
             {categories.length > 1 && (
-              <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-full bg-[#FAF6EE] border border-[#E8E2D8] w-fit">
-                {categories.map((cat) => {
-                  const isActive = selectedCategory === cat;
-                  return (
-                    <button
-                      key={cat}
-                      onClick={() => setSelectedCategory(cat)}
-                      className={[
-                        "px-3.5 py-1 rounded-full text-xs font-bold transition-all duration-150 cursor-pointer",
-                        isActive
-                          ? "bg-[#FA6400] text-white shadow-xs"
-                          : "text-stone-600 hover:text-[#1E2330] hover:bg-white",
-                      ].join(" ")}
-                    >
-                      {cat}
-                    </button>
-                  );
-                })}
+              <div className="flex flex-wrap items-center gap-2">
+                {categories.map((cat) => (
+                  <Button
+                    key={cat}
+                    variant={selectedCategory === cat ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSelectedCategory(cat)}
+                  >
+                    {cat}
+                  </Button>
+                ))}
               </div>
             )}
 
@@ -104,17 +99,17 @@ export default function AchievementsPage() {
                         className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                       />
                       <div className="absolute top-2.5 left-2.5">
-                        <span className="px-2 py-0.5 rounded-full bg-[#FA6400] text-white text-[10px] font-bold shadow-xs">
+                        <Badge variant="default">
                           Tingkat {ach.level}
-                        </span>
+                        </Badge>
                       </div>
                     </div>
 
                     <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
                       <div>
-                        <span className="inline-block px-2 py-0.5 rounded-full bg-[#FFF0E5] text-[#C2410C] text-[9px] font-bold uppercase tracking-wider mb-1.5">
+                        <Badge variant="secondary" className="mb-1.5">
                           {ach.category} • {ach.year}
-                        </span>
+                        </Badge>
                         <h3 className="text-sm font-bold text-[#1E2330] leading-snug line-clamp-2">
                           {ach.title}
                         </h3>
