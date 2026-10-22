@@ -192,12 +192,12 @@ export function Header() {
             {admission.isOpen ? (
               <Badge variant="secondary" className="gap-1.5">
                 <Sparkles className="h-3 w-3 animate-spin" style={{ animationDuration: "6s" }} />
-                PPDB {admission.academicYear || "2026/2027"} Dibuka
+                PPDB {admission.academicYear ? `${admission.academicYear} ` : ""}Dibuka
               </Badge>
             ) : (
               <Badge variant="secondary" className="gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
-                PPDB {admission.academicYear || "2026/2027"} Ditutup
+                PPDB {admission.academicYear ? `${admission.academicYear} ` : ""}Ditutup
               </Badge>
             )}
             <span className="hidden md:inline text-white/30">·</span>
