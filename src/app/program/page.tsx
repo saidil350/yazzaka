@@ -1,62 +1,46 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Program } from "@/lib/types";
 import { ArrowRight, CheckCircle2, Sparkles, Layers } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 
 export default function ProgramsDirectoryPage() {
   const { programs, profile } = useSchoolData();
-  const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
   const published = programs
     .filter((p) => p.status === "published")
     .sort((a, b) => a.orderIndex - b.orderIndex);
-
-  // Dynamic filter options generated from database
-  const filterOptions = [
-    { key: "all", label: `Semua Unit (${published.length})` },
-    ...published.map((p) => ({
-      key: p.slug,
-      label: p.title,
-    })),
-  ];
-
-  const filteredPrograms = published.filter((prog) => {
-    if (selectedFilter === "all") return true;
-    return prog.slug === selectedFilter;
-  });
 
   const getUnitBadge = (prog: Program) => {
     const cat = (prog.category || "").toLowerCase();
     const slug = (prog.slug || "").toLowerCase();
 
     if (cat.includes("wakaf") || slug.includes("peradaban")) {
-      return { tag: "Wakaf Pembangunan", target: "Program Strategis Umat", variant: "default" as const };
+      return { tag: "Wakaf Pembangunan", variant: "default" as const };
     }
     if (cat.includes("tahfiz") || slug.includes("darul-quran")) {
-      return { tag: "Tahfiz 30 Juz Bersanad", target: "Santri & Pelajar Formal", variant: "secondary" as const };
+      return { tag: "Tahfiz 30 Juz Bersanad", variant: "secondary" as const };
     }
     if (slug.includes("tpa")) {
-      return { tag: "Pendidikan Al-Qur'an", target: "Usia 4–12 Tahun", variant: "secondary" as const };
+      return { tag: "Pendidikan Al-Qur'an", variant: "secondary" as const };
     }
     if (slug.includes("tkit")) {
-      return { tag: "TK Islam Terpadu", target: "Usia 4–6 Tahun", variant: "secondary" as const };
+      return { tag: "TK Islam Terpadu", variant: "secondary" as const };
     }
     if (slug.includes("pkbm")) {
-      return { tag: "Kesetaraan & Vokasi", target: "Paket A / B / C Resmi", variant: "secondary" as const };
+      return { tag: "Kesetaraan & Vokasi", variant: "secondary" as const };
     }
     if (slug.includes("anak-shalih") || slug.includes("karakter")) {
-      return { tag: "Pembinaan Karakter", target: "Santri Cilik & Remaja", variant: "secondary" as const };
+      return { tag: "Pembinaan Karakter", variant: "secondary" as const };
     }
-    return { tag: prog.category || "Program Unggulan", target: "Pendidikan Terpadu", variant: "secondary" as const };
+    return { tag: prog.category || "Program Unggulan", variant: "secondary" as const };
   };
 
   return (
@@ -82,48 +66,20 @@ export default function ProgramsDirectoryPage() {
           </div>
         </section>
 
-        {/* ── Directory Grid with Filter ──────────────── */}
+        {/* ── Directory Grid ──────────────────────────── */}
         <section className="py-12 lg:py-14 bg-card border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
-            {/* Filter */}
-            {published.length > 0 && (
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                {filterOptions.map((opt) => (
-                  <Button
-                    key={opt.key}
-                    variant={selectedFilter === opt.key ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedFilter(opt.key)}
-                  >
-                    {opt.label}
-                  </Button>
-                ))}
-              </div>
-            )}
-
             {/* Programs Cards Grid or EmptyState */}
-            {filteredPrograms.length === 0 ? (
+            {published.length === 0 ? (
               <EmptyState
                 icon={Layers}
                 title="Tidak Ada Program Ditemukan"
-                description={
-                  selectedFilter !== "all"
-                    ? "Unit pendidikan yang dipilih saat ini belum aktif atau dalam penyusunan kurikulum."
-                    : "Belum ada program pendidikan yang dipublikasikan."
-                }
-                action={
-                  selectedFilter !== "all"
-                    ? {
-                        label: "Tampilkan Semua Unit",
-                        onClick: () => setSelectedFilter("all"),
-                      }
-                    : undefined
-                }
+                description="Belum ada program pendidikan yang dipublikasikan."
               />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredPrograms.map((prog) => {
+                {published.map((prog) => {
                   const badgeInfo = getUnitBadge(prog);
                   const isSpecialWakaf = prog.category?.toLowerCase().includes("wakaf") || prog.slug.includes("peradaban");
 
@@ -154,14 +110,9 @@ export default function ProgramsDirectoryPage() {
 
                           {/* Content Body */}
                           <div className="p-5 space-y-3">
-                            <div className="flex items-center justify-between gap-2 flex-wrap">
-                              <Badge variant={badgeInfo.variant}>
-                                {badgeInfo.tag}
-                              </Badge>
-                              <span className="text-xs text-muted-foreground font-medium">
-                                {badgeInfo.target}
-                              </span>
-                            </div>
+                            <Badge variant={badgeInfo.variant}>
+                              {badgeInfo.tag}
+                            </Badge>
 
                             <CardTitle className="text-lg font-bold text-foreground tracking-tight leading-snug">
                               {prog.title}
