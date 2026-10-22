@@ -251,7 +251,6 @@ export function mapSettings(r: Record<string, unknown>) {
   return {
     siteTitle: r.site_title,
     metaDescription: r.meta_description,
-    keywords: r.keywords,
     ogImage: r.og_image,
     googleVerification: r.google_verification,
     socialMedia: r.social_media,

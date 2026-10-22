@@ -27,7 +27,6 @@ export async function PUT(request: Request) {
       SET 
         site_title = COALESCE(${body.siteTitle ?? null}, site_title),
         meta_description = COALESCE(${body.metaDescription ?? null}, meta_description),
-        keywords = COALESCE(${body.keywords ?? null}, keywords),
         og_image = COALESCE(${body.ogImage ?? null}, og_image),
         google_verification = COALESCE(${body.googleVerification ?? null}, google_verification),
         social_media = COALESCE(${socialJson ? sql`${socialJson}::jsonb` : null}, social_media),

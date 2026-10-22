@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
@@ -27,6 +27,18 @@ export default function AdminContactSettingsPage() {
   const [province, setProvince] = useState(profile.province);
   const [mapsEmbedUrl, setMapsEmbedUrl] = useState(profile.mapsEmbedUrl);
   const [isSaving, setIsSaving] = useState(false);
+
+  // useState hanya membaca nilai awal — sinkronkan form saat profile
+  // selesai dimuat dari DB agar Simpan tidak menimpa DB dengan data fallback.
+  useEffect(() => {
+    setPhone(profile.phone);
+    setWhatsapp(profile.whatsapp);
+    setEmail(profile.email);
+    setAddress(profile.address);
+    setCity(profile.city);
+    setProvince(profile.province);
+    setMapsEmbedUrl(profile.mapsEmbedUrl);
+  }, [profile]);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();

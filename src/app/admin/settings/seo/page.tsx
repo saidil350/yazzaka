@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
@@ -15,18 +15,25 @@ export default function AdminSEOSettingsPage() {
 
   const [siteTitle, setSiteTitle] = useState(settings.siteTitle);
   const [metaDescription, setMetaDescription] = useState(settings.metaDescription);
-  const [keywords, setKeywords] = useState(settings.keywords);
   const [ogImage, setOgImage] = useState(settings.ogImage);
   const [googleVerification, setGoogleVerification] = useState(
     settings.googleVerification || ""
   );
+
+  // useState hanya membaca nilai awal — sinkronkan form saat settings
+  // selesai dimuat dari DB agar Simpan tidak menimpa DB dengan data fallback.
+  useEffect(() => {
+    setSiteTitle(settings.siteTitle);
+    setMetaDescription(settings.metaDescription);
+    setOgImage(settings.ogImage);
+    setGoogleVerification(settings.googleVerification || "");
+  }, [settings]);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     updateSettings({
       siteTitle,
       metaDescription,
-      keywords,
       ogImage,
       googleVerification,
     });
@@ -44,7 +51,8 @@ export default function AdminSEOSettingsPage() {
           Pengaturan Mesin Pencari (SEO) &amp; Metadata
         </h1>
         <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-          Optimalkan metadata judul, deskripsi pencarian Google, kata kunci (keywords), dan gambar OpenGraph untuk preview media sosial.
+          Atur judul, deskripsi, dan gambar preview situs yang terbaca Google serta
+          media sosial. Perubahan berlaku untuk seluruh halaman situs publik.
         </p>
       </div>
 
@@ -52,46 +60,46 @@ export default function AdminSEOSettingsPage() {
       <form onSubmit={handleSave}>
         <Card className="p-6 space-y-6">
           <div>
-            <h3 className="font-semibold text-base text-foreground">Metadata Mesin Pencari</h3>
+            <h3 className="font-semibold text-base text-foreground">Metadata Situs</h3>
             <p className="text-xs text-muted-foreground mt-1">
-              Konfigurasi tag metadata yang terbaca oleh robot perayap Google, Bing, dan platform media sosial.
+              Nilai di bawah dipasang otomatis sebagai tag &lt;meta&gt; di semua
+              halaman situs publik.
             </p>
           </div>
 
           <div className="space-y-4">
             <Input
-              label="Judul Situs (Default Meta Title)"
+              label="Judul Situs (Meta Title)"
               required
+              placeholder="Contoh: Yayasan Yazzakka Aceh — Lembaga Pendidikan Islam Unggul"
               value={siteTitle}
               onChange={(e) => setSiteTitle(e.target.value)}
+              helperText="Tampil di tab browser dan sebagai judul hasil pencarian Google. Idealnya 50–60 karakter agar tidak terpotong."
             />
 
             <Textarea
-              label="Deskripsi Situs (Meta Description Google)"
+              label="Deskripsi Situs (Meta Description)"
               rows={3}
               required
               value={metaDescription}
               onChange={(e) => setMetaDescription(e.target.value)}
-              helperText="Disarankan antara 120-160 karakter agar tampil sempurna pada hasil pencarian Google."
+              helperText={`${metaDescription.length}/160 karakter — ideal 120–160 agar tampil penuh di hasil pencarian Google.`}
             />
 
             <Input
-              label="Kata Kunci Utama (Keywords - Pisahkan dengan koma)"
-              value={keywords}
-              onChange={(e) => setKeywords(e.target.value)}
-            />
-
-            <Input
-              label="URL Gambar OpenGraph (Social Share Image)"
+              label="Gambar Preview Berbagi (OpenGraph)"
+              placeholder="https://contoh.com/gambar-preview.jpg"
               value={ogImage}
               onChange={(e) => setOgImage(e.target.value)}
+              helperText="Tampil saat tautan situs dibagikan ke WhatsApp, Facebook, atau X. Ukuran ideal 1200×630 piksel."
             />
 
             <Input
               label="Kode Verifikasi Google Search Console (Opsional)"
-              placeholder="google-site-verification=..."
+              placeholder="Contoh: google6c8d1f2a3b4e5f6..."
               value={googleVerification}
               onChange={(e) => setGoogleVerification(e.target.value)}
+              helperText="Tempel kode verifikasi dari Google Search Console — boleh token saja atau tag <meta> utuh, dipisah otomatis. Kosongkan bila belum ada."
             />
           </div>
 

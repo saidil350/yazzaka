@@ -214,7 +214,6 @@ export interface PageSectionConfig {
 export interface WebsiteSettings {
   siteTitle: string;
   metaDescription: string;
-  keywords: string;
   ogImage: string;
   googleVerification?: string;
   socialMedia: {

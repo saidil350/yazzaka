@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Newsreader } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
+import { getSeoSettings, normalizeGoogleVerification } from "@/lib/seo-settings";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -14,19 +15,44 @@ const newsreader = Newsreader({
   variable: "--font-newsreader",
 });
 
-export const metadata: Metadata = {
-  title: "Yayasan Yazzakka Aceh — Lembaga Pendidikan Islam Unggul & Berkarakter",
-  description:
-    "Institusi pendidikan Islam terpadu yang memadukan keunggulan kurikulum nasional, sains modern, penguasaan bahasa internasional (Arab & Inggris), serta tahfiz Al-Qur'an 30 juz.",
-  keywords: ["Yayasan Yazzakka Aceh", "Pesantren Modern Yazzakka", "SMA Unggulan", "Tahfiz Al-Qur'an", "PPDB 2026", "Sekolah Terbaik Aceh"],
-  icons: {
-    icon: [
-      { url: "/logo-Favicon.png", type: "image/png" },
-    ],
-    shortcut: "/logo-Favicon.png",
-    apple: "/logo-Favicon.png",
-  },
-};
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
+// Metadata dibaca dari DB (website_settings) saat build/revalidasi.
+// ISR 60 detik: perubahan SEO di CMS tayang ke situs publik paling lambat ~1 menit.
+export const revalidate = 60;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoSettings();
+  const googleToken = normalizeGoogleVerification(seo.googleVerification);
+
+  return {
+    metadataBase: new URL(siteUrl),
+    title: seo.siteTitle,
+    description: seo.metaDescription,
+    icons: {
+      icon: [
+        { url: "/logo-Favicon.png", type: "image/png" },
+      ],
+      shortcut: "/logo-Favicon.png",
+      apple: "/logo-Favicon.png",
+    },
+    openGraph: {
+      title: seo.siteTitle,
+      description: seo.metaDescription,
+      siteName: "Yayasan Bina Iman Akhlak Yazzakka",
+      locale: "id_ID",
+      type: "website",
+      images: seo.ogImage ? [{ url: seo.ogImage }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.siteTitle,
+      description: seo.metaDescription,
+      images: seo.ogImage ? [seo.ogImage] : undefined,
+    },
+    ...(googleToken ? { verification: { google: googleToken } } : {}),
+  };
+}
 
 export default function RootLayout({
   children,
