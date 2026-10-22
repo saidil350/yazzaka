@@ -719,7 +719,6 @@ export const initialWebsiteSettings: WebsiteSettings = {
   siteTitle: "Yayasan Yazzakka Aceh - Lembaga Pendidikan Islam Unggul & Berkarakter",
   metaDescription:
     "Portal resmi Yayasan Yazzakka Aceh. Memadukan kurikulum pendidikan formal, kesetaraan vokasi, tahfiz Al-Qur'an 30 juz, serta pembinaan karakter generasi qurani.",
-  keywords: "yayasan yazzakka aceh, sekolah islam terpadu, tkit, tpa, pkbm, pesantren peradaban, tahfiz quran 30 juz, ppdb 2026, pendidikan formal sigli",
   ogImage: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
   socialMedia: {
     instagram: "https://instagram.com/yazzakka.official",

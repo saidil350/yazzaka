@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,15 @@ export default function AdminGeneralSettingsPage() {
   const [accentColor, setAccentColor] = useState(
     profile.branding?.accentColor || "#D97706"
   );
+
+  // useState hanya membaca nilai awal — sinkronkan form saat profile
+  // selesai dimuat dari DB agar Simpan tidak menimpa DB dengan data fallback.
+  useEffect(() => {
+    setName(profile.name);
+    setTagline(profile.tagline);
+    setPrimaryColor(profile.branding?.primaryColor || "#0F2B48");
+    setAccentColor(profile.branding?.accentColor || "#D97706");
+  }, [profile]);
 
   const presetThemes = [
     {

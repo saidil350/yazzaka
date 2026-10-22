@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,16 @@ export default function AdminSocialMediaSettingsPage() {
   const [facebook, setFacebook] = useState(settings.socialMedia.facebook);
   const [tiktok, setTiktok] = useState(settings.socialMedia.tiktok);
   const [linkedin, setLinkedin] = useState(settings.socialMedia.linkedin);
+
+  // useState hanya membaca nilai awal — sinkronkan form saat settings
+  // selesai dimuat dari DB agar Simpan tidak menimpa DB dengan data fallback.
+  useEffect(() => {
+    setInstagram(settings.socialMedia.instagram);
+    setYoutube(settings.socialMedia.youtube);
+    setFacebook(settings.socialMedia.facebook);
+    setTiktok(settings.socialMedia.tiktok);
+    setLinkedin(settings.socialMedia.linkedin);
+  }, [settings]);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
