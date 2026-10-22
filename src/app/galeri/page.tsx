@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
-import { Image as ImageIcon, Video, FileText, X, ExternalLink, Sparkles } from "lucide-react";
+import { Image as ImageIcon, FileText, X, Sparkles } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 
 export default function GalleryPage() {
@@ -78,8 +78,6 @@ export default function GalleryPage() {
                   onClick={() => {
                     if (item.fileType === "image") {
                       setActiveLightbox(item.fileUrl);
-                    } else if (item.fileType === "video") {
-                      window.open(item.fileUrl, "_blank");
                     }
                   }}
                 >
@@ -91,14 +89,6 @@ export default function GalleryPage() {
                         alt={item.altText}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                    ) : item.fileType === "video" ? (
-                      <div className="w-full h-full flex flex-col items-center justify-center bg-[#1E2330] text-white p-6 text-center">
-                        <Video className="h-10 w-10 text-[#FA6400] mb-2" />
-                        <span className="text-xs font-bold text-white">Video Dokumentasi</span>
-                        <span className="text-[11px] text-amber-300 font-semibold mt-1 flex items-center gap-1">
-                          Buka di Tab Baru <ExternalLink className="h-3 w-3" />
-                        </span>
-                      </div>
                     ) : (
                       <div className="w-full h-full flex flex-col items-center justify-center bg-stone-100 text-stone-700 p-6 text-center">
                         <FileText className="h-10 w-10 text-[#FA6400] mb-2" />
@@ -129,7 +119,7 @@ export default function GalleryPage() {
                 title="Tidak Ada Media Ditemukan"
                 description={
                   selectedCategory !== "Semua"
-                    ? `Belum ada dokumentasi foto atau video dalam kategori "${selectedCategory}".`
+                    ? `Belum ada dokumentasi foto dalam kategori "${selectedCategory}".`
                     : "Belum ada berkas media galeri yang dipublikasikan."
                 }
                 action={
