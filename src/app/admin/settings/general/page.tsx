@@ -58,26 +58,63 @@ export default function AdminGeneralSettingsPage() {
     },
   ];
 
-  const handleApplyColors = (p: string, a: string) => {
-    setPrimaryColor(p);
-    setAccentColor(a);
-    updateBrandingColors(p, a);
-    toast("Warna tema live berhasil diterapkan ke seluruh website!", "success");
+  // Pratinjau warna hanya menyentuh CSS var lokal; persist ke DB di-debounce
+  // agar mengetik/menggeser color picker tidak membanjiri PUT /api/profile.
+  const debounceRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const previewColors = (p: string, a: string) => {
+    if (typeof document !== "undefined") {
+      document.documentElement.style.setProperty("--color-primary", p);
+      document.documentElement.style.setProperty("--color-accent", a);
+    }
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const commitColors = (p: string, a: string) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      updateBrandingColors(p, a).catch(() =>
+        toast("Gagal menyimpan warna tema. Coba lagi.", "error")
+      );
+    }, 500);
+  };
+
+  const handleColorChange = (which: "primary" | "accent", value: string) => {
+    const p = which === "primary" ? value : primaryColor;
+    const a = which === "accent" ? value : accentColor;
+    if (which === "primary") setPrimaryColor(value);
+    else setAccentColor(value);
+    previewColors(p, a);
+    commitColors(p, a);
+  };
+
+  const handleApplyColors = async (p: string, a: string) => {
+    setPrimaryColor(p);
+    setAccentColor(a);
+    previewColors(p, a);
+    try {
+      await updateBrandingColors(p, a);
+      toast("Warna tema live berhasil diterapkan ke seluruh website!", "success");
+    } catch {
+      toast("Gagal menyimpan warna tema. Coba lagi.", "error");
+    }
+  };
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    updateProfile({
-      name,
-      tagline,
-      branding: {
-        ...profile.branding,
-        primaryColor,
-        accentColor,
-      },
-    });
-    updateBrandingColors(primaryColor, accentColor);
-    toast("Pengaturan branding dan identitas umum berhasil disimpan!", "success");
+    try {
+      await updateProfile({
+        name,
+        tagline,
+        branding: {
+          ...profile.branding,
+          primaryColor,
+          accentColor,
+        },
+      });
+      toast("Pengaturan branding dan identitas umum berhasil disimpan!", "success");
+    } catch {
+      toast("Gagal menyimpan pengaturan branding. Coba lagi.", "error");
+    }
   };
 
   return (
@@ -151,19 +188,13 @@ export default function AdminGeneralSettingsPage() {
               <input
                 type="color"
                 value={primaryColor}
-                onChange={(e) => {
-                  setPrimaryColor(e.target.value);
-                  updateBrandingColors(e.target.value, accentColor);
-                }}
+                onChange={(e) => handleColorChange("primary", e.target.value)}
                 className="h-11 w-14 rounded-md border border-border p-1 cursor-pointer bg-card"
               />
               <Input
                 type="text"
                 value={primaryColor}
-                onChange={(e) => {
-                  setPrimaryColor(e.target.value);
-                  updateBrandingColors(e.target.value, accentColor);
-                }}
+                onChange={(e) => handleColorChange("primary", e.target.value)}
                 className="font-mono text-xs uppercase"
               />
             </div>
@@ -178,19 +209,13 @@ export default function AdminGeneralSettingsPage() {
               <input
                 type="color"
                 value={accentColor}
-                onChange={(e) => {
-                  setAccentColor(e.target.value);
-                  updateBrandingColors(primaryColor, e.target.value);
-                }}
+                onChange={(e) => handleColorChange("accent", e.target.value)}
                 className="h-11 w-14 rounded-md border border-border p-1 cursor-pointer bg-card"
               />
               <Input
                 type="text"
                 value={accentColor}
-                onChange={(e) => {
-                  setAccentColor(e.target.value);
-                  updateBrandingColors(primaryColor, e.target.value);
-                }}
+                onChange={(e) => handleColorChange("accent", e.target.value)}
                 className="font-mono text-xs uppercase"
               />
             </div>

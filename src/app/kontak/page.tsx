@@ -34,7 +34,7 @@ export default function ContactPage() {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !phone || !subject || !message) {
       toast("Mohon lengkapi semua kolom formulir.", "error");
@@ -42,23 +42,20 @@ export default function ContactPage() {
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      addContactMessage({
-        name,
-        email,
-        phone,
-        subject,
-        message,
-      });
-
-      setIsSubmitting(false);
+    try {
+      // Sukses hanya dilaporkan bila pesan benar-benar tersimpan di database.
+      await addContactMessage({ name, email, phone, subject, message });
       setName("");
       setEmail("");
       setPhone("");
       setSubject("");
       setMessage("");
       toast("Pesan Anda berhasil dikirim ke sekretariat Yazzakka! Kami akan segera merespons.", "success");
-    }, 600);
+    } catch {
+      toast("Maaf, pesan gagal terkirim. Silakan coba lagi atau hubungi kami via WhatsApp.", "error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

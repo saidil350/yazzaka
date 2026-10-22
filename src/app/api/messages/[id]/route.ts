@@ -1,9 +1,30 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
 import { mapMessage } from "../../school-data/route";
+import { getSessionUser, isSuperAdmin } from "@/lib/news/api-helpers";
+
+/** Pesan kontak memuat PII — hanya super_admin. */
+async function requireSuperAdminOrRespond(request: Request): Promise<NextResponse | null> {
+  const user = await getSessionUser(request);
+  if (!user) {
+    return NextResponse.json(
+      { error: "Autentikasi diperlukan untuk mengakses resource ini." },
+      { status: 401 }
+    );
+  }
+  if (!isSuperAdmin(user)) {
+    return NextResponse.json(
+      { error: "Peran Anda tidak memiliki izin untuk aksi ini." },
+      { status: 403 }
+    );
+  }
+  return null;
+}
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const denied = await requireSuperAdminOrRespond(request);
+    if (denied) return denied;
     const id = (await params).id;
     const body = await request.json();
     const sql = getDb();
@@ -30,6 +51,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
 
 export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const denied = await requireSuperAdminOrRespond(request);
+    if (denied) return denied;
     const id = (await params).id;
     const sql = getDb();
     

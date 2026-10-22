@@ -9,6 +9,14 @@ export interface User {
   createdAt: string;
 }
 
+export interface HeroContent {
+  eyebrow: string;
+  headline: string;
+  body: string;
+  imageUrl: string;
+  badges: string[];
+}
+
 export interface SchoolProfile {
   id: string;
   name: string;
@@ -37,6 +45,7 @@ export interface SchoolProfile {
   };
   vision: string;
   mission: string[];
+  hero: Partial<HeroContent>;
   values: {
     title: string;
     description: string;

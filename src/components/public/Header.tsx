@@ -209,7 +209,7 @@ export function Header() {
           <div className="flex items-center gap-3 text-stone-300">
             <span className="hidden lg:inline-flex items-center gap-1.5 font-medium text-[11px]">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              Akreditasi {profile.accreditation} (NPSN {profile.npsn})
+              Akreditasi {profile.accreditation} · SK Kemenkumham {profile.npsn}
             </span>
             <a
               href={`https://wa.me/${profile.whatsapp}`}

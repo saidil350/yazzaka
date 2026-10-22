@@ -36,6 +36,13 @@ export async function PUT(request: Request) {
       RETURNING *
     `;
 
+    if (result.length === 0) {
+      return NextResponse.json(
+        { error: "Baris pengaturan website tidak ditemukan (seed hilang)." },
+        { status: 404 }
+      );
+    }
+
     return NextResponse.json(mapSettings(result[0]));
   } catch (error) {
     console.error("PUT /api/settings error:", error);

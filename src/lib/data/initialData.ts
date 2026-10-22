@@ -1,5 +1,6 @@
 import {
   SchoolProfile,
+  HeroContent,
   Program,
   Facility,
   Achievement,
@@ -14,6 +15,18 @@ import {
   User,
   PageSectionConfig,
 } from "../types";
+
+// Konten default HeroSection (src/components/public/HeroSection.tsx).
+// Dipakai sebagai fallback saat school_profile.hero belum diisi dari CMS,
+// dan sebagai nilai awal form di /admin/content/hero.
+export const DEFAULT_HERO: HeroContent = {
+  eyebrow: "Pendidikan Islam Holistik & Berwawasan Global",
+  headline: "Belajar Lebih Tenang, Tumbuh Berkarakter Qur'ani.",
+  body: "Membina Iman & Akhlak Umat, Mencetak Generasi Berilmu & Berdaya Saing Tinggi. Di Yayasan Bina Iman Akhlak Yazzakka, proses pendidikan memadukan kedalaman tradisi keilmuan Islam, tahfiz Al-Qur'an 30 juz bersanad, penguasaan bahasa Arab & Inggris aktif, serta kurikulum sains modern berbasis riset.",
+  imageUrl:
+    "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
+  badges: ["Terdaftar Resmi Kemenkumham RI", "Tahfiz 30 Juz Bersanad", "Bahasa Arab & Inggris 24 Jam"],
+};
 
 export const initialSchoolProfile: SchoolProfile = {
   id: "profile-yazzaka",
@@ -51,6 +64,7 @@ export const initialSchoolProfile: SchoolProfile = {
     "Membina akhlak sosial masyarakat melalui program dakwah dan pembinaan karakter.",
     "Membangun ketahanan keluarga melalui pendidikan keislaman dan pemberdayaan ekonomi.",
   ],
+  hero: DEFAULT_HERO,
   values: [
     {
       title: "Iman & Akidah (Shahihah)",

@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Variant dark mengikuti class .dark (standar shadcn/ui), bukan
+   prefers-color-scheme OS — situs ini light-only; tanpa ini utility
+   dark:* aktif untuk pengguna dengan OS mode gelap. */
+@custom-variant dark (&:is(.dark *));
+
 /* ============================================================
    DESIGN TOKENS — Headspace Style Design System
    Warm, Mindful, Playful, Friendly & High-Contrast
@@ -187,12 +192,13 @@
   --ring:                    hsl(23 98% 52%);
 }
 
-/* ── CMS Panel Theme — shadcn preset b2KtQh6AzK (luma, rose/mist) ─────
-   Token hasil `shadcn apply b2KtQh6AzK --only theme,font` di-scope ke
-   .admin-scope agar situs publik tetap memakai brand teal/orange.
-   --accent sengaja TIDAK dioverride: tetap orange brand karena dipakai
-   tombol aksi utama di dalam panel. Font: Public Sans untuk seluruh
-   teks dan heading panel (dimuat via next/font di app/layout.tsx). */
+/* ── CMS Panel Theme — token shadcn preset luma dengan warna brand ────
+   Struktur token berasal dari `shadcn apply b2KtQh6AzK --only theme,font`
+   yang di-scope ke .admin-scope agar situs publik tetap memakai token
+   globalnya. Semua nilai rose preset sudah diganti ke warna logo yayasan:
+   teal #057984 sebagai primary, oranye #FA6400 tetap lewat --accent
+   (dipakai tombol aksi utama di dalam panel). Font: Public Sans untuk
+   seluruh teks dan heading panel (dimuat via next/font di app/layout.tsx). */
 .admin-scope {
   --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
   font-family: var(--font-sans);
@@ -204,8 +210,8 @@
   --card-foreground:         oklch(0.148 0.004 228.8);
   --popover:                 oklch(1 0 0);
   --popover-foreground:      oklch(0.148 0.004 228.8);
-  --primary:                 oklch(0.514 0.222 16.935);
-  --primary-foreground:      oklch(0.969 0.015 12.422);
+  --primary:                 #057984;
+  --primary-foreground:      hsl(0 0% 100%);
   --secondary:               oklch(0.967 0.001 286.375);
   --secondary-foreground:    oklch(0.21 0.006 285.885);
   --muted:                   oklch(0.963 0.002 197.1);
@@ -213,24 +219,24 @@
   --destructive:             oklch(0.577 0.245 27.325);
   --border:                  oklch(0.925 0.005 214.3);
   --input:                   oklch(0.925 0.005 214.3);
-  --ring:                    oklch(0.723 0.014 214.4);
+  --ring:                    hsl(184 93% 27% / 0.5);
 
-  /* Chart (preset rose) */
-  --chart-1:                 oklch(0.81 0.117 11.638);
-  --chart-2:                 oklch(0.645 0.246 16.439);
-  --chart-3:                 oklch(0.586 0.253 17.585);
-  --chart-4:                 oklch(0.514 0.222 16.935);
-  --chart-5:                 oklch(0.455 0.188 13.697);
+  /* Chart — palet brand (teal, oranye, navy) */
+  --chart-1:                 #057984;
+  --chart-2:                 #FA6400;
+  --chart-3:                 #045D65;
+  --chart-4:                 #0F2B48;
+  --chart-5:                 #7AC5C9;
 
   /* Sidebar (preset luma menyertakan token sidebar) */
   --sidebar:                 oklch(0.987 0.002 197.1);
   --sidebar-foreground:      oklch(0.148 0.004 228.8);
-  --sidebar-primary:         oklch(0.586 0.253 17.585);
-  --sidebar-primary-foreground: oklch(0.969 0.015 12.422);
+  --sidebar-primary:         #057984;
+  --sidebar-primary-foreground: hsl(0 0% 100%);
   --sidebar-accent:          oklch(0.963 0.002 197.1);
   --sidebar-accent-foreground: oklch(0.218 0.008 223.9);
   --sidebar-border:          oklch(0.925 0.005 214.3);
-  --sidebar-ring:            oklch(0.723 0.014 214.4);
+  --sidebar-ring:            hsl(184 93% 27% / 0.5);
 
   /* Pemetaan token semantik — utilitas bg-primary dsb. memakai nilai scope */
   --color-background:        var(--background);
@@ -281,8 +287,8 @@
   --card-foreground:         oklch(0.987 0.002 197.1);
   --popover:                 oklch(0.218 0.008 223.9);
   --popover-foreground:      oklch(0.987 0.002 197.1);
-  --primary:                 oklch(0.455 0.188 13.697);
-  --primary-foreground:      oklch(0.969 0.015 12.422);
+  --primary:                 #0D8F9A;
+  --primary-foreground:      hsl(0 0% 100%);
   --secondary:               oklch(0.274 0.006 286.033);
   --secondary-foreground:    oklch(0.985 0 0);
   --muted:                   oklch(0.275 0.011 216.9);
@@ -290,22 +296,22 @@
   --destructive:             oklch(0.704 0.191 22.216);
   --border:                  oklch(1 0 0 / 10%);
   --input:                   oklch(1 0 0 / 15%);
-  --ring:                    oklch(0.56 0.021 213.5);
+  --ring:                    hsl(184 60% 40% / 0.5);
 
-  --chart-1:                 oklch(0.81 0.117 11.638);
-  --chart-2:                 oklch(0.645 0.246 16.439);
-  --chart-3:                 oklch(0.586 0.253 17.585);
-  --chart-4:                 oklch(0.514 0.222 16.935);
-  --chart-5:                 oklch(0.455 0.188 13.697);
+  --chart-1:                 #057984;
+  --chart-2:                 #FA6400;
+  --chart-3:                 #045D65;
+  --chart-4:                 #7AC5C9;
+  --chart-5:                 #0F2B48;
 
   --sidebar:                 oklch(0.21 0.006 285.885);
   --sidebar-foreground:      oklch(0.987 0.002 197.1);
-  --sidebar-primary:         oklch(0.645 0.246 16.439);
-  --sidebar-primary-foreground: oklch(0.969 0.015 12.422);
+  --sidebar-primary:         #0D8F9A;
+  --sidebar-primary-foreground: hsl(0 0% 100%);
   --sidebar-accent:          oklch(0.275 0.011 216.9);
   --sidebar-accent-foreground: oklch(0.987 0.002 197.1);
   --sidebar-border:          oklch(1 0 0 / 10%);
-  --sidebar-ring:            oklch(0.56 0.021 213.5);
+  --sidebar-ring:            hsl(184 60% 40% / 0.5);
 }
 
 /* ── Landing polish: tactile, responsive, and intentionally playful ── */

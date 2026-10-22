@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
-import { formatRupiah } from "@/lib/utils";
+import { formatRupiah, generateId } from "@/lib/utils";
 import {
   Plus,
   Trash2,
@@ -164,7 +164,7 @@ export default function AdminAdmissionPage() {
     }
   };
 
-  const handleAddFee = (e: React.FormEvent) => {
+  const handleAddFee = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newFeeName || newFeeAmount <= 0) {
       toast("Nama biaya dan nominal harus valid.", "error");
@@ -181,21 +181,29 @@ export default function AdminAdmissionPage() {
       },
     ];
     setFees(updated);
-    updateAdmission({ fees: updated });
-    setNewFeeName("");
-    setNewFeeAmount(0);
-    setNewFeeNotes("");
-    toast("Komponen biaya berhasil ditambahkan!", "success");
+    try {
+      await updateAdmission({ fees: updated });
+      setNewFeeName("");
+      setNewFeeAmount(0);
+      setNewFeeNotes("");
+      toast("Komponen biaya berhasil ditambahkan!", "success");
+    } catch {
+      toast("Gagal menambahkan komponen biaya. Coba lagi.", "error");
+    }
   };
 
-  const handleDeleteFee = (index: number) => {
+  const handleDeleteFee = async (index: number) => {
     const updated = fees.filter((_, i) => i !== index);
     setFees(updated);
-    updateAdmission({ fees: updated });
-    toast("Komponen biaya dihapus.", "info");
+    try {
+      await updateAdmission({ fees: updated });
+      toast("Komponen biaya dihapus.", "info");
+    } catch {
+      toast("Gagal menghapus komponen biaya. Coba lagi.", "error");
+    }
   };
 
-  const handleAddFaq = (e: React.FormEvent) => {
+  const handleAddFaq = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newFaqQ || !newFaqA) {
       toast("Pertanyaan dan jawaban FAQ wajib diisi.", "error");
@@ -205,24 +213,32 @@ export default function AdminAdmissionPage() {
     const updated = [
       ...faqs,
       {
-        id: `faq-${Date.now()}`,
+        id: generateId("faq"),
         question: newFaqQ,
         answer: newFaqA,
         category: "Pendaftaran" as const,
       },
     ];
     setFaqs(updated);
-    updateAdmission({ faqs: updated });
-    setNewFaqQ("");
-    setNewFaqA("");
-    toast("Pertanyaan FAQ berhasil ditambahkan!", "success");
+    try {
+      await updateAdmission({ faqs: updated });
+      setNewFaqQ("");
+      setNewFaqA("");
+      toast("Pertanyaan FAQ berhasil ditambahkan!", "success");
+    } catch {
+      toast("Gagal menambahkan FAQ. Coba lagi.", "error");
+    }
   };
 
-  const handleDeleteFaq = (id: string) => {
+  const handleDeleteFaq = async (id: string) => {
     const updated = faqs.filter((f) => f.id !== id);
     setFaqs(updated);
-    updateAdmission({ faqs: updated });
-    toast("FAQ dihapus.", "info");
+    try {
+      await updateAdmission({ faqs: updated });
+      toast("FAQ dihapus.", "info");
+    } catch {
+      toast("Gagal menghapus FAQ. Coba lagi.", "error");
+    }
   };
 
   return (

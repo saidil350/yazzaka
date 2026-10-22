@@ -20,18 +20,21 @@ export async function PUT(request: Request) {
 
     const sql = getDb();
 
-    for (const sec of sections) {
-      await sql`
-        INSERT INTO page_sections (id, key, title, subtitle, is_enabled, order_index)
-        VALUES (${sec.id}, ${sec.key}, ${sec.title}, ${sec.subtitle || ""}, ${sec.isEnabled}, ${sec.orderIndex})
-        ON CONFLICT (id) DO UPDATE
-        SET 
-          is_enabled = ${sec.isEnabled},
-          order_index = ${sec.orderIndex},
-          title = ${sec.title},
-          subtitle = ${sec.subtitle || ""};
-      `;
-    }
+    // Satu transaksi: gagal di tengah tidak menyisakan setengah konfigurasi.
+    const operations = sections.map((sec) =>
+      sql.query(
+        `INSERT INTO page_sections (id, key, title, subtitle, is_enabled, order_index)
+         VALUES ($1, $2, $3, $4, $5, $6)
+         ON CONFLICT (id) DO UPDATE
+         SET
+           is_enabled = $5,
+           order_index = $6,
+           title = $3,
+           subtitle = $4`,
+        [sec.id, sec.key, sec.title, sec.subtitle || "", sec.isEnabled, sec.orderIndex]
+      )
+    );
+    await sql.transaction(operations);
 
     return NextResponse.json({ success: true, message: "Konfigurasi seksi berhasil disimpan" });
   } catch (error) {

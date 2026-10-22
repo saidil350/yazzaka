@@ -29,15 +29,19 @@ export default function AdminSEOSettingsPage() {
     setGoogleVerification(settings.googleVerification || "");
   }, [settings]);
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    updateSettings({
-      siteTitle,
-      metaDescription,
-      ogImage,
-      googleVerification,
-    });
-    toast("Pengaturan SEO global berhasil diperbarui!", "success");
+    try {
+      await updateSettings({
+        siteTitle,
+        metaDescription,
+        ogImage,
+        googleVerification,
+      });
+      toast("Pengaturan SEO global berhasil diperbarui!", "success");
+    } catch {
+      toast("Gagal menyimpan pengaturan SEO. Coba lagi.", "error");
+    }
   };
 
   return (

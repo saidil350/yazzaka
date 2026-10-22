@@ -2,9 +2,30 @@ import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
 import { mapMessage } from "../school-data/route";
 import { generateId } from "@/lib/utils";
+import { getSessionUser, isSuperAdmin } from "@/lib/news/api-helpers";
 
-export async function GET() {
+/** Pesan kontak memuat PII — hanya super_admin (proxy menambah lapisan pertama utk mutasi). */
+async function requireSuperAdminOrRespond(request: Request): Promise<NextResponse | null> {
+  const user = await getSessionUser(request);
+  if (!user) {
+    return NextResponse.json(
+      { error: "Autentikasi diperlukan untuk mengakses resource ini." },
+      { status: 401 }
+    );
+  }
+  if (!isSuperAdmin(user)) {
+    return NextResponse.json(
+      { error: "Peran Anda tidak memiliki izin untuk aksi ini." },
+      { status: 403 }
+    );
+  }
+  return null;
+}
+
+export async function GET(request: Request) {
   try {
+    const denied = await requireSuperAdminOrRespond(request);
+    if (denied) return denied;
     const sql = getDb();
     const result = await sql`SELECT * FROM contact_messages ORDER BY created_at DESC`;
     return NextResponse.json(result.map(mapMessage));
@@ -16,16 +37,13 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    const denied = await requireSuperAdminOrRespond(request);
+    if (denied) return denied;
     const body = await request.json();
     const sql = getDb();
     const id = generateId("msg");
-    const submittedAt = new Date().toLocaleString("id-ID", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-    });
+    // ISO agar konsisten dengan /api/contact — kolom `submitted_at` sama.
+    const submittedAt = new Date().toISOString();
 
     const result = await sql`
       INSERT INTO contact_messages (

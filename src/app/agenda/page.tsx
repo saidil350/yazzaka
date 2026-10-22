@@ -122,10 +122,10 @@ export default function EventsPage() {
                         <div className="flex items-center gap-3">
                           <div className="bg-[#FFF0E5] text-[#FA6400] border border-[#FED7AA] px-3 py-1 rounded-xl text-center shrink-0">
                             <span className="block text-[9px] font-bold uppercase">
-                              {new Date(evt.date).toLocaleDateString("id-ID", { month: "short" })}
+                              {new Date(`${evt.date}T00:00:00Z`).toLocaleDateString("id-ID", { month: "short", timeZone: "UTC" })}
                             </span>
                             <span className="text-base font-black">
-                              {new Date(evt.date).getDate()}
+                              {new Date(`${evt.date}T00:00:00Z`).getUTCDate()}
                             </span>
                           </div>
                           <div>

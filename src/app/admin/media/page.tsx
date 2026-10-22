@@ -46,24 +46,27 @@ export default function AdminMediaPage() {
     setModalOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fileName || !fileUrl) {
       toast("Nama file dan URL media wajib diisi.", "error");
       return;
     }
 
-    addMedia({
-      fileName,
-      fileUrl,
-      fileType,
-      fileSize,
-      category,
-      altText: altText || fileName,
-    });
-
-    toast("File media berhasil ditambahkan ke library!", "success");
-    setModalOpen(false);
+    try {
+      await addMedia({
+        fileName,
+        fileUrl,
+        fileType,
+        fileSize,
+        category,
+        altText: altText || fileName,
+      });
+      toast("File media berhasil ditambahkan ke library!", "success");
+      setModalOpen(false);
+    } catch {
+      toast("Gagal menambahkan media. Data tidak tersimpan — coba lagi.", "error");
+    }
   };
 
   const handleCopyUrl = (url: string) => {
@@ -71,10 +74,13 @@ export default function AdminMediaPage() {
     toast("URL media berhasil disalin ke clipboard!", "info");
   };
 
-  const handleDelete = (id: string, name: string) => {
-    if (confirm(`Hapus media "${name}"?`)) {
-      deleteMedia(id);
+  const handleDelete = async (id: string, name: string) => {
+    if (!confirm(`Hapus media "${name}"?`)) return;
+    try {
+      await deleteMedia(id);
       toast("Media berhasil dihapus.", "info");
+    } catch {
+      toast("Gagal menghapus media. Coba lagi.", "error");
     }
   };
 

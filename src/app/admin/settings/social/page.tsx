@@ -28,18 +28,22 @@ export default function AdminSocialMediaSettingsPage() {
     setLinkedin(settings.socialMedia.linkedin);
   }, [settings]);
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    updateSettings({
-      socialMedia: {
-        instagram,
-        youtube,
-        facebook,
-        tiktok,
-        linkedin,
-      },
-    });
-    toast("Tautan media sosial berhasil disimpan!", "success");
+    try {
+      await updateSettings({
+        socialMedia: {
+          instagram,
+          youtube,
+          facebook,
+          tiktok,
+          linkedin,
+        },
+      });
+      toast("Tautan media sosial berhasil disimpan!", "success");
+    } catch {
+      toast("Gagal menyimpan tautan media sosial. Coba lagi.", "error");
+    }
   };
 
   return (

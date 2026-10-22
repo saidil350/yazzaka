@@ -59,7 +59,15 @@ export function AdminSidebar({
     setOpenSubmenu(openSubmenu === menuKey ? null : menuKey);
   };
 
-  const navGroups = [
+  const navGroups: Array<{
+    type: "single" | "group";
+    key?: string;
+    title: string;
+    href?: string;
+    icon?: React.ElementType;
+    roles: string[];
+    items?: Array<{ label: string; href: string; badge?: string; roles?: string[] }>;
+  }> = [
     {
       type: "single",
       title: "Dashboard",
@@ -88,11 +96,17 @@ export function AdminSidebar({
       icon: Layers,
       roles: ["super_admin", "editor"],
       items: [
+        // Hero disimpan di school_profile via /api/profile — mutasi hanya
+        // untuk super_admin (lihat ADMIN_ONLY_MUTATION_PREFIXES di src/proxy.ts).
+        { label: "Hero Beranda", href: "/admin/content/hero", roles: ["super_admin"] },
         { label: "Penerimaan Santri (PPDB)", href: "/admin/content/pendaftaran" },
         { label: "Program Pendidikan", href: "/admin/content/program" },
         { label: "Fasilitas Sekolah", href: "/admin/content/fasilitas" },
         { label: "Prestasi Santri", href: "/admin/content/pengumuman" },
-        { label: "Pimpinan & Dewan Asatidz", href: "/admin/organization/tim" },
+        { label: "Agenda & Kegiatan", href: "/admin/content/kegiatan" },
+        // Data tim tersimpan via /api/organization — mutasi super_admin-only
+        // (ADMIN_ONLY_MUTATION_PREFIXES di src/proxy.ts + gate halaman).
+        { label: "Pimpinan & Dewan Asatidz", href: "/admin/organization/tim", roles: ["super_admin"] },
         { label: "Testimoni Wali & Alumni", href: "/admin/content/testimoni" },
       ],
     },
@@ -104,8 +118,10 @@ export function AdminSidebar({
       roles: ["super_admin"],
       items: [
         { label: "Profil & Slogan", href: "/admin/organization/profil" },
-        { label: "Visi & Misi", href: "/admin/organization/visi-misi" },
-        { label: "Kontak & Sosmed", href: "/admin/settings/contact" },
+        { label: "Visi, Misi & Nilai", href: "/admin/organization/visi-misi" },
+        { label: "Kontak & Lokasi", href: "/admin/settings/contact" },
+        { label: "Media Sosial", href: "/admin/settings/social" },
+        { label: "Branding & Warna", href: "/admin/settings/general" },
         {
           label: "Pesan Masuk",
           href: "/admin/settings/pesan",
@@ -227,7 +243,12 @@ export function AdminSidebar({
         // Grup dengan sub-item yang dapat dilipat
         const isGroupOpen = openSubmenu === group.key;
         const Icon = group.icon!;
-        const hasActiveChild = group.items?.some(
+        // Item dapat membatasi role sendiri (mis. Hero Beranda hanya super_admin)
+        const visibleItems = group.items?.filter((item) => {
+          if (!("roles" in item) || !item.roles) return true;
+          return role === "super_admin" || item.roles.includes(role);
+        });
+        const hasActiveChild = visibleItems?.some(
           (item) => pathname === item.href || pathname.startsWith(item.href + "/")
         );
 
@@ -295,7 +316,7 @@ export function AdminSidebar({
 
             {isGroupOpen && (
               <div className="ml-4 pl-3 border-l border-border py-1 space-y-0.5">
-                {group.items?.map((item) => {
+                {visibleItems?.map((item) => {
                   const isActive = pathname === item.href;
                   return (
                     <Link

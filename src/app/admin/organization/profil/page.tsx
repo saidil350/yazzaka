@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
@@ -30,26 +30,48 @@ export default function AdminOrgProfilePage() {
   const [principalPhoto, setPrincipalPhoto] = useState(profile.principal.photoUrl);
   const [principalWelcome, setPrincipalWelcome] = useState(profile.principal.welcomeMessage);
 
-  const handleSave = (e: React.FormEvent) => {
+  // useState hanya membaca nilai awal — sinkronkan form saat profile
+  // selesai dimuat dari DB agar Simpan tidak menimpa DB dengan data fallback.
+  useEffect(() => {
+    setName(profile.name);
+    setTagline(profile.tagline);
+    setNpsn(profile.npsn);
+    setAccreditation(profile.accreditation);
+    setEstablishedYear(profile.establishedYear);
+    setStudentCount(profile.studentCount);
+    setTeacherCount(profile.teacherCount);
+    setAlumniCount(profile.alumniCount);
+    setHafizCount(profile.hafizCount);
+    setPrincipalName(profile.principal.name);
+    setPrincipalTitle(profile.principal.title);
+    setPrincipalPhoto(profile.principal.photoUrl);
+    setPrincipalWelcome(profile.principal.welcomeMessage);
+  }, [profile]);
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    updateProfile({
-      name,
-      tagline,
-      npsn,
-      accreditation,
-      establishedYear: Number(establishedYear),
-      studentCount: Number(studentCount),
-      teacherCount: Number(teacherCount),
-      alumniCount: Number(alumniCount),
-      hafizCount: Number(hafizCount),
-      principal: {
-        name: principalName,
-        title: principalTitle,
-        photoUrl: principalPhoto,
-        welcomeMessage: principalWelcome,
-      },
-    });
-    toast("Profil resmi dan data statistik lembaga berhasil diperbarui!", "success");
+    try {
+      await updateProfile({
+        name,
+        tagline,
+        npsn,
+        accreditation,
+        establishedYear: Number(establishedYear),
+        studentCount: Number(studentCount),
+        teacherCount: Number(teacherCount),
+        alumniCount: Number(alumniCount),
+        hafizCount: Number(hafizCount),
+        principal: {
+          name: principalName,
+          title: principalTitle,
+          photoUrl: principalPhoto,
+          welcomeMessage: principalWelcome,
+        },
+      });
+      toast("Profil resmi dan data statistik lembaga berhasil diperbarui!", "success");
+    } catch {
+      toast("Gagal menyimpan profil. Perubahan tidak tersimpan — coba lagi.", "error");
+    }
   };
 
   return (

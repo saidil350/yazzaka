@@ -12,24 +12,51 @@ export default function AdminHomepageSectionsPage() {
   const { sections, toggleSection, reorderSections } = useSchoolData();
   const { toast } = useToast();
 
-  const handleMoveUp = (index: number) => {
+  // Key yang komponen publiknya tidak pernah dirender di landing —
+  // disembunyikan dari UI agar admin tidak mengelola toggle tanpa efek.
+  const UNRENDERED_SECTION_KEYS = ["news", "admission_cta"];
+  const visibleSections = sections.filter(
+    (s) => !UNRENDERED_SECTION_KEYS.includes(s.key)
+  );
+
+  const handleMoveUp = async (index: number) => {
     if (index === 0) return;
-    const updated = [...sections];
+    const updated = [...visibleSections];
     const temp = updated[index];
     updated[index] = updated[index - 1];
     updated[index - 1] = temp;
-    reorderSections(updated);
-    toast("Urutan seksi berhasil diperbarui!", "success");
+    try {
+      await reorderSections(updated);
+      toast("Urutan seksi berhasil diperbarui!", "success");
+    } catch {
+      toast("Gagal memperbarui urutan seksi.", "error");
+    }
   };
 
-  const handleMoveDown = (index: number) => {
-    if (index === sections.length - 1) return;
-    const updated = [...sections];
+  const handleMoveDown = async (index: number) => {
+    if (index === visibleSections.length - 1) return;
+    const updated = [...visibleSections];
     const temp = updated[index];
     updated[index] = updated[index + 1];
     updated[index + 1] = temp;
-    reorderSections(updated);
-    toast("Urutan seksi berhasil diperbarui!", "success");
+    try {
+      await reorderSections(updated);
+      toast("Urutan seksi berhasil diperbarui!", "success");
+    } catch {
+      toast("Gagal memperbarui urutan seksi.", "error");
+    }
+  };
+
+  const handleToggle = async (sec: (typeof visibleSections)[number]) => {
+    try {
+      await toggleSection(sec.id);
+      toast(
+        `Seksi "${sec.title}" ${sec.isEnabled ? "dinonaktifkan" : "diaktifkan"}!`,
+        "info"
+      );
+    } catch {
+      toast(`Gagal mengubah status seksi "${sec.title}".`, "error");
+    }
   };
 
   return (
@@ -49,7 +76,7 @@ export default function AdminHomepageSectionsPage() {
 
       {/* Sections List */}
       <Card className="overflow-hidden divide-y divide-border">
-        {sections.map((sec, idx) => (
+        {visibleSections.map((sec, idx) => (
           <div
             key={sec.id}
             className={`p-4 sm:p-5 flex items-center justify-between gap-4 transition-colors ${
@@ -81,15 +108,7 @@ export default function AdminHomepageSectionsPage() {
                 </span>
                 <Switch
                   checked={sec.isEnabled}
-                  onCheckedChange={() => {
-                    toggleSection(sec.id);
-                    toast(
-                      `Seksi "${sec.title}" ${
-                        sec.isEnabled ? "dinonaktifkan" : "diaktifkan"
-                      }!`,
-                      "info"
-                    );
-                  }}
+                  onCheckedChange={() => handleToggle(sec)}
                   aria-label={`Aktifkan atau nonaktifkan seksi ${sec.title}`}
                 />
               </div>

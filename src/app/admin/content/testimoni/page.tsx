@@ -59,43 +59,49 @@ export default function AdminTestimonialsPage() {
     setModalOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !quote) {
       toast("Nama dan kutipan testimoni wajib diisi.", "error");
       return;
     }
 
-    if (editingId) {
-      updateTestimonial(editingId, {
-        name,
-        role,
-        quote,
-        photoUrl,
-        childName,
-        graduationYear: graduationYear ? Number(graduationYear) : undefined,
-      });
-      toast("Testimoni berhasil diperbarui!", "success");
-    } else {
-      addTestimonial({
-        name,
-        role,
-        quote,
-        photoUrl,
-        childName,
-        graduationYear: graduationYear ? Number(graduationYear) : undefined,
-        isFeatured: true,
-      });
-      toast("Testimoni baru berhasil ditambahkan!", "success");
+    try {
+      if (editingId) {
+        await updateTestimonial(editingId, {
+          name,
+          role,
+          quote,
+          photoUrl,
+          childName,
+          graduationYear: graduationYear ? Number(graduationYear) : undefined,
+        });
+        toast("Testimoni berhasil diperbarui!", "success");
+      } else {
+        await addTestimonial({
+          name,
+          role,
+          quote,
+          photoUrl,
+          childName,
+          graduationYear: graduationYear ? Number(graduationYear) : undefined,
+          isFeatured: true,
+        });
+        toast("Testimoni baru berhasil ditambahkan!", "success");
+      }
+      setModalOpen(false);
+    } catch {
+      toast("Gagal menyimpan testimoni. Data tidak tersimpan — coba lagi.", "error");
     }
-
-    setModalOpen(false);
   };
 
-  const handleDelete = (id: string, tName: string) => {
-    if (confirm(`Hapus testimoni dari "${tName}"?`)) {
-      deleteTestimonial(id);
+  const handleDelete = async (id: string, tName: string) => {
+    if (!confirm(`Hapus testimoni dari "${tName}"?`)) return;
+    try {
+      await deleteTestimonial(id);
       toast("Testimoni telah dihapus.", "info");
+    } catch {
+      toast("Gagal menghapus testimoni. Coba lagi.", "error");
     }
   };
 

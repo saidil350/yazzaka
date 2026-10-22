@@ -37,7 +37,7 @@ export default function AdmissionPage() {
   const [notes, setNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !phone) {
       toast("Nama lengkap dan nomor WhatsApp wajib diisi.", "error");
@@ -45,22 +45,25 @@ export default function AdmissionPage() {
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      addContactMessage({
+    try {
+      // Sukses hanya dilaporkan bila pesan benar-benar tersimpan di database.
+      await addContactMessage({
         name,
-        email: email || "wali@santri.com",
+        email: email || "",
         phone,
         subject: `Permintaan Konsultasi PPDB: ${interestProgram}`,
         message: notes || `Tertarik mendaftar program ${interestProgram}. Mohon informasi alur pendaftaran dan jadwal tes.`,
       });
-
-      setIsSubmitting(false);
       setName("");
       setPhone("");
       setEmail("");
       setNotes("");
       toast("Permintaan konsultasi pendaftaran telah diterima! Tim admisi kami akan segera menghubungi Anda.", "success");
-    }, 600);
+    } catch {
+      toast("Maaf, permintaan gagal terkirim. Silakan coba lagi atau hubungi kami via WhatsApp.", "error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const steps = [

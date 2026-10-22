@@ -46,27 +46,17 @@ const STATUS_CONFIG: Record<
 
 function formatDisplayDate(dateStr: string) {
   if (!dateStr) return "-";
-  // If format is like '2026-08-22 10:15'
-  const parts = dateStr.split(" ");
-  if (parts.length === 2) {
-    const [d, t] = parts;
-    const [year, month, day] = d.split("-");
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "Mei",
-      "Jun",
-      "Jul",
-      "Agu",
-      "Sep",
-      "Okt",
-      "Nov",
-      "Des",
-    ];
-    const mName = months[parseInt(month, 10) - 1] || month;
-    return `${day} ${mName} ${year}, ${t} WIB`;
+  // Penulisan baru memakai ISO (server); baris lama bisa berformat teks
+  // id-ID — yang tidak bisa diparse ditampilkan apa adanya.
+  const parsed = new Date(dateStr);
+  if (!isNaN(parsed.getTime())) {
+    return parsed.toLocaleString("id-ID", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   }
   return dateStr;
 }
@@ -81,26 +71,34 @@ export default function AdminContactInboxPage() {
   const handleOpenDetail = (msg: ContactMessage) => {
     setSelectedMessage(msg);
     if (msg.status === "new") {
-      updateMessageStatus(msg.id, "read");
+      // Auto mark-read: gagal tidak perlu toast — pesan tetap terbaca isinya.
+      updateMessageStatus(msg.id, "read").catch((err) => console.error(err));
     }
   };
 
-  const handleStatusChange = (
+  const handleStatusChange = async (
     id: string,
     status: ContactMessage["status"]
   ) => {
-    updateMessageStatus(id, status);
-    if (selectedMessage && selectedMessage.id === id) {
-      setSelectedMessage({ ...selectedMessage, status });
+    try {
+      await updateMessageStatus(id, status);
+      if (selectedMessage && selectedMessage.id === id) {
+        setSelectedMessage({ ...selectedMessage, status });
+      }
+      toast(`Status pesan diperbarui ke "${STATUS_CONFIG[status]?.label || status}"`, "info");
+    } catch {
+      toast("Gagal memperbarui status pesan. Coba lagi.", "error");
     }
-    toast(`Status pesan diperbarui ke "${STATUS_CONFIG[status]?.label || status}"`, "info");
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm("Apakah Anda yakin ingin menghapus pesan ini dari kotak masuk?")) {
-      deleteMessage(id);
+  const handleDelete = async (id: string) => {
+    if (!confirm("Apakah Anda yakin ingin menghapus pesan ini dari kotak masuk?")) return;
+    try {
+      await deleteMessage(id);
       if (selectedMessage?.id === id) setSelectedMessage(null);
       toast("Pesan berhasil dihapus dari kotak masuk.", "info");
+    } catch {
+      toast("Gagal menghapus pesan. Coba lagi.", "error");
     }
   };
 

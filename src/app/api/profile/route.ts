@@ -60,6 +60,7 @@ export async function PUT(request: Request) {
     }
     
     if (body.mission) await sql`UPDATE school_profile SET mission = ${JSON.stringify(body.mission)}::jsonb WHERE id = 'profile-yazzaka'`;
+    if (body.hero) await sql`UPDATE school_profile SET hero = ${JSON.stringify(body.hero)}::jsonb WHERE id = 'profile-yazzaka'`;
     if (body.values) await sql`UPDATE school_profile SET values = ${JSON.stringify(body.values)}::jsonb WHERE id = 'profile-yazzaka'`;
     if (body.branding) await sql`UPDATE school_profile SET branding = ${JSON.stringify(body.branding)}::jsonb WHERE id = 'profile-yazzaka'`;
 

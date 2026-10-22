@@ -33,6 +33,22 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+// submitted_at kini ISO dari server; baris lama bisa berformat teks —
+// yang tidak bisa diparse ditampilkan apa adanya.
+function formatSubmittedAt(dateStr: string) {
+  if (!dateStr) return "-";
+  const parsed = new Date(dateStr);
+  if (!isNaN(parsed.getTime())) {
+    return parsed.toLocaleString("id-ID", {
+      day: "numeric",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+  return dateStr;
+}
+
 export default function AdminDashboardOverview() {
   const {
     profile,
@@ -62,10 +78,10 @@ export default function AdminDashboardOverview() {
       href: "/admin/content/pendaftaran",
     },
     {
-      title: "Berita & Publikasi",
+      title: "Berita Terpublikasi",
       value: articles.length,
       unit: "Artikel",
-      desc: "Liputan & wawasan santri",
+      desc: "Status published; termasuk draft dilihat di modul Berita",
       icon: Newspaper,
       href: "/admin/berita",
     },
@@ -270,7 +286,10 @@ export default function AdminDashboardOverview() {
 
             <CardContent className="p-0">
               <div className="divide-y divide-border">
-                {sections.map((sec) => (
+                {/* Key tanpa komponen publik disembunyikan agar toggle selalu berefek */}
+                {sections
+                  .filter((sec) => !["news", "admission_cta"].includes(sec.key))
+                  .map((sec) => (
                   <div
                     key={sec.id}
                     className="flex items-center justify-between gap-4 px-6 py-3"
@@ -295,7 +314,9 @@ export default function AdminDashboardOverview() {
             </CardContent>
           </Card>
 
-          {/* Kartu: Pesan Konsultasi Terbaru */}
+          {/* Kartu: Pesan Konsultasi Terbaru — hanya super_admin; data pesan
+              memuat PII dan endpoint-nya super_admin-only. */}
+          {isSuperAdmin && (
           <Card className="overflow-hidden">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
               <div className="space-y-1.5">
@@ -352,7 +373,7 @@ export default function AdminDashboardOverview() {
                           <span aria-hidden="true">·</span>
                           <span className="flex items-center gap-1 shrink-0">
                             <Clock className="size-3" aria-hidden="true" />
-                            {msg.submittedAt}
+                            {formatSubmittedAt(msg.submittedAt)}
                           </span>
                         </div>
                       </div>
@@ -385,6 +406,7 @@ export default function AdminDashboardOverview() {
               )}
             </CardContent>
           </Card>
+          )}
         </div>
 
         {/* ── Kolom Kanan (5 kolom): Pintasan Modul & Identitas ── */}
@@ -448,7 +470,7 @@ export default function AdminDashboardOverview() {
             <CardContent className="space-y-4 pt-0">
               <div className="space-y-2 text-sm">
                 <div className="flex items-center justify-between gap-4">
-                  <span className="text-muted-foreground">NPSN Resmi</span>
+                  <span className="text-muted-foreground">SK Kemenkumham</span>
                   <span className="font-medium text-foreground font-mono">{profile.npsn}</span>
                 </div>
                 <div className="flex items-center justify-between gap-4">

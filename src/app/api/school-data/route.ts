@@ -1,19 +1,30 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
 import { mapArticleRow } from "@/lib/news/mappers";
+import { getSessionUser } from "@/lib/news/api-helpers";
+import { ADMIN_ROLES } from "@/lib/auth/server";
 
 /**
  * GET /api/school-data
  * Mengambil semua data sekolah sekaligus untuk initial load SchoolDataContext.
  * Mengurangi jumlah request saat halaman pertama kali dibuka.
  *
- * Catatan akses publik: endpoint ini dapat dibaca tanpa login, jadi
- * artikel hanya dikirim berstatus published (tanpa isi/content) dan
- * media hanya galeri — bukan berkas privat fitur berita.
+ * Payload session-aware (endpoint ini juga dibaca pengunjung anonim):
+ * - anonim → subset publik: programs/facilities hanya published, TANPA
+ *   messages/users (PII), artikel hanya published tanpa isi/content, media
+ *   hanya galeri — bukan berkas privat fitur berita;
+ * - editor → data konten lengkap (termasuk draft) tapi tetap tanpa
+ *   messages/users (modul pesan & manajemen user hanya untuk super_admin);
+ * - super_admin → lengkap.
+ * Key `messages`/`users` selalu ada (array kosong bila tidak berhak) agar
+ * konsumen context tidak perlu menangani key yang hilang.
  */
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const sql = getDb();
+    const user = await getSessionUser(request);
+    const isSuperAdmin = user ? ADMIN_ROLES.includes(user.role) : false;
+    const publicOnly = !user;
 
     // Ambil semua data secara paralel untuk efisiensi
     const [
@@ -33,8 +44,12 @@ export async function GET() {
       media,
     ] = await Promise.all([
       sql`SELECT * FROM school_profile LIMIT 1`,
-      sql`SELECT * FROM programs ORDER BY order_index ASC`,
-      sql`SELECT * FROM facilities ORDER BY order_index ASC`,
+      publicOnly
+        ? sql`SELECT * FROM programs WHERE status = 'published' OR status IS NULL ORDER BY order_index ASC`
+        : sql`SELECT * FROM programs ORDER BY order_index ASC`,
+      publicOnly
+        ? sql`SELECT * FROM facilities WHERE status = 'published' OR status IS NULL ORDER BY order_index ASC`
+        : sql`SELECT * FROM facilities ORDER BY order_index ASC`,
       sql`SELECT * FROM achievements ORDER BY year DESC, created_at DESC`,
       sql`SELECT a.id, a.slug, a.title, a.excerpt, a.cover_image, a.category,
                  a.tags, a.author, a.author_role, a.published_date, a.published_at,
@@ -43,14 +58,18 @@ export async function GET() {
           FROM articles a
           LEFT JOIN users u ON u.id = a.author_id
           WHERE a.status = 'published'
-          ORDER BY a.published_at DESC NULLS LAST, a.published_date DESC`,
+          ORDER BY a.published_at DESC NULLS LAST, a.published_date DESC, a.created_at DESC`,
       sql`SELECT * FROM events ORDER BY date ASC`,
       sql`SELECT * FROM testimonials ORDER BY created_at ASC`,
       sql`SELECT * FROM admission_info LIMIT 1`,
-      sql`SELECT * FROM contact_messages ORDER BY created_at DESC`,
+      isSuperAdmin
+        ? sql`SELECT * FROM contact_messages ORDER BY created_at DESC`
+        : Promise.resolve([] as Record<string, unknown>[]),
       sql`SELECT * FROM website_settings LIMIT 1`,
       sql`SELECT * FROM organization_members ORDER BY order_index ASC`,
-      sql`SELECT * FROM users ORDER BY created_at ASC`,
+      isSuperAdmin
+        ? sql`SELECT * FROM users ORDER BY created_at ASC`
+        : Promise.resolve([] as Record<string, unknown>[]),
       sql`SELECT * FROM page_sections ORDER BY order_index ASC`,
       sql`SELECT * FROM media_items
           WHERE storage_key IS NULL AND (kind IS NULL OR kind <> 'document')
@@ -117,6 +136,7 @@ export function mapProfile(r: Record<string, unknown>) {
     },
     vision: r.vision,
     mission: r.mission,
+    hero: r.hero ?? {},
     values: r.values,
     branding: r.branding,
   };
