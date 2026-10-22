@@ -499,16 +499,6 @@ export const initialMedia: MediaItem[] = [
     altText: "Brosur Resmi Panduan Pendaftaran Siswa Baru TA 2026/2027",
     uploadedAt: "2026-08-15",
   },
-  {
-    id: "med-5",
-    fileName: "video-profil-sekolah-2026.mp4",
-    fileUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    fileType: "video",
-    fileSize: "45.0 MB",
-    category: "Kegiatan",
-    altText: "Video Profil Dokumentasi Sekolah dan Keseharian Santri",
-    uploadedAt: "2026-08-18",
-  },
 ];
 
 export const initialOrganization: OrganizationMember[] = [

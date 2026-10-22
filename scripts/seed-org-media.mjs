@@ -109,15 +109,6 @@ async function seed() {
       category: "Dokumen PPDB",
       alt_text: "Brosur Resmi Panduan Pendaftaran Siswa Baru TA 2026/2027",
     },
-    {
-      id: "med-5",
-      file_name: "video-profil-sekolah-2026.mp4",
-      file_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      file_type: "video",
-      file_size: "45.0 MB",
-      category: "Kegiatan",
-      alt_text: "Video Profil Dokumentasi Sekolah dan Keseharian Santri",
-    },
   ];
 
   for (const m of media) {

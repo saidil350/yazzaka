@@ -7,7 +7,6 @@ import { MediaItem } from "@/lib/types";
 import {
   Upload,
   Image as ImageIcon,
-  Video,
   FileText,
   Copy,
   Trash2,
@@ -96,7 +95,7 @@ export default function AdminMediaPage() {
             Media Manager &amp; Arsip Berkas
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-            Pusat penyimpanan gambar, video profil, brosur PDF, dan dokumen sekolah.
+            Pusat penyimpanan gambar, brosur PDF, dan dokumen sekolah.
           </p>
         </div>
 
@@ -115,9 +114,6 @@ export default function AdminMediaPage() {
           <TabsTrigger value="image">
             Foto &amp; Gambar ({media.filter((m) => m.fileType === "image").length})
           </TabsTrigger>
-          <TabsTrigger value="video">
-            Video ({media.filter((m) => m.fileType === "video").length})
-          </TabsTrigger>
           <TabsTrigger value="document">
             Dokumen / PDF ({media.filter((m) => m.fileType === "document").length})
           </TabsTrigger>
@@ -130,7 +126,7 @@ export default function AdminMediaPage() {
           <EmptyState
             icon={ImageIcon}
             title="Belum Ada Berkas Media"
-            description="Unggah foto kegiatan, thumbnail video, atau berkas PDF pertama Anda."
+            description="Unggah foto kegiatan atau berkas PDF pertama Anda."
             action={{
               label: "Unggah Media Baru",
               onClick: () => setModalOpen(true),
@@ -153,11 +149,6 @@ export default function AdminMediaPage() {
                     alt={item.altText}
                     className="w-full h-full object-cover"
                   />
-                ) : item.fileType === "video" ? (
-                  <div className="flex flex-col items-center gap-1 text-muted-foreground">
-                    <Video className="h-10 w-10 text-primary" aria-hidden="true" />
-                    <span className="text-[10px]">Video Link</span>
-                  </div>
                 ) : (
                   <div className="flex flex-col items-center gap-1 text-muted-foreground">
                     <FileText className="h-10 w-10 text-primary" aria-hidden="true" />
@@ -249,9 +240,9 @@ export default function AdminMediaPage() {
             />
           ) : (
             <Input
-              label="URL File (Link Dokumen / Video URL)"
+              label="URL File (Link Dokumen)"
               required
-              placeholder="https://example.com/file.pdf atau link video"
+              placeholder="https://example.com/file.pdf"
               value={fileUrl}
               onChange={(e) => setFileUrl(e.target.value)}
             />
@@ -264,7 +255,6 @@ export default function AdminMediaPage() {
               onChange={(e) => setFileType(e.target.value as MediaItem["fileType"])}
             >
               <option value="image">Gambar / Foto (Image)</option>
-              <option value="video">Video URL (YouTube/Vimeo)</option>
               <option value="document">Dokumen / PDF</option>
             </Select>
 

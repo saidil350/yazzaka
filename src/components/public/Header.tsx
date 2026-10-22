@@ -47,7 +47,7 @@ const secondaryNavLinks: { label: string; href: string; desc: string; icon: Reac
     icon: Calendar,
   },
   {
-    label: "Galeri Foto & Video",
+    label: "Galeri Foto",
     href: "/galeri",
     desc: "Dokumentasi kehidupan santri",
     icon: ImageIcon,
