@@ -76,11 +76,6 @@ interface SchoolDataContextType {
   updateAchievement: (id: string, achievement: Partial<Achievement>) => Promise<void>;
   deleteAchievement: (id: string) => Promise<void>;
 
-  // Articles
-  addArticle: (article: Omit<Article, "id">) => Promise<void>;
-  updateArticle: (id: string, article: Partial<Article>) => Promise<void>;
-  deleteArticle: (id: string) => Promise<void>;
-
   // Events
   addEvent: (event: Omit<SchoolEvent, "id">) => Promise<void>;
   updateEvent: (id: string, event: Partial<SchoolEvent>) => Promise<void>;
@@ -303,19 +298,8 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
     setAchievements(prev => prev.filter(a => a.id !== id));
   };
 
-  // Articles
-  const addArticle = async (article: Omit<Article, "id">) => {
-    const created = await apiCall('/api/articles', 'POST', article);
-    setArticles(prev => [created, ...prev]);
-  };
-  const updateArticle = async (id: string, article: Partial<Article>) => {
-    const updated = await apiCall(`/api/articles/${id}`, 'PUT', article);
-    setArticles(prev => prev.map(a => a.id === id ? updated : a));
-  };
-  const deleteArticle = async (id: string) => {
-    await apiCall(`/api/articles/${id}`, 'DELETE');
-    setArticles(prev => prev.filter(a => a.id !== id));
-  };
+  // Catatan: CRUD artikel berita kini lewat /api/articles langsung
+  // di modul admin berita (src/app/admin/berita) — bukan lewat context ini.
 
   // Events
   const addEvent = async (event: Omit<SchoolEvent, "id">) => {
@@ -483,7 +467,6 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
         addProgram, updateProgram, deleteProgram,
         addFacility, updateFacility, deleteFacility,
         addAchievement, updateAchievement, deleteAchievement,
-        addArticle, updateArticle, deleteArticle,
         addEvent, updateEvent, deleteEvent,
         addMedia, deleteMedia,
         addMember, updateMember, deleteMember,

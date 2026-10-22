@@ -75,12 +75,18 @@ export function NewsAndEvents() {
                 {leadArticle && (
                   <div className="bg-white border-2 border-[#E8E2D8] rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-200 flex flex-col md:flex-row group">
                     <div className="md:w-1/2 h-52 md:h-auto relative overflow-hidden bg-stone-100 shrink-0">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={leadArticle.coverImage}
-                        alt={leadArticle.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
+                      {leadArticle.coverImage ? (
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img
+                          src={leadArticle.coverImage}
+                          alt={leadArticle.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Newspaper className="h-10 w-10 text-stone-400" aria-hidden="true" />
+                        </div>
+                      )}
                       <div className="absolute top-3 left-3">
                         <Badge variant="outline" className="px-2.5 py-0.5 rounded-full bg-stone-900 text-white border-transparent text-[11px] font-bold shadow-xs">
                           {leadArticle.category}

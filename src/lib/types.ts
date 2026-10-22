@@ -89,24 +89,9 @@ export interface Achievement {
   description: string;
 }
 
-export interface Article {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  coverImage: string;
-  category: string;
-  tags: string[];
-  author: string;
-  authorRole: string;
-  publishedDate: string;
-  readTime: string;
-  status: "published" | "draft";
-  featured: boolean;
-  seoTitle: string;
-  seoDescription: string;
-}
+// Tipe domain berita kini didefinisikan di src/lib/news/types.ts —
+// diekspor ulang di sini agar konsumen lama tetap bekerja.
+export type { Article, NewsStatus, NewsCategory, NewsMedia } from "./news/types";
 
 export interface SchoolEvent {
   id: string;

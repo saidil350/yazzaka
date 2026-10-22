@@ -156,3 +156,56 @@ node scripts/migrate-auth.mjs
 | Error "AUTH_SECRET tidak valid" | Env belum diset | Pastikan `AUTH_SECRET` ada di `.env.local` (min 32 karakter) |
 | Redirect loop `/login ↔ /admin` | Cookie tidak tersimpan (browser blokir cookie) | Izinkan cookie / cek mode incognito+strict |
 | `403` padahal login super_admin | Role di DB bukan `super_admin` | Cek `node scripts/check-users.mjs` |
+
+---
+
+## 7. Alur Berita (fitur warta & publikasi)
+
+Modul berita berada di `/admin/berita` (URL lama `/admin/content/berita`
+otomatis dialihkan). Detail teknis: `docs/PANDUAN-FITUR-BERITA.md`.
+
+Peta akses cepat:
+
+| Aksi | editor | super_admin |
+|---|---|---|
+| Tulis berita + simpan draf | ✅ | ✅ |
+| Kirim untuk ditinjau | ✅ | ✅ |
+| Terbitkan / arsipkan | ❌ | ✅ |
+| Edit/hapus berita orang lain | ❌ | ✅ |
+| Kelola kategori & berita unggulan | ❌ | ✅ |
+
+### Skenario uji berita (T-B01 … T-B10)
+
+- **T-B01 — Teks-saja bisa terbit**: login super_admin → Tulis Berita →
+  isi judul + isi artikel (tanpa gambar/kategori/lampiran) → Terbitkan →
+  artikel tampil di `/berita` dan `/berita/[slug]` tanpa bagian kosong.
+- **T-B02 — Draft tak terlihat publik**: simpan draf → buka
+  `/berita/<slug>` di sesi tanpa login → halaman 404 (konten tidak
+  bocor); artikel tidak ada di `GET /api/articles` publik.
+- **T-B03 — Konten Tiptap utuh**: buat artikel dengan H2, bold, list,
+  blockquote → simpan → buka kembali edit → semua format tetap ada;
+  pratinjau dan halaman publik merender sama.
+- **T-B04 — Workflow editor**: login editor → tulis berita → tidak ada
+  tombol "Terbitkan" → Kirim untuk Ditinjau → status "Menunggu Tinjau" →
+  login super_admin → terbitkan dari menu aksi di daftar.
+- **T-B05 — Re-review**: editor menyimpan beritanya sendiri yang sudah
+  terbit → status otomatis menjadi "Menunggu Tinjau" (tidak langsung
+  mengubah publikasi).
+- **T-B06 — Kepemilikan**: editor membuka menu aksi berita milik
+  super_admin → hanya "Pratinjau" (tanpa Edit/Hapus). PUT/DELETE langsung
+  ke API ditolak 403.
+- **T-B07 — Slug unik**: buat dua berita berjudul sama → slug kedua
+  otomatis diberi akhiran `-2`; `slug-check` memberi peringatan saat edit.
+- **T-B08 — Hapus dengan konfirmasi**: menu aksi → Hapus → modal
+  konfirmasi → berita hilang dari daftar; toast sukses.
+- **T-B09 — Redirect URL lama**: buka `/admin/content/berita` → dialihkan
+  ke `/admin/berita`.
+- **T-B10 — Unggahan berkas** *(butuh kredensial R2 — lihat panduan)*:
+  unggah sampul & gambar inline (JPG/PNG/WEBP/GIF ≤5 MB), lampiran
+  PDF/DOCX ≤10 MB; berkas lain/oversize ditolak dengan pesan; lampiran
+  berita terbit dapat diunduh tanpa login; berkas draf menolak akses
+  anonim; hapus berkas yang masih dipakai artikel ditolak 409.
+
+Catatan teknis: `GET /api/school-data` kini hanya menyertakan artikel
+berstatus `published` (tanpa isi dokumen) dan mengecualikan berkas media
+fitur berita dari galeri publik.

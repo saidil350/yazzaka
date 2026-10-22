@@ -1,42 +1,77 @@
 import { NextResponse } from "next/server";
-import { getDb } from "@/lib/db/neon";
-import { mapArticle } from "../school-data/route";
-import { generateId } from "@/lib/utils";
+import {
+  createArticle,
+  listArticles,
+} from "@/lib/news/service";
+import {
+  parseOrThrow,
+  revalidateNews,
+  requireUser,
+  toErrorResponse,
+} from "@/lib/news/api-helpers";
+import { articlePayloadSchema } from "@/lib/news/schemas";
+import type { NewsStatus } from "@/lib/news/types";
 
-export async function GET() {
+const VALID_STATUS: NewsStatus[] = [
+  "draft",
+  "pending_review",
+  "published",
+  "archived",
+];
+
+/**
+ * GET /api/articles?q=&category=&status=&page=&pageSize=&scope=
+ * scope "public" (default): hanya artikel terbit, tanpa sesi.
+ * scope "admin": seluruh status, wajib sesi staff.
+ */
+export async function GET(request: Request) {
   try {
-    const sql = getDb();
-    const result = await sql`SELECT * FROM articles ORDER BY published_date DESC`;
-    return NextResponse.json(result.map(mapArticle));
+    const url = new URL(request.url);
+    const scope = url.searchParams.get("scope") === "admin" ? "admin" : "public";
+
+    if (scope === "admin") {
+      await requireUser(request);
+    }
+
+    const statusParam = url.searchParams.get("status");
+    const status: NewsStatus[] | undefined = statusParam
+      ? statusParam
+          .split(",")
+          .map((s) => s.trim())
+          .filter((s): s is NewsStatus =>
+            VALID_STATUS.includes(s as NewsStatus)
+          )
+      : scope === "public"
+        ? ["published"]
+        : undefined;
+
+    const result = await listArticles({
+      status,
+      categorySlug: url.searchParams.get("category") || null,
+      q: url.searchParams.get("q") || null,
+      page: Number(url.searchParams.get("page") ?? "1") || 1,
+      pageSize: Number(url.searchParams.get("pageSize") ?? "9") || 9,
+    });
+
+    return NextResponse.json(result);
   } catch (error) {
-    console.error("GET /api/articles error:", error);
-    return NextResponse.json({ error: "Gagal mengambil artikel" }, { status: 500 });
+    return toErrorResponse(error, "Gagal mengambil daftar berita");
   }
 }
 
+/** POST /api/articles — buat berita baru (editor & super_admin). */
 export async function POST(request: Request) {
   try {
+    const user = await requireUser(request);
     const body = await request.json();
-    const sql = getDb();
-    const id = generateId("art");
-    const slug = body.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    const payload = parseOrThrow(articlePayloadSchema, body);
 
-    const result = await sql`
-      INSERT INTO articles (
-        id, slug, title, excerpt, content, cover_image, category, tags, author, 
-        author_role, published_date, read_time, status, featured, seo_title, seo_description
-      ) VALUES (
-        ${id}, ${slug}, ${body.title}, ${body.excerpt}, ${body.content}, ${body.coverImage}, 
-        ${body.category}, ${JSON.stringify(body.tags ?? [])}::jsonb, ${body.author}, 
-        ${body.authorRole}, ${body.publishedDate}, ${body.readTime}, ${body.status ?? 'published'}, 
-        ${body.featured ?? false}, ${body.seoTitle}, ${body.seoDescription}
-      )
-      RETURNING *
-    `;
-
-    return NextResponse.json(mapArticle(result[0]), { status: 201 });
+    const article = await createArticle(payload, user);
+    if (article.status === "published") {
+      revalidateNews(article.slug);
+    }
+    return NextResponse.json(article, { status: 201 });
   } catch (error) {
-    console.error("POST /api/articles error:", error);
-    return NextResponse.json({ error: "Gagal menambahkan artikel" }, { status: 500 });
+    return toErrorResponse(error, "Gagal membuat berita");
   }
 }

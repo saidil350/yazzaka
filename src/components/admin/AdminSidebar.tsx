@@ -17,6 +17,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   LogOut,
+  Newspaper,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -74,6 +75,13 @@ export function AdminSidebar({
       roles: ["super_admin", "editor"],
     },
     {
+      type: "single",
+      title: "Berita & Artikel",
+      href: "/admin/berita",
+      icon: Newspaper,
+      roles: ["super_admin", "editor"],
+    },
+    {
       type: "group",
       key: "content",
       title: "Konten Landing Page",
@@ -86,7 +94,6 @@ export function AdminSidebar({
         { label: "Prestasi Santri", href: "/admin/content/pengumuman" },
         { label: "Pimpinan & Dewan Asatidz", href: "/admin/organization/tim" },
         { label: "Testimoni Wali & Alumni", href: "/admin/content/testimoni" },
-        { label: "Berita & Artikel", href: "/admin/content/berita" },
       ],
     },
     {
