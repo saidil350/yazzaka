@@ -13,7 +13,6 @@ import {
   ArrowRight,
   Sparkles,
   ChevronDown,
-  Calendar,
   Image as ImageIcon,
   MapPin,
   BookOpen,
@@ -40,12 +39,6 @@ const primaryNavLinks: NavLinkItem[] = [
 ];
 
 const secondaryNavLinks: { label: string; href: string; desc: string; icon: React.ElementType; badge?: string }[] = [
-  {
-    label: "Agenda Sekolah",
-    href: "/agenda",
-    desc: "Kalender event & jadwal PPDB",
-    icon: Calendar,
-  },
   {
     label: "Galeri Foto",
     href: "/galeri",
