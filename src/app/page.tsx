@@ -8,7 +8,7 @@ import { TrustStats } from "@/components/public/TrustStats";
 import { EditorialAbout } from "@/components/public/EditorialAbout";
 import { ProgramsSection } from "@/components/public/ProgramsSection";
 import { WhyUsSection } from "@/components/public/WhyUsSection";
-import { FacilitiesSection } from "@/components/public/FacilitiesSection";
+import { NewsSection } from "@/components/public/NewsSection";
 import { AchievementsSection } from "@/components/public/AchievementsSection";
 import { TestimonialsSection } from "@/components/public/TestimonialsSection";
 import { useSchoolData } from "@/context/SchoolDataContext";
@@ -31,7 +31,7 @@ export default function HomePage() {
         {isSectionEnabled("about") && <EditorialAbout />}
         {isSectionEnabled("programs") && <ProgramsSection />}
         {isSectionEnabled("whyus") && <WhyUsSection />}
-        {isSectionEnabled("facilities") && <FacilitiesSection />}
+        {isSectionEnabled("berita") && <NewsSection />}
         {isSectionEnabled("achievements") && <AchievementsSection />}
         {isSectionEnabled("testimonials") && <TestimonialsSection />}
       </main>

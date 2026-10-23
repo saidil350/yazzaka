@@ -93,22 +93,6 @@ async function migrate() {
   console.log("✓ programs");
 
   await sql`
-    CREATE TABLE IF NOT EXISTS facilities (
-      id TEXT PRIMARY KEY,
-      name TEXT NOT NULL,
-      category TEXT NOT NULL,
-      description TEXT,
-      capacity TEXT,
-      image_url TEXT,
-      status TEXT DEFAULT 'published',
-      order_index INTEGER DEFAULT 0,
-      created_at TIMESTAMPTZ DEFAULT NOW(),
-      updated_at TIMESTAMPTZ DEFAULT NOW()
-    )
-  `;
-  console.log("✓ facilities");
-
-  await sql`
     CREATE TABLE IF NOT EXISTS achievements (
       id TEXT PRIMARY KEY,
       title TEXT NOT NULL,
@@ -430,25 +414,6 @@ async function seed() {
   }
   console.log("✓ programs seeded (6 records)");
 
-  // === FACILITIES ===
-  const facilities = [
-    { id: "fac-1", name: "Masjid Raya Baiturrahman Yazzaka", category: "Sarana Ibadah & Olahraga", description: "Pusat spiritual dan peribadatan berkapasitas 2.000 jamaah dengan arsitektur elegan, sejuk, dan terawat.", capacity: "2.000 Jamaah", image_url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=80", status: "published", order_index: 1 },
-    { id: "fac-2", name: "Laboratorium Sains Terpadu & IoT", category: "Laboratorium & Riset", description: "Fasilitas praktikum Fisika, Kimia, Biologi, dan mikrokontroler robotika berstandar keselamatan tinggi.", capacity: "40 Siswa / Lab", image_url: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80", status: "published", order_index: 2 },
-    { id: "fac-3", name: "Perpustakaan Digital & Corner Riset", category: "Ruang Belajar", description: "Koleksi lebih dari 15.000 judul kitab kuning, literatur sains modern, dan akses jurnal internasional.", capacity: "120 Tempat Duduk", image_url: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1000&q=80", status: "published", order_index: 3 },
-    { id: "fac-4", name: "Smart Classroom Ber-AC & Multimedia", category: "Ruang Belajar", description: "Ruang kelas ergonomis dilengkapi interactive smart board, proyektor laser, dan tata suara jernih.", capacity: "28 Siswa / Kelas", image_url: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1000&q=80", status: "published", order_index: 4 },
-    { id: "fac-5", name: "Asrama Santri Modern & Sehat", category: "Asrama & Hunian", description: "Hunian santri berlantai keramik, ranjang bertingkat kokoh, sirkulasi udara alami, dan pendampingan wali kamar.", capacity: "40 Asrama", image_url: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=1000&q=80", status: "published", order_index: 5 },
-    { id: "fac-6", name: "Gelanggang Olahraga & Lapangan Futsal", category: "Sarana Ibadah & Olahraga", description: "Kompleks sarana olahraga multifungsi untuk futsal, basket, voli, bulu tangkis, dan panahan standar nasional.", capacity: "500 Penonton", image_url: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=80", status: "published", order_index: 6 },
-  ];
-
-  for (const f of facilities) {
-    await sql`
-      INSERT INTO facilities (id, name, category, description, capacity, image_url, status, order_index)
-      VALUES (${f.id}, ${f.name}, ${f.category}, ${f.description}, ${f.capacity}, ${f.image_url}, ${f.status}, ${f.order_index})
-      ON CONFLICT (id) DO NOTHING
-    `;
-  }
-  console.log("✓ facilities seeded (6 records)");
-
   // === ACHIEVEMENTS ===
   // Tidak ada seed — data fiktif dihapus 2026-10-23. Isi prestasi nyata via CMS.
   const achievements = [];
@@ -591,7 +556,7 @@ async function seed() {
       'pesantren peradaban, sekolah islam, tahfiz quran, yayasan yazzakka aceh, sigli pidie',
       '/og-image.jpg',
       '{"instagram":"https://instagram.com/yazzakka.official","youtube":"https://youtube.com/@YazzakaOfficial","facebook":"https://facebook.com/yazzakka.official","tiktok":"https://tiktok.com/@yazzakka.official","linkedin":""}',
-      '{"headerLinks":[{"label":"Beranda","href":"/"},{"label":"Tentang Kami","href":"/tentang-kami"},{"label":"Program","href":"/program"},{"label":"Fasilitas","href":"/fasilitas"},{"label":"Prestasi","href":"/prestasi"},{"label":"Berita","href":"/berita"}],"footerLinks":[{"label":"Kebijakan Privasi","href":"/privasi"},{"label":"Sitemap","href":"/sitemap"}]}'
+      '{"headerLinks":[{"label":"Beranda","href":"/"},{"label":"Tentang Kami","href":"/tentang-kami"},{"label":"Program","href":"/program"},{"label":"Prestasi","href":"/prestasi"},{"label":"Berita","href":"/berita"}],"footerLinks":[{"label":"Kebijakan Privasi","href":"/privasi"},{"label":"Sitemap","href":"/sitemap"}]}'
     ) ON CONFLICT (id) DO NOTHING
   `;
   console.log("✓ website_settings seeded");
@@ -603,7 +568,6 @@ async function seed() {
     { id: "sec-about", key: "about", title: "Tentang Sekolah", subtitle: "Sekilas profil dan visi misi", is_enabled: true, order_index: 3 },
     { id: "sec-programs", key: "programs", title: "Program Unggulan", subtitle: "Daftar program pendidikan", is_enabled: true, order_index: 4 },
     { id: "sec-why", key: "why", title: "Mengapa Yazzaka", subtitle: "Keunggulan kompetitif sekolah", is_enabled: true, order_index: 5 },
-    { id: "sec-facilities", key: "facilities", title: "Fasilitas", subtitle: "Sarana & prasarana pendidikan", is_enabled: true, order_index: 6 },
     { id: "sec-news", key: "news", title: "Berita & Agenda", subtitle: "Info terbaru dari sekolah", is_enabled: true, order_index: 8 },
     { id: "sec-testimonials", key: "testimonials", title: "Testimoni", subtitle: "Kata wali murid & alumni", is_enabled: true, order_index: 9 },
     { id: "sec-cta", key: "cta", title: "Ajakan Pendaftaran", subtitle: "Call to action pendaftaran PPDB", is_enabled: true, order_index: 10 },

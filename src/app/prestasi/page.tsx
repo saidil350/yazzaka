@@ -1,28 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Trophy, Award } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 export default function AchievementsPage() {
   const { achievements, profile } = useSchoolData();
-  const [selectedCategory, setSelectedCategory] = useState<string>("Semua");
-
-  // Dynamic categories extracted from database
-  const categories = [
-    "Semua",
-    ...Array.from(new Set(achievements.map((a) => a.category).filter(Boolean))),
-  ];
-
-  const filtered =
-    selectedCategory === "Semua"
-      ? achievements
-      : achievements.filter((a) => a.category === selectedCategory);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
@@ -49,44 +36,16 @@ export default function AchievementsPage() {
         <section className="py-12 lg:py-14 bg-white border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
-            {/* Headspace Pill Filter Bar */}
-            {categories.length > 1 && (
-              <div className="flex flex-wrap items-center gap-2">
-                {categories.map((cat) => (
-                  <Button
-                    key={cat}
-                    variant={selectedCategory === cat ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedCategory(cat)}
-                  >
-                    {cat}
-                  </Button>
-                ))}
-              </div>
-            )}
-
             {/* Grid or EmptyState */}
-            {filtered.length === 0 ? (
+            {achievements.length === 0 ? (
               <EmptyState
                 icon={Trophy}
                 title="Tidak Ada Prestasi Ditemukan"
-                description={
-                  selectedCategory !== "Semua"
-                    ? `Belum ada catatan prestasi dalam kategori "${selectedCategory}".`
-                    : "Belum ada rekaman prestasi santri yang dipublikasikan."
-                }
-                action={
-                  selectedCategory !== "Semua"
-                    ? {
-                        label: "Tampilkan Semua Prestasi",
-                        onClick: () => setSelectedCategory("Semua"),
-                      }
-                    : undefined
-                }
+                description="Belum ada rekaman prestasi santri yang dipublikasikan."
               />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                {filtered.map((ach) => (
+                {achievements.map((ach) => (
                   <div
                     key={ach.id}
                     className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between hover:border-[#FA6400]/40 hover:shadow-md transition-all shadow-xs"

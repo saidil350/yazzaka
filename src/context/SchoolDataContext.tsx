@@ -4,7 +4,6 @@ import React, { createContext, use, useState, useEffect, useCallback } from "rea
 import {
   SchoolProfile,
   Program,
-  Facility,
   Achievement,
   Article,
   SchoolEvent,
@@ -22,7 +21,6 @@ import {
 import {
   initialSchoolProfile,
   initialPrograms,
-  initialFacilities,
   initialAchievements,
   initialArticles,
   initialEvents,
@@ -40,7 +38,6 @@ import { generateId } from "@/lib/utils";
 interface SchoolDataContextType {
   profile: SchoolProfile;
   programs: Program[];
-  facilities: Facility[];
   achievements: Achievement[];
   articles: Article[];
   events: SchoolEvent[];
@@ -65,11 +62,6 @@ interface SchoolDataContextType {
   addProgram: (program: Omit<Program, "id">) => Promise<void>;
   updateProgram: (id: string, program: Partial<Program>) => Promise<void>;
   deleteProgram: (id: string) => Promise<void>;
-
-  // Facilities
-  addFacility: (facility: Omit<Facility, "id">) => Promise<void>;
-  updateFacility: (id: string, facility: Partial<Facility>) => Promise<void>;
-  deleteFacility: (id: string) => Promise<void>;
 
   // Achievements
   addAchievement: (achievement: Omit<Achievement, "id">) => Promise<void>;
@@ -122,7 +114,6 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
   // Gunakan initialData sebagai fallback sementara loading
   const [profile, setProfile] = useState<SchoolProfile>(initialSchoolProfile);
   const [programs, setPrograms] = useState<Program[]>(initialPrograms);
-  const [facilities, setFacilities] = useState<Facility[]>(initialFacilities);
   const [achievements, setAchievements] = useState<Achievement[]>(initialAchievements);
   const [articles, setArticles] = useState<Article[]>(initialArticles);
   const [events, setEvents] = useState<SchoolEvent[]>(initialEvents);
@@ -180,7 +171,6 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
         
         if (data.profile) setProfile(data.profile);
         if (data.programs) setPrograms(data.programs);
-        if (data.facilities) setFacilities(data.facilities);
         if (data.achievements) setAchievements(data.achievements);
         if (data.articles) setArticles(data.articles);
         if (data.events) setEvents(data.events);
@@ -270,21 +260,6 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
     await apiCall(`/api/programs/${id}`, 'DELETE');
     setPrograms(prev => prev.filter(p => p.id !== id));
     addLog("Menghapus Program", id);
-  };
-
-  // Facilities
-  const addFacility = async (facility: Omit<Facility, "id">) => {
-    const created = await apiCall('/api/facilities', 'POST', facility);
-    setFacilities(prev => [...prev, created]);
-    addLog("Menambahkan Fasilitas", facility.name);
-  };
-  const updateFacility = async (id: string, facility: Partial<Facility>) => {
-    const updated = await apiCall(`/api/facilities/${id}`, 'PUT', facility);
-    setFacilities(prev => prev.map(f => f.id === id ? updated : f));
-  };
-  const deleteFacility = async (id: string) => {
-    await apiCall(`/api/facilities/${id}`, 'DELETE');
-    setFacilities(prev => prev.filter(f => f.id !== id));
   };
 
   // Achievements
@@ -452,12 +427,11 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
 
   return (    <SchoolDataContext.Provider
       value={{
-        profile, programs, facilities, achievements, articles, events, media,
+        profile, programs, achievements, articles, events, media,
         organization, testimonials, admission, messages, settings, users, sections, logs,
         isLoading, error,
         updateProfile, updateBrandingColors,
         addProgram, updateProgram, deleteProgram,
-        addFacility, updateFacility, deleteFacility,
         addAchievement, updateAchievement, deleteAchievement,
         addEvent, updateEvent, deleteEvent,
         addMedia, deleteMedia,

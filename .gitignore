@@ -13,6 +13,10 @@
 # testing
 /coverage
 /.playwright-mcp/
+/gui-test-screenshots/
+
+# agent tooling
+/.zcode/
 
 # next.js
 /.next/

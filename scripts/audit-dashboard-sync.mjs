@@ -34,7 +34,6 @@ async function auditAdminDashboard() {
     console.log("   - Pesan Masuk    :", `${messagesCount} pesan (${newMessages} belum dibaca)`);
 
     console.log("\n3. MODUL KONTEN LAINNYA:");
-    console.log("   - Fasilitas      :", `${data.facilities?.length || 0} sarana`);
     console.log("   - Prestasi       :", `${data.achievements?.length || 0} rekam jejak`);
     console.log("   - Testimoni      :", `${data.testimonials?.length || 0} ulasan`);
     console.log("   - Asatidz / Tim  :", `${data.organization?.length || 0} pengajar`);

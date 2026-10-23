@@ -5,7 +5,7 @@ import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
-import { listArticles, listCategories } from "@/lib/news/service";
+import { listArticles } from "@/lib/news/service";
 import { getSchoolProfile } from "@/lib/school-profile";
 import { formatDateIndonesian } from "@/lib/utils";
 import { PAGE_SIZE_DEFAULT } from "@/lib/news/types";
@@ -23,24 +23,21 @@ export const metadata: Metadata = {
   },
 };
 
-type SearchParams = Promise<{ q?: string; kategori?: string; page?: string }>;
+type SearchParams = Promise<{ q?: string; page?: string }>;
 
 export default async function BeritaPage({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
-  const { q, kategori, page } = await searchParams;
+  const { q, page } = await searchParams;
   const currentPage = Math.max(1, Number(page ?? "1") || 1);
   const searchQuery = q?.trim() ?? "";
-  const activeCategory = kategori?.trim() ?? "";
 
-  const [profile, categories, result] = await Promise.all([
+  const [profile, result] = await Promise.all([
     getSchoolProfile(),
-    listCategories(),
     listArticles({
       status: ["published"],
-      categorySlug: activeCategory || null,
       q: searchQuery || null,
       page: currentPage,
       pageSize: PAGE_SIZE_DEFAULT,
@@ -48,13 +45,11 @@ export default async function BeritaPage({
   ]);
 
   const schoolName = profile?.name || "Yazzaka";
-  const visibleCategories = categories.filter((c) => c.articleCount > 0);
 
   const buildPageHref = (overrides: Record<string, string | null>) => {
     const params = new URLSearchParams();
-    const merged = { q: searchQuery, kategori: activeCategory, ...overrides };
+    const merged = { q: searchQuery, ...overrides };
     if (merged.q) params.set("q", merged.q);
-    if (merged.kategori) params.set("kategori", merged.kategori);
     if (overrides.page) params.set("page", overrides.page);
     const qs = params.toString();
     return qs ? `/berita?${qs}` : "/berita";
@@ -84,58 +79,23 @@ export default async function BeritaPage({
         {/* Daftar berita */}
         <section className="border-b border-border bg-background py-12 lg:py-14">
           <div className="mx-auto max-w-7xl space-y-8 px-4 sm:px-6 lg:px-8">
-            {/* Filter kategori + pencarian */}
-            <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-              <div className="flex w-full flex-wrap items-center gap-1.5 rounded-lg border border-border bg-card p-1 md:w-auto">
-                <Link
-                  href={buildPageHref({ kategori: null, page: null })}
-                  aria-current={!activeCategory ? "page" : undefined}
-                  className={[
-                    "cursor-pointer rounded-md px-3.5 py-1 text-xs font-semibold transition-colors",
-                    !activeCategory
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-background hover:text-foreground",
-                  ].join(" ")}
-                >
-                  Semua
-                </Link>
-                {visibleCategories.map((cat) => (
-                  <Link
-                    key={cat.id}
-                    href={buildPageHref({ kategori: cat.slug, page: null })}
-                    aria-current={activeCategory === cat.slug ? "page" : undefined}
-                    className={[
-                      "cursor-pointer rounded-md px-3.5 py-1 text-xs font-semibold transition-colors",
-                      activeCategory === cat.slug
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:bg-background hover:text-foreground",
-                    ].join(" ")}
-                  >
-                    {cat.name}
-                  </Link>
-                ))}
+            {/* Pencarian */}
+            <form action="/berita" method="get" className="w-full md:ml-auto md:w-72">
+              <div className="relative">
+                <Search
+                  className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                  aria-hidden="true"
+                />
+                <input
+                  type="search"
+                  name="q"
+                  defaultValue={searchQuery}
+                  placeholder="Cari artikel..."
+                  aria-label="Cari artikel"
+                  className="h-9 w-full rounded-md border border-input bg-card pl-9 pr-3 text-xs font-medium outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                />
               </div>
-
-              <form action="/berita" method="get" className="w-full md:w-72">
-                {activeCategory ? (
-                  <input type="hidden" name="kategori" value={activeCategory} />
-                ) : null}
-                <div className="relative">
-                  <Search
-                    className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-                    aria-hidden="true"
-                  />
-                  <input
-                    type="search"
-                    name="q"
-                    defaultValue={searchQuery}
-                    placeholder="Cari artikel..."
-                    aria-label="Cari artikel"
-                    className="h-9 w-full rounded-md border border-input bg-card pl-9 pr-3 text-xs font-medium outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
-                  />
-                </div>
-              </form>
-            </div>
+            </form>
 
             {/* Grid artikel */}
             {result.items.length > 0 ? (
@@ -262,10 +222,10 @@ export default async function BeritaPage({
                 description={
                   searchQuery
                     ? `Tidak ditemukan warta dengan kata kunci "${searchQuery}".`
-                    : "Belum ada artikel yang dipublikasikan dalam kategori ini."
+                    : "Belum ada artikel yang dipublikasikan."
                 }
                 action={
-                  searchQuery || activeCategory
+                  searchQuery
                     ? { label: "Reset Pencarian", href: "/berita" }
                     : undefined
                 }
