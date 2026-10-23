@@ -674,8 +674,8 @@ export async function getMediaUsage(mediaId: string): Promise<MediaUsage> {
   )) as SqlRow[];
   const inline = (await sql.query(
     `SELECT count(*)::int AS n FROM articles
-     WHERE content_doc IS NOT NULL AND content_doc::text LIKE $2`,
-    [mediaId, `%${mediaId}%`]
+     WHERE content_doc IS NOT NULL AND content_doc::text LIKE '%' || $1 || '%'`,
+    [mediaId]
   )) as SqlRow[];
   return {
     cover: Number(cover[0]?.n ?? 0),

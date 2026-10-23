@@ -58,7 +58,7 @@ export default function AdminEventsPage() {
     setTime("08:00 - 12:00 WIB");
     setLocation("Kompleks Utama Yayasan Yazzakka");
     setCategory("Akademik");
-    setCoverImage("https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80");
+    setCoverImage("");
     setRegistrationUrl("/pendaftaran");
     setStatus("upcoming");
     setModalOpen(true);
@@ -313,7 +313,7 @@ export default function AdminEventsPage() {
             label="Foto Banner Acara / Kegiatan"
             value={coverImage}
             onChange={(val) => setCoverImage(val)}
-            placeholder="https://images.unsplash.com/... atau unggah gambar"
+            placeholder="https://contoh.com/gambar.jpg"
             helperText="Unggah foto flyer/kegiatan (drag & drop) atau tautkan URL gambar."
           />
 

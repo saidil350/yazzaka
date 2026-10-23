@@ -48,15 +48,21 @@ export default function AchievementsPage() {
                 {achievements.map((ach) => (
                   <div
                     key={ach.id}
-                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between hover:border-[#FA6400]/40 hover:shadow-md transition-all shadow-xs"
+                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-md transition-all shadow-xs"
                   >
                     <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={ach.imageUrl}
-                        alt={ach.title}
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                      />
+                      {ach.imageUrl ? (
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img
+                          src={ach.imageUrl}
+                          alt={ach.title}
+                          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-stone-400">
+                          <Trophy className="h-8 w-8" />
+                        </div>
+                      )}
                     </div>
 
                     <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">

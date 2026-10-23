@@ -4,7 +4,7 @@ import React from "react";
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
-import { Compass, Sparkles, Users } from "lucide-react";
+import { Compass, Sparkles, Users, Image as ImageIcon } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { OrganizationMember } from "@/lib/types";
@@ -39,14 +39,20 @@ interface MemberCardProps {
 
 function MemberCard({ member }: MemberCardProps) {
   return (
-    <div className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between shadow-xs hover:border-[#FA6400]/40 transition-all">
+    <div className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between shadow-xs transition-all">
       <div className="relative aspect-[4/3] overflow-hidden bg-stone-200">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={member.photoUrl}
-          alt={member.name}
-          className="w-full h-full object-cover"
-        />
+        {member.photoUrl ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={member.photoUrl}
+            alt={member.name}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-stone-400">
+            <ImageIcon className="h-8 w-8" />
+          </div>
+        )}
       </div>
       <div className="p-4 space-y-1">
         <span className="text-[10px] font-bold text-[#FA6400] uppercase tracking-wider block">
@@ -141,12 +147,21 @@ export default function AboutPage() {
               <div className="lg:col-span-6">
                 <div className="rounded-3xl overflow-hidden border-2 border-[#E8E2D8] bg-[#FAF6EE] p-2 shadow-sm">
                   <div className="aspect-[4/3] relative overflow-hidden rounded-2xl bg-stone-200">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80"
-                      alt="Gedung Sekolah Yazzakka"
-                      className="w-full h-full object-cover"
-                    />
+                    {profile.aboutImageUrl ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={profile.aboutImageUrl}
+                        alt={`Gedung ${profile.name}`}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-stone-500">
+                        <ImageIcon className="h-8 w-8" />
+                        <span className="text-xs font-medium">
+                          Foto gedung diunggah via CMS Profil Lembaga
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

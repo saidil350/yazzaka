@@ -51,16 +51,22 @@ export default function EventsPage() {
                 {events.map((evt) => (
                   <div
                     key={evt.id}
-                    className="bg-white rounded-3xl border-2 border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all flex flex-col justify-between group"
+                    className="bg-white rounded-3xl border-2 border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
                   >
                     <div>
                       <div className="relative aspect-[16/10] overflow-hidden bg-stone-200">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={evt.coverImage}
-                          alt={evt.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
+                        {evt.coverImage ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img
+                            src={evt.coverImage}
+                            alt={evt.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-stone-400">
+                            <Calendar className="h-8 w-8" />
+                          </div>
+                        )}
                       </div>
 
                       <div className="p-5 space-y-3">

@@ -47,7 +47,7 @@ export function TrustStats() {
             return (
               <div
                 key={idx}
-                className="bg-card border border-yazzaka-teal-border rounded-lg p-5 transition-all duration-200 hover:-translate-y-1 hover:border-yazzaka-teal hover:shadow-md flex flex-col"
+                className="bg-card border border-border rounded-lg p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-md flex flex-col"
               >
                 <span className="text-xs font-semibold text-muted-foreground">
                   {stat.label}

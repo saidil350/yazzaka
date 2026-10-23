@@ -58,7 +58,7 @@ export function Select({
             "text-sm text-foreground shadow-xs",
             "transition-colors",
             "hover:border-muted-foreground/40",
-            "focus:outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30",
+            "focus:outline-none focus-visible:border-muted-foreground/40",
             "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-muted",
             error && "border-destructive focus-visible:border-destructive focus-visible:ring-destructive/20",
             className

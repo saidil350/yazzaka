@@ -23,6 +23,7 @@ export default function AdminOrgProfilePage() {
   const [teacherCount, setTeacherCount] = useState(profile.teacherCount);
   const [alumniCount, setAlumniCount] = useState(profile.alumniCount);
   const [hafizCount, setHafizCount] = useState(profile.hafizCount);
+  const [aboutImage, setAboutImage] = useState(profile.aboutImageUrl ?? "");
 
   // Principal
   const [principalName, setPrincipalName] = useState(profile.principal.name);
@@ -42,6 +43,7 @@ export default function AdminOrgProfilePage() {
     setTeacherCount(profile.teacherCount);
     setAlumniCount(profile.alumniCount);
     setHafizCount(profile.hafizCount);
+    setAboutImage(profile.aboutImageUrl ?? "");
     setPrincipalName(profile.principal.name);
     setPrincipalTitle(profile.principal.title);
     setPrincipalPhoto(profile.principal.photoUrl);
@@ -61,6 +63,7 @@ export default function AdminOrgProfilePage() {
         teacherCount: Number(teacherCount),
         alumniCount: Number(alumniCount),
         hafizCount: Number(hafizCount),
+        aboutImageUrl: aboutImage,
         principal: {
           name: principalName,
           title: principalTitle,
@@ -162,6 +165,20 @@ export default function AdminOrgProfilePage() {
           </div>
         </Card>
 
+        {/* Foto Gedung / Kampus */}
+        <Card className="p-6 space-y-6">
+          <h3 className="text-base font-semibold text-foreground">
+            Foto Gedung / Kampus
+          </h3>
+          <ImageUpload
+            label="Foto Gedung Sekolah (Halaman Tentang Kami)"
+            value={aboutImage}
+            onChange={(val) => setAboutImage(val)}
+            placeholder="https://contoh.com/gambar.jpg"
+            helperText="Tampil pada seksi profil di halaman /tentang-kami. Rasio disarankan 16:10."
+          />
+        </Card>
+
         {/* Principal Info */}
         <Card className="p-6 space-y-6">
           <h3 className="text-base font-semibold text-foreground">
@@ -185,7 +202,7 @@ export default function AdminOrgProfilePage() {
             label="Foto Pimpinan / Kepala Sekolah"
             value={principalPhoto}
             onChange={(val) => setPrincipalPhoto(val)}
-            placeholder="https://images.unsplash.com/... atau unggah gambar"
+            placeholder="https://contoh.com/gambar.jpg"
             helperText="Unggah foto formal pimpinan lembaga (drag & drop) atau tautkan URL gambar."
           />
 

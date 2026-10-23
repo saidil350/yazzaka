@@ -181,7 +181,7 @@ export default function AdmissionPage() {
               {steps.map((s, idx) => (
                 <div
                   key={idx}
-                  className="bg-[#FAF6EE] p-5 rounded-2xl border-2 border-[#E8E2D8] space-y-3 flex flex-col justify-between shadow-xs hover:border-[#FA6400]/40 transition-all"
+                  className="bg-[#FAF6EE] p-5 rounded-2xl border-2 border-[#E8E2D8] space-y-3 flex flex-col justify-between shadow-xs"
                 >
                   <div className="space-y-2">
                     <Badge variant="outline">
@@ -417,7 +417,7 @@ export default function AdmissionPage() {
                         <select
                           value={interestProgram}
                           onChange={(e) => setInterestProgram(e.target.value)}
-                          className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-xs sm:text-sm bg-white text-[#1E2330] font-medium"
+                          className="w-full h-10 rounded-xl border border-[#E8E2D8] px-3 text-xs sm:text-sm bg-white text-[#1E2330] font-medium focus:outline-none focus:border-muted-foreground/40"
                         >
                           <option value="Tahfiz & Sains Terpadu">Tahfiz &amp; Sains Terpadu</option>
                           <option value="Kelas Bilingual Internasional">Kelas Bilingual Internasional</option>

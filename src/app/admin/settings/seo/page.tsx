@@ -6,6 +6,7 @@ import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { ImageUpload } from "@/components/ui/image-upload";
 import { Card } from "@/components/ui/card";
 import { Save } from "lucide-react";
 
@@ -90,11 +91,11 @@ export default function AdminSEOSettingsPage() {
               helperText={`${metaDescription.length}/160 karakter — ideal 120–160 agar tampil penuh di hasil pencarian Google.`}
             />
 
-            <Input
+            <ImageUpload
               label="Gambar Preview Berbagi (OpenGraph)"
-              placeholder="https://contoh.com/gambar-preview.jpg"
               value={ogImage}
-              onChange={(e) => setOgImage(e.target.value)}
+              onChange={(val) => setOgImage(val)}
+              placeholder="https://contoh.com/gambar-preview.jpg"
               helperText="Tampil saat tautan situs dibagikan ke WhatsApp, Facebook, atau X. Ukuran ideal 1200×630 piksel."
             />
 

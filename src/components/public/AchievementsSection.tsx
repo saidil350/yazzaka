@@ -58,7 +58,7 @@ export function AchievementsSection() {
             {achievements.slice(0, 4).map((ach) => (
               <div
                 key={ach.id}
-                className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between hover:border-[#FA6400]/50 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shadow-xs"
+                className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shadow-xs"
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}

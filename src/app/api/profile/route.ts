@@ -40,6 +40,7 @@ export async function PUT(request: Request) {
         email = COALESCE(${body.email ?? null}, email),
         whatsapp = COALESCE(${body.whatsapp ?? null}, whatsapp),
         maps_embed_url = COALESCE(${body.mapsEmbedUrl ?? null}, maps_embed_url),
+        about_image_url = COALESCE(${body.aboutImageUrl ?? null}, about_image_url),
         vision = COALESCE(${body.vision ?? null}, vision),
         updated_at = NOW()
       WHERE id = 'profile-yazzaka'

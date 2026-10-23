@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Quote, Sparkles, Compass } from "lucide-react";
+import { ArrowRight, Quote, Sparkles, Compass, Image as ImageIcon } from "lucide-react";
 
 export function EditorialAbout() {
   const { profile } = useSchoolData();
@@ -35,12 +35,18 @@ export function EditorialAbout() {
           <div className="lg:col-span-5 space-y-4">
             <div className="bg-[#FAF6EE] border-2 border-[#E8E2D8] rounded-3xl p-5 shadow-xs">
               <div className="aspect-[16/10] relative overflow-hidden rounded-2xl border border-white shadow-sm bg-stone-200 mb-4">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={profile.principal.photoUrl}
-                  alt={profile.principal.name}
-                  className="w-full h-full object-cover"
-                />
+                {profile.principal.photoUrl ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={profile.principal.photoUrl}
+                    alt={profile.principal.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-stone-400">
+                    <ImageIcon className="h-8 w-8" />
+                  </div>
+                )}
               </div>
 
               {/* Message Quote */}
@@ -97,7 +103,7 @@ export function EditorialAbout() {
                 {profile.mission.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-3 rounded-xl bg-[#FAF6EE] border border-[#E8E2D8] flex items-start gap-3 transition-all hover:bg-white hover:border-yazzaka-teal/40"
+                    className="p-3 rounded-xl bg-[#FAF6EE] border border-[#E8E2D8] flex items-start gap-3 transition-all hover:bg-white"
                   >
                     <div className="h-6 w-6 rounded-full bg-yazzaka-teal-soft text-yazzaka-teal-dark border border-yazzaka-teal-border flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
                       0{idx + 1}
@@ -119,7 +125,7 @@ export function EditorialAbout() {
                 {profile.values.slice(0, 3).map((val, idx) => (
                   <div
                     key={idx}
-                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-4 transition-all hover:-translate-y-0.5 hover:border-yazzaka-teal/40 hover:shadow-xs"
+                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-4 transition-all hover:-translate-y-0.5 hover:shadow-xs"
                   >
                     <span className="text-[9px] font-extrabold uppercase tracking-widest text-yazzaka-teal-dark block mb-1">
                       Pilar 0{idx + 1}

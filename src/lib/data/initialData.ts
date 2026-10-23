@@ -17,13 +17,13 @@ import {
 
 // Konten default HeroSection (src/components/public/HeroSection.tsx).
 // Dipakai sebagai fallback saat school_profile.hero belum diisi dari CMS,
-// dan sebagai nilai awal form di /admin/content/hero.
+// dan sebagai nilai awal form di /admin/content/hero. imageUrl dibiarkan
+// kosong — foto asli diunggah via CMS, bukan foto stok.
 export const DEFAULT_HERO: HeroContent = {
   eyebrow: "Pendidikan Islam Holistik & Berwawasan Global",
   headline: "Belajar Lebih Tenang, Tumbuh Berkarakter Qur'ani.",
   body: "Membina Iman & Akhlak Umat, Mencetak Generasi Berilmu & Berdaya Saing Tinggi. Di Yayasan Bina Iman Akhlak Yazzakka, proses pendidikan memadukan kedalaman tradisi keilmuan Islam, tahfiz Al-Qur'an 30 juz bersanad, penguasaan bahasa Arab & Inggris aktif, serta kurikulum sains modern berbasis riset.",
-  imageUrl:
-    "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
+  imageUrl: "",
   badges: ["Terdaftar Resmi Kemenkumham RI", "Tahfiz 30 Juz Bersanad", "Bahasa Arab & Inggris 24 Jam"],
 };
 
@@ -95,367 +95,22 @@ export const initialSchoolProfile: SchoolProfile = {
   },
 };
 
-export const initialPrograms: Program[] = [
-  {
-    id: "prog-1",
-    slug: "tpa-yazzakka",
-    title: "TPA Yazzakka (Taman Pendidikan Al-Qur'an)",
-    category: "Pendidikan Al-Qur'an",
-    shortDesc:
-      "Pembinaan dasar baca-tulis Al-Qur'an dengan metode tartil tajwid, hafalan surat pendek, doa harian, dan adab islami anak.",
-    fullDesc:
-      "TPA Yazzakka membimbing anak-anak sejak usia dini untuk mencintai Al-Qur'an melalui metode pembelajaran interaktif, talaqqi makharijul huruf, tajwid praktis, setoran hafalan juz 'amma, serta penanaman adab dan akhlak keseharian.",
-    imageUrl: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1000&q=80",
-    iconName: "BookOpen",
-    features: [
-      "Bimbingan talaqqi fashahah & tajwid praktis",
-      "Target tuntas Juz 'Amma dan doa harian",
-      "Pembiasaan adab shalat dan akhlak mulia",
-      "Evaluasi munaqasyah dan wisuda santri",
-    ],
-    targetCompetencies: [
-      "Fasih membaca Al-Qur'an sesuai kaidah tajwid",
-      "Hafal Juz 30 dan surat-surat pilihan",
-      "Terbiasa menjalankan shalat dan adab harian",
-    ],
-    status: "published",
-    orderIndex: 1,
-  },
-  {
-    id: "prog-2",
-    slug: "tkit-yazzakka",
-    title: "TKIT Yazzakka (TK Islam Terpadu)",
-    category: "Anak Usia Dini",
-    shortDesc:
-      "Pendidikan anak usia dini berbasis fitrah, penguatan akidah, pembiasaan akhlak mulia, dan stimulasi motorik-kognitif ceria.",
-    fullDesc:
-      "TKIT Yazzakka memadukan kurikulum PAUD terpadu nasional dengan kurikulum kekhasan Islam. Menghadirkan lingkungan belajar yang aman, ramah anak, dan penuh kasih sayang untuk menumbuhkan kecintaan pada Allah dan Rasul-Nya sejak dini.",
-    imageUrl: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1000&q=80",
-    iconName: "Sparkles",
-    features: [
-      "Sentra bermain peran, seni, dan kreativitas",
-      "Tahfiz Al-Qur'an surat-surat pendek dan hadits pilihan",
-      "Smart classroom ramah anak ber-AC",
-      "Laporan perkembangan karakter dan psikomotorik",
-    ],
-    targetCompetencies: [
-      "Kemampuan sosialisasi dan kemandirian anak",
-      "Mengenal huruf hijaiyah dan dasar baca-tulis",
-      "Memiliki adab sopan santun kepada orang tua dan guru",
-    ],
-    status: "published",
-    orderIndex: 2,
-  },
-  {
-    id: "prog-3",
-    slug: "sekolah-anak-shalih",
-    title: "Sekolah Anak Shalih Yazzakka",
-    category: "Pembinaan Karakter",
-    shortDesc:
-      "Program penguatan karakter, akhlak sosial, dan kepemimpinan islami anak melalui kelas tematik dan pembiasaan ibadah.",
-    fullDesc:
-      "Sekolah Anak Shalih didesain untuk memperkuat nilai-nilai adab dan akhlak sosial di era digital. Membekali anak-anak dengan wawasan keislaman komprehensif, kepemimpinan diri, empati sosial, dan ketahanan mental islami.",
-    imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80",
-    iconName: "HeartHandshake",
-    features: [
-      "Kelas tematik parenting dan karakter santri",
-      "Halaqah adab dan keteladanan Rasulullah SAW",
-      "Aktivitas sosial dan bakti kebaikan",
-      "Mentoring kepribadian dan public speaking",
-    ],
-    targetCompetencies: [
-      "Kepribadian santun, percaya diri, dan peduli sesama",
-      "Kecakapan berkomunikasi dan memimpin kelompok",
-      "Integritas moral dan kedisiplinan ibadah",
-    ],
-    status: "published",
-    orderIndex: 3,
-  },
-  {
-    id: "prog-4",
-    slug: "pkbm-yazzakka",
-    title: "PKBM Yazzakka (Pendidikan Kesetaraan & Vokasi)",
-    category: "Pemberdayaan Umat",
-    shortDesc:
-      "Pusat Kegiatan Belajar Masyarakat untuk pendidikan kesetaraan (Paket A/B/C), literasi Al-Qur'an dewasa, dan vokasi keahlian.",
-    fullDesc:
-      "PKBM Yazzakka menyediakan akses pendidikan non-formal yang berkualitas dan inklusif bagi masyarakat. Menyelenggarakan program keaksaraan, kesetaraan pendidikan formal, kursus vokasi kemandirian, serta pemberdayaan ekonomi keluarga berbasis syariah.",
-    imageUrl: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1000&q=80",
-    iconName: "GraduationCap",
-    features: [
-      "Pendidikan Kesetaraan Paket A, B, dan C resmi",
-      "Kelas tahsin dan literasi Al-Qur'an untuk dewasa/lansia",
-      "Pelatihan keterampilan vokasi & wirausaha syariah",
-      "Jadwal belajar fleksibel berbasis tatap muka & daring",
-    ],
-    targetCompetencies: [
-      "Mendapatkan ijazah kelulusan kesetaraan resmi",
-      "Menguasai keterampilan kerja mandiri & bisnis keluarga",
-      "Melek baca Al-Qur'an dan pemahaman dasar ibadah",
-    ],
-    status: "published",
-    orderIndex: 4,
-  },
-  {
-    id: "prog-5",
-    slug: "darul-quran-yazzakka",
-    title: "Darul Quran Yazzakka (Tahfiz Intensif)",
-    category: "Tahfiz & Keilmuan",
-    shortDesc:
-      "Program karantina dan pembinaan tahfiz 30 juz intensif dengan bimbingan asatidz bersanad dan kajian dirasah Islamiyah.",
-    fullDesc:
-      "Darul Quran Yazzakka memfokuskan pembinaan santri dalam menghafal Al-Qur'an 30 juz mutqin disertai pendalaman kaidah bahasa Arab, fiqih ibadah, dan kajian kitab tauhid di bawah bimbingan langsung para masyaikh dan asatidz.",
-    imageUrl: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1000&q=80",
-    iconName: "Award",
-    features: [
-      "Target mutqin 30 juz dengan bimbingan bersanad",
-      "Karantina tahfiz dan setoran harian intensif",
-      "Kajian akidah dan dirasah Islamiyah terstruktur",
-      "Tasmi' hafalan terbuka sekali duduk",
-    ],
-    targetCompetencies: [
-      "Hafal 30 juz dengan kaidah tajwid dan makhraj mutqin",
-      "Memahami dasar-dasar akidah ahlussunnah wal jama'ah",
-      "Kesiapan menjadi imam, da'i, dan penerima sanad",
-    ],
-    status: "published",
-    orderIndex: 5,
-  },
-  {
-    id: "prog-6",
-    slug: "pesantren-peradaban-60",
-    title: "Wakaf Pesantren Peradaban 6.0 Pidie",
-    category: "Program Strategis",
-    shortDesc:
-      "Ikhtiar pembangunan kawasan pesantren peradaban modern berbasis wakaf umat di Cot Rheng, Pidie untuk melahirkan pemimpin umat masa depan.",
-    fullDesc:
-      "Program strategis Yayasan Yazzakka untuk mendirikan Pesantren Peradaban 6.0 di Kabupaten Pidie, Aceh. Mengintegrasikan kemuliaan tradisi keilmuan Islam Serambi Mekkah dengan keunggulan sains masa depan, kepemimpinan global, dan kemandirian peradaban.",
-    imageUrl: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=80",
-    iconName: "Globe",
-    features: [
-      "Pembebasan lahan wakaf dan pembangunan masterplan terpadu",
-      "Fasilitas asrama, masjid peradaban, dan laboratorium riset",
-      "Pendidikan kader ulama intelektual berwawasan dunia",
-      "Peluang amal jariyah wakaf produktif untuk kaum muslimin",
-    ],
-    targetCompetencies: [
-      "Membangun peradaban Islam masa depan berlandaskan Al-Qur'an & Sunnah",
-      "Mencetak generasi pemimpin yang tangguh dan berwawasan global",
-      "Pusat rujukan studi peradaban Islam di Aceh dan Asia Tenggara",
-    ],
-    status: "published",
-    orderIndex: 6,
-  },
-];
+// Semua fallback koleksi di bawah sengaja dikosongkan (2026-10-23) — tidak ada
+// lagi foto stok/template sebagai data demo. Data nyata selalu dari database
+// via /api/school-data; saat API gagal halaman menampilkan state kosong yang
+// jujur, bukan konten fiktif.
 
-// Fallback prestasi kosong — data fiktif dihapus 2026-10-23.
-// Prestasi nyata diisi via CMS /admin/prestasi.
+export const initialPrograms: Program[] = [];
+
 export const initialAchievements: Achievement[] = [];
 
-export const initialArticles: Article[] = [
-  {
-    id: "art-1",
-    slug: "penerimaan-santri-baru-tahun-ajaran-2026-2027",
-    title: "Penerimaan Santri Baru (PPDB) Tahun Ajaran 2026/2027 Resmi Dibuka",
-    excerpt:
-      "SMA & Pesantren Modern Yazzaka membuka pendaftaran calon peserta didik baru Gelombang 1 dengan kuota terbatas dan beasiswa prestasi.",
-    content: `SMA & Pesantren Modern Yazzaka secara resmi membuka pendaftaran santri dan peserta didik baru (PPDB) untuk Tahun Ajaran 2026/2027. Pada periode tahun ini, Yazzaka menyediakan program reguler dan beasiswa santri berprestasi bagi lulusan SMP/MTs sederajat dari seluruh Indonesia.
+export const initialArticles: Article[] = [];
 
-Pendaftaran dilakukan secara terintegrasi melalui portal online dengan tahapan registrasi akun, pengunggahan berkas rapor, tes potensi akademik, tes lisan tahfiz, dan wawancara komitmen wali santri.
+export const initialEvents: SchoolEvent[] = [];
 
-Pimpinan Yazzaka menegaskan komitmen sekolah untuk terus mempertahankan kualitas pengasuhan dengan rasio pendampingan santri yang ideal. Bagi calon pendaftar yang memiliki prestasi juara olimpiade sains minimal tingkat provinsi atau tahfiz minimal 5 juz, sekolah menyediakan jalur beasiswa bebas uang sarana prasarana.`,
-    coverImage: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
-    category: "Pengumuman",
-    tags: ["PPDB 2026", "Pendaftaran", "Beasiswa", "Santri Baru"],
-    author: "Tim Humas & SPMB",
-    authorRole: "Panitia Penerimaan Santri",
-    publishedDate: "2026-08-01",
-    readTime: "3 menit",
-    status: "published",
-    featured: true,
-    seoTitle: "Penerimaan Santri Baru PPDB 2026/2027 - SMA Yazzaka",
-    seoDescription: "Informasi resmi jadwal, persyaratan, alur pendaftaran santri baru SMA & Pesantren Yazzaka TA 2026/2027.",
-  },
-  {
-    id: "art-2",
-    slug: "tips-mendampingi-anak-siap-mandiri-di-pesantren-modern",
-    title: "Membangun Kesiapan Mental dan Kemandirian Anak Memasuki Kehidupan Asrama",
-    excerpt:
-      "Panduan praktis bagi orang tua dalam membangun komunikasi positif dan melatih kemandirian anak sebelum memasuki lingkungan pesantren.",
-    content: `Transisi dari lingkungan keluarga menuju kehidupan asrama seringkali menjadi fase penting bagi anak dan orang tua. Pondok pesantren modern menawarkan ruang tumbuhnya kedisiplinan dan kepemimpinan diri yang luar biasa, namun membutuhkan kesiapan mental yang matang.
+export const initialMedia: MediaItem[] = [];
 
-1. **Komunikasi Terbuka tentang Tujuan Hidup**: Ajak anak berdialog tentang impian mereka dan bagaimana lingkungan pesantren dapat membantu mewujudkan cita-cita tersebut tanpa paksaan sepihak.
-2. **Latihan Kemandirian Praktis**: Biasakan anak merapikan tempat tidur, mencuci pakaian pribadi sederhana, dan mengelola uang saku harian.
-3. **Membangun Mindset Bertumbuh**: Tanamkan pemahaman bahwa rasa rindu (homesick) adalah proses alami adaptasi yang akan melahirkan ketangguhan jiwa.`,
-    coverImage: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=1200&q=80",
-    category: "Wawasan & Opini",
-    tags: ["Parenting", "Edukasi Santri", "Kemandirian", "Keluarga"],
-    author: "Ust. H. Nashirudin, M.Psi.",
-    authorRole: "Konselor Pendidikan & Pengasuhan",
-    publishedDate: "2026-07-20",
-    readTime: "4 menit",
-    status: "published",
-    featured: false,
-    seoTitle: "Kiat Mendampingi Anak Memasuki Pesantren Modern - Yazzaka Edu",
-    seoDescription: "Wawasan parenting Islami tentang mempersiapkan kemandirian santri baru di lingkungan asrama.",
-  },
-  {
-    id: "art-3",
-    slug: "santri-yazzaka-raih-medali-emas-osn-biologi-2025",
-    title: "Santri Yazzaka Harumkan Nama Daerah dengan Meraih Emas OSN Biologi 2025",
-    excerpt:
-      "Prestasi gemilang diraih ananda Muhammad Farhan setelah melalui babak penyisihan ketat dan ujian praktikum sains tingkat nasional.",
-    content: `Kabar membanggakan datang dari panggung Olimpiade Sains Nasional (OSN) 2025. Santri kelas 11 SMA Yazzaka, Muhammad Farhan Al-Ghifari, berhasil membawa pulang Medali Emas pada cabang Biologi tingkat SMA/MA.
-
-Keberhasilan ini merupakan buah dari pembinaan intensif Club Sains Yazzaka yang mengombinasikan telaah teori ilmiah mendalam dan praktikum laboratorium secara berkala di bawah bimbingan guru-guru master sains. Farhan menyatakan rasa syukur dan mendedikasikan medali ini untuk kedua orang tua, para guru, dan seluruh teman santri di asrama.`,
-    coverImage: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&w=1200&q=80",
-    category: "Prestasi",
-    tags: ["Prestasi OSN", "Medali Emas", "Sains Yazzaka", "Olimpiade"],
-    author: "Redaksi Yazzaka Post",
-    authorRole: "Divisi Publikasi & Jurnalistik",
-    publishedDate: "2025-10-22",
-    readTime: "3 menit",
-    status: "published",
-    featured: false,
-    seoTitle: "Santri Yazzaka Sabet Emas OSN Biologi Nasional 2025",
-    seoDescription: "Liputan prestasi santri SMA Yazzaka meraih medali emas OSN Biologi tingkat nasional.",
-  },
-];
-
-export const initialEvents: SchoolEvent[] = [
-  {
-    id: "evt-1",
-    title: "Penerimaan Santri Baru (PPDB) Gelombang 1",
-    description: "Pendaftaran online berkas dan ujian seleksi masuk online/offline untuk calon santri TA 2026/2027.",
-    date: "2026-09-01",
-    time: "08:00 - 15:00 WIB",
-    location: "Kompleks Pendidikan Yazzakka & Online Portal",
-    category: "Penerimaan Siswa",
-    coverImage: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
-    registrationUrl: "/pendaftaran",
-    status: "upcoming",
-  },
-  {
-    id: "evt-2",
-    title: "Seminar Parenting Akbar: Mendidik Generasi Alpha Berjiwa Pemimpin",
-    description: "Menghadirkan pakar psikologi anak dan praktisi pendidikan karakter Islam nasional untuk wali murid dan umum.",
-    date: "2026-09-20",
-    time: "09:00 - 12:30 WIB",
-    location: "Aula Utama Yayasan Yazzakka",
-    category: "Seminar & Parenting",
-    coverImage: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
-    registrationUrl: "/kontak",
-    status: "upcoming",
-  },
-  {
-    id: "evt-3",
-    title: "Haflah Khotmil Qur'an & Wisuda Tahfiz 30 Juz Angkatan IX",
-    description: "Uji publik hafalan Al-Qur'an 30 juz sekali duduk dan penganugerahan sanad tajwid bagi para wisudawan.",
-    date: "2026-10-15",
-    time: "07:30 - 13:00 WIB",
-    location: "Masjid Baiturrahim Yazzakka",
-    category: "Wisuda & Pameran",
-    coverImage: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=800&q=80",
-    registrationUrl: "",
-    status: "upcoming",
-  },
-];
-
-export const initialMedia: MediaItem[] = [
-  {
-    id: "med-1",
-    fileName: "gedung-sekolah-yazzaka.jpg",
-    fileUrl: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
-    fileType: "image",
-    fileSize: "1.8 MB",
-    category: "Fasilitas",
-    altText: "Gedung Utama dan Halaman Asri Sekolah Terpadu Yazzakka",
-    uploadedAt: "2026-08-01",
-  },
-  {
-    id: "med-2",
-    fileName: "santri-tahfiz-quran.jpg",
-    fileUrl: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1200&q=80",
-    fileType: "image",
-    fileSize: "2.1 MB",
-    category: "Kegiatan",
-    altText: "Aktivitas Halaqah Tahfiz Al-Qur'an Pagi Santri Yazzakka",
-    uploadedAt: "2026-08-05",
-  },
-  {
-    id: "med-3",
-    fileName: "praktikum-laboratorium-sains.jpg",
-    fileUrl: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
-    fileType: "image",
-    fileSize: "2.4 MB",
-    category: "Fasilitas",
-    altText: "Praktikum Siswa di Laboratorium Pembelajaran Terpadu",
-    uploadedAt: "2026-08-10",
-  },
-  {
-    id: "med-4",
-    fileName: "brosur-ppdb-yazzaka-2026.pdf",
-    fileUrl: "/docs/brosur-ppdb-yazzaka-2026.pdf",
-    fileType: "document",
-    fileSize: "4.5 MB",
-    category: "Dokumen PPDB",
-    altText: "Brosur Resmi Panduan Pendaftaran Siswa Baru TA 2026/2027",
-    uploadedAt: "2026-08-15",
-  },
-];
-
-export const initialOrganization: OrganizationMember[] = [
-  {
-    id: "org-1",
-    name: "Dr. KH. Ahmad Zaki Mubarak, Lc., M.Phil.",
-    roleTitle: "Pimpinan & Pengasuh Pesantren",
-    department: "Darul Quran Yazzakka",
-    photoUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
-    bio: "Alumnus Universitas Al-Azhar Kairo dan Doktoral UIN Sunan Kalijaga dengan pengalaman 20+ tahun dalam manajemen pendidikan Islam terpadu.",
-    qualifications: "S1 Syari'ah (Al-Azhar), S2 Islamic Studies (Leiden/UIN), S3 Pendidikan Islam",
-    orderIndex: 1,
-  },
-  {
-    id: "org-2",
-    name: "Drs. H. M. Furqon Al-Hafiz, M.Pd.",
-    roleTitle: "Kepala Sekolah Anak Shalih",
-    department: "Sekolah Anak Shalih Yazzakka",
-    photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
-    bio: "Pendidik teladan dengan dedikasi tinggi pada pengembangan kurikulum sains modern dan sistem evaluasi mutu sekolah bertaraf nasional.",
-    qualifications: "S1 Pendidikan Fisika (UNNES), S2 Manajemen Pendidikan (UNY), Hafiz 30 Juz",
-    orderIndex: 2,
-  },
-  {
-    id: "org-3",
-    name: "Ust. Muhammad Ridwan, Lc., M.A.",
-    roleTitle: "Kepala TPA & Pembina Tahfiz",
-    department: "Taman Pendidikan Al-Qur'an (TPA)",
-    photoUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
-    bio: "Pakar pengajaran bahasa Arab komunikatif dan pembina metode pembelajaran Al-Qur'an tartil & tahfiz usia dini.",
-    qualifications: "S1 Bahasa Arab (Univ. Islam Madinah), S2 Linguistik Terapan",
-    orderIndex: 3,
-  },
-  {
-    id: "org-4",
-    name: "Dr. Siti Nurhaliza, M.Si.",
-    roleTitle: "Koordinator Program Kesetaraan & Vokasi",
-    department: "PKBM Yazzakka",
-    photoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
-    bio: "Peneliti dan penggerak program pendidikan non-formal dan vokasi untuk mencetak santri mandiri dan berdaya saing.",
-    qualifications: "S1 Biologi (UGM), S2 & S3 Bioteknologi (ITB)",
-    orderIndex: 4,
-  },
-  {
-    id: "org-5",
-    name: "Usth. Fatimah Az-Zahra, S.Pd.I.",
-    roleTitle: "Kepala TKIT Yazzakka",
-    department: "TKIT Yazzakka",
-    photoUrl: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=800&q=80",
-    bio: "Praktisi pendidikan anak usia dini berbasis adab Islam dan stimulasi kecerdasan majemuk ramah anak.",
-    qualifications: "S1 Pendidikan Islam Anak Usia Dini (UIN Ar-Raniry)",
-    orderIndex: 5,
-  },
-];
+export const initialOrganization: OrganizationMember[] = [];
 
 // Fallback testimoni kosong — testimoni fiktif dihapus 2026-10-23.
 // Testimoni nyata diisi via CMS /admin/testimoni.
@@ -519,7 +174,8 @@ export const initialWebsiteSettings: WebsiteSettings = {
   siteTitle: "Yayasan Yazzakka Aceh - Lembaga Pendidikan Islam Unggul & Berkarakter",
   metaDescription:
     "Portal resmi Yayasan Yazzakka Aceh. Memadukan kurikulum pendidikan formal, kesetaraan vokasi, tahfiz Al-Qur'an 30 juz, serta pembinaan karakter generasi qurani.",
-  ogImage: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80",
+  // Aset asli yang benar-benar ada di public/ — bukan foto stok.
+  ogImage: "/yazzakka.png",
   socialMedia: {
     instagram: "https://instagram.com/yazzakka.official",
     youtube: "https://youtube.com/@yazzakkaofficial",
@@ -554,7 +210,7 @@ export const initialUsers: User[] = [
     name: "Ust. Fathurrahman, S.Kom.",
     email: "admin@yazzakka.sch.id",
     role: "super_admin",
-    avatarUrl: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
+    avatarUrl: "",
     createdAt: "2026-01-10",
   },
   {
@@ -562,7 +218,7 @@ export const initialUsers: User[] = [
     name: "Usth. Maryam Salsabila, S.Pd.",
     email: "editor@yazzakka.sch.id",
     role: "editor",
-    avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
+    avatarUrl: "",
     createdAt: "2026-02-15",
   },
 ];

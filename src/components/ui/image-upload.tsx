@@ -18,7 +18,7 @@ export function ImageUpload({
   label = "Foto Sampul / Gambar",
   value = "",
   onChange,
-  placeholder = "https://images.unsplash.com/... atau unggah gambar",
+  placeholder = "https://contoh.com/gambar.jpg",
   required = false,
   helperText,
   className = "",
@@ -27,14 +27,17 @@ export function ImageUpload({
   const [mode, setMode] = useState<"upload" | "url">("upload");
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [storageNotice, setStorageNotice] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [previewError, setPreviewError] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    setPreviewError(false);
+  }, [value]);
 
   const handleFileProcess = useCallback(
     async (file: File) => {
       setErrorMsg(null);
-      setStorageNotice(null);
       // Validasi tipe file
       if (!file.type.startsWith("image/")) {
         setErrorMsg("Hanya file gambar (JPG, PNG, WEBP, GIF, SVG) yang diperbolehkan.");
@@ -47,9 +50,8 @@ export function ImageUpload({
         return;
       }
 
-      // Utamakan unggah ke object storage (/api/uploads → R2) agar tersimpan
-      // sebagai URL ringan. Data URL base64 hanya fallback saat storage belum
-      // dikonfigurasi — base64 ikut tersimpan ke database & payload API.
+      // Unggah ke /api/uploads agar tersimpan sebagai berkas (bukan base64
+      // tersemat di database).
       setIsUploading(true);
       try {
         const form = new FormData();
@@ -62,35 +64,18 @@ export function ImageUpload({
             onChange(data.fileUrl);
             return;
           }
-        } else if (res.status === 503) {
-          setStorageNotice(
-            "Object storage belum aktif — gambar disimpan tersemat (base64) ke database. Untuk performa terbaik, konfigurasikan R2_* agar tersimpan sebagai berkas."
-          );
+          setErrorMsg("Respons unggahan tidak valid dari server.");
         } else {
           const body = await res.text().catch(() => "");
           setErrorMsg(
-            `Gagal mengunggah ke storage (HTTP ${res.status})${body ? `: ${body.slice(0, 140)}` : ""}`
+            `Gagal mengunggah (HTTP ${res.status})${body ? `: ${body.slice(0, 140)}` : ""}`
           );
-          return;
         }
       } catch {
-        setStorageNotice(
-          "Gagal terhubung ke layanan unggah — gambar disimpan tersemat (base64) ke database."
-        );
+        setErrorMsg("Gagal terhubung ke layanan unggah. Coba lagi.");
       } finally {
         setIsUploading(false);
       }
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (typeof reader.result === "string") {
-          onChange(reader.result);
-        }
-      };
-      reader.onerror = () => {
-        setErrorMsg("Gagal membaca file gambar.");
-      };
-      reader.readAsDataURL(file);
     },
     [maxSizeMB, onChange]
   );
@@ -175,21 +160,31 @@ export function ImageUpload({
       {/* Preview if image exists */}
       {value ? (
         <div className="relative group rounded-lg overflow-hidden border border-border bg-card p-2 flex items-center gap-4">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={value}
-            alt="Preview"
-            className="h-20 w-28 object-cover rounded-md border border-border bg-white shrink-0"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src =
-                "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=200&auto=format&fit=crop&q=60";
-            }}
-          />
-          <div className="flex-1 min-w-0 pr-2">
-            <div className="flex items-center gap-1.5 text-xs font-medium text-success mb-1">
-              <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
-              <span>Gambar Siap Digunakan</span>
+          {previewError ? (
+            <div className="h-20 w-28 rounded-md border border-border bg-muted flex items-center justify-center text-muted-foreground shrink-0">
+              <ImageIcon className="h-5 w-5" />
             </div>
+          ) : (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={value}
+              alt="Preview"
+              className="h-20 w-28 object-cover rounded-md border border-border bg-white shrink-0"
+              onError={() => setPreviewError(true)}
+            />
+          )}
+          <div className="flex-1 min-w-0 pr-2">
+            {previewError ? (
+              <div className="flex items-center gap-1.5 text-xs font-medium text-destructive mb-1">
+                <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+                <span>Gambar tidak dapat dimuat — periksa tautan atau unggah ulang.</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1.5 text-xs font-medium text-success mb-1">
+                <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
+                <span>Gambar Siap Digunakan</span>
+              </div>
+            )}
             <p className="text-xs text-muted-foreground truncate font-mono bg-muted px-2 py-1 rounded-md border border-border">
               {value.startsWith("data:") ? `Data Gambar Lokal (${value.substring(0, 30)}...)` : value}
             </p>
@@ -266,22 +261,14 @@ export function ImageUpload({
                     onChange(e.target.value);
                   }}
                   placeholder={placeholder}
-                  className="w-full h-9 pl-9 pr-3 rounded-md border border-input bg-card text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30 shadow-xs"
+                  className="w-full h-9 pl-9 pr-3 rounded-md border border-input bg-card text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:border-muted-foreground/40 shadow-xs"
                 />
               </div>
               <p className="text-xs text-muted-foreground">
-                Tempelkan URL tautan gambar publik (Unsplash, CDN, atau cloud hosting).
+                Tempelkan URL gambar publik yang sudah tersedia di internet, atau gunakan tab unggah.
               </p>
             </div>
           )}
-        </div>
-      )}
-
-      {/* Storage fallback notice (base64) */}
-      {storageNotice && !errorMsg && (
-        <div className="flex items-start gap-1.5 text-xs text-amber-600 font-medium mt-1">
-          <AlertCircle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-          <span>{storageNotice}</span>
         </div>
       )}
 

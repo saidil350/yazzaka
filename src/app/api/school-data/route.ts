@@ -68,7 +68,8 @@ export async function GET(request: Request) {
         : Promise.resolve([] as Record<string, unknown>[]),
       sql`SELECT * FROM page_sections ORDER BY order_index ASC`,
       sql`SELECT * FROM media_items
-          WHERE storage_key IS NULL AND (kind IS NULL OR kind <> 'document')
+          WHERE (kind IS NULL OR kind <> 'document')
+            AND (storage_key IS NULL OR visibility = 'public')
           ORDER BY created_at DESC`,
     ]);
 
@@ -122,6 +123,7 @@ export function mapProfile(r: Record<string, unknown>) {
     email: r.email,
     whatsapp: r.whatsapp,
     mapsEmbedUrl: r.maps_embed_url,
+    aboutImageUrl: r.about_image_url ?? "",
     principal: {
       name: r.principal_name,
       title: r.principal_title,
@@ -291,12 +293,19 @@ export function mapSection(r: Record<string, unknown>) {
 }
 
 export function mapMedia(r: Record<string, unknown>) {
+  // Baris baru (modul berita) memakai kolom kind/size_bytes; baris legacy
+  // memakai file_type/file_size — turunkan fileType & fileSize agar galeri
+  // dan halaman admin media merender keduanya dengan benar.
+  const sizeBytes = r.size_bytes != null ? Number(r.size_bytes) : null;
+  const fileSize =
+    (r.file_size as string | null) ??
+    (sizeBytes != null ? `${Math.max(1, Math.round(sizeBytes / 1024))} KB` : undefined);
   return {
     id: r.id,
     fileName: r.file_name,
     fileUrl: r.file_url,
-    fileType: r.file_type,
-    fileSize: r.file_size,
+    fileType: (r.file_type as string | null) ?? (r.kind as string | null) ?? "image",
+    fileSize,
     category: r.category,
     altText: r.alt_text,
     uploadedAt: r.uploaded_at,

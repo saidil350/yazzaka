@@ -146,9 +146,7 @@ export default function AdminTeamMembersPage() {
       (m) => normalizeDepartment(m.department) === initialDept
     );
     setOrderIndex(membersInDept.length + 1);
-    setPhotoUrl(
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"
-    );
+    setPhotoUrl("");
     setBio("");
     setQualifications("");
     setModalOpen(true);
@@ -594,7 +592,7 @@ export default function AdminTeamMembersPage() {
                 label="Foto Profil Resmi Pengajar"
                 value={photoUrl}
                 onChange={(val) => setPhotoUrl(val)}
-                placeholder="https://images.unsplash.com/... atau unggah file foto"
+                placeholder="https://contoh.com/foto.jpg"
                 helperText="Unggah foto formal guru/asatidz (format JPG/PNG/WebP) atau gunakan URL gambar."
               />
             </div>

@@ -139,7 +139,7 @@ export function MediaPickerModal({
                     onSelect(media);
                     onClose();
                   }}
-                  className="group w-full cursor-pointer overflow-hidden rounded-md border border-border bg-background text-left transition-colors hover:border-primary"
+                  className="group w-full cursor-pointer overflow-hidden rounded-md border border-border bg-background text-left transition-colors"
                   aria-label={`Pilih gambar ${media.fileName}`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
