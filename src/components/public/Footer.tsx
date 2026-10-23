@@ -185,9 +185,6 @@ export function Footer() {
                 <Link href="/berita">Warta &amp; Kajian Dakwah</Link>
               </li>
               <li>
-                <Link href="/agenda">Agenda Tabligh Akbar</Link>
-              </li>
-              <li>
                 <Link href="/galeri">Dokumentasi Foto</Link>
               </li>
             </ul>
