@@ -7,6 +7,11 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
 import { formatRupiah, formatDateIndonesian } from "@/lib/utils";
 import {
+  DEFAULT_FEE_UNIT,
+  groupFeesByUnit,
+  isFeeGrouped,
+} from "@/lib/admission-fees";
+import {
   Sparkles,
   CheckCircle2,
   HelpCircle,
@@ -25,10 +30,34 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionItem } from "@/components/ui/accordion";
+import type { AdmissionFeeItem } from "@/lib/types";
 
 export default function AdmissionPage() {
   const { admission, profile, addContactMessage } = useSchoolData();
   const { toast } = useToast();
+
+  const fees = admission.fees ?? [];
+  const feeGroups = groupFeesByUnit(fees);
+  const showFeeGroups = isFeeGrouped(fees);
+
+  const feeRow = (fee: AdmissionFeeItem, idx: number) => (
+    <tr key={idx} className="hover:bg-[#FAF6EE]/60 transition-colors">
+      <td className="p-3.5 sm:px-5 font-bold text-[#1E2330]">
+        {fee.name}
+        {fee.notes && (
+          <span className="block text-[11px] text-stone-500 font-normal mt-0.5">
+            {fee.notes}
+          </span>
+        )}
+      </td>
+      <td className="p-3.5 sm:px-5 text-xs text-stone-500">
+        {fee.category}
+      </td>
+      <td className="p-3.5 sm:px-5 text-right font-bold text-[#FA6400] text-sm sm:text-base">
+        {fee.amount > 0 ? formatRupiah(fee.amount) : "Hubungi Panitia"}
+      </td>
+    </tr>
+  );
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -247,40 +276,52 @@ export default function AdmissionPage() {
                   </h2>
                 </div>
 
-                <div className="border-2 border-[#E8E2D8] rounded-2xl overflow-hidden bg-white shadow-xs">
-                  <table className="w-full text-left text-xs sm:text-sm">
-                    <thead className="bg-[#FAF6EE] border-b border-[#E8E2D8] font-bold uppercase text-[11px] text-stone-500">
-                      <tr>
-                        <th className="p-3.5 sm:px-5">Komponen</th>
-                        <th className="p-3.5 sm:px-5">Kategori</th>
-                        <th className="p-3.5 sm:px-5 text-right">Nominal</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-stone-100 text-stone-700 font-medium">
-                      {admission.fees.map((fee, idx) => (
-                        <tr key={idx} className="hover:bg-[#FAF6EE]/60 transition-colors">
-                          <td className="p-3.5 sm:px-5 font-bold text-[#1E2330]">
-                            {fee.name}
-                            {fee.notes && (
-                              <span className="block text-[11px] text-stone-500 font-normal mt-0.5">
-                                {fee.notes}
-                              </span>
-                            )}
-                          </td>
-                          <td className="p-3.5 sm:px-5 text-xs text-stone-500">
-                            {fee.category}
-                          </td>
-                          <td className="p-3.5 sm:px-5 text-right font-bold text-[#FA6400] text-sm sm:text-base">
-                            {fee.amount > 0 ? formatRupiah(fee.amount) : "Hubungi Panitia"}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <div className="p-3 bg-[#FAF6EE] border-t border-[#E8E2D8] text-[11px] text-stone-500 font-medium">
-                    * Biaya sudah mencakup fasilitas asrama, konsumsi 3x sehari, laundry seragam, dan layanan kesehatan pesantren.
+                {showFeeGroups ? (
+                  <div className="space-y-6">
+                    {feeGroups.map((group) => (
+                      <div key={group.unit} className="space-y-2">
+                        <h3 className="text-sm font-bold text-[#1E2330]">
+                          {group.unit}
+                        </h3>
+                        <div className="border-2 border-[#E8E2D8] rounded-2xl overflow-hidden bg-white shadow-xs">
+                          <table className="w-full text-left text-xs sm:text-sm">
+                            <thead className="bg-[#FAF6EE] border-b border-[#E8E2D8] font-bold uppercase text-[11px] text-stone-500">
+                              <tr>
+                                <th className="p-3.5 sm:px-5">Komponen</th>
+                                <th className="p-3.5 sm:px-5">Kategori</th>
+                                <th className="p-3.5 sm:px-5 text-right">Nominal</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-stone-100 text-stone-700 font-medium">
+                              {group.items.map(({ fee, index }) => feeRow(fee, index))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    ))}
+                    <p className="text-[11px] text-stone-500 font-medium">
+                      * Biaya sudah mencakup fasilitas asrama, konsumsi 3x sehari, laundry seragam, dan layanan kesehatan pesantren.
+                    </p>
                   </div>
-                </div>
+                ) : (
+                  <div className="border-2 border-[#E8E2D8] rounded-2xl overflow-hidden bg-white shadow-xs">
+                    <table className="w-full text-left text-xs sm:text-sm">
+                      <thead className="bg-[#FAF6EE] border-b border-[#E8E2D8] font-bold uppercase text-[11px] text-stone-500">
+                        <tr>
+                          <th className="p-3.5 sm:px-5">Komponen</th>
+                          <th className="p-3.5 sm:px-5">Kategori</th>
+                          <th className="p-3.5 sm:px-5 text-right">Nominal</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-stone-100 text-stone-700 font-medium">
+                        {fees.map((fee, idx) => feeRow(fee, idx))}
+                      </tbody>
+                    </table>
+                    <div className="p-3 bg-[#FAF6EE] border-t border-[#E8E2D8] text-[11px] text-stone-500 font-medium">
+                      * Biaya sudah mencakup fasilitas asrama, konsumsi 3x sehari, laundry seragam, dan layanan kesehatan pesantren.
+                    </div>
+                  </div>
+                )}
               </div>
 
             </div>

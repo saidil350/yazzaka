@@ -145,6 +145,9 @@ export interface AdmissionFeeItem {
   // Kategori bebas (diedit via CMS), bukan union tertutup — nilai yang
   // tampil publik hanya sebagai teks badge/kolom tabel.
   category: string;
+  // Satuan pendidikan tempat biaya berlaku (TPA, TKIT, dst.); kosong/legacy
+  // berarti Umum (semua unit) — lihat src/lib/admission-fees.ts.
+  unit?: string;
   notes?: string;
 }
 

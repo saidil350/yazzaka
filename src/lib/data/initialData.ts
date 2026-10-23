@@ -139,6 +139,7 @@ export const initialAdmissionInfo: AdmissionInfo = {
       name: "Rincian biaya PPDB",
       amount: 0,
       category: "Menyusul",
+      unit: "Umum (Semua Unit)",
       notes: "Informasi biaya akan diumumkan oleh panitia — silakan hubungi panitia PPDB via WhatsApp.",
     },
   ],
