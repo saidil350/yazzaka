@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useSchoolData } from "@/context/SchoolDataContext";
-import { ArrowRight, Sparkles, CheckCircle2, Layers } from "lucide-react";
+import { ArrowRight, Sparkles, CheckCircle2, Layers, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -64,19 +64,25 @@ export function ProgramsSection() {
                   className={[
                     "interactive-lift rounded-[1.25rem] border overflow-hidden flex flex-col justify-between group shadow-xs",
                     isSpecialWakaf
-                      ? "bg-yazzaka-teal-soft border-yazzaka-teal ring-2 ring-yazzaka-teal/20"
+                      ? "bg-yazzaka-teal-soft border-border"
                       : "bg-white border-[#E8E2D8]",
                   ].join(" ")}
                 >
                   <div>
                     {/* Card Image Banner */}
                     <div className="relative aspect-[16/10] overflow-hidden bg-stone-200">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={prog.imageUrl}
-                        alt={prog.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
+                      {prog.imageUrl ? (
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img
+                          src={prog.imageUrl}
+                          alt={prog.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-stone-400">
+                          <ImageIcon className="h-8 w-8" />
+                        </div>
+                      )}
                     </div>
 
                     {/* Body Content */}

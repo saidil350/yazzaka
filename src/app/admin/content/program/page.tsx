@@ -69,7 +69,7 @@ export default function AdminProgramsCrudPage() {
     setCategory("Akademik");
     setShortDesc("");
     setFullDesc("");
-    setImageUrl("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80");
+    setImageUrl("");
     setIconName("BookOpen");
     setFeaturesList([
       "Target capaian terukur",
@@ -400,7 +400,7 @@ export default function AdminProgramsCrudPage() {
               label="Foto Banner Program"
               value={imageUrl}
               onChange={(val) => setImageUrl(val)}
-              placeholder="https://images.unsplash.com/... atau unggah gambar"
+              placeholder="https://contoh.com/gambar.jpg"
               helperText="Unggah berkas gambar (drag & drop) atau gunakan tautan URL gambar resolusi tinggi."
             />
           </div>

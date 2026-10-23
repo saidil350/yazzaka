@@ -6,7 +6,7 @@ import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Program } from "@/lib/types";
-import { ArrowRight, CheckCircle2, Sparkles, Layers } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles, Layers, BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -89,23 +89,22 @@ export default function ProgramsDirectoryPage() {
                       href={`/program/${prog.slug}`}
                       className="group block h-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
-                      <Card
-                        className={[
-                          "h-full overflow-hidden flex flex-col justify-between interactive-lift",
-                          isSpecialWakaf
-                            ? "border-yazzaka-teal ring-2 ring-yazzaka-teal/20"
-                            : "",
-                        ].join(" ")}
-                      >
+                      <Card className="h-full overflow-hidden flex flex-col justify-between interactive-lift">
                         <div>
                           {/* Banner Image */}
                           <div className="aspect-[16/10] overflow-hidden bg-muted">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={prog.imageUrl}
-                              alt={prog.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
+                            {prog.imageUrl ? (
+                              /* eslint-disable-next-line @next/next/no-img-element */
+                              <img
+                                src={prog.imageUrl}
+                                alt={prog.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                                <BookOpen className="h-8 w-8" />
+                              </div>
+                            )}
                           </div>
 
                           {/* Content Body */}

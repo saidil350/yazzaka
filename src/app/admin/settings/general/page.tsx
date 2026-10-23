@@ -144,7 +144,7 @@ export default function AdminGeneralSettingsPage() {
               key={idx}
               type="button"
               onClick={() => handleApplyColors(preset.primary, preset.accent)}
-              className="p-4 rounded-lg border border-border hover:border-primary bg-muted flex items-center justify-between text-left transition-colors cursor-pointer"
+              className="p-4 rounded-lg border border-border bg-muted flex items-center justify-between text-left transition-colors cursor-pointer"
             >
               <div>
                 <span className="font-medium text-xs text-foreground block">
@@ -189,7 +189,7 @@ export default function AdminGeneralSettingsPage() {
                 type="color"
                 value={primaryColor}
                 onChange={(e) => handleColorChange("primary", e.target.value)}
-                className="h-11 w-14 rounded-md border border-border p-1 cursor-pointer bg-card"
+                className="h-11 w-14 rounded-md border border-border p-1 cursor-pointer bg-card focus:outline-none focus:border-muted-foreground/40"
               />
               <Input
                 type="text"
@@ -210,7 +210,7 @@ export default function AdminGeneralSettingsPage() {
                 type="color"
                 value={accentColor}
                 onChange={(e) => handleColorChange("accent", e.target.value)}
-                className="h-11 w-14 rounded-md border border-border p-1 cursor-pointer bg-card"
+                className="h-11 w-14 rounded-md border border-border p-1 cursor-pointer bg-card focus:outline-none focus:border-muted-foreground/40"
               />
               <Input
                 type="text"

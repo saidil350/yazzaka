@@ -42,7 +42,7 @@ export default function AdminTestimonialsPage() {
     setName("");
     setRole("Wali Murid");
     setQuote("");
-    setPhotoUrl("https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80");
+    setPhotoUrl("");
     setChildName("");
     setGraduationYear(undefined);
     setModalOpen(true);
@@ -258,7 +258,7 @@ export default function AdminTestimonialsPage() {
             label="Foto Profil Pemberi Testimoni"
             value={photoUrl}
             onChange={(val) => setPhotoUrl(val)}
-            placeholder="https://images.unsplash.com/... atau unggah gambar"
+            placeholder="https://contoh.com/gambar.jpg"
             helperText="Unggah foto wajah/profil (drag & drop) atau gunakan URL gambar."
           />
 

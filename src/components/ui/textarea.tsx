@@ -48,7 +48,7 @@ export function Textarea({
           "placeholder:text-muted-foreground",
           "transition-colors shadow-xs",
           "hover:border-muted-foreground/40",
-          "focus:outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30",
+          "focus:outline-none focus-visible:border-muted-foreground/40",
           "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-muted",
           "resize-y",
           error && [

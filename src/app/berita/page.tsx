@@ -92,7 +92,7 @@ export default async function BeritaPage({
                   defaultValue={searchQuery}
                   placeholder="Cari artikel..."
                   aria-label="Cari artikel"
-                  className="h-9 w-full rounded-md border border-input bg-card pl-9 pr-3 text-xs font-medium outline-none transition-colors placeholder:text-muted-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                  className="h-9 w-full rounded-md border border-input bg-card pl-9 pr-3 text-xs font-medium outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-muted-foreground/40"
                 />
               </div>
             </form>
@@ -104,7 +104,7 @@ export default async function BeritaPage({
                   {result.items.map((art) => (
                     <article
                       key={art.id}
-                      className="group flex flex-col justify-between overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary/40"
+                      className="group flex flex-col justify-between overflow-hidden rounded-lg border border-border bg-card"
                     >
                       <div>
                         <div className="relative aspect-[16/10] overflow-hidden bg-muted">

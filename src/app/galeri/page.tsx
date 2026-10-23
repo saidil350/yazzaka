@@ -42,7 +42,7 @@ export default function GalleryPage() {
               {media.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white rounded-3xl border-2 border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all group flex flex-col cursor-pointer"
+                  className="bg-white rounded-3xl border-2 border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md transition-all group flex flex-col cursor-pointer"
                   onClick={() => {
                     if (item.fileType === "image") {
                       setActiveLightbox(item.fileUrl);

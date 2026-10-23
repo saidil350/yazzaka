@@ -241,7 +241,7 @@ export default function AdminMediaPage() {
                   setFileName(`media-${Date.now()}.png`);
                 }
               }}
-              placeholder="https://images.unsplash.com/... atau unggah berkas"
+              placeholder="https://contoh.com/berkas.jpg"
               helperText="Unggah gambar via drag & drop atau masukkan URL gambar."
             />
           ) : (

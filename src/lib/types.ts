@@ -36,6 +36,8 @@ export interface SchoolProfile {
   email: string;
   whatsapp: string;
   mapsEmbedUrl: string;
+  /** Foto gedung/kampus untuk halaman /tentang-kami (opsional). */
+  aboutImageUrl?: string;
   principal: {
     name: string;
     title: string;

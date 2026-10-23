@@ -14,7 +14,9 @@ import { requireUser, toErrorResponse } from "@/lib/news/api-helpers";
 
 /**
  * POST /api/uploads — unggah berkas ke object storage (multipart/form-data).
- * field: file (File), purpose ("image" | "document", opsional).
+ * field: file (File), purpose (opsional). purpose="image" (form konten publik
+ * seperti hero/program) → visibility 'public' agar bisa dimuat pengunjung;
+ * tanpa purpose (media berita) → 'private' sampai artikel terbit.
  * Validasi server: allowlist ekstensi + magic bytes + batas ukuran.
  * Gagal di tengah jalan TIDAK menyisakan record/node gambar.
  */
@@ -26,7 +28,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error:
-            "Object storage belum dikonfigurasi (R2_*). Unggahan dinonaktifkan — hubungi administrator.",
+            "Penyimpanan berkas belum dikonfigurasi (isi R2_* atau set UPLOAD_LOCAL_FALLBACK=1).",
         },
         { status: 503 }
       );
@@ -66,6 +68,9 @@ export async function POST(request: Request) {
     const buffer = new Uint8Array(await file.arrayBuffer());
     await putObject(key, buffer, validation.mimeType);
 
+    const purpose = String(form.get("purpose") ?? "").trim().toLowerCase();
+    const visibility = purpose === "image" ? "public" : "private";
+
     const sql = getDb();
     const id = generateId("med");
     const dot = fileName.lastIndexOf(".");
@@ -73,11 +78,11 @@ export async function POST(request: Request) {
 
     const result = await sql`
       INSERT INTO media_items (
-        id, file_name, file_url, storage_key, mime_type, size_bytes,
+        id, file_name, file_url, file_type, storage_key, mime_type, size_bytes,
         kind, visibility, alt_text, uploaded_by, uploaded_at, created_at
       ) VALUES (
-        ${id}, ${fileName}, ${`/api/files/${key}`}, ${key}, ${validation.mimeType},
-        ${file.size}, ${validation.kind}, 'private', ${baseName}, ${user.id},
+        ${id}, ${fileName}, ${`/api/files/${key}`}, ${validation.kind}, ${key}, ${validation.mimeType},
+        ${file.size}, ${validation.kind}, ${visibility}, ${baseName}, ${user.id},
         ${new Date().toISOString()}, NOW()
       )
       RETURNING *

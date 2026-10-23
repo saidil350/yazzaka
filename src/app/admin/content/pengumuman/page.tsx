@@ -66,7 +66,7 @@ export default function AdminAchievementsPage() {
     setLevel("Nasional");
     setYear(2026);
     setDate(new Date().toISOString().split("T")[0]);
-    setImageUrl("https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&w=1000&q=80");
+    setImageUrl("");
     setDescription("");
     setModalOpen(true);
   };
@@ -334,7 +334,7 @@ export default function AdminAchievementsPage() {
             label="Foto Dokumentasi / Piagam Prestasi"
             value={imageUrl}
             onChange={(val) => setImageUrl(val)}
-            placeholder="https://images.unsplash.com/... atau unggah gambar"
+            placeholder="https://contoh.com/gambar.jpg"
             helperText="Unggah foto santri/piala (drag & drop) atau gunakan tautan URL gambar."
           />
 

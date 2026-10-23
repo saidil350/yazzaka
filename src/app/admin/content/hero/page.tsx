@@ -152,7 +152,7 @@ export default function AdminHeroPage() {
             label="Foto / Ilustrasi Hero"
             value={imageUrl}
             onChange={(val) => setImageUrl(val)}
-            placeholder="https://images.unsplash.com/... atau unggah gambar"
+            placeholder="https://contoh.com/gambar.jpg"
             helperText="Unggah gambar (drag & drop) atau tautkan URL. Rasio disarankan 4:3 hingga 16:11."
           />
         </Card>

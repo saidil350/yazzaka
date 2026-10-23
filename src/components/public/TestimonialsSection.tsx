@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useSchoolData } from "@/context/SchoolDataContext";
-import { MessageSquareHeart, Star, Quote, MessageSquare } from "lucide-react";
+import { MessageSquareHeart, Star, Quote, MessageSquare, User } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 
@@ -40,7 +40,7 @@ export function TestimonialsSection() {
               return (
                 <div
                   key={test.id}
-                  className="bg-white border-2 border-[#E8E2D8] rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-xs hover:shadow-md hover:border-[#FA6400]/40 hover:-translate-y-0.5 transition-all duration-200"
+                  className="bg-white border-2 border-[#E8E2D8] rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -62,12 +62,18 @@ export function TestimonialsSection() {
                   </div>
 
                   <div className="pt-3.5 mt-3 border-t border-black/10 flex items-center gap-3">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={test.photoUrl}
-                      alt={test.name}
-                      className="h-10 w-10 rounded-full object-cover border-2 border-white shadow-xs shrink-0"
-                    />
+                    {test.photoUrl ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={test.photoUrl}
+                        alt={test.name}
+                        className="h-10 w-10 rounded-full object-cover border-2 border-white shadow-xs shrink-0"
+                      />
+                    ) : (
+                      <div className="h-10 w-10 rounded-full bg-muted border-2 border-white shadow-xs shrink-0 flex items-center justify-center text-muted-foreground">
+                        <User className="h-4 w-4" />
+                      </div>
+                    )}
                     <div>
                       <h4 className="font-bold text-xs sm:text-sm text-[#1E2330]">
                         {test.name}

@@ -114,12 +114,18 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
 
                 <div className="rounded-3xl overflow-hidden border-2 border-[#E8E2D8] bg-[#FAF6EE] p-2 shadow-xs">
                   <div className="aspect-video relative overflow-hidden rounded-2xl bg-stone-200">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={program.imageUrl}
-                      alt={program.title}
-                      className="w-full h-full object-cover"
-                    />
+                    {program.imageUrl ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={program.imageUrl}
+                        alt={program.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-stone-400">
+                        <Building2 className="h-8 w-8" />
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -278,7 +284,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                   <Link
                     key={p.id}
                     href={`/program/${p.slug}`}
-                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-4 space-y-2.5 flex flex-col justify-between group shadow-xs hover:border-[#FA6400]/40 transition-all"
+                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-4 space-y-2.5 flex flex-col justify-between group shadow-xs transition-all"
                   >
                     <div className="space-y-2">
                       <Badge variant="secondary">

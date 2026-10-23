@@ -16,7 +16,6 @@ import {
   SlidersHorizontal,
   PanelLeftClose,
   PanelLeftOpen,
-  LogOut,
   Newspaper,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -38,14 +37,8 @@ export function AdminSidebar({
 }: AdminSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { role, logout } = useAuth();
+  const { role } = useAuth();
   const { messages, profile } = useSchoolData();
-
-  const handleLogout = async () => {
-    await logout();
-    onMobileClose();
-    router.push("/login");
-  };
 
   const newMessagesCount = messages.filter((m) => m.status === "new").length;
 
@@ -347,52 +340,23 @@ export function AdminSidebar({
     </nav>
   );
 
-  const sidebarFooter = (collapsed: boolean) => (
-    <div
-      className={cn(
-        "border-t border-border shrink-0",
-        collapsed ? "p-2" : "p-3"
-      )}
-    >
-      {collapsed ? (
-        <div className="flex flex-col items-center gap-2">
+  // Logout hanya tersedia via menu akun di AdminTopbar agar tidak ada dua pintu keluar.
+  const sidebarFooter = (collapsed: boolean) =>
+    collapsed ? (
+      <div className="border-t border-border shrink-0 p-2 flex flex-col items-center">
+        {onToggleCollapse && (
           <button
             type="button"
-            onClick={handleLogout}
-            title="Keluar dari CMS (Logout)"
-            aria-label="Keluar dari CMS"
-            className="flex items-center justify-center size-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-card transition-colors cursor-pointer"
+            onClick={onToggleCollapse}
+            title="Besarkan sidebar"
+            aria-label="Besarkan sidebar"
+            className="hidden lg:flex items-center justify-center size-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-card transition-colors cursor-pointer"
           >
-            <LogOut className="size-4" />
+            <PanelLeftOpen className="size-4" />
           </button>
-          {onToggleCollapse && (
-            <button
-              type="button"
-              onClick={onToggleCollapse}
-              title="Besarkan sidebar"
-              aria-label="Besarkan sidebar"
-              className="hidden lg:flex items-center justify-center size-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-card transition-colors cursor-pointer"
-            >
-              <PanelLeftOpen className="size-4" />
-            </button>
-          )}
-        </div>
-      ) : (
-        <button
-          type="button"
-          onClick={handleLogout}
-          className={cn(
-            "w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium",
-            "text-muted-foreground hover:text-foreground hover:bg-card",
-            "transition-colors cursor-pointer"
-          )}
-        >
-          <LogOut className="size-4 shrink-0" />
-          <span>Keluar</span>
-        </button>
-      )}
-    </div>
-  );
+        )}
+      </div>
+    ) : null;
 
   return (
     <>

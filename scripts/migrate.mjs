@@ -307,7 +307,7 @@ async function seed() {
       'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.989201509376!2d109.789234!3d-7.010234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMDAnMzYuOCJTIDEwOcKwNDcnMjEuMiJF!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid',
       'Dr. KH. Ahmad Zaki Mubarak, Lc., M.Phil.',
       'Pimpinan & Direktur Pendidikan Yazzaka',
-      'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
+      '',
       'Assalamu''alaikum Warahmatullahi Wabarakatuh. Selamat datang di portal resmi SMA & Pesantren Modern Yazzaka.',
       'Menjadi pusat keunggulan pendidikan Islam modern terpadu terkemuka di Asia Tenggara yang melahirkan generasi berkarakter Qur''ani, berdaya saing sains global, dan berjiwa kepemimpinan peradaban.',
       '["Menyelenggarakan pendidikan holistik berbasis nilai-nilai Islam dan sains teknologi mutakhir.", "Membina program tahfiz Al-Qur''an dan pendalaman dirasah Islamiyah yang mutqin dan kontekstual.", "Mengembangkan lingkungan bilingual interaktif bahasa Arab dan Inggris sebagai bahasa pengantar ilmu.", "Membangun ekosistem riset, sains terapan, dan kewirausahaan siswa berstandar global.", "Menanamkan karakter kepemimpinan, kemandirian santri, dan kepekaan sosial kemasyarakatan."]',
@@ -326,7 +326,7 @@ async function seed() {
       category: "Pendidikan Al-Qur'an",
       short_desc: "Pembinaan dasar baca-tulis Al-Qur'an dengan metode tartil tajwid, hafalan surat pendek, doa harian, dan adab islami anak.",
       full_desc: "TPA Yazzakka membimbing anak-anak sejak usia dini untuk mencintai Al-Qur'an melalui metode pembelajaran interaktif, talaqqi makharijul huruf, tajwid praktis, setoran hafalan juz 'amma, serta penanaman adab dan akhlak keseharian.",
-      image_url: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=1000&q=80",
+      image_url: "",
       icon_name: "BookOpen",
       features: JSON.stringify(["Bimbingan talaqqi fashahah & tajwid praktis", "Target tuntas Juz 'Amma dan doa harian", "Pembiasaan adab shalat dan akhlak mulia", "Evaluasi munaqasyah dan wisuda santri"]),
       target_competencies: JSON.stringify(["Fasih membaca Al-Qur'an sesuai kaidah tajwid", "Hafal Juz 30 dan surat-surat pilihan", "Terbiasa menjalankan shalat dan adab harian"]),
@@ -340,7 +340,7 @@ async function seed() {
       category: "Anak Usia Dini",
       short_desc: "Pendidikan anak usia dini berbasis fitrah, penguatan akidah, pembiasaan akhlak mulia, dan stimulasi motorik-kognitif ceria.",
       full_desc: "TKIT Yazzakka memadukan kurikulum PAUD terpadu nasional dengan kurikulum kekhasan Islam. Menghadirkan lingkungan belajar yang aman, ramah anak, dan penuh kasih sayang untuk menumbuhkan kecintaan pada Allah dan Rasul-Nya sejak dini.",
-      image_url: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1000&q=80",
+      image_url: "",
       icon_name: "Sparkles",
       features: JSON.stringify(["Sentra bermain peran, seni, dan kreativitas", "Tahfiz Al-Qur'an surat-surat pendek dan hadits pilihan", "Smart classroom ramah anak ber-AC", "Laporan perkembangan karakter dan psikomotorik"]),
       target_competencies: JSON.stringify(["Kemampuan sosialisasi dan kemandirian anak", "Mengenal huruf hijaiyah dan dasar baca-tulis", "Memiliki adab sopan santun kepada orang tua dan guru"]),
@@ -354,7 +354,7 @@ async function seed() {
       category: "Pembinaan Karakter",
       short_desc: "Program penguatan karakter, akhlak sosial, dan kepemimpinan islami anak melalui kelas tematik dan pembiasaan ibadah.",
       full_desc: "Sekolah Anak Shalih didesain untuk memperkuat nilai-nilai adab dan akhlak sosial di era digital. Membekali anak-anak dengan wawasan keislaman komprehensif, kepemimpinan diri, empati sosial, dan ketahanan mental islami.",
-      image_url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80",
+      image_url: "",
       icon_name: "HeartHandshake",
       features: JSON.stringify(["Kelas tematik parenting dan karakter santri", "Halaqah adab dan keteladanan Rasulullah SAW", "Aktivitas sosial dan bakti kebaikan", "Mentoring kepribadian dan public speaking"]),
       target_competencies: JSON.stringify(["Kepribadian santun, percaya diri, dan peduli sesama", "Kecakapan berkomunikasi dan memimpin kelompok", "Integritas moral dan kedisiplinan ibadah"]),
@@ -368,7 +368,7 @@ async function seed() {
       category: "Pemberdayaan Umat",
       short_desc: "Pusat Kegiatan Belajar Masyarakat untuk pendidikan kesetaraan (Paket A/B/C), literasi Al-Qur'an dewasa, dan vokasi keahlian.",
       full_desc: "PKBM Yazzakka menyediakan akses pendidikan non-formal yang berkualitas dan inklusif bagi masyarakat. Menyelenggarakan program keaksaraan, kesetaraan pendidikan formal, kursus vokasi kemandirian, serta pemberdayaan ekonomi keluarga berbasis syariah.",
-      image_url: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1000&q=80",
+      image_url: "",
       icon_name: "GraduationCap",
       features: JSON.stringify(["Pendidikan Kesetaraan Paket A, B, dan C resmi", "Kelas tahsin dan literasi Al-Qur'an untuk dewasa/lansia", "Pelatihan keterampilan vokasi & wirausaha syariah", "Jadwal belajar fleksibel berbasis tatap muka & daring"]),
       target_competencies: JSON.stringify(["Mendapatkan ijazah kelulusan kesetaraan resmi", "Menguasai keterampilan kerja mandiri & bisnis keluarga", "Melek baca Al-Qur'an dan pemahaman dasar ibadah"]),
@@ -382,7 +382,7 @@ async function seed() {
       category: "Tahfiz & Keilmuan",
       short_desc: "Program karantina dan pembinaan tahfiz 30 juz intensif dengan bimbingan asatidz bersanad dan kajian dirasah Islamiyah.",
       full_desc: "Darul Quran Yazzakka memfokuskan pembinaan santri dalam menghafal Al-Qur'an 30 juz mutqin disertai pendalaman kaidah bahasa Arab, fiqih ibadah, dan kajian kitab tauhid di bawah bimbingan langsung para masyaikh dan asatidz.",
-      image_url: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1000&q=80",
+      image_url: "",
       icon_name: "Award",
       features: JSON.stringify(["Target mutqin 30 juz dengan bimbingan bersanad", "Karantina tahfiz dan setoran harian intensif", "Kajian akidah dan dirasah Islamiyah terstruktur", "Tasmi' hafalan terbuka sekali duduk"]),
       target_competencies: JSON.stringify(["Hafal 30 juz dengan kaidah tajwid dan makhraj mutqin", "Memahami dasar-dasar akidah ahlussunnah wal jama'ah", "Kesiapan menjadi imam, da'i, dan penerima sanad"]),
@@ -396,7 +396,7 @@ async function seed() {
       category: "Program Strategis",
       short_desc: "Ikhtiar pembangunan kawasan pesantren peradaban modern berbasis wakaf umat di Cot Rheng, Pidie untuk melahirkan pemimpin umat masa depan.",
       full_desc: "Program strategis Yayasan Yazzakka untuk mendirikan Pesantren Peradaban 6.0 di Kabupaten Pidie, Aceh. Mengintegrasikan kemuliaan tradisi keilmuan Islam Serambi Mekkah dengan keunggulan sains masa depan, kepemimpinan global, dan kemandirian peradaban.",
-      image_url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=80",
+      image_url: "",
       icon_name: "Globe",
       features: JSON.stringify(["Pembebasan lahan wakaf dan pembangunan masterplan terpadu", "Fasilitas asrama, masjid peradaban, dan laboratorium riset", "Pendidikan kader ulama intelektual berwawasan dunia", "Peluang amal jariyah wakaf produktif untuk kaum muslimin"]),
       target_competencies: JSON.stringify(["Membangun peradaban Islam masa depan berlandaskan Al-Qur'an & Sunnah", "Mencetak generasi pemimpin yang tangguh dan berwawasan global", "Pusat rujukan studi peradaban Islam di Aceh dan Asia Tenggara"]),
@@ -435,7 +435,7 @@ async function seed() {
       title: "Yazzaka Raih Medali Emas OSN Biologi 2025: Bukti Keunggulan Riset Santri",
       excerpt: "Santri Yazzaka kembali mengukir prestasi gemilang di panggung nasional dengan meraih Medali Emas pada Olimpiade Sains Nasional bidang Biologi.",
       content: "Konten artikel lengkap tentang prestasi OSN Biologi 2025.",
-      cover_image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80",
+      cover_image: "",
       category: "Prestasi",
       tags: JSON.stringify(["OSN", "Sains", "Prestasi", "Biologi"]),
       author: "Tim Humas Yazzaka",
@@ -453,7 +453,7 @@ async function seed() {
       title: "Pesantren Modern vs. Tradisional: Mana yang Lebih Baik untuk Anak Anda?",
       excerpt: "Perdebatan antara pesantren modern dan tradisional terus berkembang. Artikel ini mengupas tuntas perbedaan, keunggulan, dan bagaimana Yazzaka menjawab tantangan keduanya.",
       content: "Konten artikel lengkap tentang perbandingan pesantren.",
-      cover_image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+      cover_image: "",
       category: "Wawasan & Opini",
       tags: JSON.stringify(["Pesantren", "Pendidikan Islam", "Parenting"]),
       author: "Dr. KH. Ahmad Zaki Mubarak",
@@ -471,7 +471,7 @@ async function seed() {
       title: "Pengumuman Resmi: PPDB Yazzaka Tahun Ajaran 2026/2027 Telah Dibuka",
       excerpt: "Yazzaka membuka pendaftaran peserta didik baru (PPDB) untuk tahun ajaran 2026/2027. Kuota terbatas, segera daftarkan putra-putri Anda.",
       content: "Konten pengumuman PPDB lengkap.",
-      cover_image: "https://images.unsplash.com/photo-1606761568499-6d2451b23c66?auto=format&fit=crop&w=1200&q=80",
+      cover_image: "",
       category: "Pengumuman",
       tags: JSON.stringify(["PPDB", "Pendaftaran", "2026"]),
       author: "Panitia PPDB Yazzaka",
@@ -496,9 +496,9 @@ async function seed() {
 
   // === EVENTS ===
   const events = [
-    { id: "evt-1", title: "Open House & Hari Informasi PPDB 2026/2027", description: "Kunjungi sekolah Yazzakka secara langsung, temui para pengajar, dan dapatkan informasi lengkap tentang program & biaya pendidikan.", date: "2025-12-07", time: "08:00 - 14:00 WIB", location: "Kompleks Utama Yazzakka, Sigli", category: "Penerimaan Siswa", cover_image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=80", registration_url: "#daftar", status: "upcoming" },
-    { id: "evt-2", title: "Seminar Parenting: Mendidik Generasi Hafiz di Era Digital", description: "Seminar bersama pakar pendidikan Islam dan psikolog anak tentang strategi mendidik anak hafiz Al-Qur'an yang adaptif di era digital.", date: "2025-11-22", time: "08:30 - 12:00 WIB", location: "Aula Utama Yayasan Yazzakka", category: "Seminar & Parenting", cover_image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?auto=format&fit=crop&w=1000&q=80", registration_url: "#seminar", status: "upcoming" },
-    { id: "evt-3", title: "Wisuda & Haflah Akhirussanah ke-12 Yazzaka", description: "Perayaan wisuda santri angkatan ke-12 disertai penampilan seni, pameran karya siswa, dan penyerahan ijazah.", date: "2025-06-15", time: "07:00 - 17:00 WIB", location: "Sekolah Yazzakka & Area Terbuka", category: "Wisuda & Pameran", cover_image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=80", status: "completed" },
+    { id: "evt-1", title: "Open House & Hari Informasi PPDB 2026/2027", description: "Kunjungi sekolah Yazzakka secara langsung, temui para pengajar, dan dapatkan informasi lengkap tentang program & biaya pendidikan.", date: "2025-12-07", time: "08:00 - 14:00 WIB", location: "Kompleks Utama Yazzakka, Sigli", category: "Penerimaan Siswa", cover_image: "", registration_url: "#daftar", status: "upcoming" },
+    { id: "evt-2", title: "Seminar Parenting: Mendidik Generasi Hafiz di Era Digital", description: "Seminar bersama pakar pendidikan Islam dan psikolog anak tentang strategi mendidik anak hafiz Al-Qur'an yang adaptif di era digital.", date: "2025-11-22", time: "08:30 - 12:00 WIB", location: "Aula Utama Yayasan Yazzakka", category: "Seminar & Parenting", cover_image: "", registration_url: "#seminar", status: "upcoming" },
+    { id: "evt-3", title: "Wisuda & Haflah Akhirussanah ke-12 Yazzaka", description: "Perayaan wisuda santri angkatan ke-12 disertai penampilan seni, pameran karya siswa, dan penyerahan ijazah.", date: "2025-06-15", time: "07:00 - 17:00 WIB", location: "Sekolah Yazzakka & Area Terbuka", category: "Wisuda & Pameran", cover_image: "", status: "completed" },
   ];
 
   for (const e of events) {
@@ -521,7 +521,7 @@ async function seed() {
       ON CONFLICT (id) DO NOTHING
     `;
   }
-  console.log("✓ testimonials seeded (3 records)");
+  console.log("✓ testimonials seeded (0 records — isi via CMS)");
 
   // === ADMISSION INFO ===
   // Placeholder jujur (2026-10-23): biaya/jadwal/FAQ fiktif tidak di-seed.
@@ -554,7 +554,7 @@ async function seed() {
       'Yayasan & Pesantren Yazzakka Aceh — Generasi Unggul Berkarakter',
       'Lembaga pendidikan Islam terpadu dan sekolah formal di Sigli Aceh. Program Tahfiz, Karakter Islami, Bahasa Arab, dan Kepemimpinan untuk mencetak generasi unggul.',
       'pesantren peradaban, sekolah islam, tahfiz quran, yayasan yazzakka aceh, sigli pidie',
-      '/og-image.jpg',
+      NULL,
       '{"instagram":"https://instagram.com/yazzakka.official","youtube":"https://youtube.com/@YazzakaOfficial","facebook":"https://facebook.com/yazzakka.official","tiktok":"https://tiktok.com/@yazzakka.official","linkedin":""}',
       '{"headerLinks":[{"label":"Beranda","href":"/"},{"label":"Tentang Kami","href":"/tentang-kami"},{"label":"Program","href":"/program"},{"label":"Prestasi","href":"/prestasi"},{"label":"Berita","href":"/berita"}],"footerLinks":[{"label":"Kebijakan Privasi","href":"/privasi"},{"label":"Sitemap","href":"/sitemap"}]}'
     ) ON CONFLICT (id) DO NOTHING
@@ -584,7 +584,7 @@ async function seed() {
 
   // === USERS ===
   const users = [
-    { id: "user-1", name: "Super Admin Yazzaka", email: "superadmin@yazzaka.sch.id", role: "super_admin", avatar_url: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80", created_at: "2026-01-01" },
+    { id: "user-1", name: "Super Admin Yazzaka", email: "superadmin@yazzaka.sch.id", role: "super_admin", avatar_url: "", created_at: "2026-01-01" },
     { id: "user-2", name: "Admin Konten", email: "admin@yazzaka.sch.id", role: "admin", avatar_url: undefined, created_at: "2026-03-15" },
   ];
 

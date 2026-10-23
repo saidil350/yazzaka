@@ -6,7 +6,7 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DEFAULT_HERO } from "@/lib/data/initialData";
-import { ArrowRight, BookOpen, CheckCircle2, Landmark } from "lucide-react";
+import { ArrowRight, BookOpen, CheckCircle2, Landmark, Image as ImageIcon } from "lucide-react";
 
 export function HeroSection() {
   const { profile, admission } = useSchoolData();
@@ -96,13 +96,20 @@ export function HeroSection() {
             {/* Main Rounded Card */}
             <div className="relative rounded-3xl overflow-hidden border-2 border-white bg-white shadow-xl">
               <div className="aspect-[4/3] sm:aspect-[16/11] relative max-h-[340px]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={hero.imageUrl}
-                  alt={`Aktivitas santri di ${profile.name}`}
-                  className="w-full h-full object-cover"
-                  loading="eager"
-                />
+                {hero.imageUrl ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={hero.imageUrl}
+                    alt={`Aktivitas santri di ${profile.name}`}
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-muted text-muted-foreground">
+                    <ImageIcon className="h-8 w-8" />
+                    <span className="text-xs font-medium">Foto hero diunggah via CMS</span>
+                  </div>
+                )}
 
               </div>
             </div>

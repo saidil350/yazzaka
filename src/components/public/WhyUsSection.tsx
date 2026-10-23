@@ -107,7 +107,7 @@ export function WhyUsSection() {
             return (
               <div
                 key={idx}
-                className="bg-white border border-[#E8E2D8] rounded-lg p-6 transition-all duration-200 hover:-translate-y-1 hover:border-yazzaka-teal/50 hover:shadow-md flex flex-col justify-between group"
+                className="bg-white border border-[#E8E2D8] rounded-lg p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-md flex flex-col justify-between group"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
