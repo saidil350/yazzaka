@@ -53,15 +53,17 @@ export function HeroSection() {
 
             {/* Pill Action CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
-              <Link href="/pendaftaran">
-                <Button
-                  size="default"
-                  className="font-bold text-xs sm:text-sm h-11 px-6 w-full sm:w-auto shadow-sm"
-                >
-                  <span>{admission.isOpen ? "Daftar Santri Baru" : "Informasi PPDB"}</span>
-                  <ArrowRight className="h-4 w-4 ml-1" />
-                </Button>
-              </Link>
+              {admission.showHeroCta && (
+                <Link href="/pendaftaran">
+                  <Button
+                    size="default"
+                    className="font-bold text-xs sm:text-sm h-11 px-6 w-full sm:w-auto shadow-sm"
+                  >
+                    <span>{admission.isOpen ? "Daftar Santri Baru" : "Informasi PPDB"}</span>
+                    <ArrowRight className="h-4 w-4 ml-1" />
+                  </Button>
+                </Link>
+              )}
               <Link href="/tentang-kami">
                 <Button
                   variant="outline"

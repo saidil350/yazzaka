@@ -168,6 +168,8 @@ export interface AdmissionInfo {
   endDate?: string;
   hideFormWhenClosed?: boolean;
   closedMessage?: string;
+  showHeaderCta: boolean;
+  showHeroCta: boolean;
   registrationUrl: string;
   consultationWhatsapp: string;
   timeline: AdmissionTimelineStep[];

@@ -471,6 +471,8 @@ export const initialAdmissionInfo: AdmissionInfo = {
   endDate: "",
   hideFormWhenClosed: true,
   closedMessage: "Pendaftaran santri baru untuk periode ini sedang ditutup. Untuk informasi jadwal gelombang berikutnya atau konsultasi langsung, silakan hubungi sekretariat PPDB kami melalui WhatsApp.",
+  showHeaderCta: true,
+  showHeroCta: true,
   registrationUrl: "/pendaftaran",
   consultationWhatsapp: "6285362999090",
   timeline: [],

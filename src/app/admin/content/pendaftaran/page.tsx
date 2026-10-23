@@ -23,6 +23,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Select } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import {
   Table,
   TableBody,
@@ -397,15 +398,12 @@ export default function AdminAdmissionPage() {
                   </p>
                 </div>
 
-                <label className="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
-                  <input
-                    type="checkbox"
-                    checked={hideFormWhenClosed}
-                    onChange={(e) => setHideFormWhenClosed(e.target.checked)}
-                    className="sr-only peer"
-                  />
-                  <div className="w-11 h-6 bg-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-border after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-                </label>
+                <Switch
+                  checked={hideFormWhenClosed}
+                  onCheckedChange={setHideFormWhenClosed}
+                  aria-label="Sembunyikan formulir pendaftaran saat ditutup"
+                  className="mt-1 shrink-0"
+                />
               </div>
 
               {/* Pesan Kustom Pengumuman Penutupan */}
