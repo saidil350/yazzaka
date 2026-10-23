@@ -34,6 +34,8 @@ export async function PUT(request: Request) {
         end_date = COALESCE(${body.endDate !== undefined ? body.endDate : null}, end_date),
         hide_form_when_closed = COALESCE(${body.hideFormWhenClosed !== undefined ? body.hideFormWhenClosed : null}, hide_form_when_closed),
         closed_message = COALESCE(${body.closedMessage !== undefined ? body.closedMessage : null}, closed_message),
+        show_header_cta = COALESCE(${body.showHeaderCta !== undefined ? body.showHeaderCta : null}, show_header_cta),
+        show_hero_cta = COALESCE(${body.showHeroCta !== undefined ? body.showHeroCta : null}, show_hero_cta),
         registration_url = COALESCE(${body.registrationUrl ?? null}, registration_url),
         consultation_whatsapp = COALESCE(${body.consultationWhatsapp ?? null}, consultation_whatsapp),
         timeline = COALESCE(${timelineJson ? sql`${timelineJson}::jsonb` : null}, timeline),

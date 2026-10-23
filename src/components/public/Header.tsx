@@ -347,7 +347,7 @@ export function Header() {
 
           {/* Action CTA & Mobile Hamburger */}
           <div className="flex items-center gap-2.5 shrink-0">
-            {pathname !== "/pendaftaran" && (
+            {pathname !== "/pendaftaran" && admission.showHeaderCta && (
               <Link href="/pendaftaran" className="hidden sm:inline-flex">
                 <Button
                   variant={admission.isOpen ? "default" : "outline"}
@@ -506,12 +506,14 @@ export function Header() {
 
             {/* Drawer Footer Actions */}
             <div className="pt-3.5 border-t border-[#E8E2D8] space-y-2 shrink-0">
-              <Link href="/pendaftaran" onClick={() => setMobileMenuOpen(false)} className="block">
-                <Button className="w-full justify-center font-bold h-10 text-xs">
-                  {admission.isOpen ? "Daftar Santri Baru (PPDB)" : "Informasi PPDB (Ditutup)"}
-                  <ArrowRight className="h-3.5 w-3.5 ml-1" />
-                </Button>
-              </Link>
+              {admission.showHeaderCta && (
+                <Link href="/pendaftaran" onClick={() => setMobileMenuOpen(false)} className="block">
+                  <Button className="w-full justify-center font-bold h-10 text-xs">
+                    {admission.isOpen ? "Daftar Santri Baru (PPDB)" : "Informasi PPDB (Ditutup)"}
+                    <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                  </Button>
+                </Link>
+              )}
               <a
                 href={`https://wa.me/${profile.whatsapp}?text=Assalamu'alaikum%20Admin%20Yazzakka`}
                 target="_blank"

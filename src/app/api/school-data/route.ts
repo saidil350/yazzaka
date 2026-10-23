@@ -220,6 +220,8 @@ export function mapAdmission(r: Record<string, unknown>) {
     endDate: (r.end_date as string) || "",
     hideFormWhenClosed: r.hide_form_when_closed !== undefined ? Boolean(r.hide_form_when_closed) : true,
     closedMessage: (r.closed_message as string) || "",
+    showHeaderCta: r.show_header_cta !== undefined ? Boolean(r.show_header_cta) : true,
+    showHeroCta: r.show_hero_cta !== undefined ? Boolean(r.show_hero_cta) : true,
     registrationUrl: (r.registration_url as string) || "",
     consultationWhatsapp: (r.consultation_whatsapp as string) || "",
     timeline: ensureArray(r.timeline),
