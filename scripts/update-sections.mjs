@@ -31,13 +31,6 @@ const sql = neon(DATABASE_URL);
 
 async function run() {
   console.log("Updating page_sections in Neon Database...");
-  
-  // Set is_enabled to false for facilities
-  await sql`
-    UPDATE page_sections 
-    SET is_enabled = false 
-    WHERE key = 'facilities' OR id = 'sec-facilities' OR id = 'sec-6';
-  `;
 
   // Remove news and events sections if exists
   await sql`

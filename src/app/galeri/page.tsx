@@ -7,23 +7,10 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { Image as ImageIcon, FileText, X, Sparkles } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 export default function GalleryPage() {
   const { media, profile } = useSchoolData();
-  const [selectedCategory, setSelectedCategory] = useState<string>("Semua");
   const [activeLightbox, setActiveLightbox] = useState<string | null>(null);
-
-  // Dynamic categories extracted from media library in database
-  const categories = [
-    "Semua",
-    ...Array.from(new Set(media.map((m) => m.category).filter(Boolean))),
-  ];
-
-  const filtered =
-    selectedCategory === "Semua"
-      ? media
-      : media.filter((m) => m.category === selectedCategory);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
@@ -50,23 +37,9 @@ export default function GalleryPage() {
         <section className="py-12 lg:py-14 bg-white border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
-            {/* Filter Tabs */}
-            <div className="flex flex-wrap items-center gap-2">
-              {categories.map((cat) => (
-                <Button
-                  key={cat}
-                  variant={selectedCategory === cat ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(cat)}
-                >
-                  {cat}
-                </Button>
-              ))}
-            </div>
-
             {/* Media Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((item) => (
+              {media.map((item) => (
                 <div
                   key={item.id}
                   className="bg-white rounded-3xl border-2 border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all group flex flex-col cursor-pointer"
@@ -104,23 +77,11 @@ export default function GalleryPage() {
               ))}
             </div>
 
-            {filtered.length === 0 && (
+            {media.length === 0 && (
               <EmptyState
                 icon={ImageIcon}
                 title="Tidak Ada Media Ditemukan"
-                description={
-                  selectedCategory !== "Semua"
-                    ? `Belum ada dokumentasi foto dalam kategori "${selectedCategory}".`
-                    : "Belum ada berkas media galeri yang dipublikasikan."
-                }
-                action={
-                  selectedCategory !== "Semua"
-                    ? {
-                        label: "Tampilkan Semua Media",
-                        onClick: () => setSelectedCategory("Semua"),
-                      }
-                    : undefined
-                }
+                description="Belum ada berkas media galeri yang dipublikasikan."
               />
             )}
 

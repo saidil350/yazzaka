@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
@@ -13,12 +13,6 @@ import { EmptyState } from "@/components/ui/empty-state";
 
 export default function EventsPage() {
   const { events } = useSchoolData();
-  const [filterStatus, setFilterStatus] = useState<"all" | "upcoming" | "completed">("all");
-
-  const filtered = events.filter((e) => {
-    if (filterStatus === "all") return true;
-    return e.status === filterStatus;
-  });
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
@@ -45,44 +39,16 @@ export default function EventsPage() {
         <section className="py-12 lg:py-14 bg-white border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
-            {/* Filter */}
-            <div className="flex items-center gap-2">
-              {([
-                ["all", "Semua Agenda"],
-                ["upcoming", "Akan Datang"],
-                ["completed", "Telah Selesai"],
-              ] as const).map(([status, label]) => (
-                <Button
-                  key={status}
-                  variant={filterStatus === status ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setFilterStatus(status)}
-                >
-                  {label}
-                </Button>
-              ))}
-            </div>
-
             {/* Event List or EmptyState */}
-            {filtered.length === 0 ? (
+            {events.length === 0 ? (
               <EmptyState
                 icon={Calendar}
                 title="Tidak Ada Agenda yang Ditemukan"
-                description={`Saat ini belum ada jadwal agenda kegiatan ${
-                  filterStatus === "upcoming"
-                    ? "yang akan datang"
-                    : filterStatus === "completed"
-                    ? "yang telah selesai"
-                    : ""
-                }.`}
-                action={{
-                  label: "Tampilkan Semua Agenda",
-                  onClick: () => setFilterStatus("all"),
-                }}
+                description="Saat ini belum ada jadwal agenda kegiatan."
               />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filtered.map((evt) => (
+                {events.map((evt) => (
                   <div
                     key={evt.id}
                     className="bg-white rounded-3xl border-2 border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md hover:border-[#FA6400]/40 transition-all flex flex-col justify-between group"

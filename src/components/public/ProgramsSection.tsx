@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { ArrowRight, Sparkles, CheckCircle2, Layers } from "lucide-react";
@@ -10,25 +10,10 @@ import { EmptyState } from "@/components/ui/empty-state";
 
 export function ProgramsSection() {
   const { programs } = useSchoolData();
-  const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
   const published = programs
     .filter((p) => p.status === "published")
     .sort((a, b) => a.orderIndex - b.orderIndex);
-
-  // Dynamic filter options generated from database
-  const filterOptions = [
-    { key: "all", label: `Semua Unit (${published.length})` },
-    ...published.map((p) => ({
-      key: p.slug,
-      label: p.title,
-    })),
-  ];
-
-  const filteredPrograms = published.filter((prog) => {
-    if (selectedFilter === "all") return true;
-    return prog.slug === selectedFilter;
-  });
 
   return (
     <section id="program" className="landing-section py-16 lg:py-20 bg-secondary/35 border-b border-border scroll-mt-24">
@@ -61,36 +46,16 @@ export function ProgramsSection() {
           </Link>
         </div>
 
-        {/* Category Filter Pills */}
-        {published.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#E8E2D8]">
-            {filterOptions.map((opt) => (
-              <Button
-                key={opt.key}
-                variant={selectedFilter === opt.key ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedFilter(opt.key)}
-              >
-                {opt.label}
-              </Button>
-            ))}
-          </div>
-        )}
-
         {/* 6 Interactive Cards Grid or EmptyState */}
-        {filteredPrograms.length === 0 ? (
+        {published.length === 0 ? (
           <EmptyState
             icon={Layers}
             title="Belum Ada Program Ditemukan"
-            description="Saat ini belum ada unit atau program pendidikan yang aktif untuk kriteria yang dipilih."
-            action={{
-              label: "Reset Filter",
-              onClick: () => setSelectedFilter("all"),
-            }}
+            description="Saat ini belum ada unit atau program pendidikan yang aktif."
           />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPrograms.map((prog) => {
+            {published.map((prog) => {
               const isSpecialWakaf = prog.category?.toLowerCase().includes("wakaf") || prog.slug.includes("peradaban");
 
               return (
@@ -100,7 +65,7 @@ export function ProgramsSection() {
                     "interactive-lift rounded-[1.25rem] border overflow-hidden flex flex-col justify-between group shadow-xs",
                     isSpecialWakaf
                       ? "bg-yazzaka-teal-soft border-yazzaka-teal ring-2 ring-yazzaka-teal/20"
-                      : "bg-white border-[#E8E2D8] hover:border-yazzaka-teal/50",
+                      : "bg-white border-[#E8E2D8]",
                   ].join(" ")}
                 >
                   <div>

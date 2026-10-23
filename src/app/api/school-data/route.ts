@@ -10,7 +10,7 @@ import { ADMIN_ROLES } from "@/lib/auth/server";
  * Mengurangi jumlah request saat halaman pertama kali dibuka.
  *
  * Payload session-aware (endpoint ini juga dibaca pengunjung anonim):
- * - anonim → subset publik: programs/facilities hanya published, TANPA
+ * - anonim → subset publik: programs hanya published, TANPA
  *   messages/users (PII), artikel hanya published tanpa isi/content, media
  *   hanya galeri — bukan berkas privat fitur berita;
  * - editor → data konten lengkap (termasuk draft) tapi tetap tanpa
@@ -30,7 +30,6 @@ export async function GET(request: Request) {
     const [
       profiles,
       programs,
-      facilities,
       achievements,
       articles,
       events,
@@ -47,9 +46,6 @@ export async function GET(request: Request) {
       publicOnly
         ? sql`SELECT * FROM programs WHERE status = 'published' OR status IS NULL ORDER BY order_index ASC`
         : sql`SELECT * FROM programs ORDER BY order_index ASC`,
-      publicOnly
-        ? sql`SELECT * FROM facilities WHERE status = 'published' OR status IS NULL ORDER BY order_index ASC`
-        : sql`SELECT * FROM facilities ORDER BY order_index ASC`,
       sql`SELECT * FROM achievements ORDER BY year DESC, created_at DESC`,
       sql`SELECT a.id, a.slug, a.title, a.excerpt, a.cover_image, a.category,
                  a.tags, a.author, a.author_role, a.published_date, a.published_at,
@@ -83,7 +79,6 @@ export async function GET(request: Request) {
     return NextResponse.json({
       profile: profile ? mapProfile(profile) : null,
       programs: programs.map(mapProgram),
-      facilities: facilities.map(mapFacility),
       achievements: achievements.map(mapAchievement),
       articles: articles.map(mapArticleRow),
       events: events.map(mapEvent),
@@ -154,19 +149,6 @@ export function mapProgram(r: Record<string, unknown>) {
     iconName: r.icon_name,
     features: r.features,
     targetCompetencies: r.target_competencies,
-    status: r.status,
-    orderIndex: r.order_index,
-  };
-}
-
-export function mapFacility(r: Record<string, unknown>) {
-  return {
-    id: r.id,
-    name: r.name,
-    category: r.category,
-    description: r.description,
-    capacity: r.capacity,
-    imageUrl: r.image_url,
     status: r.status,
     orderIndex: r.order_index,
   };

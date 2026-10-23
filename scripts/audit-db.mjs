@@ -9,7 +9,6 @@ async function runAudit() {
   const results = await Promise.all([
     sql`SELECT count(*) as c FROM school_profile`,
     sql`SELECT count(*) as c FROM programs`,
-    sql`SELECT count(*) as c FROM facilities`,
     sql`SELECT count(*) as c FROM achievements`,
     sql`SELECT count(*) as c FROM articles`,
     sql`SELECT count(*) as c FROM events`,
@@ -24,7 +23,7 @@ async function runAudit() {
   ]);
 
   const names = [
-    "school_profile", "programs", "facilities", "achievements",
+    "school_profile", "programs", "achievements",
     "articles", "events", "testimonials", "admission_info",
     "contact_messages", "website_settings", "organization_members",
     "users", "page_sections", "media_items"

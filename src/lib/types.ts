@@ -74,17 +74,6 @@ export interface Program {
   targetCompetencies: string[];
 }
 
-export interface Facility {
-  id: string;
-  name: string;
-  category: string;
-  description: string;
-  capacity?: string;
-  imageUrl: string;
-  status: "published" | "draft";
-  orderIndex: number;
-}
-
 export interface Achievement {
   id: string;
   title: string;

@@ -101,7 +101,6 @@ export function AdminSidebar({
         { label: "Hero Beranda", href: "/admin/content/hero", roles: ["super_admin"] },
         { label: "Penerimaan Santri (PPDB)", href: "/admin/content/pendaftaran" },
         { label: "Program Pendidikan", href: "/admin/content/program" },
-        { label: "Fasilitas Sekolah", href: "/admin/content/fasilitas" },
         { label: "Prestasi Santri", href: "/admin/content/pengumuman" },
         { label: "Agenda & Kegiatan", href: "/admin/content/kegiatan" },
         // Data tim tersimpan via /api/organization — mutasi super_admin-only

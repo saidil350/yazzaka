@@ -91,10 +91,10 @@ export default function ProgramsDirectoryPage() {
                     >
                       <Card
                         className={[
-                          "h-full overflow-hidden flex flex-col justify-between interactive-lift transition-colors",
+                          "h-full overflow-hidden flex flex-col justify-between interactive-lift",
                           isSpecialWakaf
                             ? "border-yazzaka-teal ring-2 ring-yazzaka-teal/20"
-                            : "hover:border-yazzaka-teal/60",
+                            : "",
                         ].join(" ")}
                       >
                         <div>
