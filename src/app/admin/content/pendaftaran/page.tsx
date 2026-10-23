@@ -33,6 +33,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AdmissionFeeItem } from "@/lib/types";
+import {
+  DEFAULT_FEE_UNIT,
+  FEE_UNITS,
+  groupFeesByUnit,
+  isFeeGrouped,
+} from "@/lib/admission-fees";
 
 export default function AdminAdmissionPage() {
   const { admission, updateAdmission } = useSchoolData();
@@ -75,6 +81,7 @@ export default function AdminAdmissionPage() {
   const [newFeeName, setNewFeeName] = useState("");
   const [newFeeAmount, setNewFeeAmount] = useState<number>(0);
   const [newFeeCategory, setNewFeeCategory] = useState<AdmissionFeeItem["category"]>("Pendaftaran");
+  const [newFeeUnit, setNewFeeUnit] = useState<string>(DEFAULT_FEE_UNIT);
   const [newFeeNotes, setNewFeeNotes] = useState("");
 
   // FAQs state
@@ -178,6 +185,7 @@ export default function AdminAdmissionPage() {
         name: newFeeName,
         amount: Number(newFeeAmount),
         category: newFeeCategory,
+        unit: newFeeUnit,
         notes: newFeeNotes,
       },
     ];
@@ -187,6 +195,7 @@ export default function AdminAdmissionPage() {
       setNewFeeName("");
       setNewFeeAmount(0);
       setNewFeeNotes("");
+      setNewFeeUnit(DEFAULT_FEE_UNIT);
       toast("Komponen biaya berhasil ditambahkan!", "success");
     } catch {
       toast("Gagal menambahkan komponen biaya. Coba lagi.", "error");
@@ -241,6 +250,9 @@ export default function AdminAdmissionPage() {
       toast("Gagal menghapus FAQ. Coba lagi.", "error");
     }
   };
+
+  const feeGroups = groupFeesByUnit(fees);
+  const showFeeGroups = isFeeGrouped(fees);
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
@@ -546,7 +558,7 @@ export default function AdminAdmissionPage() {
             <h3 className="font-semibold text-base text-foreground">
               Tambah Komponen Biaya Baru
             </h3>
-            <form onSubmit={handleAddFee} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+            <form onSubmit={handleAddFee} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
               <Input
                 label="Nama Komponen Biaya"
                 required
@@ -572,6 +584,17 @@ export default function AdminAdmissionPage() {
                 <option value="SPP Bulanan">SPP Bulanan</option>
                 <option value="Seragam & Kit Santri">Seragam &amp; Kit Santri</option>
               </Select>
+              <Select
+                label="Satuan Pendidikan"
+                value={newFeeUnit}
+                onChange={(e) => setNewFeeUnit(e.target.value)}
+              >
+                {FEE_UNITS.map((unit) => (
+                  <option key={unit} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </Select>
               <Button type="submit" className="w-full">
                 <Plus className="h-4 w-4" />
                 Tambah Biaya
@@ -590,29 +613,65 @@ export default function AdminAdmissionPage() {
                 </tr>
               </TableHeader>
               <TableBody>
-                {fees.map((fee, idx) => (
-                  <TableRow key={idx}>
-                    <TableCell className="p-4 sm:px-6 font-medium text-foreground">{fee.name}</TableCell>
-                    <TableCell className="p-4 sm:px-6">
-                      <Badge variant="secondary">{fee.category}</Badge>
-                    </TableCell>
-                    <TableCell className="p-4 sm:px-6 text-right font-semibold text-primary">
-                      {formatRupiah(fee.amount)}
-                    </TableCell>
-                    <TableCell className="p-4 sm:px-6 text-right">
-                      <Button
-                        variant="ghost"
-                        size="icon-sm"
-                        onClick={() => handleDeleteFee(idx)}
-                        className="text-destructive hover:text-destructive"
-                        title="Hapus Komponen"
-                        aria-label="Hapus Komponen"
-                      >
-                        <Trash2 className="h-4 w-4" aria-hidden="true" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {showFeeGroups
+                  ? feeGroups.map((group) => (
+                      <React.Fragment key={group.unit}>
+                        <TableRow className="bg-muted/50 hover:bg-muted/50">
+                          <TableCell colSpan={4} className="p-3 sm:px-6 text-sm font-semibold text-foreground">
+                            {group.unit}
+                            <span className="ml-2 text-xs font-normal text-muted-foreground">
+                              {group.items.length} komponen
+                            </span>
+                          </TableCell>
+                        </TableRow>
+                        {group.items.map(({ fee, index }) => (
+                          <TableRow key={index}>
+                            <TableCell className="p-4 sm:px-6 font-medium text-foreground">{fee.name}</TableCell>
+                            <TableCell className="p-4 sm:px-6">
+                              <Badge variant="secondary">{fee.category}</Badge>
+                            </TableCell>
+                            <TableCell className="p-4 sm:px-6 text-right font-semibold text-primary">
+                              {formatRupiah(fee.amount)}
+                            </TableCell>
+                            <TableCell className="p-4 sm:px-6 text-right">
+                              <Button
+                                variant="ghost"
+                                size="icon-sm"
+                                onClick={() => handleDeleteFee(index)}
+                                className="text-destructive hover:text-destructive"
+                                title="Hapus Komponen"
+                                aria-label="Hapus Komponen"
+                              >
+                                <Trash2 className="h-4 w-4" aria-hidden="true" />
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </React.Fragment>
+                    ))
+                  : fees.map((fee, idx) => (
+                      <TableRow key={idx}>
+                        <TableCell className="p-4 sm:px-6 font-medium text-foreground">{fee.name}</TableCell>
+                        <TableCell className="p-4 sm:px-6">
+                          <Badge variant="secondary">{fee.category}</Badge>
+                        </TableCell>
+                        <TableCell className="p-4 sm:px-6 text-right font-semibold text-primary">
+                          {formatRupiah(fee.amount)}
+                        </TableCell>
+                        <TableCell className="p-4 sm:px-6 text-right">
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => handleDeleteFee(idx)}
+                            className="text-destructive hover:text-destructive"
+                            title="Hapus Komponen"
+                            aria-label="Hapus Komponen"
+                          >
+                            <Trash2 className="h-4 w-4" aria-hidden="true" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
               </TableBody>
             </Table>
           </Card>
