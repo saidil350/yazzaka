@@ -119,7 +119,7 @@ export function ProgramsSection() {
                           isSpecialWakaf ? "bg-[#FA6400] hover:bg-[#E05A00] text-white shadow-xs" : "",
                         ].join(" ")}
                       >
-                        <span>{isSpecialWakaf ? "Pelajari Info Wakaf & Masterplan" : "Rincian & Pendaftaran Unit"}</span>
+                        <span>{isSpecialWakaf ? "Pelajari Info Wakaf & Masterplan" : "Rincian Lebih Lanjut"}</span>
                         <ArrowRight className="h-3.5 w-3.5 ml-1" />
                       </Button>
                     </Link>

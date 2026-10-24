@@ -516,6 +516,32 @@
   animation-play-state: paused;
 }
 
+/* ── Hero editorial stagger — entrance bertahap kolom kiri hero ──
+   Anak langsung .hero-stagger muncul berurutan (rise + fade);
+   delay per anak lewat nth-child. prefers-reduced-motion global
+   sudah mematikan ini secara otomatis. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-stagger > * {
+  opacity: 0;
+  animation: hero-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-stagger > *:nth-child(2) { animation-delay: 0.17s; }
+.hero-stagger > *:nth-child(3) { animation-delay: 0.29s; }
+.hero-stagger > *:nth-child(4) { animation-delay: 0.41s; }
+.hero-stagger > *:nth-child(5) { animation-delay: 0.53s; }
+
 /* ── Scrollbar ───────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 8px;

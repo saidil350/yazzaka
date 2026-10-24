@@ -9,7 +9,6 @@ import {
   Phone,
   Mail,
   MessageCircle,
-  Clock,
   ArrowUpRight,
 } from "lucide-react";
 import {
@@ -199,10 +198,6 @@ export function Footer() {
                 <a href={`mailto:${profile.email}`} className="font-semibold text-stone-700">
                   {profile.email}
                 </a>
-              </div>
-              <div className="flex items-start gap-2.5 pt-1.5 border-t border-[#E8E2D8] text-[11px] text-stone-500">
-                <Clock className="h-3.5 w-3.5 text-stone-400 shrink-0 mt-0.5" />
-                <span>Senin – Sabtu: 08:00 – 16:30 WIB</span>
               </div>
             </div>
           </div>
