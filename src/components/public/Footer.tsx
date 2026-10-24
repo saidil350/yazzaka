@@ -8,8 +8,6 @@ import {
   MapPin,
   Phone,
   Mail,
-  ShieldCheck,
-  Award,
   MessageCircle,
   Clock,
   ArrowUpRight,
@@ -19,7 +17,6 @@ import {
   YoutubeIcon,
   FacebookIcon,
 } from "@/components/public/SocialIcons";
-import { Badge } from "@/components/ui/badge";
 
 export function Footer() {
   const { profile, settings } = useSchoolData();
@@ -57,18 +54,6 @@ export function Footer() {
             <p className="text-xs text-stone-600 leading-relaxed font-medium pr-4">
               {profile.description}
             </p>
-
-            {/* Legal and Leader Badges */}
-            <div className="flex flex-wrap gap-2 pt-1">
-              <Badge variant="secondary" className="gap-1.5">
-                <ShieldCheck className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
-                <span>SK Kemenkumham: {profile.npsn}</span>
-              </Badge>
-              <Badge variant="secondary" className="gap-1.5">
-                <Award className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
-                <span>Binaan Dr. Amri Fatmi</span>
-              </Badge>
-            </div>
 
             {/* Social Media Links */}
             <div className="pt-2">
