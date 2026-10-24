@@ -6,7 +6,7 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DEFAULT_HERO } from "@/lib/data/initialData";
-import { ArrowRight, BookOpen, CheckCircle2, Landmark, Image as ImageIcon } from "lucide-react";
+import { ArrowRight, BookOpen, Landmark, Image as ImageIcon } from "lucide-react";
 
 /**
  * Satu kolom marquee vertikal untuk kolase galeri hero.
@@ -74,8 +74,10 @@ export function HeroSection() {
         {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
-          {/* ── Left: Friendly Headline & Mission (7 cols) ─────── */}
-          <div className="lg:col-span-7 space-y-4 sm:space-y-5">
+          {/* ── Left: Friendly Headline & Mission (7 cols) ───────
+              hero-stagger: anak-anak kolom ini muncul berurutan
+              (editorial stagger) saat halaman dimuat. */}
+          <div className="lg:col-span-7 space-y-4 sm:space-y-5 hero-stagger">
 
             {/* Pill Eyebrow */}
             <Badge variant="secondary" className="gap-2">
@@ -119,16 +121,6 @@ export function HeroSection() {
                   <span>Jelajahi Profil</span>
                 </Button>
               </Link>
-            </div>
-
-            {/* Quick Benefits in Pill Badges */}
-            <div className="pt-4 border-t border-[#E8E2D8] flex flex-wrap items-center gap-2 sm:gap-3">
-              {hero.badges.map((badge) => (
-                <Badge key={badge} variant="outline" className="gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
-                  <span>{badge}</span>
-                </Badge>
-              ))}
             </div>
           </div>
 
