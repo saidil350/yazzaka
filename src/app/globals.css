@@ -491,6 +491,31 @@
   animation: fade-backdrop 0.2s ease-out forwards;
 }
 
+/* ── Hero Gallery Collage — marquee vertikal dua kolom ─────
+   Track berisi daftar gambar yang digandakan; translateY(-50%)
+   menggeser tepat sepanjang satu daftar sehingga loop tak berujung
+   tanpa sambungan terlihat. Item memakai padding-bottom (bukan gap)
+   agar tinggi kedua salinan identik. */
+@keyframes hero-collage-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+
+.hero-collage-track {
+  animation: hero-collage-up var(--collage-duration, 36s) linear infinite;
+  will-change: transform;
+}
+
+.hero-collage-track--reverse {
+  animation-direction: reverse;
+}
+
+/* Jeda animasi saat kursor/fokus berada di atas kolase */
+.hero-collage:hover .hero-collage-track,
+.hero-collage:focus-within .hero-collage-track {
+  animation-play-state: paused;
+}
+
 /* ── Scrollbar ───────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 8px;

@@ -25,6 +25,7 @@ export const DEFAULT_HERO: HeroContent = {
   body: "Membina Iman & Akhlak Umat, Mencetak Generasi Berilmu & Berdaya Saing Tinggi. Di Yayasan Bina Iman Akhlak Yazzakka, proses pendidikan memadukan kedalaman tradisi keilmuan Islam, tahfiz Al-Qur'an 30 juz bersanad, penguasaan bahasa Arab & Inggris aktif, serta kurikulum sains modern berbasis riset.",
   imageUrl: "",
   badges: ["Terdaftar Resmi Kemenkumham RI", "Tahfiz 30 Juz Bersanad", "Bahasa Arab & Inggris 24 Jam"],
+  gallery: [],
 };
 
 export const initialSchoolProfile: SchoolProfile = {

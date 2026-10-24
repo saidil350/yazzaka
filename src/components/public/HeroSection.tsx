@@ -8,11 +8,60 @@ import { Badge } from "@/components/ui/badge";
 import { DEFAULT_HERO } from "@/lib/data/initialData";
 import { ArrowRight, BookOpen, CheckCircle2, Landmark, Image as ImageIcon } from "lucide-react";
 
+/**
+ * Satu kolom marquee vertikal untuk kolase galeri hero.
+ * Daftar digandakan di dalam track — translate -50% menggeser tepat
+ * satu panjang daftar sehingga animasi loop tanpa sambungan terlihat.
+ */
+function CollageColumn({
+  items,
+  altBase,
+  reverse = false,
+  duration,
+}: {
+  items: string[];
+  altBase: string;
+  reverse?: boolean;
+  duration: string;
+}) {
+  return (
+    <div className="h-full overflow-hidden rounded-lg">
+      <div
+        className={`hero-collage-track flex flex-col ${
+          reverse ? "hero-collage-track--reverse" : ""
+        }`}
+        style={{ "--collage-duration": duration } as React.CSSProperties}
+      >
+        {[items, items].map((list, half) => (
+          <div key={half} className="shrink-0" aria-hidden={half === 1 ? true : undefined}>
+            {list.map((url, i) => (
+              <div key={`${half}-${i}`} className="pb-3 sm:pb-4">
+                <div className="overflow-hidden rounded-lg border border-border bg-card">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={url}
+                    alt={`${altBase} (${i + 1})`}
+                    className="w-full aspect-[4/3] object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function HeroSection() {
   const { profile, admission } = useSchoolData();
   // hero di DB bersifat parsial (JSONB default '{}') — gabungkan dengan default
   // agar seksi tetap tampil utuh sebelum konten diisi dari CMS.
   const hero = { ...DEFAULT_HERO, ...profile.hero };
+  // Item kosong (ditambahkan admin tapi belum diisi) dilewati agar tidak
+  // merusak loop marquee maupun syarat minimal 2 gambar.
+  const heroGallery = (hero.gallery ?? []).filter((url) => url.trim() !== "");
 
   return (
     <section
@@ -87,33 +136,50 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* ── Right: Media Card (5 cols) ── */}
+          {/* ── Right: Gallery Collage Blocks (5 cols) ── */}
           <div className="lg:col-span-5 relative mt-4 lg:mt-0">
-
-            {/* Decorative colored backdrop card */}
-            <div className="absolute inset-0 bg-yazzaka-teal rounded-3xl transform rotate-2 translate-y-2 translate-x-2" />
-
-            {/* Main Rounded Card */}
-            <div className="relative rounded-3xl overflow-hidden border-2 border-white bg-white shadow-xl">
-              <div className="aspect-[4/3] sm:aspect-[16/11] relative max-h-[340px]">
-                {hero.imageUrl ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    src={hero.imageUrl}
-                    alt={`Aktivitas santri di ${profile.name}`}
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                  />
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-muted text-muted-foreground">
-                    <ImageIcon className="h-8 w-8" />
-                    <span className="text-xs font-medium">Foto hero diunggah via CMS</span>
-                  </div>
-                )}
-
+            {heroGallery.length >= 2 ? (
+              /* Kolase galeri dua kolom beranimasi slide (dikelola via CMS).
+                 Hover/fokus menjeda animasi; prefers-reduced-motion
+                 mendapatkan kolase statis lewat aturan global. */
+              <div
+                className="hero-collage grid grid-cols-2 gap-3 sm:gap-4 h-[300px] sm:h-[360px] lg:h-[380px]"
+                aria-label="Kolase galeri aktivitas santri"
+              >
+                <CollageColumn
+                  items={heroGallery.filter((_, i) => i % 2 === 0)}
+                  altBase={`Aktivitas santri di ${profile.name}`}
+                  duration="36s"
+                />
+                <CollageColumn
+                  items={heroGallery.filter((_, i) => i % 2 === 1)}
+                  altBase={`Aktivitas santri di ${profile.name}`}
+                  reverse
+                  duration="46s"
+                />
               </div>
-            </div>
-
+            ) : (
+              /* Fallback: kartu gambar tunggal (hero.imageUrl) saat kolase
+                 belum diisi dari CMS. */
+              <div className="relative rounded-lg overflow-hidden border border-border bg-card shadow-sm">
+                <div className="aspect-[4/3] sm:aspect-[16/11] relative">
+                  {hero.imageUrl ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={hero.imageUrl}
+                      alt={`Aktivitas santri di ${profile.name}`}
+                      className="w-full h-full object-cover"
+                      loading="eager"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-muted text-muted-foreground">
+                      <ImageIcon className="h-8 w-8" />
+                      <span className="text-xs font-medium">Foto hero diunggah via CMS</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
         </div>
