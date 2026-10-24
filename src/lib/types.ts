@@ -15,6 +15,8 @@ export interface HeroContent {
   body: string;
   imageUrl: string;
   badges: string[];
+  /** Daftar URL gambar kolase galeri hero (animasi slide). Kosong = fallback ke imageUrl. */
+  gallery: string[];
 }
 
 export interface SchoolProfile {
