@@ -83,7 +83,7 @@ export function WhyUsSection() {
         ];
 
   return (
-    <section id="keunggulan" className="py-14 lg:py-16 bg-[#FFFDF9] text-stone-800 border-b border-[#E8E2D8] scroll-mt-24">
+    <section id="keunggulan" className="py-14 lg:py-16 text-stone-800 border-b border-border scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
         {/* Section Header */}

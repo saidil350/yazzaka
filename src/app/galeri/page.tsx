@@ -13,12 +13,12 @@ export default function GalleryPage() {
   const [activeLightbox, setActiveLightbox] = useState<string | null>(null);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
+    <div className="flex flex-col min-h-screen bg-background">
       <Header />
       <main className="flex-1">
 
         {/* ── Headspace Warm Page Hero Banner ─────────── */}
-        <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
+        <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
             <Badge variant="secondary" className="gap-2 mb-3">
               <Sparkles className="h-3.5 w-3.5 text-yazzaka-teal-dark" />

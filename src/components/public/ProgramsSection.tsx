@@ -16,7 +16,7 @@ export function ProgramsSection() {
     .sort((a, b) => a.orderIndex - b.orderIndex);
 
   return (
-    <section id="program" className="landing-section py-16 lg:py-20 bg-secondary/35 border-b border-border scroll-mt-24">
+    <section id="program" className="landing-section py-16 lg:py-20 border-b border-border scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
         {/* Section Header */}
@@ -61,12 +61,7 @@ export function ProgramsSection() {
               return (
                 <div
                   key={prog.id}
-                  className={[
-                    "interactive-lift rounded-[1.25rem] border overflow-hidden flex flex-col justify-between group shadow-xs",
-                    isSpecialWakaf
-                      ? "bg-yazzaka-teal-soft border-border"
-                      : "bg-white border-[#E8E2D8]",
-                  ].join(" ")}
+                  className="interactive-lift rounded-[1.25rem] border border-[#E8E2D8] overflow-hidden flex flex-col justify-between group shadow-xs bg-white"
                 >
                   <div>
                     {/* Card Image Banner */}

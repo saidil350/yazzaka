@@ -222,8 +222,8 @@ export function Header() {
         className={[
           "sticky top-0 z-40 backdrop-blur-md transition-all duration-200",
           isScrolled
-            ? "bg-[#FCF8F1]/95 shadow-[0_4px_20px_rgba(30,35,48,0.06)] border-b border-[#E8E2D8]"
-            : "bg-[#FCF8F1]/90 border-b border-[#E8E2D8]/80",
+            ? "bg-background/95 shadow-[0_4px_20px_rgba(30,35,48,0.06)] border-b border-[#E8E2D8]"
+            : "bg-background/90 border-b border-[#E8E2D8]/80",
         ].join(" ")}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
@@ -306,7 +306,7 @@ export function Header() {
                             "flex items-start gap-2.5 p-2.5 rounded-xl transition-all",
                             isCurrent
                               ? "bg-yazzaka-teal-soft text-yazzaka-teal-dark"
-                              : "text-[#1E2330] hover:bg-[#FAF6EE]",
+                              : "text-[#1E2330] hover:bg-muted/50",
                           ].join(" ")}
                         >
                           <div
@@ -388,7 +388,7 @@ export function Header() {
           <div
             ref={mobileMenuRef}
             id="mobile-menu"
-            className="absolute inset-y-0 right-0 w-[min(320px,86vw)] bg-[#FCF8F1] flex flex-col overflow-y-auto border-l border-[#E8E2D8] shadow-2xl p-5 animate-slide-in-right"
+            className="absolute inset-y-0 right-0 w-[min(320px,86vw)] bg-background flex flex-col overflow-y-auto border-l border-[#E8E2D8] shadow-2xl p-5 animate-slide-in-right"
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between pb-3.5 border-b border-[#E8E2D8] shrink-0">

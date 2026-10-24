@@ -71,12 +71,12 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
   const isWakaf = program.slug === "pesantren-peradaban-60";
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
+    <div className="flex flex-col min-h-screen bg-background">
       <Header />
       <main className="flex-1">
 
         {/* ── Headspace Warm Page Hero Banner ─────────── */}
-        <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
+        <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
             <Link
               href="/program"
@@ -112,7 +112,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
               {/* Left Main (8 cols) */}
               <div className="lg:col-span-8 space-y-6">
 
-                <div className="rounded-3xl overflow-hidden border-2 border-[#E8E2D8] bg-[#FAF6EE] p-2 shadow-xs">
+                <div className="rounded-3xl overflow-hidden border-2 border-[#E8E2D8] bg-white p-2 shadow-xs">
                   <div className="aspect-video relative overflow-hidden rounded-2xl bg-stone-200">
                     {program.imageUrl ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
@@ -139,7 +139,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                 </div>
 
                 {/* Features list */}
-                <div className="bg-[#FAF6EE] p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-3 shadow-xs">
+                <div className="bg-white p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-3 shadow-xs">
                   <h3 className="text-base font-bold text-[#1E2330]">
                     {isWakaf ? "Pilar Strategis Pembangunan:" : "Target Capaian & Keunggulan Khusus:"}
                   </h3>
@@ -155,7 +155,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
 
                 {/* Target Competencies */}
                 {program.targetCompetencies && program.targetCompetencies.length > 0 && (
-                  <div className="bg-[#FAF6EE] border-[#E8E2D8] border-2 p-6 rounded-3xl space-y-3 shadow-xs">
+                  <div className="bg-white border-[#E8E2D8] border-2 p-6 rounded-3xl space-y-3 shadow-xs">
                     <h3 className="text-base font-bold text-yazzaka-teal-dark">
                       {isWakaf ? "Dampak Peradaban & Kemaslahatan Umat:" : "Kompetensi Kelulusan Santri:"}
                     </h3>
@@ -200,7 +200,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
 
               {/* Right Sidebar (4 cols) */}
               <div className="lg:col-span-4 space-y-4">
-                <div className="bg-[#FAF6EE] p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-4 shadow-xs">
+                <div className="bg-white p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-4 shadow-xs">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[#FA6400] block">
                     {isWakaf ? "Layanan Wakaf & Kemitraan" : "Layanan Admisi & Pendaftaran"}
                   </span>
@@ -259,7 +259,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
 
         {/* ── Other Programs & Units ──────────────────── */}
         {otherPrograms.length > 0 && (
-          <section className="py-12 bg-[#FAF6EE] border-b border-[#E8E2D8]">
+          <section className="py-12 border-b border-border">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl space-y-6">
               <div className="flex items-center justify-between">
                 <div>

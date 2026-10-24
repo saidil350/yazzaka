@@ -19,7 +19,7 @@ interface ValueCardProps {
 function PhilosophyCard({ index, title, description }: ValueCardProps) {
   return (
     <div
-      className="bg-[#FAF6EE] border-[#E8E2D8] border-2 p-4 rounded-2xl space-y-1.5 shadow-xs"
+      className="bg-white border-[#E8E2D8] border-2 p-4 rounded-2xl space-y-1.5 shadow-xs"
     >
       <span className="text-[10px] font-extrabold uppercase text-yazzaka-teal-dark block">
         Jiwa 0{index + 1}
@@ -93,12 +93,12 @@ export default function AboutPage() {
   );
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
+    <div className="flex flex-col min-h-screen bg-background">
       <Header />
       <main className="flex-1">
 
         {/* ── Page Hero Banner ─────────────────────────── */}
-        <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
+        <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
             <Badge variant="secondary" className="gap-2 mb-3">
               <Sparkles className="h-3.5 w-3.5 text-yazzaka-teal-dark" />
@@ -133,11 +133,11 @@ export default function AboutPage() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 pt-4 border-t border-[#E8E2D8] text-xs">
-                  <div className="p-3 rounded-xl bg-[#FAF6EE] border border-[#E8E2D8]">
+                  <div className="p-3 rounded-xl bg-white border border-[#E8E2D8]">
                     <span className="font-extrabold text-[#1E2330] block">NPSN Resmi:</span>
                     <span className="text-stone-600 font-semibold">{profile.npsn}</span>
                   </div>
-                  <div className="p-3 rounded-xl bg-[#FAF6EE] border border-[#E8E2D8]">
+                  <div className="p-3 rounded-xl bg-white border border-[#E8E2D8]">
                     <span className="font-extrabold text-[#1E2330] block">Akreditasi BAN-S/M:</span>
                     <span className="text-yazzaka-teal-dark font-bold">Peringkat {profile.accreditation} (Unggul)</span>
                   </div>
@@ -145,7 +145,7 @@ export default function AboutPage() {
               </div>
 
               <div className="lg:col-span-6">
-                <div className="rounded-3xl overflow-hidden border-2 border-[#E8E2D8] bg-[#FAF6EE] p-2 shadow-sm">
+                <div className="rounded-3xl overflow-hidden border-2 border-[#E8E2D8] bg-white p-2 shadow-sm">
                   <div className="aspect-[4/3] relative overflow-hidden rounded-2xl bg-stone-200">
                     {profile.aboutImageUrl ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
@@ -171,7 +171,7 @@ export default function AboutPage() {
         </section>
 
         {/* ── Vision & Mission ─────────────────────────── */}
-        <section className="py-12 lg:py-14 bg-[#FAF6EE] border-b border-[#E8E2D8]">
+        <section className="py-12 lg:py-14 border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             <div className="max-w-3xl space-y-2">
@@ -186,7 +186,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
               {/* Vision Box */}
-              <div className="lg:col-span-5 bg-[#FAF6EE] border-[#E8E2D8] border-2 p-6 rounded-3xl space-y-3 shadow-xs">
+              <div className="lg:col-span-5 bg-white border-[#E8E2D8] border-2 p-6 rounded-3xl space-y-3 shadow-xs">
                 <div className="flex items-center gap-2">
                   <div className="h-7 w-7 rounded-full bg-yazzaka-teal-dark text-white flex items-center justify-center">
                     <Compass className="h-3.5 w-3.5" />
@@ -207,7 +207,7 @@ export default function AboutPage() {
                 </span>
                 <div className="space-y-2">
                   {profile.mission.map((item, idx) => (
-                    <div key={idx} className="p-2.5 rounded-xl bg-[#FAF6EE] border border-[#E8E2D8] flex items-start gap-3">
+                    <div key={idx} className="p-2.5 rounded-xl bg-white border border-[#E8E2D8] flex items-start gap-3">
                       <span className="h-6 w-6 rounded-full bg-[#FFF0E5] text-[#FA6400] font-bold text-xs flex items-center justify-center shrink-0">
                         0{idx + 1}
                       </span>
@@ -252,7 +252,7 @@ export default function AboutPage() {
         </section>
 
         {/* ── Leadership & Educators ───────────────────── */}
-        <section className="py-12 lg:py-14 bg-[#FAF6EE]">
+        <section className="py-12 lg:py-14 ">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">

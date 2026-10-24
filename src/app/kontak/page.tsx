@@ -60,12 +60,12 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
+    <div className="flex flex-col min-h-screen bg-background">
       <Header />
       <main className="flex-1">
 
         {/* ── Headspace Warm Page Hero Banner ─────────── */}
-        <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
+        <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
             <Badge variant="secondary" className="gap-2 mb-3">
               <Sparkles className="h-3.5 w-3.5 text-yazzaka-orange" />
@@ -88,7 +88,7 @@ export default function ContactPage() {
               {/* Left Column: Contact Details (5 cols) */}
               <div className="lg:col-span-5 space-y-6">
 
-                <div className="bg-[#FAF6EE] rounded-3xl p-6 border-2 border-[#E8E2D8] shadow-xs space-y-5">
+                <div className="bg-white rounded-3xl p-6 border-2 border-[#E8E2D8] shadow-xs space-y-5">
                   <h2 className="text-lg font-bold text-[#1E2330]">
                     Informasi Kontak Resmi
                   </h2>
@@ -205,7 +205,7 @@ export default function ContactPage() {
               </div>
 
               {/* Right Column: Interactive Contact Form (7 cols) */}
-              <div className="lg:col-span-7 bg-[#FAF6EE] rounded-3xl p-6 sm:p-8 border-2 border-[#E8E2D8] shadow-xs space-y-5">
+              <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border-2 border-[#E8E2D8] shadow-xs space-y-5">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[#FA6400] block mb-1">
                     Kirim Pesan

@@ -41,7 +41,7 @@ export default function AdmissionPage() {
   const showFeeGroups = isFeeGrouped(fees);
 
   const feeRow = (fee: AdmissionFeeItem, idx: number) => (
-    <tr key={idx} className="hover:bg-[#FAF6EE]/60 transition-colors">
+    <tr key={idx} className="hover:bg-muted/40 transition-colors">
       <td className="p-3.5 sm:px-5 font-bold text-[#1E2330]">
         {fee.name}
         {fee.notes && (
@@ -119,12 +119,12 @@ export default function AdmissionPage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FCF8F1]">
+    <div className="flex flex-col min-h-screen bg-background">
       <Header />
       <main className="flex-1">
 
         {/* ── Headspace Warm Page Hero Banner ─────────── */}
-        <section className="relative overflow-hidden bg-[#FCF8F1] py-10 lg:py-14 border-b border-[#E8E2D8]">
+        <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-[#E8E2D8]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl space-y-3">
             <div className="flex flex-wrap items-center justify-center gap-2">
               <Badge variant="secondary" className="gap-2">
@@ -210,7 +210,7 @@ export default function AdmissionPage() {
               {steps.map((s, idx) => (
                 <div
                   key={idx}
-                  className="bg-[#FAF6EE] p-5 rounded-2xl border-2 border-[#E8E2D8] space-y-3 flex flex-col justify-between shadow-xs"
+                  className="bg-white p-5 rounded-2xl border-2 border-[#E8E2D8] space-y-3 flex flex-col justify-between shadow-xs"
                 >
                   <div className="space-y-2">
                     <Badge variant="outline">
@@ -231,7 +231,7 @@ export default function AdmissionPage() {
         </section>
 
         {/* ── Requirements & Transparent Fees Grid ─────── */}
-        <section className="py-12 lg:py-14 bg-[#FAF6EE] border-b border-[#E8E2D8]" id="biaya">
+        <section className="py-12 lg:py-14 border-b border-border" id="biaya">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
 
@@ -285,7 +285,7 @@ export default function AdmissionPage() {
                         </h3>
                         <div className="border-2 border-[#E8E2D8] rounded-2xl overflow-hidden bg-white shadow-xs">
                           <table className="w-full text-left text-xs sm:text-sm">
-                            <thead className="bg-[#FAF6EE] border-b border-[#E8E2D8] font-bold uppercase text-[11px] text-stone-500">
+                            <thead className="bg-muted/50 border-b border-[#E8E2D8] font-bold uppercase text-[11px] text-stone-500">
                               <tr>
                                 <th className="p-3.5 sm:px-5">Komponen</th>
                                 <th className="p-3.5 sm:px-5">Kategori</th>
@@ -306,7 +306,7 @@ export default function AdmissionPage() {
                 ) : (
                   <div className="border-2 border-[#E8E2D8] rounded-2xl overflow-hidden bg-white shadow-xs">
                     <table className="w-full text-left text-xs sm:text-sm">
-                      <thead className="bg-[#FAF6EE] border-b border-[#E8E2D8] font-bold uppercase text-[11px] text-stone-500">
+                      <thead className="bg-muted/50 border-b border-[#E8E2D8] font-bold uppercase text-[11px] text-stone-500">
                         <tr>
                           <th className="p-3.5 sm:px-5">Komponen</th>
                           <th className="p-3.5 sm:px-5">Kategori</th>
@@ -317,7 +317,7 @@ export default function AdmissionPage() {
                         {fees.map((fee, idx) => feeRow(fee, idx))}
                       </tbody>
                     </table>
-                    <div className="p-3 bg-[#FAF6EE] border-t border-[#E8E2D8] text-[11px] text-stone-500 font-medium">
+                    <div className="p-3 bg-muted/40 border-t border-[#E8E2D8] text-[11px] text-stone-500 font-medium">
                       * Biaya sudah mencakup fasilitas asrama, konsumsi 3x sehari, laundry seragam, dan layanan kesehatan pesantren.
                     </div>
                   </div>
@@ -349,7 +349,7 @@ export default function AdmissionPage() {
                     <AccordionItem
                       key={faq.id}
                       title={faq.question}
-                      className="bg-[#FAF6EE] border border-[#E8E2D8] rounded-xl text-stone-800 font-bold"
+                      className="bg-white border border-[#E8E2D8] rounded-xl text-stone-800 font-bold"
                     >
                       <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
                         {faq.answer}
@@ -362,7 +362,7 @@ export default function AdmissionPage() {
               {/* Consultation Form or Closed Notice */}
               <div className="lg:col-span-5">
                 {!admission.isOpen && (admission.hideFormWhenClosed ?? true) ? (
-                  <div className="bg-[#FAF6EE] p-6 sm:p-7 rounded-3xl border-2 border-[#E8E2D8] space-y-5 shadow-xs">
+                  <div className="bg-white p-6 sm:p-7 rounded-3xl border-2 border-[#E8E2D8] space-y-5 shadow-xs">
                     <div className="flex items-start gap-3.5">
                       <div className="h-11 w-11 rounded-2xl bg-[#FFF0E5] text-[#FA6400] border border-[#FED7AA] flex items-center justify-center shrink-0">
                         <Lock className="h-5 w-5" />
@@ -418,7 +418,7 @@ export default function AdmissionPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-[#FAF6EE] p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-4 shadow-xs">
+                  <div className="bg-white p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-4 shadow-xs">
                     <div>
                       <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#FA6400] block mb-1">
                         Layanan Admisi

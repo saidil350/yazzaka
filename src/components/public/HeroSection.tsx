@@ -69,10 +69,6 @@ export function HeroSection() {
       aria-labelledby="hero-heading"
       className="landing-section relative overflow-hidden bg-background py-12 sm:py-16 lg:py-20 border-b border-border scroll-mt-24"
     >
-      {/* ── Headspace Subtle Playful Background Blobs ────────────── */}
-      <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-yazzaka-teal-soft/80 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-8 -mb-16 w-72 h-72 rounded-full bg-yazzaka-teal-soft/50 blur-3xl pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Main Grid */}
