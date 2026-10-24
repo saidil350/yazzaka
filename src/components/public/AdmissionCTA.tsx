@@ -12,7 +12,7 @@ export function AdmissionCTA() {
   const { profile, admission } = useSchoolData();
 
   return (
-    <section id="ppdb" className="py-14 lg:py-18 bg-[#FFFDF9] scroll-mt-24">
+    <section id="ppdb" className="py-14 lg:py-18 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Headspace Warm Sunset Banner */}
@@ -83,7 +83,7 @@ export function AdmissionCTA() {
               <Link href="/pendaftaran" className="block w-full">
                 <Button
                   size="default"
-                  className="w-full justify-center text-sm font-extrabold bg-white text-yazzaka-orange-dark hover:bg-[#FAF6EE] shadow-md border-2 border-white h-11 cursor-pointer"
+                  className="w-full justify-center text-sm font-extrabold bg-white text-yazzaka-orange-dark hover:bg-muted/40 shadow-md border-2 border-white h-11 cursor-pointer"
                 >
                   <span>{admission.isOpen ? "Daftar Siswa Baru" : "Lihat Informasi PPDB"}</span>
                   <ArrowRight className="h-4 w-4 ml-1" />

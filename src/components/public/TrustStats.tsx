@@ -39,7 +39,7 @@ export function TrustStats() {
   ];
 
   return (
-    <section id="statistik" className="bg-yazzaka-teal-soft border-b border-yazzaka-teal-border py-8 lg:py-10 scroll-mt-24">
+    <section id="statistik" className="border-b border-border py-8 lg:py-10 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {stats.map((stat, idx) => {

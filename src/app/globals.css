@@ -13,7 +13,7 @@
 
 @theme {
   /* ── Core Semantic Variables (Headspace Warm Cream & Deep Charcoal) ─ */
-  --color-background:             hsl(40 45% 97.5%);   /* Warm Cream / Vanilla #FCF8F1 */
+  --color-background:             hsl(0 0% 100%);      /* Default White */
   --color-foreground:             hsl(222 25% 15%);     /* Deep Mindful Charcoal #1E2330 */
 
   --color-card:                   hsl(0 0% 100%);
@@ -106,7 +106,7 @@
 
 /* ── CSS Custom Properties (Root & Semantic Aliases) ────── */
 :root {
-  --background:              hsl(40 45% 97.5%);
+  --background:              hsl(0 0% 100%);
   --foreground:              hsl(222 25% 15%);
   --card:                    hsl(0 0% 100%);
   --card-foreground:         hsl(222 25% 15%);
@@ -144,7 +144,7 @@
   --danger-bg:               hsl(6 90% 96%);
 
   /* Legacy surface/text aliases — High Contrast & Readable */
-  --surface-base:            hsl(40 45% 97.5%);
+  --surface-base:            hsl(0 0% 100%);
   --surface-raised:          hsl(0 0% 100%);
   --surface-overlay:         hsl(38 30% 95%);
   --surface-inverse:         hsl(222 30% 12%);

@@ -11,7 +11,7 @@ export function EditorialAbout() {
   const { profile } = useSchoolData();
 
   return (
-    <section id="tentang" className="py-14 lg:py-16 bg-[#FFFDF9] border-b border-[#E8E2D8] scroll-mt-24">
+    <section id="tentang" className="py-14 lg:py-16 border-b border-border scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
         {/* Section Title Header */}
@@ -33,7 +33,7 @@ export function EditorialAbout() {
 
           {/* Left Column: Principal Card with Speech Bubble */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="bg-[#FAF6EE] border-2 border-[#E8E2D8] rounded-3xl p-5 shadow-xs">
+            <div className="bg-white border-2 border-[#E8E2D8] rounded-3xl p-5 shadow-xs">
               <div className="aspect-[16/10] relative overflow-hidden rounded-2xl border border-white shadow-sm bg-stone-200 mb-4">
                 {profile.principal.photoUrl ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
@@ -80,7 +80,7 @@ export function EditorialAbout() {
           <div className="lg:col-span-7 space-y-6">
 
             {/* Vision Card — Neutral Stone Elegant */}
-            <div className="bg-[#FAF6EE] border-2 border-[#E8E2D8] rounded-2xl p-5 sm:p-6 shadow-xs">
+            <div className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-5 sm:p-6 shadow-xs">
               <div className="flex items-center gap-2 mb-2">
                 <div className="h-7 w-7 rounded-full bg-[#1E2330] text-white flex items-center justify-center">
                   <Compass className="h-3.5 w-3.5" />
@@ -103,7 +103,7 @@ export function EditorialAbout() {
                 {profile.mission.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-3 rounded-xl bg-[#FAF6EE] border border-[#E8E2D8] flex items-start gap-3 transition-all hover:bg-white"
+                    className="p-3 rounded-xl bg-white border border-[#E8E2D8] flex items-start gap-3 transition-all hover:bg-muted/40"
                   >
                     <div className="h-6 w-6 rounded-full bg-yazzaka-teal-soft text-yazzaka-teal-dark border border-yazzaka-teal-border flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
                       0{idx + 1}

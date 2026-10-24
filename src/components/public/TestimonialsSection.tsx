@@ -10,7 +10,7 @@ export function TestimonialsSection() {
   const { testimonials, profile } = useSchoolData();
 
   return (
-    <section id="testimoni" className="py-14 lg:py-16 bg-[#FAF6EE] border-b border-[#E8E2D8] scroll-mt-24">
+    <section id="testimoni" className="py-14 lg:py-16 border-b border-border scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
         {/* Section Header */}

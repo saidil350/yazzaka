@@ -108,7 +108,7 @@ export default function LoginPage() {
       : "/yazzakka.png";
 
   return (
-    <div className="admin-scope min-h-screen bg-[#FCF8F1] flex flex-col justify-between text-[#1E2330] selection:bg-[#FFF0E5] selection:text-[#FA6400]">
+    <div className="admin-scope min-h-screen bg-background flex flex-col justify-between text-[#1E2330] selection:bg-[#FFF0E5] selection:text-[#FA6400]">
       {/* ── Top Header Bar ────────────────────────────────────────── */}
       <header className="w-full border-b border-[#E8E2D8] bg-white/80 backdrop-blur-xs py-3 px-4 sm:px-8">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
@@ -199,7 +199,7 @@ export default function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="nama@yazzakka.sch.id"
-                    className="flex h-10 w-full rounded-xl border border-[#E8E2D8] bg-white pl-10 pr-3.5 py-2 text-sm font-medium text-[#1E2330] placeholder:text-stone-400 transition-colors focus:outline-none focus:border-muted-foreground/40 disabled:bg-[#FAF6EE] disabled:cursor-not-allowed"
+                    className="flex h-10 w-full rounded-xl border border-[#E8E2D8] bg-white pl-10 pr-3.5 py-2 text-sm font-medium text-[#1E2330] placeholder:text-stone-400 transition-colors focus:outline-none focus:border-muted-foreground/40 disabled:bg-muted/50 disabled:cursor-not-allowed"
                   />
                 </div>
               </div>
@@ -231,7 +231,7 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Masukkan kata sandi akun"
-                    className="flex h-10 w-full rounded-xl border border-[#E8E2D8] bg-white pl-10 pr-10 py-2 text-sm font-medium text-[#1E2330] placeholder:text-stone-400 transition-colors focus:outline-none focus:border-muted-foreground/40 disabled:bg-[#FAF6EE] disabled:cursor-not-allowed"
+                    className="flex h-10 w-full rounded-xl border border-[#E8E2D8] bg-white pl-10 pr-10 py-2 text-sm font-medium text-[#1E2330] placeholder:text-stone-400 transition-colors focus:outline-none focus:border-muted-foreground/40 disabled:bg-muted/50 disabled:cursor-not-allowed"
                   />
                   <button
                     type="button"
