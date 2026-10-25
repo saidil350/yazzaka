@@ -12,9 +12,11 @@ export default function AdminHomepageSectionsPage() {
   const { sections, toggleSection, reorderSections } = useSchoolData();
   const { toast } = useToast();
 
-  // Key yang komponen publiknya tidak pernah dirender di landing —
+  // Key yang komponen publiknya tidak pernah dirender di beranda —
   // disembunyikan dari UI agar admin tidak mengelola toggle tanpa efek.
-  const UNRENDERED_SECTION_KEYS = ["news", "admission_cta"];
+  // 'organization' hanya dipakai /tentang-kami (title/subtitle, tanpa
+  // isEnabled), jadi togglenya di beranda tidak berefek di mana pun.
+  const UNRENDERED_SECTION_KEYS = ["news", "admission_cta", "organization"];
   // Seksi dengan posisi tetap (bukan bagian urutan konten beranda) —
   // toggle-nya efektif, tapi tombol urut disembunyikan.
   const FIXED_POSITION_KEYS = ["topbar"];
@@ -93,7 +95,7 @@ export default function AdminHomepageSectionsPage() {
           >
             <div className="flex items-center gap-4">
               <span className="h-8 w-8 rounded-md bg-primary/10 text-primary border border-primary/20 font-medium text-xs flex items-center justify-center shrink-0">
-                0{idx + 1}
+                {String(idx + 1).padStart(2, "0")}
               </span>
               <div>
                 <div className="flex items-center gap-2">
@@ -144,7 +146,7 @@ export default function AdminHomepageSectionsPage() {
                   type="button"
                   variant="ghost"
                   size="icon-sm"
-                  disabled={idx === sections.length - 1}
+                  disabled={idx === visibleSections.length - 1}
                   onClick={() => handleMoveDown(idx)}
                   className="text-muted-foreground hover:text-primary"
                   title="Pindah ke Bawah"
