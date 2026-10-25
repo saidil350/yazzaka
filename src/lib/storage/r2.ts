@@ -94,15 +94,29 @@ function localPath(key: string): string | null {
   return full;
 }
 
-function bucketFor(config: StorageConfig, visibility: string): string {
+function bucketFor(config: StorageConfig, key: string, visibility: string): string {
   if (config.provider === "r2") return config.bucket;
-  if (visibility === "public") return config.bucket;
-  if (!config.privateBucket) {
+
+  // Key menentukan lokasi fisik meskipun status artikel berubah.
+  // Key private/ selalu berada di bucket privat, termasuk setelah diterbitkan.
+  if (key.startsWith("private/")) {
+    if (!config.privateBucket) {
+      throw new Error(
+        "Bucket privat Neon belum dikonfigurasi; operasi media privat ditolak."
+      );
+    }
+    return config.privateBucket;
+  }
+
+  // Key tanpa prefix ada di bucket public_read. Tolak metadata privat agar
+  // media publik lama tidak secara tidak sengaja disajikan sebagai berkas privat.
+  if (visibility !== "public") {
     throw new Error(
-      "Bucket privat Neon belum dikonfigurasi; unggahan privat ditolak demi keamanan."
+      "Berkas privat lama berada di bucket publik; akses ditolak sampai berkas dipindahkan."
     );
   }
-  return config.privateBucket;
+
+  return config.bucket;
 }
 
 function getS3Client(config: StorageConfig): S3Client {
@@ -132,7 +146,7 @@ export async function putObject(
     const client = getS3Client(config);
     await client.send(
       new PutObjectCommand({
-        Bucket: bucketFor(config, visibility),
+        Bucket: bucketFor(config, key, visibility),
         Key: key,
         Body: body,
         ContentType: contentType,
@@ -162,7 +176,7 @@ export async function getObject(
     const client = getS3Client(config);
     const result = await client.send(
       new GetObjectCommand({
-        Bucket: bucketFor(config, visibility),
+        Bucket: bucketFor(config, key, visibility),
         Key: key,
       })
     );
@@ -195,7 +209,7 @@ export async function deleteObject(
     const client = getS3Client(config);
     await client.send(
       new DeleteObjectCommand({
-        Bucket: bucketFor(config, visibility),
+        Bucket: bucketFor(config, key, visibility),
         Key: key,
       })
     );
@@ -216,7 +230,7 @@ export function publicUrl(key: string): string | null {
 }
 
 export function resolveMediaUrl(key: string, visibility: string): string {
-  if (visibility === "public") {
+  if (visibility === "public" && !key.startsWith("private/")) {
     const direct = publicUrl(key);
     if (direct) return direct;
   }
@@ -233,7 +247,7 @@ export function maxDocumentMB(): number {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 10;
 }
 
-export function buildStorageKey(originalName: string): string {
+export function buildStorageKey(originalName: string, visibility = "private"): string {
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, "0");
@@ -242,5 +256,6 @@ export function buildStorageKey(originalName: string): string {
   const ext = dot > 0 ? originalName.slice(dot + 1).toLowerCase() : "";
   const safeBase = slugify(base).slice(0, 80) || "berkas";
   const uuid = randomUUID();
-  return `news/${year}/${month}/${uuid}-${safeBase}${ext ? `.${ext}` : ""}`;
+  const key = `news/${year}/${month}/${uuid}-${safeBase}${ext ? `.${ext}` : ""}`;
+  return visibility === "public" ? key : `private/${key}`;
 }
