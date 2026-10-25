@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Newsreader, Public_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { getSeoSettings, normalizeGoogleVerification } from "@/lib/seo-settings";
+import { getServerSections } from "@/lib/sections-server";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -60,11 +61,15 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Seksi dari DB ikut dirender awal agar status visibilitas (mis. topbar)
+  // sudah benar di HTML pertama — tidak menunggu fetch client.
+  const initialSections = await getServerSections();
+
   return (
     <html
       lang="id"
@@ -76,7 +81,7 @@ export default function RootLayout({
         className="min-h-screen bg-background text-foreground antialiased"
         suppressHydrationWarning
       >
-        <Providers>
+        <Providers initialSections={initialSections}>
           {children}
         </Providers>
       </body>

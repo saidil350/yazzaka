@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useSchoolData } from "@/context/SchoolDataContext";
-import { Menu, ExternalLink, Bell, LogOut, ChevronDown } from "lucide-react";
+import { Menu, Bell, LogOut, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -116,14 +116,6 @@ export function AdminTopbar({
             </Button>
           </Link>
         )}
-
-        {/* Pratinjau situs publik */}
-        <Link href="/" target="_blank" rel="noopener noreferrer">
-          <Button variant="outline" size="sm">
-            <ExternalLink />
-            <span className="hidden sm:inline">Lihat Web Publik</span>
-          </Button>
-        </Link>
 
         {/* Menu akun pengguna */}
         <DropdownMenu>
