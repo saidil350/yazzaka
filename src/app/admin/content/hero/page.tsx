@@ -181,6 +181,7 @@ export default function AdminHeroPage() {
             onChange={(val) => setImageUrl(val)}
             placeholder="https://contoh.com/gambar.jpg"
             helperText="Unggah gambar (drag & drop) atau tautkan URL. Rasio disarankan 4:3 hingga 16:11."
+            folder="hero"
           />
         </Card>
 
@@ -247,6 +248,7 @@ export default function AdminHeroPage() {
                   onChange={(val) => handleGalleryChange(idx, val)}
                   placeholder="https://contoh.com/gambar.jpg"
                   helperText="Rasio disarankan 4:3. Item dengan gambar kosong dilewati di tampilan publik."
+                  folder="galeri"
                 />
               </div>
             ))}

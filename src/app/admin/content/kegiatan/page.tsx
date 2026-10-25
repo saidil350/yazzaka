@@ -315,6 +315,7 @@ export default function AdminEventsPage() {
             onChange={(val) => setCoverImage(val)}
             placeholder="https://contoh.com/gambar.jpg"
             helperText="Unggah foto flyer/kegiatan (drag & drop) atau tautkan URL gambar."
+            folder="agenda"
           />
 
           <Input

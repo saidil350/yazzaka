@@ -12,6 +12,9 @@ export interface ImageUploadProps {
   helperText?: string;
   className?: string;
   maxSizeMB?: number;
+  /** Folder bucket tujuan (hero/program/agenda/tim/galeri/umum) — menentukan
+   *  direktori penyimpanan berkas di bucket "gambar". */
+  folder?: string;
 }
 
 export function ImageUpload({
@@ -23,6 +26,7 @@ export function ImageUpload({
   helperText,
   className = "",
   maxSizeMB = 5,
+  folder = "umum",
 }: ImageUploadProps) {
   const [mode, setMode] = useState<"upload" | "url">("upload");
   const [isDragging, setIsDragging] = useState(false);
@@ -57,6 +61,7 @@ export function ImageUpload({
         const form = new FormData();
         form.append("file", file);
         form.append("purpose", "image");
+        form.append("folder", folder);
         const res = await fetch("/api/uploads", { method: "POST", body: form });
         if (res.ok) {
           const data = await res.json();
@@ -77,7 +82,7 @@ export function ImageUpload({
         setIsUploading(false);
       }
     },
-    [maxSizeMB, onChange]
+    [maxSizeMB, onChange, folder]
   );
 
   const handleDragOver = (e: React.DragEvent) => {
