@@ -45,6 +45,16 @@ export function isLocalFallbackEnabled(): boolean {
   return flag === "1" || flag === "true";
 }
 
+/**
+ * Base URL publik Neon Storage bucket (access public_read) — memungkinkan
+ * pembacaan berkas publik tanpa kredensial pada host yang tidak punya
+ * backend tulis (mis. Vercel). Format: https://<endpoint>/<bucket>
+ */
+export function neonPublicBase(): string | null {
+  const base = process.env.NEON_STORAGE_PUBLIC_BASE?.replace(/\/+$/, "");
+  return base || null;
+}
+
 export function isStorageConfigured(): boolean {
   return getStorageConfig() !== null || isLocalFallbackEnabled();
 }
@@ -116,6 +126,18 @@ export async function getObject(
     };
   }
   if (!isLocalFallbackEnabled()) {
+    const neon = neonPublicBase();
+    if (neon) {
+      // Bucket Neon bersifat public_read — baca anonim tanpa kredensial.
+      const res = await fetch(`${neon}/${key}`);
+      if (!res.ok || !res.body) throw new Error("Objek tidak ditemukan di storage");
+      const lengthHeader = res.headers.get("content-length");
+      return {
+        body: res.body,
+        contentType: res.headers.get("content-type"),
+        contentLength: lengthHeader ? Number(lengthHeader) : null,
+      };
+    }
     throw new Error("Object storage belum dikonfigurasi");
   }
   const full = localPath(key);
@@ -144,11 +166,13 @@ export async function deleteObject(key: string): Promise<void> {
   await fs.rm(full, { force: true });
 }
 
-/** URL publik langsung dari R2 (hanya untuk berkas visibility public). */
+/** URL publik langsung dari R2 / Neon Storage (hanya untuk berkas visibility public). */
 export function publicUrl(key: string): string | null {
   const config = getStorageConfig();
-  if (!config?.publicBaseUrl) return null;
-  return `${config.publicBaseUrl}/${key}`;
+  if (config?.publicBaseUrl) return `${config.publicBaseUrl}/${key}`;
+  const neon = neonPublicBase();
+  if (neon) return `${neon}/${key}`;
+  return null;
 }
 
 /**
