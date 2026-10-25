@@ -710,7 +710,7 @@ export async function deleteNewsMedia(mediaId: string, user: SessionUser): Promi
   if (media.storageKey) {
     const { deleteObject } = await import("@/lib/storage/r2");
     try {
-      await deleteObject(media.storageKey);
+      await deleteObject(media.storageKey, media.visibility);
     } catch (error) {
       console.error("Gagal menghapus objek dari storage:", error);
     }

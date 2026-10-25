@@ -9,37 +9,71 @@ import {
 } from "@aws-sdk/client-s3";
 import { slugify } from "@/lib/utils";
 
-/**
- * Lapisan penyimpanan berkas dengan dua backend:
- * - Cloudflare R2 (S3-compatible) bila kredensial R2_* lengkap — backend
- *   produksi agar berkas bertahan lintas deploy.
- * - Disk lokal <repo>/storage/uploads bila env UPLOAD_LOCAL_FALLBACK=1 dan
- *   R2 belum dikonfigurasi — untuk pengembangan lokal.
- * Tanpa keduanya, unggahan ditolak dengan pesan jelas (jangan pernah
- * berpura-pura berhasil).
- */
-
 export interface StorageConfig {
-  accountId: string;
+  endpoint: string;
+  region: string;
   accessKeyId: string;
   secretAccessKey: string;
   bucket: string;
+  privateBucket: string | null;
   publicBaseUrl: string | null;
+  forcePathStyle: boolean;
+  provider: "r2" | "neon";
 }
 
+/**
+ * Storage mendukung Cloudflare R2 dan Neon Object Storage.
+ * Untuk Neon, kredensial wajib di-scope ke branch database yang sama.
+ * Bucket publik dan privat dipisahkan agar visibility privat tidak dapat
+ * dilewati dengan membuka URL objek secara langsung.
+ */
 export function getStorageConfig(): StorageConfig | null {
-  const accountId = process.env.R2_ACCOUNT_ID;
-  const accessKeyId = process.env.R2_ACCESS_KEY_ID;
-  const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
-  const bucket = process.env.R2_BUCKET;
-  if (!accountId || !accessKeyId || !secretAccessKey || !bucket) {
+  const r2AccountId = process.env.R2_ACCOUNT_ID;
+  const r2AccessKeyId = process.env.R2_ACCESS_KEY_ID;
+  const r2SecretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
+  const r2Bucket = process.env.R2_BUCKET;
+
+  if (r2AccountId && r2AccessKeyId && r2SecretAccessKey && r2Bucket) {
+    return {
+      endpoint: `https://${r2AccountId}.r2.cloudflarestorage.com`,
+      region: "auto",
+      accessKeyId: r2AccessKeyId,
+      secretAccessKey: r2SecretAccessKey,
+      bucket: r2Bucket,
+      privateBucket: null,
+      publicBaseUrl: process.env.R2_PUBLIC_BASE_URL?.replace(/\/+$/, "") || null,
+      forcePathStyle: false,
+      provider: "r2",
+    };
+  }
+
+  const endpoint = process.env.AWS_ENDPOINT_URL_S3?.replace(/\/+$/, "");
+  const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+  const region = process.env.AWS_REGION;
+  const bucket =
+    process.env.NEON_STORAGE_PUBLIC_BUCKET ||
+    process.env.NEON_STORAGE_BUCKET;
+
+  if (!endpoint || !accessKeyId || !secretAccessKey || !region || !bucket) {
     return null;
   }
-  const publicBaseUrl = process.env.R2_PUBLIC_BASE_URL?.replace(/\/+$/, "") || null;
-  return { accountId, accessKeyId, secretAccessKey, bucket, publicBaseUrl };
+
+  return {
+    endpoint,
+    region,
+    accessKeyId,
+    secretAccessKey,
+    bucket,
+    privateBucket: process.env.NEON_STORAGE_PRIVATE_BUCKET || null,
+    publicBaseUrl:
+      process.env.NEON_STORAGE_PUBLIC_BASE?.replace(/\/+$/, "") ||
+      `${endpoint}/${encodeURIComponent(bucket)}`,
+    forcePathStyle: true,
+    provider: "neon",
+  };
 }
 
-/** Fallback disk lokal hanya aktif lewat env eksplisit (pengembangan lokal). */
 export function isLocalFallbackEnabled(): boolean {
   const flag = process.env.UPLOAD_LOCAL_FALLBACK;
   return flag === "1" || flag === "true";
@@ -53,7 +87,6 @@ function localRoot(): string {
   return path.join(process.cwd(), "storage", "uploads");
 }
 
-/** Resolusi kunci ke path disk, menolak kunci yang keluar dari root. */
 function localPath(key: string): string | null {
   const root = path.resolve(localRoot());
   const full = path.resolve(root, key);
@@ -61,10 +94,36 @@ function localPath(key: string): string | null {
   return full;
 }
 
+function bucketFor(config: StorageConfig, key: string, visibility: string): string {
+  if (config.provider === "r2") return config.bucket;
+
+  // Key menentukan lokasi fisik meskipun status artikel berubah.
+  // Key private/ selalu berada di bucket privat, termasuk setelah diterbitkan.
+  if (key.startsWith("private/")) {
+    if (!config.privateBucket) {
+      throw new Error(
+        "Bucket privat Neon belum dikonfigurasi; operasi media privat ditolak."
+      );
+    }
+    return config.privateBucket;
+  }
+
+  // Key tanpa prefix ada di bucket public_read. Tolak metadata privat agar
+  // media publik lama tidak secara tidak sengaja disajikan sebagai berkas privat.
+  if (visibility !== "public") {
+    throw new Error(
+      "Berkas privat lama berada di bucket publik; akses ditolak sampai berkas dipindahkan."
+    );
+  }
+
+  return config.bucket;
+}
+
 function getS3Client(config: StorageConfig): S3Client {
   return new S3Client({
-    region: "auto",
-    endpoint: `https://${config.accountId}.r2.cloudflarestorage.com`,
+    region: config.region,
+    endpoint: config.endpoint,
+    forcePathStyle: config.forcePathStyle,
     credentials: {
       accessKeyId: config.accessKeyId,
       secretAccessKey: config.secretAccessKey,
@@ -72,17 +131,22 @@ function getS3Client(config: StorageConfig): S3Client {
   });
 }
 
+function encodeStorageKey(key: string): string {
+  return key.split("/").map((part) => encodeURIComponent(part)).join("/");
+}
+
 export async function putObject(
   key: string,
   body: Uint8Array,
-  contentType: string
+  contentType: string,
+  visibility = "private"
 ): Promise<void> {
   const config = getStorageConfig();
   if (config) {
     const client = getS3Client(config);
     await client.send(
       new PutObjectCommand({
-        Bucket: config.bucket,
+        Bucket: bucketFor(config, key, visibility),
         Key: key,
         Body: body,
         ContentType: contentType,
@@ -100,13 +164,21 @@ export async function putObject(
 }
 
 export async function getObject(
-  key: string
-): Promise<{ body: ReadableStream<Uint8Array>; contentType: string | null; contentLength: number | null }> {
+  key: string,
+  visibility = "private"
+): Promise<{
+  body: ReadableStream<Uint8Array>;
+  contentType: string | null;
+  contentLength: number | null;
+}> {
   const config = getStorageConfig();
   if (config) {
     const client = getS3Client(config);
     const result = await client.send(
-      new GetObjectCommand({ Bucket: config.bucket, Key: key })
+      new GetObjectCommand({
+        Bucket: bucketFor(config, key, visibility),
+        Key: key,
+      })
     );
     if (!result.Body) throw new Error("Objek tidak ditemukan di storage");
     return {
@@ -123,17 +195,24 @@ export async function getObject(
   const buffer = await fs.readFile(full);
   return {
     body: new Blob([buffer]).stream() as ReadableStream<Uint8Array>,
-    // Content-Type diambil dari kolom mime_type media_items oleh pemanggil.
     contentType: null,
     contentLength: buffer.byteLength,
   };
 }
 
-export async function deleteObject(key: string): Promise<void> {
+export async function deleteObject(
+  key: string,
+  visibility = "private"
+): Promise<void> {
   const config = getStorageConfig();
   if (config) {
     const client = getS3Client(config);
-    await client.send(new DeleteObjectCommand({ Bucket: config.bucket, Key: key }));
+    await client.send(
+      new DeleteObjectCommand({
+        Bucket: bucketFor(config, key, visibility),
+        Key: key,
+      })
+    );
     return;
   }
   if (!isLocalFallbackEnabled()) {
@@ -144,27 +223,20 @@ export async function deleteObject(key: string): Promise<void> {
   await fs.rm(full, { force: true });
 }
 
-/** URL publik langsung dari R2 (hanya untuk berkas visibility public). */
 export function publicUrl(key: string): string | null {
   const config = getStorageConfig();
   if (!config?.publicBaseUrl) return null;
-  return `${config.publicBaseUrl}/${key}`;
+  return `${config.publicBaseUrl}/${encodeStorageKey(key)}`;
 }
 
-/**
- * URL terbaik untuk menampilkan berkas.
- * - public + publicBaseUrl tersedia → langsung dari R2 (hemat hit server).
- * - selain itu → /api/files/<key> (streaming server, cek visibility).
- */
 export function resolveMediaUrl(key: string, visibility: string): string {
-  if (visibility === "public") {
+  if (visibility === "public" && !key.startsWith("private/")) {
     const direct = publicUrl(key);
     if (direct) return direct;
   }
-  return `/api/files/${key}`;
+  return `/api/files/${encodeStorageKey(key)}`;
 }
 
-/** Batas ukuran dapat dikonfigurasi lewat env (default 5 MB / 10 MB). */
 export function maxImageMB(): number {
   const parsed = Number(process.env.NEWS_MAX_IMAGE_MB);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 5;
@@ -175,8 +247,7 @@ export function maxDocumentMB(): number {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 10;
 }
 
-/** Kunci objek unik: news/2026/10/<uuid>-<nama-bersih>.<ext> */
-export function buildStorageKey(originalName: string): string {
+export function buildStorageKey(originalName: string, visibility = "private"): string {
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, "0");
@@ -185,5 +256,6 @@ export function buildStorageKey(originalName: string): string {
   const ext = dot > 0 ? originalName.slice(dot + 1).toLowerCase() : "";
   const safeBase = slugify(base).slice(0, 80) || "berkas";
   const uuid = randomUUID();
-  return `news/${year}/${month}/${uuid}-${safeBase}${ext ? `.${ext}` : ""}`;
+  const key = `news/${year}/${month}/${uuid}-${safeBase}${ext ? `.${ext}` : ""}`;
+  return visibility === "public" ? key : `private/${key}`;
 }
