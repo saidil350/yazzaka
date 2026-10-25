@@ -12,6 +12,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async headers() {
+    return [
+      {
+        // Area privat tidak boleh terindeks mesin pencari maupun AI crawler.
+        source: "/:path(admin|login|api)/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

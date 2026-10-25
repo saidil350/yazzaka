@@ -20,6 +20,7 @@ import {
   getProgramPageProfile,
   listOtherPublishedPrograms,
 } from "@/lib/programs";
+import { buildBreadcrumbJsonLd, JsonLd } from "@/lib/seo/structured-data";
 
 type Params = Promise<{ slug: string }>;
 
@@ -35,7 +36,8 @@ export async function generateMetadata({
     return { title: "Program tidak ditemukan" };
   }
 
-  const title = `${program.title} — Yazzakka`;
+  // Sufiks brand ditangani title.template di root layout — jangan dobel.
+  const title = program.title;
   const description = program.shortDesc || `Program pendidikan ${program.title}.`;
 
   return {
@@ -68,8 +70,15 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
 
   const isWakaf = program.slug === "pesantren-peradaban-60";
 
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Beranda", path: "/" },
+    { name: "Program", path: "/program" },
+    { name: program.title, path: `/program/${program.slug}` },
+  ]);
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
+      <JsonLd data={breadcrumbJsonLd} />
       <Header />
       <main className="flex-1">
 
