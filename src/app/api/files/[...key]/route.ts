@@ -36,7 +36,7 @@ export async function GET(request: Request, { params }: RouteContext) {
       }
     }
 
-    const object = await getObject(key);
+    const object = await getObject(key, media.visibility);
     const encodedName = encodeURIComponent(media.file_name || "berkas");
 
     return new Response(object.body, {

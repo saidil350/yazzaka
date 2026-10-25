@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error:
-            "Penyimpanan berkas belum dikonfigurasi (isi R2_* atau set UPLOAD_LOCAL_FALLBACK=1).",
+            "Penyimpanan berkas belum dikonfigurasi. Set kredensial R2 atau konfigurasi Neon Object Storage dengan bucket publik dan privat.",
         },
         { status: 503 }
       );
@@ -64,12 +64,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const key = buildStorageKey(fileName);
-    const buffer = new Uint8Array(await file.arrayBuffer());
-    await putObject(key, buffer, validation.mimeType);
-
     const purpose = String(form.get("purpose") ?? "").trim().toLowerCase();
     const visibility = purpose === "image" ? "public" : "private";
+    const key = buildStorageKey(fileName, visibility);
+    const buffer = new Uint8Array(await file.arrayBuffer());
+    await putObject(key, buffer, validation.mimeType, visibility);
 
     const sql = getDb();
     const id = generateId("med");
