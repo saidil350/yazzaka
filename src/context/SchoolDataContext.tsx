@@ -106,8 +106,15 @@ interface SchoolDataContextType {
 
 const SchoolDataContext = createContext<SchoolDataContextType | undefined>(undefined);
 
-export function SchoolDataProvider({ children }: { children: React.ReactNode }) {
-  // Gunakan initialData sebagai fallback sementara loading
+export function SchoolDataProvider({
+  children,
+  initialSections: serverSections,
+}: {
+  children: React.ReactNode;
+  initialSections?: PageSectionConfig[];
+}) {
+  // Gunakan initialData sebagai fallback sementara loading; seksi halaman
+  // memakai data server dari layout root bila tersedia (anti-kedipan toggle).
   const [profile, setProfile] = useState<SchoolProfile>(initialSchoolProfile);
   const [programs, setPrograms] = useState<Program[]>(initialPrograms);
   const [achievements, setAchievements] = useState<Achievement[]>(initialAchievements);
@@ -119,7 +126,7 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
   const [messages, setMessages] = useState<ContactMessage[]>(initialContactMessages);
   const [settings, setSettings] = useState<WebsiteSettings>(initialWebsiteSettings);
   const [users, setUsers] = useState<User[]>(initialUsers);
-  const [sections, setSections] = useState<PageSectionConfig[]>(initialSections);
+  const [sections, setSections] = useState<PageSectionConfig[]>(serverSections ?? initialSections);
   
   const [logs, setLogs] = useState<ActivityLog[]>([{
     id: "log-1",

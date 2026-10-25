@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getDb } from "@/lib/db/neon";
 import { PageSectionConfig } from "@/lib/types";
 
@@ -35,6 +36,10 @@ export async function PUT(request: Request) {
       )
     );
     await sql.transaction(operations);
+
+    // Visibilitas seksi kini ikut dirender server-side di layout root —
+    // invalidasi cache ISR agar perubahan toggle langsung tayang.
+    revalidatePath("/", "layout");
 
     return NextResponse.json({ success: true, message: "Konfigurasi seksi berhasil disimpan" });
   } catch (error) {

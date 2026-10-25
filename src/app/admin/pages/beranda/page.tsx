@@ -15,12 +15,16 @@ export default function AdminHomepageSectionsPage() {
   // Key yang komponen publiknya tidak pernah dirender di landing —
   // disembunyikan dari UI agar admin tidak mengelola toggle tanpa efek.
   const UNRENDERED_SECTION_KEYS = ["news", "admission_cta"];
+  // Seksi dengan posisi tetap (bukan bagian urutan konten beranda) —
+  // toggle-nya efektif, tapi tombol urut disembunyikan.
+  const FIXED_POSITION_KEYS = ["topbar"];
+  const isFixedPosition = (key: string) => FIXED_POSITION_KEYS.includes(key);
   const visibleSections = sections.filter(
     (s) => !UNRENDERED_SECTION_KEYS.includes(s.key)
   );
 
   const handleMoveUp = async (index: number) => {
-    if (index === 0) return;
+    if (index === 0 || isFixedPosition(visibleSections[index - 1].key)) return;
     const updated = [...visibleSections];
     const temp = updated[index];
     updated[index] = updated[index - 1];
@@ -34,7 +38,11 @@ export default function AdminHomepageSectionsPage() {
   };
 
   const handleMoveDown = async (index: number) => {
-    if (index === visibleSections.length - 1) return;
+    if (
+      index === visibleSections.length - 1 ||
+      isFixedPosition(visibleSections[index + 1].key)
+    )
+      return;
     const updated = [...visibleSections];
     const temp = updated[index];
     updated[index] = updated[index + 1];
@@ -43,7 +51,7 @@ export default function AdminHomepageSectionsPage() {
       await reorderSections(updated);
       toast("Urutan seksi berhasil diperbarui!", "success");
     } catch {
-      toast("Gagal memperbarui urutan seksi.", "error");
+      toast("Gagal memperbarhi urutan seksi.", "error");
     }
   };
 
@@ -113,13 +121,18 @@ export default function AdminHomepageSectionsPage() {
                 />
               </div>
 
-              {/* Order Controls */}
+              {/* Order Controls — disembunyikan untuk seksi berposisi tetap */}
+              {isFixedPosition(sec.key) ? (
+                <span className="text-xs text-muted-foreground pl-3 border-l border-border">
+                  Posisi tetap
+                </span>
+              ) : (
               <div className="flex items-center gap-1 pl-3 border-l border-border">
                 <Button
                   type="button"
                   variant="ghost"
                   size="icon-sm"
-                  disabled={idx === 0}
+                  disabled={idx === 0 || isFixedPosition(visibleSections[idx - 1].key)}
                   onClick={() => handleMoveUp(idx)}
                   className="text-muted-foreground hover:text-primary"
                   title="Pindah ke Atas"
@@ -140,6 +153,7 @@ export default function AdminHomepageSectionsPage() {
                   <ArrowDown className="h-4 w-4" aria-hidden="true" />
                 </Button>
               </div>
+              )}
             </div>
           </div>
         ))}

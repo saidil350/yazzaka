@@ -13,7 +13,6 @@ import {
   ChevronRight,
   Clock,
   Send,
-  ExternalLink,
   Globe,
   Users,
   Newspaper,
@@ -159,16 +158,6 @@ export default function AdminDashboardOverview() {
             </Button>
           </Link>
 
-          <Link href="/" target="_blank" rel="noopener noreferrer">
-            <Button
-              variant="accent"
-              size="sm"
-              aria-label="Buka situs publik di tab baru"
-            >
-              <span>Lihat Web Publik</span>
-              <ExternalLink aria-hidden="true" />
-            </Button>
-          </Link>
         </div>
       </div>
 

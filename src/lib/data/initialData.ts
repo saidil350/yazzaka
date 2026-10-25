@@ -193,6 +193,7 @@ export const initialUsers: User[] = [
 ];
 
 export const initialSections: PageSectionConfig[] = [
+  { id: "sec-topbar", key: "topbar", title: "Topbar Info & Kontak", subtitle: "Pita akreditasi & WhatsApp CS di paling atas — tampil di semua halaman publik", isEnabled: true, orderIndex: 0 },
   { id: "sec-1", key: "hero", title: "Hero Banner", subtitle: "Visual utama dan pesan pimpinan", isEnabled: true, orderIndex: 1 },
   { id: "sec-10", key: "news_carousel", title: "Berita Unggulan", subtitle: "Karousel warta pilihan pesantren", isEnabled: true, orderIndex: 2 },
   { id: "sec-2", key: "stats", title: "Statistik Kredibilitas", subtitle: "Angka kunci akreditasi & capaian", isEnabled: true, orderIndex: 2 },

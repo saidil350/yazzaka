@@ -61,7 +61,7 @@ const quickUnits = [
 ];
 
 export function Header() {
-  const { profile } = useSchoolData();
+  const { profile, sections } = useSchoolData();
   const pathname = usePathname();
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -171,9 +171,14 @@ export function Header() {
     }
   };
 
+  // Visibilitas topbar dikontrol dari CMS (page_sections key "topbar");
+  // default tampil bila key belum ada di data.
+  const showTopbar = sections.find((s) => s.key === "topbar")?.isEnabled ?? true;
+
   return (
     <>
       {/* ── Top Announcement Sub-Bar ───────────── */}
+      {showTopbar && (
       <div
         className="bg-[#262B35] text-[#FAF6EE] border-b border-white/10 relative z-50"
         role="banner"
@@ -199,6 +204,7 @@ export function Header() {
           </div>
         </div>
       </div>
+      )}
 
       {/* ── Main Sticky Header ──────── */}
       <header
@@ -403,12 +409,12 @@ export function Header() {
                         setMobileMenuOpen(false);
                       }}
                       aria-current={active ? "page" : undefined}
-                      className={[
-                        "flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-bold transition-all",
-                        active
-                          ? "bg-[#1E2330] text-white shadow-xs"
-                          : "text-stone-700 hover:bg-[#F3EFE6]",
-                      ].join(" ")}
+                  className={[
+                    "flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-bold transition-all",
+                    active
+                      ? "bg-[#00A0B0] text-white shadow-xs"
+                      : "text-stone-700 hover:bg-[#F3EFE6]",
+                  ].join(" ")}
                     >
                       <span>{link.label}</span>
                     </Link>
