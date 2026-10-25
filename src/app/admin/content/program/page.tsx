@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { Modal } from "@/components/ui/modal";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
@@ -185,13 +186,17 @@ export default function AdminProgramsCrudPage() {
     }
   };
 
-  const handleDelete = async (id: string, progTitle: string) => {
-    if (!confirm(`Hapus program "${progTitle}"?`)) return;
+  const [programToDelete, setProgramToDelete] = useState<Program | null>(null);
+
+  const handleConfirmDelete = async () => {
+    if (!programToDelete) return;
     try {
-      await deleteProgram(id);
+      await deleteProgram(programToDelete.id);
       toast("Program telah dihapus.", "info");
     } catch {
       toast("Gagal menghapus program. Coba lagi.", "error");
+    } finally {
+      setProgramToDelete(null);
     }
   };
 
@@ -292,7 +297,7 @@ export default function AdminProgramsCrudPage() {
                       <Button
                         variant="ghost"
                         size="icon-sm"
-                        onClick={() => handleDelete(prog.id, prog.title)}
+                        onClick={() => setProgramToDelete(prog)}
                         className="text-destructive hover:text-destructive"
                         title="Hapus Program"
                         aria-label="Hapus Program"
@@ -551,6 +556,23 @@ export default function AdminProgramsCrudPage() {
           </div>
         </form>
       </Modal>
+
+      {/* ── Konfirmasi Hapus Program ──────────────────── */}
+      <ConfirmDialog
+        isOpen={programToDelete !== null}
+        onClose={() => setProgramToDelete(null)}
+        onConfirm={handleConfirmDelete}
+        title="Hapus Program?"
+        description={
+          <>
+            Apakah Anda yakin ingin menghapus program{" "}
+            <span className="font-medium text-foreground">
+              &ldquo;{programToDelete?.title}&rdquo;
+            </span>
+            ? Tindakan ini tidak dapat dibatalkan.
+          </>
+        }
+      />
     </div>
   );
 }

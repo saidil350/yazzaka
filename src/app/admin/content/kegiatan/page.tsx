@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Modal } from "@/components/ui/modal";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
@@ -119,13 +120,17 @@ export default function AdminEventsPage() {
     }
   };
 
-  const handleDelete = async (id: string, evtTitle: string) => {
-    if (!confirm(`Hapus agenda "${evtTitle}"?`)) return;
+  const [eventToDelete, setEventToDelete] = useState<SchoolEvent | null>(null);
+
+  const handleConfirmDelete = async () => {
+    if (!eventToDelete) return;
     try {
-      await deleteEvent(id);
+      await deleteEvent(eventToDelete.id);
       toast("Agenda telah dihapus.", "info");
     } catch {
       toast("Gagal menghapus agenda. Coba lagi.", "error");
+    } finally {
+      setEventToDelete(null);
     }
   };
 
@@ -221,7 +226,7 @@ export default function AdminEventsPage() {
                       <Button
                         variant="ghost"
                         size="icon-sm"
-                        onClick={() => handleDelete(evt.id, evt.title)}
+                        onClick={() => setEventToDelete(evt)}
                         className="text-destructive hover:text-destructive"
                         title="Hapus Agenda"
                         aria-label="Hapus Agenda"
@@ -333,6 +338,23 @@ export default function AdminEventsPage() {
           />
         </form>
       </Modal>
+
+      {/* ── Konfirmasi Hapus Agenda ───────────────────── */}
+      <ConfirmDialog
+        isOpen={eventToDelete !== null}
+        onClose={() => setEventToDelete(null)}
+        onConfirm={handleConfirmDelete}
+        title="Hapus Agenda?"
+        description={
+          <>
+            Apakah Anda yakin ingin menghapus agenda{" "}
+            <span className="font-medium text-foreground">
+              &ldquo;{eventToDelete?.title}&rdquo;
+            </span>
+            ? Tindakan ini tidak dapat dibatalkan.
+          </>
+        }
+      />
     </div>
   );
 }

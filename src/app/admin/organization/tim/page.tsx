@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { Modal } from "@/components/ui/modal";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
@@ -195,13 +196,17 @@ export default function AdminTeamMembersPage() {
     }
   };
 
-  const handleDelete = async (id: string, mName: string) => {
-    if (!confirm(`Apakah Anda yakin ingin menghapus data "${mName}"?`)) return;
+  const [memberToDelete, setMemberToDelete] = useState<OrganizationMember | null>(null);
+
+  const handleConfirmDelete = async () => {
+    if (!memberToDelete) return;
     try {
-      await deleteMember(id);
+      await deleteMember(memberToDelete.id);
       toast("Data pengajar telah dihapus dari sistem.", "info");
     } catch {
       toast("Gagal menghapus data pengajar. Coba lagi.", "error");
+    } finally {
+      setMemberToDelete(null);
     }
   };
 
@@ -525,7 +530,7 @@ export default function AdminTeamMembersPage() {
                   <Button
                     variant="ghost"
                     size="icon-sm"
-                    onClick={() => handleDelete(m.id, m.name)}
+                    onClick={() => setMemberToDelete(m)}
                     className="text-destructive hover:text-destructive"
                     title="Hapus Pengajar"
                     aria-label="Hapus Pengajar"
@@ -625,6 +630,23 @@ export default function AdminTeamMembersPage() {
           />
         </form>
       </Modal>
+
+      {/* ── Konfirmasi Hapus Pengajar ─────────────────── */}
+      <ConfirmDialog
+        isOpen={memberToDelete !== null}
+        onClose={() => setMemberToDelete(null)}
+        onConfirm={handleConfirmDelete}
+        title="Hapus Data Pengajar?"
+        description={
+          <>
+            Apakah Anda yakin ingin menghapus data{" "}
+            <span className="font-medium text-foreground">
+              &ldquo;{memberToDelete?.name}&rdquo;
+            </span>
+            ? Tindakan ini tidak dapat dibatalkan.
+          </>
+        }
+      />
     </div>
   );
 }

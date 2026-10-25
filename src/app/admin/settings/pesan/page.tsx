@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -91,14 +92,18 @@ export default function AdminContactInboxPage() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Apakah Anda yakin ingin menghapus pesan ini dari kotak masuk?")) return;
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+
+  const handleConfirmDelete = async () => {
+    if (!selectedMessage) return;
     try {
-      await deleteMessage(id);
-      if (selectedMessage?.id === id) setSelectedMessage(null);
+      await deleteMessage(selectedMessage.id);
+      setSelectedMessage(null);
       toast("Pesan berhasil dihapus dari kotak masuk.", "info");
     } catch {
       toast("Gagal menghapus pesan. Coba lagi.", "error");
+    } finally {
+      setDeleteConfirmOpen(false);
     }
   };
 
@@ -337,7 +342,7 @@ export default function AdminContactInboxPage() {
                 type="button"
                 variant="ghost"
                 size="sm"
-                onClick={() => handleDelete(selectedMessage.id)}
+                onClick={() => setDeleteConfirmOpen(true)}
                 className="text-destructive hover:text-destructive"
               >
                 <Trash2 className="h-4 w-4 shrink-0" />
@@ -449,6 +454,15 @@ export default function AdminContactInboxPage() {
           </div>
         </Modal>
       )}
+
+      {/* ── Konfirmasi Hapus Pesan ─────────────────────── */}
+      <ConfirmDialog
+        isOpen={deleteConfirmOpen}
+        onClose={() => setDeleteConfirmOpen(false)}
+        onConfirm={handleConfirmDelete}
+        title="Hapus Pesan?"
+        description="Apakah Anda yakin ingin menghapus pesan ini dari kotak masuk? Tindakan ini tidak dapat dibatalkan."
+      />
     </div>
   );
 }

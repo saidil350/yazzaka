@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Modal } from "@/components/ui/modal";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
@@ -126,13 +127,17 @@ export default function AdminAchievementsPage() {
     }
   };
 
-  const handleDelete = async (id: string, achTitle: string) => {
-    if (!confirm(`Hapus prestasi "${achTitle}"?`)) return;
+  const [achievementToDelete, setAchievementToDelete] = useState<Achievement | null>(null);
+
+  const handleConfirmDelete = async () => {
+    if (!achievementToDelete) return;
     try {
-      await deleteAchievement(id);
+      await deleteAchievement(achievementToDelete.id);
       toast("Prestasi telah dihapus.", "info");
     } catch {
       toast("Gagal menghapus prestasi. Coba lagi.", "error");
+    } finally {
+      setAchievementToDelete(null);
     }
   };
 
@@ -231,7 +236,7 @@ export default function AdminAchievementsPage() {
                       <Button
                         variant="ghost"
                         size="icon-sm"
-                        onClick={() => handleDelete(ach.id, ach.title)}
+                        onClick={() => setAchievementToDelete(ach)}
                         className="text-destructive hover:text-destructive"
                         title="Hapus Prestasi"
                         aria-label="Hapus Prestasi"
@@ -346,6 +351,23 @@ export default function AdminAchievementsPage() {
           />
         </form>
       </Modal>
+
+      {/* ── Konfirmasi Hapus Prestasi ─────────────────── */}
+      <ConfirmDialog
+        isOpen={achievementToDelete !== null}
+        onClose={() => setAchievementToDelete(null)}
+        onConfirm={handleConfirmDelete}
+        title="Hapus Prestasi?"
+        description={
+          <>
+            Apakah Anda yakin ingin menghapus prestasi{" "}
+            <span className="font-medium text-foreground">
+              &ldquo;{achievementToDelete?.title}&rdquo;
+            </span>
+            ? Tindakan ini tidak dapat dibatalkan.
+          </>
+        }
+      />
     </div>
   );
 }

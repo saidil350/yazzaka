@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Modal } from "@/components/ui/modal";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -74,13 +75,17 @@ export default function AdminMediaPage() {
     toast("URL media berhasil disalin ke clipboard!", "info");
   };
 
-  const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Hapus media "${name}"?`)) return;
+  const [mediaToDelete, setMediaToDelete] = useState<MediaItem | null>(null);
+
+  const handleConfirmDelete = async () => {
+    if (!mediaToDelete) return;
     try {
-      await deleteMedia(id);
+      await deleteMedia(mediaToDelete.id);
       toast("Media berhasil dihapus.", "info");
     } catch {
       toast("Gagal menghapus media. Coba lagi.", "error");
+    } finally {
+      setMediaToDelete(null);
     }
   };
 
@@ -191,7 +196,7 @@ export default function AdminMediaPage() {
                     variant="ghost"
                     size="icon-sm"
                     type="button"
-                    onClick={() => handleDelete(item.id, item.fileName)}
+                    onClick={() => setMediaToDelete(item)}
                     aria-label={`Hapus ${item.fileName}`}
                     title={`Hapus ${item.fileName}`}
                     className="text-destructive hover:text-destructive"
@@ -292,6 +297,23 @@ export default function AdminMediaPage() {
           </div>
         </form>
       </Modal>
+
+      {/* ── Konfirmasi Hapus Media ────────────────────── */}
+      <ConfirmDialog
+        isOpen={mediaToDelete !== null}
+        onClose={() => setMediaToDelete(null)}
+        onConfirm={handleConfirmDelete}
+        title="Hapus Media?"
+        description={
+          <>
+            Apakah Anda yakin ingin menghapus media{" "}
+            <span className="font-medium text-foreground">
+              &ldquo;{mediaToDelete?.fileName}&rdquo;
+            </span>
+            ? Tindakan ini tidak dapat dibatalkan.
+          </>
+        }
+      />
     </div>
   );
 }
