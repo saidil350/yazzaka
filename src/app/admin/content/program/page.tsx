@@ -402,6 +402,7 @@ export default function AdminProgramsCrudPage() {
               onChange={(val) => setImageUrl(val)}
               placeholder="https://contoh.com/gambar.jpg"
               helperText="Unggah berkas gambar (drag & drop) atau gunakan tautan URL gambar resolusi tinggi."
+              folder="program"
             />
           </div>
 

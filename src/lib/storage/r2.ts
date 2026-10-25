@@ -199,8 +199,34 @@ export function maxDocumentMB(): number {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 10;
 }
 
-/** Kunci objek unik: news/2026/10/<uuid>-<nama-bersih>.<ext> */
-export function buildStorageKey(originalName: string): string {
+/**
+ * Folder tujuan objek di bucket "gambar" — satu folder per jenis konten
+ * agar bucket tertata (bukan semuanya menumpuk di satu prefix).
+ */
+export const STORAGE_FOLDERS = [
+  "berita",
+  "hero",
+  "program",
+  "agenda",
+  "tim",
+  "galeri",
+  "umum",
+] as const;
+export type StorageFolder = (typeof STORAGE_FOLDERS)[number];
+
+export function isStorageFolder(value: string): value is StorageFolder {
+  return (STORAGE_FOLDERS as readonly string[]).includes(value);
+}
+
+/**
+ * Kunci objek unik per folder tujuan:
+ * - berita → berita/YYYY/MM/<uuid>-<nama-bersih>.<ext> (konten kronologis)
+ * - folder lain (hero/program/agenda/tim/galeri/umum) → <folder>/<uuid>-<nama-bersih>.<ext>
+ */
+export function buildStorageKey(
+  originalName: string,
+  folder: StorageFolder = "berita"
+): string {
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, "0");
@@ -209,5 +235,8 @@ export function buildStorageKey(originalName: string): string {
   const ext = dot > 0 ? originalName.slice(dot + 1).toLowerCase() : "";
   const safeBase = slugify(base).slice(0, 80) || "berkas";
   const uuid = randomUUID();
-  return `news/${year}/${month}/${uuid}-${safeBase}${ext ? `.${ext}` : ""}`;
+  const file = `${uuid}-${safeBase}${ext ? `.${ext}` : ""}`;
+  return folder === "berita"
+    ? `berita/${year}/${month}/${file}`
+    : `${folder}/${file}`;
 }

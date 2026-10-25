@@ -5,6 +5,7 @@ import { mapNewsMediaRow } from "@/lib/news/mappers";
 import {
   buildStorageKey,
   isStorageConfigured,
+  isStorageFolder,
   maxDocumentMB,
   maxImageMB,
   putObject,
@@ -17,6 +18,8 @@ import { requireUser, toErrorResponse } from "@/lib/news/api-helpers";
  * field: file (File), purpose (opsional). purpose="image" (form konten publik
  * seperti hero/program) → visibility 'public' agar bisa dimuat pengunjung;
  * tanpa purpose (media berita) → 'private' sampai artikel terbit.
+ * field: folder (opsional, salah satu STORAGE_FOLDERS) — direktori bucket
+ * tujuan; default "umum" (konten publik) / "berita" (media berita).
  * Validasi server: allowlist ekstensi + magic bytes + batas ukuran.
  * Gagal di tengah jalan TIDAK menyisakan record/node gambar.
  */
@@ -64,12 +67,22 @@ export async function POST(request: Request) {
       );
     }
 
-    const key = buildStorageKey(fileName);
-    const buffer = new Uint8Array(await file.arrayBuffer());
-    await putObject(key, buffer, validation.mimeType);
-
     const purpose = String(form.get("purpose") ?? "").trim().toLowerCase();
     const visibility = purpose === "image" ? "public" : "private";
+
+    // Folder bucket dipilih pengirim (form admin mengetahui konteksnya);
+    // fallback: konten publik umum → "umum", media berita → "berita".
+    const folderRaw = String(form.get("folder") ?? "").trim().toLowerCase();
+    const folder =
+      folderRaw && isStorageFolder(folderRaw)
+        ? folderRaw
+        : purpose === "image"
+          ? "umum"
+          : "berita";
+
+    const key = buildStorageKey(fileName, folder);
+    const buffer = new Uint8Array(await file.arrayBuffer());
+    await putObject(key, buffer, validation.mimeType);
 
     const sql = getDb();
     const id = generateId("med");

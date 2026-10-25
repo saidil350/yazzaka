@@ -594,6 +594,7 @@ export default function AdminTeamMembersPage() {
                 onChange={(val) => setPhotoUrl(val)}
                 placeholder="https://contoh.com/foto.jpg"
                 helperText="Unggah foto formal guru/asatidz (format JPG/PNG/WebP) atau gunakan URL gambar."
+                folder="tim"
               />
             </div>
             <div>
