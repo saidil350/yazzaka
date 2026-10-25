@@ -21,7 +21,8 @@ Jangan gunakan kredensial branch production untuk preview staging. Jangan menyim
 ## Pemisahan akses
 
 - Media dengan `visibility=public` disimpan di bucket publik dan boleh memakai URL langsung.
-- Media dengan `visibility=private` disimpan di bucket privat dan hanya disajikan melalui `/api/files/<key>` setelah pemeriksaan sesi.
+- Media baru dengan `visibility=private` disimpan di bucket privat dengan key berawalan `private/` dan hanya disajikan melalui `/api/files/<key>` setelah pemeriksaan sesi.
+- Prefix `private/` menentukan lokasi fisik sehingga objek draft yang kemudian diterbitkan tetap berada di bucket privat dan disajikan lewat proxy aplikasi. Key lama tanpa prefix dianggap berada di bucket publik; jika metadata-nya privat, akses ditolak sampai objek dipindahkan.
 - Jika bucket privat belum dikonfigurasi, upload privat ditolak alih-alih ditulis ke bucket publik.
 - Mengubah bucket publik menjadi privat atau sebaliknya bukan bagian dari deployment ini. Objek yang sudah ada tetap di bucket asalnya.
 
@@ -31,8 +32,8 @@ Jangan gunakan kredensial branch production untuk preview staging. Jangan menyim
 2. `GET /api/files/<key>` untuk media publik yang masih menggunakan proxy mengembalikan HTTP 200.
 3. Request anonim ke media privat mengembalikan HTTP 401.
 4. Upload gambar dengan `purpose=image` tersimpan di bucket publik.
-5. Upload dokumen tanpa `purpose=image` tersimpan di bucket privat.
-6. Delete media menghapus objek dari bucket sesuai nilai visibility.
+5. Upload dokumen tanpa `purpose=image` tersimpan di bucket privat dan key-nya berawalan `private/`.
+6. Delete media menghapus objek dari bucket sesuai lokasi yang ditandai oleh key, termasuk setelah status artikel berubah.
 7. Build, TypeScript, dan lint lolos sebelum pull request digabungkan ke branch `staging`.
 
 Perbaikan ini tidak membutuhkan migrasi skema database.
