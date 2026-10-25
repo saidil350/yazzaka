@@ -8,6 +8,7 @@ import { Compass, Sparkles, Users, Image as ImageIcon } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { OrganizationMember } from "@/lib/types";
+import { DEFAULT_FOUNDATION } from "@/lib/data/initialData";
 
 // ── Sub-component: Philosophy Value Card (Panca Jiwa) ────────────────────────
 interface ValueCardProps {
@@ -28,6 +29,25 @@ function PhilosophyCard({ index, title, description }: ValueCardProps) {
       <p className="text-xs text-stone-600 leading-relaxed font-medium">
         {description}
       </p>
+    </div>
+  );
+}
+
+// ── Sub-component: Foundation Data Row ───────────────────────────────────────
+interface DataRowProps {
+  label: string;
+  children: React.ReactNode;
+}
+
+function FoundationDataRow({ label, children }: DataRowProps) {
+  return (
+    <div className="py-3 border-b border-border last:border-b-0 grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4">
+      <dt className="text-xs font-medium text-muted-foreground sm:pt-0.5">
+        {label}
+      </dt>
+      <dd className="text-sm font-semibold text-foreground sm:col-span-2 leading-relaxed">
+        {children}
+      </dd>
     </div>
   );
 }
@@ -79,6 +99,7 @@ function MemberCard({ member }: MemberCardProps) {
 
 export default function AboutPage() {
   const { profile, organization, sections } = useSchoolData();
+  const foundation = profile.foundation ?? DEFAULT_FOUNDATION;
 
   const teamSection = sections.find(
     (s) => s.key === "organization" || s.id === "sec-team"
@@ -134,12 +155,12 @@ export default function AboutPage() {
 
                 <div className="grid grid-cols-2 gap-3 pt-4 border-t border-[#E8E2D8] text-xs">
                   <div className="p-3 rounded-xl bg-white border border-[#E8E2D8]">
-                    <span className="font-extrabold text-[#1E2330] block">NPSN Resmi:</span>
-                    <span className="text-stone-600 font-semibold">{profile.npsn}</span>
+                    <span className="font-extrabold text-[#1E2330] block">SK Kemenkumham RI:</span>
+                    <span className="text-stone-600 font-semibold">{foundation.skNumber}</span>
                   </div>
                   <div className="p-3 rounded-xl bg-white border border-[#E8E2D8]">
-                    <span className="font-extrabold text-[#1E2330] block">Akreditasi BAN-S/M:</span>
-                    <span className="text-yazzaka-teal-dark font-bold">Peringkat {profile.accreditation} (Unggul)</span>
+                    <span className="font-extrabold text-[#1E2330] block">Nomor Induk Yayasan:</span>
+                    <span className="text-yazzaka-teal-dark font-bold">{foundation.registryNumber}</span>
                   </div>
                 </div>
               </div>
@@ -167,6 +188,84 @@ export default function AboutPage() {
               </div>
 
             </div>
+          </div>
+        </section>
+
+        {/* ── Foundation Data & Legality ──────────────── */}
+        <section className="py-12 lg:py-14 border-b border-border">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+            <div className="max-w-3xl space-y-2">
+              <Badge variant="secondary">
+                Badan Hukum &amp; Legalitas
+              </Badge>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+                Data Yayasan
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <div className="lg:col-span-7 bg-card border border-border rounded-lg p-6">
+                <dl>
+                  <FoundationDataRow label="Nama Yayasan">
+                    {profile.name}
+                  </FoundationDataRow>
+                  <FoundationDataRow label="Nomor SK Kemenkumham RI">
+                    {foundation.skNumber}
+                  </FoundationDataRow>
+                  <FoundationDataRow label="Nomor Induk Yayasan">
+                    {foundation.registryNumber}
+                  </FoundationDataRow>
+                  <FoundationDataRow label="Berdiri Sejak">
+                    {profile.establishedYear}
+                  </FoundationDataRow>
+                  <FoundationDataRow label="Pendiri">
+                    <ol className="space-y-1">
+                      {foundation.founders.map((founder, idx) => (
+                        <li key={idx}>
+                          {idx + 1}. {founder}
+                        </li>
+                      ))}
+                    </ol>
+                  </FoundationDataRow>
+                  <FoundationDataRow label="Ketua Yayasan">
+                    {foundation.chairman}
+                  </FoundationDataRow>
+                  <FoundationDataRow label="Contact Person">
+                    {foundation.contactPerson}
+                  </FoundationDataRow>
+                  <FoundationDataRow label="Email Yayasan">
+                    <a href={`mailto:${foundation.email}`} className="hover:underline break-all">
+                      {foundation.email}
+                    </a>
+                  </FoundationDataRow>
+                </dl>
+              </div>
+
+              <div className="lg:col-span-5 bg-card border border-border rounded-lg p-6 space-y-4">
+                <span className="text-xs font-bold text-muted-foreground block">
+                  Legalitas Yayasan
+                </span>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {profile.name} merupakan badan hukum resmi yang telah
+                  disahkan oleh Kementerian Hukum dan Hak Asasi Manusia
+                  Republik Indonesia melalui SK Nomor{" "}
+                  <span className="font-semibold text-foreground">
+                    {foundation.skNumber}
+                  </span>{" "}
+                  dengan Nomor Induk Yayasan{" "}
+                  <span className="font-semibold text-foreground">
+                    {foundation.registryNumber}
+                  </span>
+                  , saat ini dipimpin oleh{" "}
+                  <span className="font-semibold text-foreground">
+                    {foundation.chairman}
+                  </span>{" "}
+                  selaku Ketua Yayasan.
+                </p>
+              </div>
+            </div>
+
           </div>
         </section>
 

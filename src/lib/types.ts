@@ -19,6 +19,21 @@ export interface HeroContent {
   gallery: string[];
 }
 
+export interface FoundationData {
+  /** Nomor SK pengesahan dari Kemenkumham RI. */
+  skNumber: string;
+  /** Nomor Induk Yayasan (contoh: AZ 1871). */
+  registryNumber: string;
+  /** Nama para pendiri yayasan. */
+  founders: string[];
+  /** Nama ketua yayasan. */
+  chairman: string;
+  /** Nomor kontak person yayasan. */
+  contactPerson: string;
+  /** Email resmi yayasan. */
+  email: string;
+}
+
 export interface SchoolProfile {
   id: string;
   name: string;
@@ -40,6 +55,8 @@ export interface SchoolProfile {
   mapsEmbedUrl: string;
   /** Foto gedung/kampus untuk halaman /tentang-kami (opsional). */
   aboutImageUrl?: string;
+  /** Data legal yayasan untuk halaman /tentang-kami (opsional). */
+  foundation?: FoundationData;
   principal: {
     name: string;
     title: string;

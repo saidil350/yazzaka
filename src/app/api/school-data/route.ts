@@ -120,6 +120,7 @@ export function mapProfile(r: Record<string, unknown>) {
     whatsapp: r.whatsapp,
     mapsEmbedUrl: r.maps_embed_url,
     aboutImageUrl: r.about_image_url ?? "",
+    foundation: r.foundation ?? null,
     principal: {
       name: r.principal_name,
       title: r.principal_title,
