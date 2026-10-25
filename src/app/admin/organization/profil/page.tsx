@@ -8,7 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ImageUpload } from "@/components/ui/image-upload";
 import { Card } from "@/components/ui/card";
-import { Save } from "lucide-react";
+import { Save, Plus, Trash2 } from "lucide-react";
+import { DEFAULT_FOUNDATION } from "@/lib/data/initialData";
 
 export default function AdminOrgProfilePage() {
   const { profile, updateProfile } = useSchoolData();
@@ -24,6 +25,15 @@ export default function AdminOrgProfilePage() {
   const [alumniCount, setAlumniCount] = useState(profile.alumniCount);
   const [hafizCount, setHafizCount] = useState(profile.hafizCount);
   const [aboutImage, setAboutImage] = useState(profile.aboutImageUrl ?? "");
+
+  // Data Yayasan (legalitas)
+  const foundation = profile.foundation ?? DEFAULT_FOUNDATION;
+  const [skNumber, setSkNumber] = useState(foundation.skNumber);
+  const [registryNumber, setRegistryNumber] = useState(foundation.registryNumber);
+  const [founders, setFounders] = useState<string[]>(foundation.founders);
+  const [chairman, setChairman] = useState(foundation.chairman);
+  const [contactPerson, setContactPerson] = useState(foundation.contactPerson);
+  const [foundationEmail, setFoundationEmail] = useState(foundation.email);
 
   // Principal
   const [principalName, setPrincipalName] = useState(profile.principal.name);
@@ -44,6 +54,13 @@ export default function AdminOrgProfilePage() {
     setAlumniCount(profile.alumniCount);
     setHafizCount(profile.hafizCount);
     setAboutImage(profile.aboutImageUrl ?? "");
+    const f = profile.foundation ?? DEFAULT_FOUNDATION;
+    setSkNumber(f.skNumber);
+    setRegistryNumber(f.registryNumber);
+    setFounders(f.founders);
+    setChairman(f.chairman);
+    setContactPerson(f.contactPerson);
+    setFoundationEmail(f.email);
     setPrincipalName(profile.principal.name);
     setPrincipalTitle(profile.principal.title);
     setPrincipalPhoto(profile.principal.photoUrl);
@@ -64,6 +81,14 @@ export default function AdminOrgProfilePage() {
         alumniCount: Number(alumniCount),
         hafizCount: Number(hafizCount),
         aboutImageUrl: aboutImage,
+        foundation: {
+          skNumber,
+          registryNumber,
+          founders: founders.filter((n) => n.trim() !== ""),
+          chairman,
+          contactPerson,
+          email: foundationEmail,
+        },
         principal: {
           name: principalName,
           title: principalTitle,
@@ -162,6 +187,84 @@ export default function AdminOrgProfilePage() {
                 onChange={(e) => setHafizCount(Number(e.target.value))}
               />
             </div>
+          </div>
+        </Card>
+
+        {/* Data Yayasan & Legalitas */}
+        <Card className="p-6 space-y-6">
+          <h3 className="text-base font-semibold text-foreground">
+            Data Yayasan & Legalitas
+          </h3>
+          <p className="text-xs text-muted-foreground">
+            Tampil pada seksi &quot;Data &amp; Legalitas Yayasan&quot; di halaman /tentang-kami.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Input
+              label="Nomor SK Kemenkumham RI"
+              value={skNumber}
+              onChange={(e) => setSkNumber(e.target.value)}
+            />
+            <Input
+              label="Nomor Induk Yayasan"
+              value={registryNumber}
+              onChange={(e) => setRegistryNumber(e.target.value)}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Input
+              label="Ketua Yayasan"
+              value={chairman}
+              onChange={(e) => setChairman(e.target.value)}
+            />
+            <Input
+              label="Contact Person Yayasan"
+              value={contactPerson}
+              onChange={(e) => setContactPerson(e.target.value)}
+            />
+          </div>
+
+          <Input
+            label="Email Resmi Yayasan"
+            type="email"
+            value={foundationEmail}
+            onChange={(e) => setFoundationEmail(e.target.value)}
+          />
+
+          <div className="space-y-3">
+            <span className="text-xs font-medium text-muted-foreground block">
+              Pendiri Yayasan
+            </span>
+            {founders.map((founder, idx) => (
+              <div key={idx} className="flex items-start gap-2">
+                <Input
+                  aria-label={`Nama pendiri ${idx + 1}`}
+                  value={founder}
+                  onChange={(e) =>
+                    setFounders(founders.map((f, i) => (i === idx ? e.target.value : f)))
+                  }
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  aria-label={`Hapus pendiri ${idx + 1}`}
+                  onClick={() => setFounders(founders.filter((_, i) => i !== idx))}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setFounders([...founders, ""])}
+            >
+              <Plus className="h-4 w-4" />
+              Tambah Pendiri
+            </Button>
           </div>
         </Card>
 

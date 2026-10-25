@@ -64,6 +64,7 @@ export async function PUT(request: Request) {
     if (body.hero) await sql`UPDATE school_profile SET hero = ${JSON.stringify(body.hero)}::jsonb WHERE id = 'profile-yazzaka'`;
     if (body.values) await sql`UPDATE school_profile SET values = ${JSON.stringify(body.values)}::jsonb WHERE id = 'profile-yazzaka'`;
     if (body.branding) await sql`UPDATE school_profile SET branding = ${JSON.stringify(body.branding)}::jsonb WHERE id = 'profile-yazzaka'`;
+    if (body.foundation) await sql`UPDATE school_profile SET foundation = ${JSON.stringify(body.foundation)}::jsonb WHERE id = 'profile-yazzaka'`;
 
     // Re-fetch to get complete updated row
     const finalResult = await sql`SELECT * FROM school_profile WHERE id = 'profile-yazzaka' LIMIT 1`;

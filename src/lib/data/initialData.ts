@@ -1,6 +1,7 @@
 import {
   SchoolProfile,
   HeroContent,
+  FoundationData,
   Program,
   Achievement,
   Article,
@@ -25,6 +26,18 @@ export const DEFAULT_HERO: HeroContent = {
   imageUrl: "",
   badges: ["Terdaftar Resmi Kemenkumham RI", "Tahfiz 30 Juz Bersanad", "Bahasa Arab & Inggris 24 Jam"],
   gallery: [],
+};
+
+// Konten default "Data & Legalitas Yayasan" (halaman /tentang-kami). Bersumber
+// dari halaman resmi https://yazzakkaaceh.org/data-yayasan/ dan dipakai sebagai
+// fallback bila school_profile.foundation belum diisi dari CMS.
+export const DEFAULT_FOUNDATION: FoundationData = {
+  skNumber: "AHU-0005614.AH.01.04. Tahun 2022",
+  registryNumber: "AZ 1871",
+  founders: ["Siti Ruhayya, Lc.", "Munzir"],
+  chairman: "Dr. Amri Fatmi, Lc., M.A.",
+  contactPerson: "+62 853-6299-9090",
+  email: "yayasanbinaimanakhlakyazzakka@gmail.com",
 };
 
 export const initialSchoolProfile: SchoolProfile = {
@@ -64,6 +77,7 @@ export const initialSchoolProfile: SchoolProfile = {
     "Membangun ketahanan keluarga melalui pendidikan keislaman dan pemberdayaan ekonomi.",
   ],
   hero: DEFAULT_HERO,
+  foundation: DEFAULT_FOUNDATION,
   values: [
     {
       title: "Iman & Akidah (Shahihah)",
