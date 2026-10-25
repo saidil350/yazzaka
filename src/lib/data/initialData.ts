@@ -8,7 +8,6 @@ import {
   MediaItem,
   OrganizationMember,
   Testimonial,
-  AdmissionInfo,
   ContactMessage,
   WebsiteSettings,
   User,
@@ -117,36 +116,6 @@ export const initialOrganization: OrganizationMember[] = [];
 // Testimoni nyata diisi via CMS /admin/testimoni.
 export const initialTestimonials: Testimonial[] = [];
 
-// Fallback PPDB — placeholder jujur (2026-10-23): angka biaya, jadwal, dan FAQ
-// fiktif dihapus. Konten nyata diisi via CMS /admin/content/pendaftaran.
-export const initialAdmissionInfo: AdmissionInfo = {
-  periodName: "Penerimaan Santri Baru",
-  academicYear: "",
-  isOpen: true,
-  startDate: "",
-  endDate: "",
-  hideFormWhenClosed: true,
-  closedMessage: "Pendaftaran santri baru untuk periode ini sedang ditutup. Untuk informasi jadwal gelombang berikutnya atau konsultasi langsung, silakan hubungi sekretariat PPDB kami melalui WhatsApp.",
-  showHeaderCta: true,
-  showHeroCta: true,
-  registrationUrl: "/pendaftaran",
-  consultationWhatsapp: "6285362999090",
-  timeline: [],
-  requirements: [
-    "Informasi persyaratan berkas akan diumumkan oleh panitia PPDB — silakan hubungi via WhatsApp.",
-  ],
-  fees: [
-    {
-      name: "Rincian biaya PPDB",
-      amount: 0,
-      category: "Menyusul",
-      unit: "Umum (Semua Unit)",
-      notes: "Informasi biaya akan diumumkan oleh panitia — silakan hubungi panitia PPDB via WhatsApp.",
-    },
-  ],
-  faqs: [],
-};
-
 export const initialContactMessages: ContactMessage[] = [
   {
     id: "msg-1",
@@ -193,13 +162,11 @@ export const initialWebsiteSettings: WebsiteSettings = {
       { label: "Berita", href: "/berita" },
       { label: "Agenda", href: "/agenda" },
       { label: "Galeri", href: "/galeri" },
-      { label: "Pendaftaran", href: "/pendaftaran" },
       { label: "Kontak", href: "/kontak" },
     ],
     footerLinks: [
       { label: "Profil Sekolah", href: "/tentang-kami" },
       { label: "Program Unggulan", href: "/program" },
-      { label: "Brosur & Biaya PPDB", href: "/pendaftaran" },
       { label: "Berita & Pengumuman", href: "/berita" },
       { label: "Hubungi Kami", href: "/kontak" },
     ],
@@ -227,6 +194,7 @@ export const initialUsers: User[] = [
 
 export const initialSections: PageSectionConfig[] = [
   { id: "sec-1", key: "hero", title: "Hero Banner", subtitle: "Visual utama dan pesan pimpinan", isEnabled: true, orderIndex: 1 },
+  { id: "sec-10", key: "news_carousel", title: "Berita Unggulan", subtitle: "Karousel warta pilihan pesantren", isEnabled: true, orderIndex: 2 },
   { id: "sec-2", key: "stats", title: "Statistik Kredibilitas", subtitle: "Angka kunci akreditasi & capaian", isEnabled: true, orderIndex: 2 },
   { id: "sec-3", key: "about", title: "Sambutan & Profil", subtitle: "Editorial pengenalan sekolah", isEnabled: true, orderIndex: 3 },
   { id: "sec-4", key: "programs", title: "Program Unggulan", subtitle: "Daftar kurikulum akademik & tahfiz", isEnabled: true, orderIndex: 4 },
@@ -234,6 +202,5 @@ export const initialSections: PageSectionConfig[] = [
   { id: "sec-6", key: "berita", title: "Warta & Berita", subtitle: "Artikel dan kabar terkini sekolah", isEnabled: true, orderIndex: 6 },
   { id: "sec-7", key: "achievements", title: "Prestasi Siswa", subtitle: "Catatan kejuaraan tingkat nasional", isEnabled: false, orderIndex: 7 },
   { id: "sec-8", key: "testimonials", title: "Testimoni", subtitle: "Kesan wali murid dan kiprah alumni", isEnabled: true, orderIndex: 8 },
-  { id: "sec-9", key: "admission_cta", title: "Banner Konversi PPDB", subtitle: "Ajakan mendaftar siswa baru", isEnabled: true, orderIndex: 9 },
   { id: "sec-team", key: "organization", title: "Pimpinan & Dewan Asatidz", subtitle: "Pendidik berdedikasi tinggi yang memadukan kedalaman tradisi keilmuan Islam dan kompetensi sains modern.", isEnabled: true, orderIndex: 10 },
 ];

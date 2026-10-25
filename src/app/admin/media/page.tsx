@@ -272,7 +272,6 @@ export default function AdminMediaPage() {
               <option value="Galeri">Galeri</option>
               <option value="Fasilitas">Fasilitas</option>
               <option value="Kegiatan">Kegiatan</option>
-              <option value="Dokumen PPDB">Dokumen PPDB</option>
               <option value="Banner">Banner</option>
             </Select>
           </div>

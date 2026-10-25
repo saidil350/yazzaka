@@ -16,7 +16,6 @@ import {
   ExternalLink,
   Globe,
   Users,
-  UserPlus,
   Newspaper,
   Quote,
 } from "lucide-react";
@@ -56,7 +55,6 @@ export default function AdminDashboardOverview() {
     sections,
     messages,
     articles,
-    admission,
     toggleSection,
   } = useSchoolData();
   const { role } = useAuth();
@@ -69,14 +67,6 @@ export default function AdminDashboardOverview() {
 
   // KPI Utama yang secara langsung terhubung ke Landing Page
   const landingKpis = [
-    {
-      title: "Penerimaan Santri (PPDB)",
-      value: admission.isOpen ? "Aktif" : "Tutup",
-      unit: admission.academicYear,
-      desc: admission.periodName,
-      icon: UserPlus,
-      href: "/admin/content/pendaftaran",
-    },
     {
       title: "Berita Terpublikasi",
       value: articles.length,
@@ -97,13 +87,6 @@ export default function AdminDashboardOverview() {
 
   // Modul Pengeditan Cepat Landing Page
   const landingModules = [
-    {
-      title: "Penerimaan Santri (PPDB)",
-      desc: "Gelombang pendaftaran, tahun ajaran, rincian biaya, dan FAQ.",
-      href: "/admin/content/pendaftaran",
-      icon: UserPlus,
-      badge: "Seksi PPDB",
-    },
     {
       title: "Pimpinan & Dewan Asatidz",
       desc: "Profil pimpinan, kepala sekolah, asatidz, kualifikasi ijazah, dan foto.",
@@ -134,7 +117,7 @@ export default function AdminDashboardOverview() {
     },
     {
       title: "Kontak & WhatsApp Hotline",
-      desc: "Nomor WhatsApp pendaftaran, email, alamat maps, dan media sosial.",
+      desc: "Nomor WhatsApp, email, alamat maps, dan media sosial.",
       href: "/admin/settings/contact",
       icon: PhoneCall,
       badge: "Header & Footer",
@@ -159,7 +142,7 @@ export default function AdminDashboardOverview() {
             Dashboard Ikhtisar {profile.name}
           </h1>
           <p className="text-sm text-muted-foreground max-w-2xl leading-relaxed">
-            Kelola visibilitas seksi, perbarui konten landing page secara langsung, dan tindak lanjuti pesan konsultasi calon santri baru.
+            Kelola visibilitas seksi, perbarui konten landing page secara langsung, dan tindak lanjuti pesan masuk dari formulir kontak.
           </p>
         </div>
 
@@ -200,10 +183,10 @@ export default function AdminDashboardOverview() {
             <MessageSquare aria-hidden="true" />
             <div className="min-w-0">
               <AlertTitle className="col-start-auto">
-                Terdapat {unreadMessages.length} pesan konsultasi pendaftaran baru
+                Terdapat {unreadMessages.length} pesan masuk baru
               </AlertTitle>
               <AlertDescription className="col-start-auto">
-                Calon wali santri baru saja mengirimkan formulir pertanyaan melalui landing page.
+                Pengunjung baru saja mengirimkan pertanyaan melalui formulir kontak situs.
               </AlertDescription>
             </div>
           </div>
@@ -221,7 +204,7 @@ export default function AdminDashboardOverview() {
         <h2 id="kpi-section-heading" className="sr-only">
           Statistik Konten Landing Page
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {landingKpis.map((kpi) => {
             const Icon = kpi.icon;
             return (
@@ -322,7 +305,7 @@ export default function AdminDashboardOverview() {
               <div className="space-y-1.5">
                 <CardTitle>Pesan Konsultasi Masuk</CardTitle>
                 <CardDescription>
-                  Leads pertanyaan calon wali santri dari formulir kontak publik.
+                  Pertanyaan pengunjung dari formulir kontak publik.
                 </CardDescription>
               </div>
 
@@ -363,7 +346,7 @@ export default function AdminDashboardOverview() {
                           )}
                         </div>
                         <p className="text-sm text-foreground truncate">
-                          {msg.subject || "Konsultasi Santri Baru"}
+                          {msg.subject || "Pertanyaan Umum"}
                         </p>
                         <p className="text-xs text-muted-foreground truncate">
                           {msg.message}

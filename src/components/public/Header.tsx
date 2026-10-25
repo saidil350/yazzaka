@@ -10,7 +10,6 @@ import {
   Menu,
   X,
   Phone,
-  ArrowRight,
   Sparkles,
   ChevronDown,
   Image as ImageIcon,
@@ -21,7 +20,6 @@ import {
   Award,
   Globe,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 interface NavLinkItem {
@@ -63,7 +61,7 @@ const quickUnits = [
 ];
 
 export function Header() {
-  const { profile, admission } = useSchoolData();
+  const { profile } = useSchoolData();
   const pathname = usePathname();
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -182,28 +180,13 @@ export function Header() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between text-xs">
           <div className="flex items-center gap-2.5">
-            {admission.isOpen ? (
-              <Badge variant="secondary" className="gap-1.5">
-                <Sparkles className="h-3 w-3 animate-spin" style={{ animationDuration: "6s" }} />
-                PPDB {admission.academicYear ? `${admission.academicYear} ` : ""}Dibuka
-              </Badge>
-            ) : (
-              <Badge variant="secondary" className="gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
-                PPDB {admission.academicYear ? `${admission.academicYear} ` : ""}Ditutup
-              </Badge>
-            )}
-            <span className="hidden md:inline text-white/30">·</span>
-            <span className="hidden md:inline text-stone-300 font-medium text-[11px]">
-              {admission.isOpen ? "Informasi & Pendaftaran Santri / Siswa Baru" : "Informasi Jadwal & Persyaratan PPDB"}
+            <span className="hidden md:inline-flex items-center gap-1.5 text-stone-300 font-medium text-[11px]">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              Akreditasi {profile.accreditation} · SK Kemenkumham {profile.npsn}
             </span>
           </div>
 
           <div className="flex items-center gap-3 text-stone-300">
-            <span className="hidden lg:inline-flex items-center gap-1.5 font-medium text-[11px]">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              Akreditasi {profile.accreditation} · SK Kemenkumham {profile.npsn}
-            </span>
             <a
               href={`https://wa.me/${profile.whatsapp}`}
               target="_blank"
@@ -220,10 +203,10 @@ export function Header() {
       {/* ── Main Sticky Header ──────── */}
       <header
         className={[
-          "sticky top-0 z-40 backdrop-blur-md transition-all duration-200",
+          "sticky top-0 z-40 transition-all duration-200",
           isScrolled
-            ? "bg-background/95 shadow-[0_4px_20px_rgba(30,35,48,0.06)] border-b border-[#E8E2D8]"
-            : "bg-background/90 border-b border-[#E8E2D8]/80",
+            ? "bg-background shadow-xs border-b border-[#E8E2D8]"
+            : "bg-background border-b border-[#E8E2D8]",
         ].join(" ")}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
@@ -247,7 +230,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Structured Navigation (Clean & Ergonomic) */}
-          <nav aria-label="Navigasi utama" className="hidden lg:flex items-center gap-1 bg-[#F3EFE6]/90 p-1 rounded-full border border-[#E8E2D8]">
+          <nav aria-label="Navigasi utama" className="hidden lg:flex items-center gap-1 bg-[#F3EFE6] p-1 rounded-full border border-[#E8E2D8]">
             {primaryNavLinks.map((link) => {
               const active = isLinkActive(link);
               return (
@@ -259,8 +242,8 @@ export function Header() {
                   className={[
                     "px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 whitespace-nowrap",
                     active
-                      ? "bg-white text-yazzaka-teal-dark shadow-xs"
-                      : "text-stone-600 hover:bg-white/60",
+                      ? "bg-white text-stone-600 shadow-xs"
+                      : "text-stone-600 hover:bg-white",
                   ].join(" ")}
                 >
                   {link.label}
@@ -278,14 +261,14 @@ export function Header() {
                 className={[
                   "px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 whitespace-nowrap flex items-center gap-1 cursor-pointer",
                   isSecondaryActive || dropdownOpen
-                    ? "bg-white text-yazzaka-teal-dark shadow-xs"
-                    : "text-stone-600 hover:bg-white/60",
+                    ? "bg-white text-stone-600 shadow-xs"
+                    : "text-stone-600 hover:bg-white",
                 ].join(" ")}
               >
                 <span>Informasi</span>
                 <ChevronDown
                   className={`h-3.5 w-3.5 transition-transform duration-200 ${
-                    dropdownOpen ? "rotate-180 text-yazzaka-teal-dark" : "text-stone-400"
+                    dropdownOpen ? "rotate-180 text-stone-600" : "text-stone-400"
                   }`}
                 />
               </button>
@@ -305,13 +288,13 @@ export function Header() {
                           className={[
                             "flex items-start gap-2.5 p-2.5 rounded-xl transition-all",
                             isCurrent
-                              ? "bg-yazzaka-teal-soft text-yazzaka-teal-dark"
+                              ? "bg-muted text-[#1E2330]"
                               : "text-[#1E2330] hover:bg-muted/50",
                           ].join(" ")}
                         >
                           <div
                             className={`p-1.5 rounded-lg shrink-0 mt-0.5 ${
-                              isCurrent ? "bg-yazzaka-teal-dark text-white" : "bg-yazzaka-teal-soft text-yazzaka-teal-dark"
+                              isCurrent ? "bg-[#1E2330] text-white" : "bg-muted text-stone-600"
                             }`}
                           >
                             <Icon className="h-4 w-4" />
@@ -340,19 +323,6 @@ export function Header() {
 
           {/* Action CTA & Mobile Hamburger */}
           <div className="flex items-center gap-2.5 shrink-0">
-            {pathname !== "/pendaftaran" && admission.showHeaderCta && (
-              <Link href="/pendaftaran" className="hidden sm:inline-flex">
-                <Button
-                  variant={admission.isOpen ? "default" : "outline"}
-                  size="default"
-                  className="px-4 py-2 text-xs font-bold h-9"
-                >
-                  <span>{admission.isOpen ? "Daftar Sekarang" : "Info PPDB"}</span>
-                  <ArrowRight className="h-3.5 w-3.5 ml-1" />
-                </Button>
-              </Link>
-            )}
-
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -436,7 +406,7 @@ export function Header() {
                       className={[
                         "flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-bold transition-all",
                         active
-                          ? "bg-yazzaka-teal-dark text-white shadow-xs"
+                          ? "bg-[#1E2330] text-white shadow-xs"
                           : "text-stone-700 hover:bg-[#F3EFE6]",
                       ].join(" ")}
                     >
@@ -462,11 +432,11 @@ export function Header() {
                       className={[
                         "flex items-center gap-2.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all",
                         isCurrent
-                          ? "bg-yazzaka-teal-soft text-yazzaka-teal-dark"
+                          ? "bg-muted text-[#1E2330]"
                           : "text-stone-700 hover:bg-[#F3EFE6]",
                       ].join(" ")}
                     >
-                      <Icon className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
+                      <Icon className="h-3.5 w-3.5 text-stone-600 shrink-0" />
                       <span className="truncate">{item.label}</span>
                     </Link>
                   );
@@ -499,14 +469,6 @@ export function Header() {
 
             {/* Drawer Footer Actions */}
             <div className="pt-3.5 border-t border-[#E8E2D8] space-y-2 shrink-0">
-              {admission.showHeaderCta && (
-                <Link href="/pendaftaran" onClick={() => setMobileMenuOpen(false)} className="block">
-                  <Button className="w-full justify-center font-bold h-10 text-xs">
-                    {admission.isOpen ? "Daftar Santri Baru (PPDB)" : "Informasi PPDB (Ditutup)"}
-                    <ArrowRight className="h-3.5 w-3.5 ml-1" />
-                  </Button>
-                </Link>
-              )}
               <a
                 href={`https://wa.me/${profile.whatsapp}?text=Assalamu'alaikum%20Admin%20Yazzakka`}
                 target="_blank"

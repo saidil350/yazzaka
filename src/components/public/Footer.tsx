@@ -163,9 +163,6 @@ export function Footer() {
                 <Link href="/tentang-kami">Profil &amp; Visi Yayasan</Link>
               </li>
               <li>
-                <Link href="/pendaftaran">Pendaftaran &amp; Admisi</Link>
-              </li>
-              <li>
                 <Link href="/berita">Warta &amp; Kajian Dakwah</Link>
               </li>
               <li>

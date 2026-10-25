@@ -6,7 +6,7 @@ import { useSchoolData } from "@/context/SchoolDataContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DEFAULT_HERO } from "@/lib/data/initialData";
-import { ArrowRight, BookOpen, Landmark, Image as ImageIcon } from "lucide-react";
+import { BookOpen, Landmark, Image as ImageIcon } from "lucide-react";
 
 /**
  * Satu kolom marquee vertikal untuk kolase galeri hero.
@@ -55,7 +55,7 @@ function CollageColumn({
 }
 
 export function HeroSection() {
-  const { profile, admission } = useSchoolData();
+  const { profile } = useSchoolData();
   // hero di DB bersifat parsial (JSONB default '{}') — gabungkan dengan default
   // agar seksi tetap tampil utuh sebelum konten diisi dari CMS.
   const hero = { ...DEFAULT_HERO, ...profile.hero };
@@ -100,17 +100,6 @@ export function HeroSection() {
 
             {/* Pill Action CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
-              {admission.showHeroCta && (
-                <Link href="/pendaftaran">
-                  <Button
-                    size="default"
-                    className="font-bold text-xs sm:text-sm h-11 px-6 w-full sm:w-auto shadow-sm"
-                  >
-                    <span>{admission.isOpen ? "Daftar Santri Baru" : "Informasi PPDB"}</span>
-                    <ArrowRight className="h-4 w-4 ml-1" />
-                  </Button>
-                </Link>
-              )}
               <Link href="/tentang-kami">
                 <Button
                   variant="outline"

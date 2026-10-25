@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowUp, ArrowDown } from "lucide-react";
 
 export default function AdminHomepageSectionsPage() {
-  const { sections, toggleSection, reorderSections, admission, updateAdmission } = useSchoolData();
+  const { sections, toggleSection, reorderSections } = useSchoolData();
   const { toast } = useToast();
 
   // Key yang komponen publiknya tidak pernah dirender di landing —
@@ -56,22 +56,6 @@ export default function AdminHomepageSectionsPage() {
       );
     } catch {
       toast(`Gagal mengubah status seksi "${sec.title}".`, "error");
-    }
-  };
-
-  const handleToggleCta = async (
-    field: "showHeaderCta" | "showHeroCta",
-    label: string,
-    next: boolean
-  ) => {
-    try {
-      await updateAdmission({ [field]: next });
-      toast(
-        `Tombol pendaftaran ${label} ${next ? "ditampilkan" : "disembunyikan"}!`,
-        "info"
-      );
-    } catch {
-      toast(`Gagal mengubah tampilan tombol pendaftaran ${label}.`, "error");
     }
   };
 
@@ -159,60 +143,6 @@ export default function AdminHomepageSectionsPage() {
             </div>
           </div>
         ))}
-      </Card>
-
-      {/* Tombol CTA Pendaftaran */}
-      <Card className="overflow-hidden divide-y divide-border">
-        <div className="p-4 sm:p-5">
-          <h2 className="font-semibold text-sm text-foreground">
-            Tombol Pendaftaran (CTA)
-          </h2>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            Tampilkan atau sembunyikan tombol pendaftaran di header situs dan hero beranda. Tombol di sidebar halaman detail program tidak terpengaruh.
-          </p>
-        </div>
-
-        <div className="p-4 sm:p-5 flex items-center justify-between gap-4">
-          <div>
-            <h3 className="font-semibold text-sm text-foreground">
-              Tombol Pendaftaran di Header Situs
-            </h3>
-            <p className="text-xs text-muted-foreground">
-              Tombol "Daftar Sekarang" di header situs (desktop) dan "Daftar Santri Baru (PPDB)" di menu mobile.
-            </p>
-          </div>
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="text-xs text-muted-foreground">
-              {admission.showHeaderCta ? "Aktif" : "Nonaktif"}
-            </span>
-            <Switch
-              checked={admission.showHeaderCta}
-              onCheckedChange={(next) => handleToggleCta("showHeaderCta", "di header", next)}
-              aria-label="Tampilkan tombol pendaftaran di header situs"
-            />
-          </div>
-        </div>
-
-        <div className="p-4 sm:p-5 flex items-center justify-between gap-4">
-          <div>
-            <h3 className="font-semibold text-sm text-foreground">
-              Tombol Pendaftaran di Hero Beranda
-            </h3>
-            <p className="text-xs text-muted-foreground">
-              Tombol "Daftar Santri Baru" pada seksi hero beranda. Tombol "Jelajahi Profil" tetap tampil.
-            </p>
-          </div>
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="text-xs text-muted-foreground">
-              {admission.showHeroCta ? "Aktif" : "Nonaktif"}
-            </span>
-            <Switch
-              checked={admission.showHeroCta}
-              onCheckedChange={(next) => handleToggleCta("showHeroCta", "di hero beranda", next)}
-              aria-label="Tampilkan tombol pendaftaran di hero beranda"
-            />
-          </div>
-        </div>
       </Card>
     </div>
   );

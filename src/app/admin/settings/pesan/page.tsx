@@ -123,7 +123,7 @@ export default function AdminContactInboxPage() {
             Kotak Pesan &amp; Konsultasi
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-2xl leading-relaxed">
-            Daftar pertanyaan publik dan permohonan konsultasi pendaftaran santri baru dari formulir website.
+            Daftar pertanyaan dan permohonan konsultasi publik dari formulir website.
           </p>
         </div>
 
