@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Modal } from "@/components/ui/modal";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
 import { Badge } from "@/components/ui/badge";
@@ -95,13 +96,17 @@ export default function AdminTestimonialsPage() {
     }
   };
 
-  const handleDelete = async (id: string, tName: string) => {
-    if (!confirm(`Hapus testimoni dari "${tName}"?`)) return;
+  const [testimonialToDelete, setTestimonialToDelete] = useState<Testimonial | null>(null);
+
+  const handleConfirmDelete = async () => {
+    if (!testimonialToDelete) return;
     try {
-      await deleteTestimonial(id);
+      await deleteTestimonial(testimonialToDelete.id);
       toast("Testimoni telah dihapus.", "info");
     } catch {
       toast("Gagal menghapus testimoni. Coba lagi.", "error");
+    } finally {
+      setTestimonialToDelete(null);
     }
   };
 
@@ -164,7 +169,7 @@ export default function AdminTestimonialsPage() {
                     <Button
                       variant="ghost"
                       size="icon-sm"
-                      onClick={() => handleDelete(test.id, test.name)}
+                      onClick={() => setTestimonialToDelete(test)}
                       className="text-destructive hover:text-destructive"
                       title="Hapus Testimoni"
                       aria-label="Hapus Testimoni"
@@ -272,6 +277,23 @@ export default function AdminTestimonialsPage() {
           />
         </form>
       </Modal>
+
+      {/* ── Konfirmasi Hapus Testimoni ────────────────── */}
+      <ConfirmDialog
+        isOpen={testimonialToDelete !== null}
+        onClose={() => setTestimonialToDelete(null)}
+        onConfirm={handleConfirmDelete}
+        title="Hapus Testimoni?"
+        description={
+          <>
+            Apakah Anda yakin ingin menghapus testimoni dari{" "}
+            <span className="font-medium text-foreground">
+              &ldquo;{testimonialToDelete?.name}&rdquo;
+            </span>
+            ? Tindakan ini tidak dapat dibatalkan.
+          </>
+        }
+      />
     </div>
   );
 }
