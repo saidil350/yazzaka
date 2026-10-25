@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Newsreader, Public_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { getSeoSettings, normalizeGoogleVerification } from "@/lib/seo-settings";
+import { Analytics } from "@vercel/analytics/next";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -79,6 +80,7 @@ export default function RootLayout({
         <Providers>
           {children}
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
