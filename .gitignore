@@ -47,3 +47,6 @@ next-env.d.ts
 
 # Unggahan fallback disk lokal (dilayani via /api/files)
 storage/
+
+# backup pra-migrasi production (jangan masuk Git)
+backups/

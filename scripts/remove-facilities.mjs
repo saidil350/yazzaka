@@ -47,12 +47,14 @@ async function run() {
   `;
   console.log("✓ Baris page_sections fasilitas dihapus");
 
-  await sql`DELETE FROM page_sections WHERE key = 'berita'`;
+  // Idempoten: baris 'berita' yang sudah ada (termasuk yang dinonaktifkan
+  // admin) TIDAK disentuh — hanya disisipkan bila key belum ada.
   await sql`
     INSERT INTO page_sections (id, key, title, subtitle, is_enabled, order_index)
     VALUES ('sec-berita', 'berita', 'Warta & Berita', 'Artikel dan kabar terkini sekolah', true, 6)
+    ON CONFLICT (key) DO NOTHING
   `;
-  console.log("✓ Baris page_sections 'berita' disisipkan (aktif, urutan 6)");
+  console.log("✓ Baris page_sections 'berita' tersedia (aktif, urutan 6) — dilewati bila sudah ada");
 
   const settings = await sql`SELECT id, navigation FROM website_settings LIMIT 1`;
   if (settings[0]?.navigation) {
