@@ -45,8 +45,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Unggahan fallback disk lokal (dilayani via /api/files)
-storage/
+# Unggahan fallback disk lokal (dilayani via /api/files) — hanya di root repo,
+# jangan jangkar kosong: pola "storage/" juga melarang src/lib/storage/ (kode).
+/storage/
 
 # backup pra-migrasi production (jangan masuk Git)
 backups/
