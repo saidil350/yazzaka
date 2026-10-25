@@ -66,7 +66,7 @@ export async function POST(request: Request) {
 
     const purpose = String(form.get("purpose") ?? "").trim().toLowerCase();
     const visibility = purpose === "image" ? "public" : "private";
-    const key = buildStorageKey(fileName);
+    const key = buildStorageKey(fileName, visibility);
     const buffer = new Uint8Array(await file.arrayBuffer());
     await putObject(key, buffer, validation.mimeType, visibility);
 
