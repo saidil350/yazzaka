@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, use, useState, useEffect, useCallback } from "react";
+import React, { createContext, use, useState, useEffect, useCallback, useRef } from "react";
 import {
   SchoolProfile,
   Program,
@@ -152,9 +152,19 @@ export function SchoolDataProvider({
     setLogs((prev) => [newLog, ...prev.slice(0, 49)]);
   }, []);
 
-  // Fetch dari API saat mount
+  // Guard sinkronisasi: cegah fetch ganda, dan jangan sinkron ulang saat
+  // ada penyimpanan seksi yang masih berjalan (bisa menimpa state optimistik).
+  const syncInFlightRef = useRef(false);
+  const lastSyncAtRef = useRef(0);
+  const sectionsSavingRef = useRef(false);
+
+  // Fetch dari API saat mount, lalu sinkron ulang saat tab kembali aktif agar
+  // perubahan CMS dari tab lain (mis. hide seksi beranda) tidak pernah
+  // menyisakan state basi yang masih merender seksi tersembunyi.
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData(isInitial = false) {
+      if (syncInFlightRef.current) return;
+      syncInFlightRef.current = true;
       try {
         // A cold database connection can briefly fail during local/dev and serverless starts.
         // Retry once and preserve the API status/body in the console for actionable diagnosis.
@@ -170,7 +180,7 @@ export function SchoolDataProvider({
           );
         }
         const data = await res.json();
-        
+
         if (data.profile) setProfile(data.profile);
         if (data.programs) setPrograms(data.programs);
         if (data.achievements) setAchievements(data.achievements);
@@ -183,16 +193,38 @@ export function SchoolDataProvider({
         if (data.users) setUsers(data.users);
         if (data.sections) setSections(data.sections);
         if (data.media) setMedia(data.media);
-        
-        addLog("Sync", "Berhasil mengambil data dari Neon Database");
+
+        lastSyncAtRef.current = Date.now();
+        if (isInitial) addLog("Sync", "Berhasil mengambil data dari Neon Database");
       } catch (err) {
-        console.error(err);
-        setError("Gagal sinkronisasi dengan database. Menggunakan data lokal (fallback).");
+        // Sinkron ulang yang gagal dibiarkan diam-diam memakai data terakhir;
+        // pesan fallback hanya untuk sinkronisasi awal yang benar-benar gagal.
+        if (isInitial) {
+          console.error(err);
+          setError("Gagal sinkronisasi dengan database. Menggunakan data lokal (fallback).");
+        } else {
+          console.error("Sinkronisasi ulang gagal, memakai data terakhir:", err);
+        }
       } finally {
-        setIsLoading(false);
+        syncInFlightRef.current = false;
+        if (isInitial) setIsLoading(false);
       }
     }
-    fetchData();
+
+    fetchData(true);
+
+    const syncOnVisible = () => {
+      if (typeof document === "undefined" || document.visibilityState !== "visible") return;
+      if (sectionsSavingRef.current) return;
+      if (Date.now() - lastSyncAtRef.current < 5000) return;
+      fetchData();
+    };
+    document.addEventListener("visibilitychange", syncOnVisible);
+    window.addEventListener("focus", syncOnVisible);
+    return () => {
+      document.removeEventListener("visibilitychange", syncOnVisible);
+      window.removeEventListener("focus", syncOnVisible);
+    };
   }, [addLog]);
 
   // Apply Live Brand CSS Variables
@@ -389,6 +421,7 @@ export function SchoolDataProvider({
   // dan rethrow agar caller bisa menampilkan toast gagal.
   const saveSections = async (updated: PageSectionConfig[], previous: PageSectionConfig[], logMessage: string) => {
     setSections(updated);
+    sectionsSavingRef.current = true;
     try {
       const res = await fetch('/api/sections', {
         method: 'PUT',
@@ -396,11 +429,14 @@ export function SchoolDataProvider({
         body: JSON.stringify({ sections: updated }),
       });
       if (!res.ok) throw new Error(`API Error: ${res.status}`);
+      lastSyncAtRef.current = Date.now();
       addLog("Update", logMessage);
     } catch (err) {
       setSections(previous); // rollback optimistic
       console.error("Gagal menyimpan konfigurasi seksi:", err);
       throw err;
+    } finally {
+      sectionsSavingRef.current = false;
     }
   };
 

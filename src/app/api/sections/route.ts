@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { getDb } from "@/lib/db/neon";
+import { setLastKnownGoodSections } from "@/lib/sections-server";
 import { PageSectionConfig } from "@/lib/types";
 
 /**
@@ -36,6 +37,12 @@ export async function PUT(request: Request) {
       )
     );
     await sql.transaction(operations);
+
+    // Segarkan fallback last-known-good dari DB langsung setelah tulis sukses,
+    // agar kegagalan DB sesaat setelahnya tidak memakai konfigurasi lama yang
+    // memunculkan kembali seksi yang baru disembunyikan.
+    const freshRows = await sql`SELECT * FROM page_sections ORDER BY order_index ASC`;
+    setLastKnownGoodSections(freshRows);
 
     // Visibilitas seksi kini ikut dirender server-side di layout root —
     // invalidasi cache ISR agar perubahan toggle langsung tayang.
