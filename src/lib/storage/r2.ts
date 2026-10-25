@@ -10,33 +10,69 @@ import {
 import { slugify } from "@/lib/utils";
 
 /**
- * Lapisan penyimpanan berkas dengan dua backend:
- * - Cloudflare R2 (S3-compatible) bila kredensial R2_* lengkap — backend
- *   produksi agar berkas bertahan lintas deploy.
- * - Disk lokal <repo>/storage/uploads bila env UPLOAD_LOCAL_FALLBACK=1 dan
- *   R2 belum dikonfigurasi — untuk pengembangan lokal.
- * Tanpa keduanya, unggahan ditolak dengan pesan jelas (jangan pernah
- * berpura-pura berhasil).
+ * Lapisan penyimpanan berkas:
+ * - Cloudflare R2 saat kredensial R2_* lengkap.
+ * - Neon Object Storage saat AWS_ENDPOINT_URL_S3, AWS_ACCESS_KEY_ID,
+ *   AWS_SECRET_ACCESS_KEY, AWS_REGION, dan NEON_STORAGE_BUCKET tersedia.
+ * - Disk lokal hanya bila UPLOAD_LOCAL_FALLBACK=1 (pengembangan lokal).
+ *
+ * Neon memakai endpoint per-branch dan path-style addressing. Karena itu
+ * endpoint dan credential Neon wajib berasal dari branch yang sama dengan
+ * DATABASE_URL aplikasi (misalnya Vercel Preview branch staging).
  */
 
 export interface StorageConfig {
-  accountId: string;
+  endpoint: string;
+  region: string;
   accessKeyId: string;
   secretAccessKey: string;
   bucket: string;
   publicBaseUrl: string | null;
+  forcePathStyle: boolean;
 }
 
 export function getStorageConfig(): StorageConfig | null {
-  const accountId = process.env.R2_ACCOUNT_ID;
-  const accessKeyId = process.env.R2_ACCESS_KEY_ID;
-  const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
-  const bucket = process.env.R2_BUCKET;
-  if (!accountId || !accessKeyId || !secretAccessKey || !bucket) {
+  const r2AccountId = process.env.R2_ACCOUNT_ID;
+  const r2AccessKeyId = process.env.R2_ACCESS_KEY_ID;
+  const r2SecretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
+  const r2Bucket = process.env.R2_BUCKET;
+
+  if (r2AccountId && r2AccessKeyId && r2SecretAccessKey && r2Bucket) {
+    const publicBaseUrl =
+      process.env.R2_PUBLIC_BASE_URL?.replace(/\/+$/, "") || null;
+    return {
+      endpoint: `https://${r2AccountId}.r2.cloudflarestorage.com`,
+      region: "auto",
+      accessKeyId: r2AccessKeyId,
+      secretAccessKey: r2SecretAccessKey,
+      bucket: r2Bucket,
+      publicBaseUrl,
+      forcePathStyle: false,
+    };
+  }
+
+  const endpoint = process.env.AWS_ENDPOINT_URL_S3?.replace(/\/+$/, "");
+  const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+  const region = process.env.AWS_REGION;
+  const bucket = process.env.NEON_STORAGE_BUCKET;
+
+  if (!endpoint || !accessKeyId || !secretAccessKey || !region || !bucket) {
     return null;
   }
-  const publicBaseUrl = process.env.R2_PUBLIC_BASE_URL?.replace(/\/+$/, "") || null;
-  return { accountId, accessKeyId, secretAccessKey, bucket, publicBaseUrl };
+
+  // Bucket staging dikonfigurasi public_read. URL publik Neon berbentuk
+  // <branch endpoint>/<bucket>/<key>; objek privat tetap diambil oleh server
+  // sesudah route memvalidasi sesi dan visibility-nya.
+  return {
+    endpoint,
+    region,
+    accessKeyId,
+    secretAccessKey,
+    bucket,
+    publicBaseUrl: `${endpoint}/${encodeURIComponent(bucket)}`,
+    forcePathStyle: true,
+  };
 }
 
 /** Fallback disk lokal hanya aktif lewat env eksplisit (pengembangan lokal). */
@@ -63,13 +99,18 @@ function localPath(key: string): string | null {
 
 function getS3Client(config: StorageConfig): S3Client {
   return new S3Client({
-    region: "auto",
-    endpoint: `https://${config.accountId}.r2.cloudflarestorage.com`,
+    region: config.region,
+    endpoint: config.endpoint,
+    forcePathStyle: config.forcePathStyle,
     credentials: {
       accessKeyId: config.accessKeyId,
       secretAccessKey: config.secretAccessKey,
     },
   });
+}
+
+function encodeStorageKey(key: string): string {
+  return key.split("/").map((part) => encodeURIComponent(part)).join("/");
 }
 
 export async function putObject(
@@ -101,7 +142,11 @@ export async function putObject(
 
 export async function getObject(
   key: string
-): Promise<{ body: ReadableStream<Uint8Array>; contentType: string | null; contentLength: number | null }> {
+): Promise<{
+  body: ReadableStream<Uint8Array>;
+  contentType: string | null;
+  contentLength: number | null;
+}> {
   const config = getStorageConfig();
   if (config) {
     const client = getS3Client(config);
@@ -144,16 +189,16 @@ export async function deleteObject(key: string): Promise<void> {
   await fs.rm(full, { force: true });
 }
 
-/** URL publik langsung dari R2 (hanya untuk berkas visibility public). */
+/** URL publik langsung dari R2/Neon (hanya untuk berkas visibility public). */
 export function publicUrl(key: string): string | null {
   const config = getStorageConfig();
   if (!config?.publicBaseUrl) return null;
-  return `${config.publicBaseUrl}/${key}`;
+  return `${config.publicBaseUrl}/${encodeStorageKey(key)}`;
 }
 
 /**
  * URL terbaik untuk menampilkan berkas.
- * - public + publicBaseUrl tersedia → langsung dari R2 (hemat hit server).
+ * - public + base URL tersedia → langsung dari bucket publik.
  * - selain itu → /api/files/<key> (streaming server, cek visibility).
  */
 export function resolveMediaUrl(key: string, visibility: string): string {
@@ -161,7 +206,7 @@ export function resolveMediaUrl(key: string, visibility: string): string {
     const direct = publicUrl(key);
     if (direct) return direct;
   }
-  return `/api/files/${key}`;
+  return `/api/files/${encodeStorageKey(key)}`;
 }
 
 /** Batas ukuran dapat dikonfigurasi lewat env (default 5 MB / 10 MB). */
