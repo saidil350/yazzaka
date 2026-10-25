@@ -3,6 +3,13 @@ import { Plus_Jakarta_Sans, Newsreader, Public_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { getSeoSettings, normalizeGoogleVerification } from "@/lib/seo-settings";
+import {
+  buildOrganizationJsonLd,
+  buildWebSiteJsonLd,
+  getOrgFacts,
+  getSiteUrl,
+  JsonLd,
+} from "@/lib/seo/structured-data";
 import { getServerSections } from "@/lib/sections-server";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -34,8 +41,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(siteUrl),
-    title: seo.siteTitle,
+    title: {
+      default: seo.siteTitle,
+      template: "%s | Yazzakka Aceh",
+    },
     description: seo.metaDescription,
+    alternates: { canonical: "/" },
     icons: {
       icon: [
         { url: "/logo-Favicon.png", type: "image/png" },
@@ -70,6 +81,11 @@ export default async function RootLayout({
   // sudah benar di HTML pertama — tidak menunggu fetch client.
   const initialSections = await getServerSections();
 
+  // Structured data organisasi — sekali per halaman, sumber school_profile.
+  const facts = await getOrgFacts();
+  const orgJsonLd = buildOrganizationJsonLd(facts);
+  const siteJsonLd = buildWebSiteJsonLd(facts);
+
   return (
     <html
       lang="id"
@@ -81,6 +97,8 @@ export default async function RootLayout({
         className="min-h-screen bg-background text-foreground antialiased"
         suppressHydrationWarning
       >
+        <JsonLd data={orgJsonLd} />
+        <JsonLd data={siteJsonLd} />
         <Providers initialSections={initialSections}>
           {children}
         </Providers>

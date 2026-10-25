@@ -14,6 +14,12 @@ import { Footer } from "@/components/public/Footer";
 import { RenderDoc } from "@/components/news/render-doc";
 import { getArticleBySlug, getAttachments } from "@/lib/news/service";
 import { getSchoolProfile } from "@/lib/school-profile";
+import {
+  buildArticleJsonLd,
+  buildBreadcrumbJsonLd,
+  getSiteUrl,
+  JsonLd,
+} from "@/lib/seo/structured-data";
 import { formatDateIndonesian } from "@/lib/utils";
 
 type Params = Promise<{ slug: string }>;
@@ -70,8 +76,35 @@ export default async function BeritaDetailPage({ params }: { params: Params }) {
 
   const attachments = await getAttachments(article.id);
 
+  const [profile] = await Promise.all([getSchoolProfile()]);
+  const schoolName = profile?.name || "Yazzakka";
+  const articleUrl = `${getSiteUrl()}/berita/${article.slug}`;
+  const articleJsonLd = buildArticleJsonLd({
+    title: article.title,
+    description:
+      article.seoDescription ||
+      article.excerpt ||
+      (article.content ? article.content.slice(0, 160) : ""),
+    image: article.coverImage
+      ? article.coverImage.startsWith("http")
+        ? article.coverImage
+        : `${getSiteUrl()}${article.coverImage}`
+      : null,
+    publishedAt: article.publishedAt || article.publishedDate,
+    updatedAt: article.updatedAt,
+    url: articleUrl,
+    authorName: article.author || schoolName,
+  });
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: "Beranda", path: "/" },
+    { name: "Berita", path: "/berita" },
+    { name: article.title, path: `/berita/${article.slug}` },
+  ]);
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <JsonLd data={articleJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
       <Header />
       <main className="flex-1">
         <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
