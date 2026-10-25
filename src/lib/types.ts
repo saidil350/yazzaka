@@ -141,50 +141,6 @@ export interface Testimonial {
   isFeatured: boolean;
 }
 
-export interface AdmissionFeeItem {
-  name: string;
-  amount: number;
-  // Kategori bebas (diedit via CMS), bukan union tertutup — nilai yang
-  // tampil publik hanya sebagai teks badge/kolom tabel.
-  category: string;
-  // Satuan pendidikan tempat biaya berlaku (TPA, TKIT, dst.); kosong/legacy
-  // berarti Umum (semua unit) — lihat src/lib/admission-fees.ts.
-  unit?: string;
-  notes?: string;
-}
-
-export interface AdmissionTimelineStep {
-  phase: string;
-  dateRange: string;
-  description: string;
-  isCurrent: boolean;
-}
-
-export interface AdmissionFAQ {
-  id: string;
-  question: string;
-  answer: string;
-  category: "Pendaftaran" | "Biaya" | "Kehidupan Asrama" | "Akademik";
-}
-
-export interface AdmissionInfo {
-  periodName: string;
-  academicYear: string;
-  isOpen: boolean;
-  startDate?: string;
-  endDate?: string;
-  hideFormWhenClosed?: boolean;
-  closedMessage?: string;
-  showHeaderCta: boolean;
-  showHeroCta: boolean;
-  registrationUrl: string;
-  consultationWhatsapp: string;
-  timeline: AdmissionTimelineStep[];
-  requirements: string[];
-  fees: AdmissionFeeItem[];
-  faqs: AdmissionFAQ[];
-}
-
 export interface ContactMessage {
   id: string;
   name: string;

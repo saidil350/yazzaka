@@ -40,17 +40,6 @@ export const listOtherPublishedPrograms = cache(
   }
 );
 
-/** Status PPDB untuk label CTA di halaman detail program. */
-export const getAdmissionOpen = cache(async (): Promise<boolean> => {
-  try {
-    const sql = getDb();
-    const rows = await sql`SELECT is_open FROM admission_info LIMIT 1`;
-    return rows[0] ? Boolean(rows[0].is_open) : false;
-  } catch {
-    return false;
-  }
-});
-
 /** Kontak singkat profil untuk sidebar halaman program. */
 export interface ProgramPageProfile {
   name: string;

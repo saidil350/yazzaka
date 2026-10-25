@@ -30,7 +30,7 @@ export default function EventsPage() {
               Agenda &amp; Kegiatan Sekolah
             </h1>
             <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
-              Jadwal pelaksanaan penerimaan santri/siswa, seminar parenting, wisuda tahfiz, haflah khotmil Quran, dan kegiatan kesiswaan.
+              Jadwal seminar parenting, wisuda tahfiz, haflah khotmil Quran, dan kegiatan kesiswaan.
             </p>
           </div>
         </section>
@@ -106,16 +106,36 @@ export default function EventsPage() {
                     </div>
 
                     <div className="p-5 pt-0">
-                      <Link href="/pendaftaran" className="block">
-                        <Button
-                          variant="outline"
-                          size="default"
-                          className="w-full justify-between font-bold text-xs h-9"
-                        >
-                          <span>Informasi Pendaftaran</span>
-                          <ArrowRight className="h-3.5 w-3.5" />
-                        </Button>
-                      </Link>
+                      {evt.registrationUrl && (
+                        evt.registrationUrl.startsWith("http") ? (
+                          <a
+                            href={evt.registrationUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block"
+                          >
+                            <Button
+                              variant="outline"
+                              size="default"
+                              className="w-full justify-between font-bold text-xs h-9"
+                            >
+                              <span>Tautan Terkait</span>
+                              <ArrowRight className="h-3.5 w-3.5" />
+                            </Button>
+                          </a>
+                        ) : (
+                          <Link href={evt.registrationUrl} className="block">
+                            <Button
+                              variant="outline"
+                              size="default"
+                              className="w-full justify-between font-bold text-xs h-9"
+                            >
+                              <span>Tautan Terkait</span>
+                              <ArrowRight className="h-3.5 w-3.5" />
+                            </Button>
+                          </Link>
+                        )
+                      )}
                     </div>
                   </div>
                 ))}

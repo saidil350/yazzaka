@@ -169,28 +169,6 @@ async function migrate() {
   console.log("✓ testimonials");
 
   await sql`
-    CREATE TABLE IF NOT EXISTS admission_info (
-      id TEXT PRIMARY KEY DEFAULT 'admission-yazzaka',
-      period_name TEXT,
-      academic_year TEXT,
-      is_open BOOLEAN DEFAULT FALSE,
-      start_date TEXT,
-      end_date TEXT,
-      hide_form_when_closed BOOLEAN DEFAULT TRUE,
-      closed_message TEXT,
-      registration_url TEXT,
-      consultation_whatsapp TEXT,
-      timeline JSONB DEFAULT '[]',
-      requirements JSONB DEFAULT '[]',
-      fees JSONB DEFAULT '[]',
-      faqs JSONB DEFAULT '[]',
-      created_at TIMESTAMPTZ DEFAULT NOW(),
-      updated_at TIMESTAMPTZ DEFAULT NOW()
-    )
-  `;
-  console.log("✓ admission_info");
-
-  await sql`
     CREATE TABLE IF NOT EXISTS contact_messages (
       id TEXT PRIMARY KEY,
       name TEXT NOT NULL,
@@ -465,24 +443,6 @@ async function seed() {
       seo_title: "Pesantren Modern vs Tradisional: Panduan Lengkap",
       seo_description: "Perbandingan pesantren modern dan tradisional untuk membantu orang tua memilih.",
     },
-    {
-      id: "art-3",
-      slug: "pembukaan-ppdb-tahun-ajaran-2026-2027",
-      title: "Pengumuman Resmi: PPDB Yazzaka Tahun Ajaran 2026/2027 Telah Dibuka",
-      excerpt: "Yazzaka membuka pendaftaran peserta didik baru (PPDB) untuk tahun ajaran 2026/2027. Kuota terbatas, segera daftarkan putra-putri Anda.",
-      content: "Konten pengumuman PPDB lengkap.",
-      cover_image: "",
-      category: "Pengumuman",
-      tags: JSON.stringify(["PPDB", "Pendaftaran", "2026"]),
-      author: "Panitia PPDB Yazzaka",
-      author_role: "Divisi Penerimaan Santri Baru",
-      published_date: "2025-11-01",
-      read_time: "3 menit",
-      status: "published",
-      featured: false,
-      seo_title: "PPDB Yazzaka 2026/2027 Dibuka",
-      seo_description: "Informasi resmi pembukaan PPDB Yazzaka tahun ajaran 2026/2027.",
-    },
   ];
 
   for (const a of articles) {
@@ -492,11 +452,12 @@ async function seed() {
       ON CONFLICT (id) DO NOTHING
     `;
   }
-  console.log("✓ articles seeded (3 records)");
+  console.log("✓ articles seeded (2 records)");
 
   // === EVENTS ===
+  // Seed artikel pengumuman PPDB & event Open House PPDB dihapus 2026-10-25
+  // mengikuti penghapusan fitur pendaftaran (berita/agenda diisi via CMS).
   const events = [
-    { id: "evt-1", title: "Open House & Hari Informasi PPDB 2026/2027", description: "Kunjungi sekolah Yazzakka secara langsung, temui para pengajar, dan dapatkan informasi lengkap tentang program & biaya pendidikan.", date: "2025-12-07", time: "08:00 - 14:00 WIB", location: "Kompleks Utama Yazzakka, Sigli", category: "Penerimaan Siswa", cover_image: "", registration_url: "#daftar", status: "upcoming" },
     { id: "evt-2", title: "Seminar Parenting: Mendidik Generasi Hafiz di Era Digital", description: "Seminar bersama pakar pendidikan Islam dan psikolog anak tentang strategi mendidik anak hafiz Al-Qur'an yang adaptif di era digital.", date: "2025-11-22", time: "08:30 - 12:00 WIB", location: "Aula Utama Yayasan Yazzakka", category: "Seminar & Parenting", cover_image: "", registration_url: "#seminar", status: "upcoming" },
     { id: "evt-3", title: "Wisuda & Haflah Akhirussanah ke-12 Yazzaka", description: "Perayaan wisuda santri angkatan ke-12 disertai penampilan seni, pameran karya siswa, dan penyerahan ijazah.", date: "2025-06-15", time: "07:00 - 17:00 WIB", location: "Sekolah Yazzakka & Area Terbuka", category: "Wisuda & Pameran", cover_image: "", status: "completed" },
   ];
@@ -508,7 +469,7 @@ async function seed() {
       ON CONFLICT (id) DO NOTHING
     `;
   }
-  console.log("✓ events seeded (3 records)");
+  console.log("✓ events seeded (2 records)");
 
   // === TESTIMONIALS ===
   // Tidak ada seed — testimoni fiktif dihapus 2026-10-23. Isi via CMS.
@@ -524,26 +485,9 @@ async function seed() {
   console.log("✓ testimonials seeded (0 records — isi via CMS)");
 
   // === ADMISSION INFO ===
-  // Placeholder jujur (2026-10-23): biaya/jadwal/FAQ fiktif tidak di-seed.
-  // Isi konten PPDB nyata via CMS /admin/content/pendaftaran.
-  await sql`
-    INSERT INTO admission_info (
-      id, period_name, academic_year, is_open, registration_url, consultation_whatsapp,
-      timeline, requirements, fees, faqs
-    ) VALUES (
-      'admission-yazzaka',
-      'Penerimaan Santri Baru',
-      '',
-      true,
-      '/pendaftaran',
-      '6285362999090',
-      '[]',
-      '["Informasi persyaratan berkas akan diumumkan oleh panitia PPDB — silakan hubungi via WhatsApp."]',
-      '[{"name":"Rincian biaya PPDB","category":"Menyusul","amount":0,"notes":"Informasi biaya akan diumumkan oleh panitia — silakan hubungi panitia PPDB via WhatsApp."}]',
-      '[]'
-    ) ON CONFLICT (id) DO NOTHING
-  `;
-  console.log("✓ admission_info seeded (placeholder — isi biaya/jadwal nyata via CMS)");
+  // Fitur PPDB dihapus 2026-10-25 (situs fokus branding & berita).
+  // Tabel admission_info tidak lagi dibuat/di-seed; branch lama yang masih
+  // memilikinya boleh menyimpan datanya tanpa diakses kode.
 
   // === WEBSITE SETTINGS ===
   await sql`
@@ -570,7 +514,6 @@ async function seed() {
     { id: "sec-why", key: "why", title: "Mengapa Yazzaka", subtitle: "Keunggulan kompetitif sekolah", is_enabled: true, order_index: 5 },
     { id: "sec-news", key: "news", title: "Berita & Agenda", subtitle: "Info terbaru dari sekolah", is_enabled: true, order_index: 8 },
     { id: "sec-testimonials", key: "testimonials", title: "Testimoni", subtitle: "Kata wali murid & alumni", is_enabled: true, order_index: 9 },
-    { id: "sec-cta", key: "cta", title: "Ajakan Pendaftaran", subtitle: "Call to action pendaftaran PPDB", is_enabled: true, order_index: 10 },
   ];
 
   for (const s of sections) {

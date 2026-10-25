@@ -24,7 +24,7 @@
 |---|------|-------|------|----------------|------------|
 | 1 | Super Admin Yazzaka | `admin@yazzakka.sch.id` | `super_admin` | `***REMOVED***` | Akses penuh semua modul |
 | 2 | Editor Konten | `editor@yazzakka.sch.id` | `editor` | `***REMOVED***` | Konten saja, tidak bisa settings/organization |
-| 3 | Staf PPDB | `spmb@yazzakka.sch.id` | `admission_staff` | `***REMOVED***` | Konten + pesan masuk |
+| 3 | Staf PPDB | `spmb@yazzakka.sch.id` | `admission_staff` | `***REMOVED***` | **Usang (2026-10-25)** — fitur PPDB dihapus; akun masih bisa login tapi tidak ada modul PPDB lagi |
 
 ### Matriks Hak Akses (RBAC — divalidasi server-side di `src/proxy.ts`)
 

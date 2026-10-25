@@ -59,7 +59,7 @@ export default function AdminEventsPage() {
     setLocation("Kompleks Utama Yayasan Yazzakka");
     setCategory("Akademik");
     setCoverImage("");
-    setRegistrationUrl("/pendaftaran");
+    setRegistrationUrl("");
     setStatus("upcoming");
     setModalOpen(true);
   };
@@ -318,8 +318,8 @@ export default function AdminEventsPage() {
           />
 
           <Input
-            label="Tautan Pendaftaran (Opsional)"
-            placeholder="/pendaftaran atau https://..."
+            label="Tautan Terkait (Opsional)"
+            placeholder="https://... atau /berita"
             value={registrationUrl}
             onChange={(e) => setRegistrationUrl(e.target.value)}
           />

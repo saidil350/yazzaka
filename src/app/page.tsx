@@ -4,6 +4,7 @@ import React from "react";
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { HeroSection } from "@/components/public/HeroSection";
+import { NewsCarouselSection } from "@/components/public/NewsCarouselSection";
 import { TrustStats } from "@/components/public/TrustStats";
 import { EditorialAbout } from "@/components/public/EditorialAbout";
 import { ProgramsSection } from "@/components/public/ProgramsSection";
@@ -27,6 +28,7 @@ export default function HomePage() {
       <Header />
       <main className="flex-1">
         {isSectionEnabled("hero") && <HeroSection />}
+        {isSectionEnabled("news_carousel") && <NewsCarouselSection />}
         {isSectionEnabled("stats") && <TrustStats />}
         {isSectionEnabled("about") && <EditorialAbout />}
         {isSectionEnabled("programs") && <ProgramsSection />}

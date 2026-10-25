@@ -92,7 +92,6 @@ export function AdminSidebar({
         // Hero disimpan di school_profile via /api/profile — mutasi hanya
         // untuk super_admin (lihat ADMIN_ONLY_MUTATION_PREFIXES di src/proxy.ts).
         { label: "Hero Beranda", href: "/admin/content/hero", roles: ["super_admin"] },
-        { label: "Penerimaan Santri (PPDB)", href: "/admin/content/pendaftaran" },
         { label: "Program Pendidikan", href: "/admin/content/program" },
         { label: "Prestasi Santri", href: "/admin/content/pengumuman" },
         { label: "Agenda & Kegiatan", href: "/admin/content/kegiatan" },

@@ -59,9 +59,10 @@ async function migrate() {
   const hash = hashPassword(password);
 
   const users = [
-    { id: "cms-user-admin", name: "Super Admin Yazzaka", email: "admin@yazzakka.sch.id", role: "super_admin" },
-    { id: "cms-user-editor", name: "Editor Konten Yazzaka", email: "editor@yazzakka.sch.id", role: "editor" },
-    { id: "cms-user-ppdb", name: "Staf PPDB Yazzaka", email: "spmb@yazzakka.sch.id", role: "admission_staff" },
+    { id: "cms-user-admin", name: "Super Admin Yazzakka", email: "admin@yazzakka.sch.id", role: "super_admin" },
+    { id: "cms-user-editor", name: "Editor Konten Yazzakka", email: "editor@yazzakka.sch.id", role: "editor" },
+    // Akun "Staf PPDB" (admission_staff) tidak lagi di-seed sejak fitur PPDB
+    // dihapus 2026-10-25; baris lama di DB yang ada dibiarkan tanpa diakses.
   ];
 
   for (const u of users) {

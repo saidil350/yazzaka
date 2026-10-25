@@ -13,7 +13,6 @@ async function runAudit() {
     sql`SELECT count(*) as c FROM articles`,
     sql`SELECT count(*) as c FROM events`,
     sql`SELECT count(*) as c FROM testimonials`,
-    sql`SELECT count(*) as c FROM admission_info`,
     sql`SELECT count(*) as c FROM contact_messages`,
     sql`SELECT count(*) as c FROM website_settings`,
     sql`SELECT count(*) as c FROM organization_members`,
@@ -24,7 +23,7 @@ async function runAudit() {
 
   const names = [
     "school_profile", "programs", "achievements",
-    "articles", "events", "testimonials", "admission_info",
+    "articles", "events", "testimonials",
     "contact_messages", "website_settings", "organization_members",
     "users", "page_sections", "media_items"
   ];

@@ -75,7 +75,7 @@ export default function ContactPage() {
               Hubungi Yayasan Yazzakka
             </h1>
             <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
-              Kami siap melayani pertanyaan seputar pendaftaran santri/siswa, kunjungan ke sekolah, kemitraan dakwah/pendidikan, dan konsultasi program.
+              Kami siap melayani pertanyaan seputar kunjungan ke sekolah, kemitraan dakwah/pendidikan, dan konsultasi program.
             </p>
           </div>
         </section>

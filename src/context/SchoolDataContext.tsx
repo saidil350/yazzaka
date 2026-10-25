@@ -10,7 +10,6 @@ import {
   MediaItem,
   OrganizationMember,
   Testimonial,
-  AdmissionInfo,
   ContactMessage,
   WebsiteSettings,
   User,
@@ -27,7 +26,6 @@ import {
   initialMedia,
   initialOrganization,
   initialTestimonials,
-  initialAdmissionInfo,
   initialContactMessages,
   initialWebsiteSettings,
   initialUsers,
@@ -44,7 +42,6 @@ interface SchoolDataContextType {
   media: MediaItem[];
   organization: OrganizationMember[];
   testimonials: Testimonial[];
-  admission: AdmissionInfo;
   messages: ContactMessage[];
   settings: WebsiteSettings;
   users: User[];
@@ -87,8 +84,7 @@ interface SchoolDataContextType {
   updateTestimonial: (id: string, testimonial: Partial<Testimonial>) => Promise<void>;
   deleteTestimonial: (id: string) => Promise<void>;
 
-  // Admission & Settings
-  updateAdmission: (data: Partial<AdmissionInfo>) => Promise<void>;
+  // Settings
   updateSettings: (data: Partial<WebsiteSettings>) => Promise<void>;
 
   // Messages
@@ -120,7 +116,6 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
   const [media, setMedia] = useState<MediaItem[]>(initialMedia);
   const [organization, setOrganization] = useState<OrganizationMember[]>(initialOrganization);
   const [testimonials, setTestimonials] = useState<Testimonial[]>(initialTestimonials);
-  const [admission, setAdmission] = useState<AdmissionInfo>(initialAdmissionInfo);
   const [messages, setMessages] = useState<ContactMessage[]>(initialContactMessages);
   const [settings, setSettings] = useState<WebsiteSettings>(initialWebsiteSettings);
   const [users, setUsers] = useState<User[]>(initialUsers);
@@ -175,7 +170,6 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
         if (data.articles) setArticles(data.articles);
         if (data.events) setEvents(data.events);
         if (data.testimonials) setTestimonials(data.testimonials);
-        if (data.admission) setAdmission(data.admission);
         if (data.messages) setMessages(data.messages);
         if (data.settings) setSettings(data.settings);
         if (data.organization) setOrganization(data.organization);
@@ -321,12 +315,7 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
     setTestimonials(prev => prev.filter(t => t.id !== id));
   };
 
-  // Admission & Settings
-  const updateAdmission = async (data: Partial<AdmissionInfo>) => {
-    const updated = await apiCall('/api/admission', 'PUT', data);
-    setAdmission(updated);
-  };
-
+  // Settings
   const updateSettings = async (data: Partial<WebsiteSettings>) => {
     const updated = await apiCall('/api/settings', 'PUT', data);
     setSettings(updated);
@@ -428,7 +417,7 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
   return (    <SchoolDataContext.Provider
       value={{
         profile, programs, achievements, articles, events, media,
-        organization, testimonials, admission, messages, settings, users, sections, logs,
+        organization, testimonials, messages, settings, users, sections, logs,
         isLoading, error,
         updateProfile, updateBrandingColors,
         addProgram, updateProgram, deleteProgram,
@@ -437,7 +426,7 @@ export function SchoolDataProvider({ children }: { children: React.ReactNode }) 
         addMedia, deleteMedia,
         addMember, updateMember, deleteMember,
         addTestimonial, updateTestimonial, deleteTestimonial,
-        updateAdmission, updateSettings,
+        updateSettings,
         addContactMessage, updateMessageStatus, deleteMessage,
         toggleSection, reorderSections, updateSection,
         addUser, updateUserRole, deleteUser, refreshUsers,

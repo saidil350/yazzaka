@@ -34,7 +34,6 @@ export async function GET(request: Request) {
       articles,
       events,
       testimonials,
-      admissions,
       messages,
       settings,
       organization,
@@ -57,7 +56,6 @@ export async function GET(request: Request) {
           ORDER BY a.published_at DESC NULLS LAST, a.published_date DESC, a.created_at DESC`,
       sql`SELECT * FROM events ORDER BY date ASC`,
       sql`SELECT * FROM testimonials ORDER BY created_at ASC`,
-      sql`SELECT * FROM admission_info LIMIT 1`,
       isSuperAdmin
         ? sql`SELECT * FROM contact_messages ORDER BY created_at DESC`
         : Promise.resolve([] as Record<string, unknown>[]),
@@ -74,7 +72,6 @@ export async function GET(request: Request) {
     ]);
 
     const profile = profiles[0] ?? null;
-    const admission = admissions[0] ?? null;
     const websiteSettings = settings[0] ?? null;
 
     return NextResponse.json({
@@ -84,7 +81,6 @@ export async function GET(request: Request) {
       articles: articles.map(mapArticleRow),
       events: events.map(mapEvent),
       testimonials: testimonials.map(mapTestimonial),
-      admission: admission ? mapAdmission(admission) : null,
       messages: messages.map(mapMessage),
       settings: websiteSettings ? mapSettings(websiteSettings) : null,
       organization: organization.map(mapMember),
@@ -196,40 +192,6 @@ export function mapTestimonial(r: Record<string, unknown>) {
     graduationYear: r.graduation_year,
     childName: r.child_name,
     isFeatured: r.is_featured,
-  };
-}
-
-function ensureArray<T>(val: unknown): T[] {
-  if (!val) return [];
-  if (Array.isArray(val)) return val as T[];
-  if (typeof val === "string") {
-    try {
-      const parsed = JSON.parse(val);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
-  }
-  return [];
-}
-
-export function mapAdmission(r: Record<string, unknown>) {
-  return {
-    periodName: (r.period_name as string) || "",
-    academicYear: (r.academic_year as string) || "",
-    isOpen: Boolean(r.is_open),
-    startDate: (r.start_date as string) || "",
-    endDate: (r.end_date as string) || "",
-    hideFormWhenClosed: r.hide_form_when_closed !== undefined ? Boolean(r.hide_form_when_closed) : true,
-    closedMessage: (r.closed_message as string) || "",
-    showHeaderCta: r.show_header_cta !== undefined ? Boolean(r.show_header_cta) : true,
-    showHeroCta: r.show_hero_cta !== undefined ? Boolean(r.show_hero_cta) : true,
-    registrationUrl: (r.registration_url as string) || "",
-    consultationWhatsapp: (r.consultation_whatsapp as string) || "",
-    timeline: ensureArray(r.timeline),
-    requirements: ensureArray<string>(r.requirements),
-    fees: ensureArray(r.fees),
-    faqs: ensureArray(r.faqs),
   };
 }
 

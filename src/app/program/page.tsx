@@ -145,7 +145,7 @@ export default function ProgramsDirectoryPage() {
                         <div className="px-5 pb-5">
                           <div className="flex items-center justify-between gap-2 border-t border-border pt-4 text-sm font-semibold text-foreground">
                             <span>
-                              {isSpecialWakaf ? "Detail Wakaf & Masterplan" : "Rincian Kurikulum & Pendaftaran"}
+                              {isSpecialWakaf ? "Detail Wakaf & Masterplan" : "Rincian Kurikulum"}
                             </span>
                             <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
                           </div>
