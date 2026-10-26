@@ -8,10 +8,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ImageUpload } from "@/components/ui/image-upload";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Save } from "lucide-react";
 
 export default function AdminSEOSettingsPage() {
-  const { settings, updateSettings } = useSchoolData();
+  const { settings, updateSettings, isLoading } = useSchoolData();
   const { toast } = useToast();
 
   const [siteTitle, setSiteTitle] = useState(settings.siteTitle);
@@ -44,6 +45,32 @@ export default function AdminSEOSettingsPage() {
       toast("Gagal menyimpan pengaturan SEO. Coba lagi.", "error");
     }
   };
+
+  // Form hanya dipasang setelah data awal tiba — mencegah edit nilai fallback
+  // seed selama sinkronisasi DB berjalan (belt-and-braces dengan re-sync di atas).
+  if (isLoading) {
+    return (
+      <div className="max-w-4xl mx-auto space-y-8" aria-busy="true">
+        <div className="space-y-2">
+          <Skeleton className="h-3 w-44" />
+          <Skeleton className="h-8 w-80" />
+          <Skeleton className="h-3 w-full max-w-lg" />
+        </div>
+        <Card className="p-6 space-y-6">
+          <Skeleton className="h-5 w-40" />
+          <div className="space-y-4">
+            <Skeleton className="h-16" />
+            <Skeleton className="h-24" />
+            <Skeleton className="h-28" />
+            <Skeleton className="h-16" />
+          </div>
+          <div className="flex justify-end pt-4 border-t border-border">
+            <Skeleton className="h-9 w-44" />
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">

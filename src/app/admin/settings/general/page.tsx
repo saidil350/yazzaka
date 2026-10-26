@@ -6,10 +6,12 @@ import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Palette, Save, Check } from "lucide-react";
 
 export default function AdminGeneralSettingsPage() {
-  const { profile, updateProfile, updateBrandingColors } = useSchoolData();
+  const { profile, updateProfile, updateBrandingColors, isLoading } =
+    useSchoolData();
   const { toast } = useToast();
 
   const [name, setName] = useState(profile.name);
@@ -116,6 +118,46 @@ export default function AdminGeneralSettingsPage() {
       toast("Gagal menyimpan pengaturan branding. Coba lagi.", "error");
     }
   };
+
+  // Form hanya dipasang setelah data awal tiba — mencegah edit nilai fallback
+  // seed selama sinkronisasi DB berjalan (belt-and-braces dengan re-sync di atas).
+  if (isLoading) {
+    return (
+      <div className="max-w-4xl mx-auto space-y-8" aria-busy="true">
+        <div className="space-y-2">
+          <Skeleton className="h-3 w-52" />
+          <Skeleton className="h-8 w-88" />
+          <Skeleton className="h-3 w-full max-w-lg" />
+        </div>
+        <Card className="p-6 space-y-4">
+          <Skeleton className="h-4 w-72" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[0, 1, 2, 3].map((i) => (
+              <Skeleton key={i} className="h-20 rounded-lg" />
+            ))}
+          </div>
+        </Card>
+        <Card className="p-6 space-y-6">
+          <Skeleton className="h-5 w-64" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {[0, 1].map((i) => (
+              <div key={i} className="space-y-2">
+                <Skeleton className="h-3 w-52" />
+                <div className="flex items-center gap-3">
+                  <Skeleton className="h-11 w-14 rounded-md" />
+                  <Skeleton className="h-9 flex-1" />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="pt-4 border-t border-border space-y-4">
+            <Skeleton className="h-16" />
+            <Skeleton className="h-16" />
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">

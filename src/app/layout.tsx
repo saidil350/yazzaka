@@ -11,6 +11,7 @@ import {
   JsonLd,
 } from "@/lib/seo/structured-data";
 import { getServerSections } from "@/lib/sections-server";
+import { getServerHero } from "@/lib/school-profile";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -80,6 +81,10 @@ export default async function RootLayout({
   // Seksi dari DB ikut dirender awal agar status visibilitas (mis. topbar)
   // sudah benar di HTML pertama — tidak menunggu fetch client.
   const initialSections = await getServerSections();
+  // Kolase hero ikut dirender awal agar URL gambar sudah ada di HTML pertama
+  // dan browser mengunduhnya sejak awal — bukan menunggu fetch client lalu
+  // menampilkan empty-state.
+  const serverHero = await getServerHero();
 
   // Structured data organisasi — sekali per halaman, sumber school_profile.
   const facts = await getOrgFacts();
@@ -99,7 +104,7 @@ export default async function RootLayout({
       >
         <JsonLd data={orgJsonLd} />
         <JsonLd data={siteJsonLd} />
-        <Providers initialSections={initialSections}>
+        <Providers initialSections={initialSections} initialHero={serverHero}>
           {children}
         </Providers>
       </body>

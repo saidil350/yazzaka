@@ -8,11 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ImageUpload } from "@/components/ui/image-upload";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Save, Plus, Trash2 } from "lucide-react";
 import { DEFAULT_FOUNDATION } from "@/lib/data/initialData";
 
 export default function AdminOrgProfilePage() {
-  const { profile, updateProfile } = useSchoolData();
+  const { profile, updateProfile, isLoading } = useSchoolData();
   const { toast } = useToast();
 
   const [name, setName] = useState(profile.name);
@@ -101,6 +102,63 @@ export default function AdminOrgProfilePage() {
       toast("Gagal menyimpan profil. Perubahan tidak tersimpan — coba lagi.", "error");
     }
   };
+
+  // Form hanya dipasang setelah data awal tiba — mencegah admin menyunting
+  // nilai fallback seed selama sinkronisasi DB berjalan (belt-and-braces
+  // dengan efek re-sync profile di atas).
+  if (isLoading) {
+    return (
+      <div className="max-w-5xl mx-auto space-y-8" aria-busy="true">
+        <div className="space-y-2">
+          <Skeleton className="h-3 w-44" />
+          <Skeleton className="h-8 w-80" />
+          <Skeleton className="h-3 w-full max-w-lg" />
+        </div>
+        <Card className="p-6 space-y-6">
+          <Skeleton className="h-5 w-60" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Skeleton className="h-16" />
+            <Skeleton className="h-16" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Skeleton className="h-16" />
+            <Skeleton className="h-16" />
+            <Skeleton className="h-16" />
+          </div>
+          <div className="border-t border-border pt-4 space-y-4">
+            <Skeleton className="h-3 w-64" />
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <Skeleton className="h-16" />
+              <Skeleton className="h-16" />
+              <Skeleton className="h-16" />
+              <Skeleton className="h-16" />
+            </div>
+          </div>
+        </Card>
+        <Card className="p-6 space-y-6">
+          <Skeleton className="h-5 w-52" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Skeleton className="h-16" />
+            <Skeleton className="h-16" />
+          </div>
+          <Skeleton className="h-16 sm:w-2/3" />
+        </Card>
+        <Card className="p-6 space-y-6">
+          <Skeleton className="h-5 w-44" />
+          <Skeleton className="h-28" />
+        </Card>
+        <Card className="p-6 space-y-6">
+          <Skeleton className="h-5 w-56" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Skeleton className="h-16" />
+            <Skeleton className="h-16" />
+          </div>
+          <Skeleton className="h-28" />
+          <Skeleton className="h-28" />
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">

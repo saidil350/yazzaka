@@ -16,6 +16,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
 import { Select } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -26,7 +27,8 @@ import {
 } from "@/components/ui/table";
 
 export default function AdminEventsPage() {
-  const { events, addEvent, updateEvent, deleteEvent } = useSchoolData();
+  const { events, addEvent, updateEvent, deleteEvent, isLoading } =
+    useSchoolData();
   const { toast } = useToast();
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -158,7 +160,52 @@ export default function AdminEventsPage() {
 
       {/* Events Table */}
       <Card className="overflow-hidden">
-        {events.length === 0 ? (
+        {isLoading ? (
+          <div className="overflow-x-auto">
+            <Table className="text-left">
+              <TableHeader>
+                <tr>
+                  <TableHead className="p-4 sm:px-6">Nama Agenda &amp; Kategori</TableHead>
+                  <TableHead className="p-4 sm:px-6">Tanggal &amp; Waktu</TableHead>
+                  <TableHead className="p-4 sm:px-6">Lokasi</TableHead>
+                  <TableHead className="p-4 sm:px-6">Status</TableHead>
+                  <TableHead className="p-4 sm:px-6 text-right">Aksi</TableHead>
+                </tr>
+              </TableHeader>
+              <TableBody>
+                {[0, 1, 2, 3].map((i) => (
+                  <TableRow key={i}>
+                    <TableCell className="p-4 sm:px-6">
+                      <div className="space-y-1.5">
+                        <Skeleton className="h-3 w-20" />
+                        <Skeleton className="h-4 w-44" />
+                        <Skeleton className="h-3 w-56 max-w-full" />
+                      </div>
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6">
+                      <div className="space-y-1">
+                        <Skeleton className="h-3 w-24" />
+                        <Skeleton className="h-3 w-20" />
+                      </div>
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6">
+                      <Skeleton className="h-3 w-28" />
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6">
+                      <Skeleton className="h-5 w-20" />
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6">
+                      <div className="flex items-center justify-end gap-2">
+                        <Skeleton className="h-8 w-8" />
+                        <Skeleton className="h-8 w-8" />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        ) : events.length === 0 ? (
           <div className="p-8">
             <EmptyState
               icon={Calendar}

@@ -41,8 +41,13 @@ function CollageColumn({
                   <img
                     src={url}
                     alt={`${altBase} (${i + 1})`}
-                    className="w-full aspect-[4/3] object-cover"
-                    loading="lazy"
+                    className="w-full aspect-[4/3] object-cover bg-muted"
+                    // Dua gambar teratas tiap kolase ada di viewport awal —
+                    // muat eager berprioritas tinggi; sisanya (termasuk salinan
+                    // marquee) tetap lazy.
+                    loading={half === 0 && i < 2 ? "eager" : "lazy"}
+                    fetchPriority={half === 0 && i < 2 ? "high" : "auto"}
+                    decoding="async"
                   />
                 </div>
               </div>

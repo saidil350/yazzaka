@@ -29,6 +29,7 @@ import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -39,7 +40,8 @@ import {
 } from "@/components/ui/table";
 
 export default function AdminProgramsCrudPage() {
-  const { programs, addProgram, updateProgram, deleteProgram } = useSchoolData();
+  const { programs, addProgram, updateProgram, deleteProgram, isLoading } =
+    useSchoolData();
   const { toast } = useToast();
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -224,7 +226,50 @@ export default function AdminProgramsCrudPage() {
 
       {/* Programs List */}
       <Card className="overflow-hidden">
-        {programs.length === 0 ? (
+        {isLoading ? (
+          <div className="overflow-x-auto">
+            <Table className="text-left">
+              <TableHeader>
+                <tr>
+                  <TableHead className="p-4 sm:px-6">Nama Program &amp; Kategori</TableHead>
+                  <TableHead className="p-4 sm:px-6">Keunggulan Utama</TableHead>
+                  <TableHead className="p-4 sm:px-6">Status</TableHead>
+                  <TableHead className="p-4 sm:px-6 text-right">Aksi</TableHead>
+                </tr>
+              </TableHeader>
+              <TableBody>
+                {[0, 1, 2, 3].map((i) => (
+                  <TableRow key={i}>
+                    <TableCell className="p-4 sm:px-6">
+                      <div className="flex items-center gap-3 max-w-sm">
+                        <Skeleton className="h-12 w-16 shrink-0" />
+                        <div className="space-y-1.5">
+                          <Skeleton className="h-3 w-16" />
+                          <Skeleton className="h-4 w-40" />
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6">
+                      <div className="space-y-1.5">
+                        <Skeleton className="h-3 w-44 max-w-full" />
+                        <Skeleton className="h-3 w-36 max-w-full" />
+                      </div>
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6">
+                      <Skeleton className="h-5 w-16" />
+                    </TableCell>
+                    <TableCell className="p-4 sm:px-6">
+                      <div className="flex items-center justify-end gap-2">
+                        <Skeleton className="h-8 w-8" />
+                        <Skeleton className="h-8 w-8" />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        ) : programs.length === 0 ? (
           <div className="p-8">
             <EmptyState
               icon={Layers}
