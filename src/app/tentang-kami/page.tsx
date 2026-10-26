@@ -4,7 +4,7 @@ import React from "react";
 import { Header } from "@/components/public/Header";
 import { Footer } from "@/components/public/Footer";
 import { useSchoolData } from "@/context/SchoolDataContext";
-import { Compass, Sparkles, Users, Image as ImageIcon } from "lucide-react";
+import { Users, Image as ImageIcon } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { OrganizationMember } from "@/lib/types";
@@ -19,14 +19,12 @@ interface ValueCardProps {
 
 function PhilosophyCard({ index, title, description }: ValueCardProps) {
   return (
-    <div
-      className="bg-white border-[#E8E2D8] border-2 p-4 rounded-2xl space-y-1.5 shadow-xs"
-    >
-      <span className="text-[10px] font-extrabold uppercase text-yazzaka-teal-dark block">
-        Jiwa 0{index + 1}
+    <div className="bg-card border border-border p-4 rounded-lg space-y-1.5">
+      <span className="text-xs text-muted-foreground block">
+        Jiwa {String(index + 1).padStart(2, "0")}
       </span>
-      <h3 className="text-sm font-bold text-[#1E2330]">{title}</h3>
-      <p className="text-xs text-stone-600 leading-relaxed font-medium">
+      <h3 className="text-sm font-semibold text-foreground">{title}</h3>
+      <p className="text-xs text-muted-foreground leading-relaxed">
         {description}
       </p>
     </div>
@@ -59,8 +57,8 @@ interface MemberCardProps {
 
 function MemberCard({ member }: MemberCardProps) {
   return (
-    <div className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between shadow-xs transition-all">
-      <div className="relative aspect-[4/3] overflow-hidden bg-stone-200">
+    <div className="bg-card border border-border rounded-lg overflow-hidden flex flex-col justify-between">
+      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         {member.photoUrl ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
@@ -69,27 +67,27 @@ function MemberCard({ member }: MemberCardProps) {
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-stone-400">
+          <div className="w-full h-full flex items-center justify-center text-muted-foreground">
             <ImageIcon className="h-8 w-8" />
           </div>
         )}
       </div>
       <div className="p-4 space-y-1">
-        <span className="text-[10px] font-bold text-[#FA6400] uppercase tracking-wider block">
+        <span className="text-xs text-muted-foreground block">
           {member.department}
         </span>
-        <h3 className="text-sm font-bold text-[#1E2330] leading-snug">
+        <h3 className="text-sm font-semibold text-foreground leading-snug">
           {member.name}
         </h3>
-        <p className="text-xs text-stone-500 font-semibold">
+        <p className="text-xs text-muted-foreground">
           {member.roleTitle}
         </p>
         {member.qualifications && (
-          <p className="text-[10px] text-stone-400 italic">
+          <p className="text-xs text-muted-foreground italic">
             {member.qualifications}
           </p>
         )}
-        <p className="text-[11px] text-stone-600 pt-2 border-t border-stone-100 line-clamp-2 font-medium">
+        <p className="text-xs text-muted-foreground pt-2 border-t border-border line-clamp-2">
           {member.bio}
         </p>
       </div>
@@ -119,23 +117,22 @@ export default function AboutPage() {
       <main className="flex-1">
 
         {/* ── Page Hero Banner ─────────────────────────── */}
-        <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-[#E8E2D8]">
+        <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
-            <Badge variant="secondary" className="gap-2 mb-3">
-              <Sparkles className="h-3.5 w-3.5 text-yazzaka-teal-dark" />
-              <span>Profil &amp; Filosofi Lembaga</span>
+            <Badge variant="secondary" className="mb-3">
+              Profil &amp; Filosofi Lembaga
             </Badge>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
               Tentang {profile.name}
             </h1>
-            <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
+            <p className="text-sm sm:text-base text-muted-foreground mt-3 leading-relaxed">
               Sejarah dedikasi mencetak generasi muslim berilmu amaliah, beramal ilmiah, dan berakhlakul karimah sejak tahun {profile.establishedYear}.
             </p>
           </div>
         </section>
 
         {/* ── Narrative & History ──────────────────────── */}
-        <section className="py-12 lg:py-14 bg-white border-b border-[#E8E2D8]">
+        <section className="py-12 lg:py-14 bg-background border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
@@ -143,47 +140,45 @@ export default function AboutPage() {
                 <Badge variant="secondary">
                   Identitas &amp; Landasan
                 </Badge>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330] leading-snug">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground leading-snug">
                   Memadukan Kebeningan Sanad Pesantren dan Keunggulan Sains Kontemporer
                 </h2>
-                <div className="space-y-3 text-sm text-stone-600 leading-relaxed font-medium">
+                <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
                   <p>{profile.description}</p>
                   <p>
                     Didirikan dengan tekad melahirkan generasi santri yang tidak hanya hafal Al-Qur&apos;an secara mutqin dan menguasai literatur kitab kuning, namun juga memiliki kecakapan sains, teknologi, dan kepemimpinan untuk menjawab tantangan zaman.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 pt-4 border-t border-[#E8E2D8] text-xs">
-                  <div className="p-3 rounded-xl bg-white border border-[#E8E2D8]">
-                    <span className="font-extrabold text-[#1E2330] block">SK Kemenkumham RI:</span>
-                    <span className="text-stone-600 font-semibold">{foundation.skNumber}</span>
+                <div className="grid grid-cols-2 gap-3 pt-4 border-t border-border">
+                  <div>
+                    <span className="text-xs text-muted-foreground block">SK Kemenkumham RI</span>
+                    <span className="text-sm font-semibold text-foreground">{foundation.skNumber}</span>
                   </div>
-                  <div className="p-3 rounded-xl bg-white border border-[#E8E2D8]">
-                    <span className="font-extrabold text-[#1E2330] block">Nomor Induk Yayasan:</span>
-                    <span className="text-yazzaka-teal-dark font-bold">{foundation.registryNumber}</span>
+                  <div>
+                    <span className="text-xs text-muted-foreground block">Nomor Induk Yayasan</span>
+                    <span className="text-sm font-semibold text-foreground">{foundation.registryNumber}</span>
                   </div>
                 </div>
               </div>
 
               <div className="lg:col-span-6">
-                <div className="rounded-3xl overflow-hidden border-2 border-[#E8E2D8] bg-white p-2 shadow-sm">
-                  <div className="aspect-[4/3] relative overflow-hidden rounded-2xl bg-stone-200">
-                    {profile.aboutImageUrl ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
-                        src={profile.aboutImageUrl}
-                        alt={`Gedung ${profile.name}`}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-stone-500">
-                        <ImageIcon className="h-8 w-8" />
-                        <span className="text-xs font-medium">
-                          Foto gedung diunggah via CMS Profil Lembaga
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                <div className="aspect-[4/3] relative overflow-hidden rounded-lg border border-border bg-muted">
+                  {profile.aboutImageUrl ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={profile.aboutImageUrl}
+                      alt={`Gedung ${profile.name}`}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-muted-foreground">
+                      <ImageIcon className="h-8 w-8" />
+                      <span className="text-xs">
+                        Foto gedung diunggah via CMS Profil Lembaga
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -199,7 +194,7 @@ export default function AboutPage() {
               <Badge variant="secondary">
                 Badan Hukum &amp; Legalitas
               </Badge>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground">
                 Data Yayasan
               </h2>
             </div>
@@ -243,7 +238,7 @@ export default function AboutPage() {
               </div>
 
               <div className="lg:col-span-5 bg-card border border-border rounded-lg p-6 space-y-4">
-                <span className="text-xs font-bold text-muted-foreground block">
+                <span className="text-xs font-semibold text-muted-foreground block">
                   Legalitas Yayasan
                 </span>
                 <p className="text-sm text-muted-foreground leading-relaxed">
@@ -277,7 +272,7 @@ export default function AboutPage() {
               <Badge variant="secondary">
                 Arah &amp; Tujuan
               </Badge>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground">
                 Visi &amp; Misi Strategis Lembaga
               </h2>
             </div>
@@ -285,32 +280,30 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
               {/* Vision Box */}
-              <div className="lg:col-span-5 bg-white border-[#E8E2D8] border-2 p-6 rounded-3xl space-y-3 shadow-xs">
-                <div className="flex items-center gap-2">
-                  <div className="h-7 w-7 rounded-full bg-yazzaka-teal-dark text-white flex items-center justify-center">
-                    <Compass className="h-3.5 w-3.5" />
-                  </div>
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-yazzaka-teal-dark">
-                    Visi Pokok
-                  </span>
-                </div>
-                <p className="text-lg sm:text-xl text-[#1E2330] font-bold leading-snug">
+              <div className="lg:col-span-5 bg-card border border-border p-6 rounded-lg space-y-3">
+                <span className="text-xs font-semibold text-muted-foreground block">
+                  Visi Pokok
+                </span>
+                <p className="text-lg sm:text-xl text-foreground font-bold leading-snug">
                   &ldquo;{profile.vision}&rdquo;
                 </p>
               </div>
 
               {/* Mission Items */}
-              <div className="lg:col-span-7 bg-white p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-3 shadow-xs">
-                <span className="text-xs font-bold uppercase tracking-wider text-stone-500 block">
+              <div className="lg:col-span-7 bg-card border border-border p-6 rounded-lg space-y-3">
+                <span className="text-xs font-semibold text-muted-foreground block">
                   Misi Penyelenggaraan Pendidikan
                 </span>
-                <div className="space-y-2">
+                <div className="divide-y divide-border">
                   {profile.mission.map((item, idx) => (
-                    <div key={idx} className="p-2.5 rounded-xl bg-white border border-[#E8E2D8] flex items-start gap-3">
-                      <span className="h-6 w-6 rounded-full bg-[#FFF0E5] text-[#FA6400] font-bold text-xs flex items-center justify-center shrink-0">
-                        0{idx + 1}
+                    <div
+                      key={idx}
+                      className="flex items-start gap-3 py-2.5 first:pt-0 last:pb-0"
+                    >
+                      <span className="text-xs font-semibold text-muted-foreground tabular-nums pt-0.5 shrink-0">
+                        {String(idx + 1).padStart(2, "0")}
                       </span>
-                      <p className="text-xs sm:text-sm text-[#1E2330] leading-relaxed font-medium">
+                      <p className="text-xs sm:text-sm text-foreground leading-relaxed">
                         {item}
                       </p>
                     </div>
@@ -324,14 +317,14 @@ export default function AboutPage() {
         </section>
 
         {/* ── Panca Jiwa Values ────────────────────────── */}
-        <section className="py-12 lg:py-14 bg-white border-b border-[#E8E2D8]">
+        <section className="py-12 lg:py-14 bg-background border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             <div className="max-w-3xl space-y-2">
               <Badge variant="secondary">
                 Nilai Filosofis
               </Badge>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground">
                 Panca Jiwa Pondok Pesantren {profile.name}
               </h2>
             </div>
@@ -351,7 +344,7 @@ export default function AboutPage() {
         </section>
 
         {/* ── Leadership & Educators ───────────────────── */}
-        <section className="py-12 lg:py-14 ">
+        <section className="py-12 lg:py-14">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -359,10 +352,10 @@ export default function AboutPage() {
                 <Badge variant="secondary">
                   Struktur &amp; Keteladanan
                 </Badge>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E2330]">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground">
                   {sectionTitle}
                 </h2>
-                <p className="text-xs sm:text-sm text-stone-600">
+                <p className="text-xs sm:text-sm text-muted-foreground">
                   {sectionSubtitle}
                 </p>
               </div>
