@@ -109,13 +109,18 @@ const SchoolDataContext = createContext<SchoolDataContextType | undefined>(undef
 export function SchoolDataProvider({
   children,
   initialSections: serverSections,
+  initialHero,
 }: {
   children: React.ReactNode;
   initialSections?: PageSectionConfig[];
+  initialHero?: Partial<SchoolProfile["hero"]> | null;
 }) {
   // Gunakan initialData sebagai fallback sementara loading; seksi halaman
   // memakai data server dari layout root bila tersedia (anti-kedipan toggle).
-  const [profile, setProfile] = useState<SchoolProfile>(initialSchoolProfile);
+  // Konten hero juga dari server agar kolase hero tampil di HTML pertama.
+  const [profile, setProfile] = useState<SchoolProfile>(
+    initialHero ? { ...initialSchoolProfile, hero: initialHero } : initialSchoolProfile
+  );
   const [programs, setPrograms] = useState<Program[]>(initialPrograms);
   const [achievements, setAchievements] = useState<Achievement[]>(initialAchievements);
   const [articles, setArticles] = useState<Article[]>(initialArticles);

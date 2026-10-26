@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Phone,
   Save,
@@ -16,7 +17,7 @@ import {
 } from "lucide-react";
 
 export default function AdminContactSettingsPage() {
-  const { profile, updateProfile } = useSchoolData();
+  const { profile, updateProfile, isLoading } = useSchoolData();
   const { toast } = useToast();
 
   const [phone, setPhone] = useState(profile.phone);
@@ -54,6 +55,43 @@ export default function AdminContactSettingsPage() {
   };
 
   const cleanWaNumber = whatsapp.replace(/\D/g, "");
+
+  // Form hanya dipasang setelah data awal tiba — mencegah edit nilai fallback
+  // seed selama sinkronisasi DB berjalan (belt-and-braces dengan re-sync di atas).
+  if (isLoading) {
+    return (
+      <div className="max-w-4xl mx-auto space-y-8" aria-busy="true">
+        <div className="space-y-2">
+          <Skeleton className="h-3 w-48" />
+          <Skeleton className="h-8 w-72" />
+          <Skeleton className="h-3 w-full max-w-lg" />
+        </div>
+        <Card className="p-6 space-y-6">
+          <Skeleton className="h-5 w-56" />
+          <div className="space-y-5">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="space-y-1.5">
+                <Skeleton className="h-3 w-40" />
+                <Skeleton className="h-9" />
+              </div>
+            ))}
+          </div>
+          <div className="space-y-5 border-t border-border pt-6">
+            <Skeleton className="h-5 w-40" />
+            <div className="space-y-1.5">
+              <Skeleton className="h-3 w-44" />
+              <Skeleton className="h-9" />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Skeleton className="h-16" />
+              <Skeleton className="h-16" />
+            </div>
+            <Skeleton className="h-24" />
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">

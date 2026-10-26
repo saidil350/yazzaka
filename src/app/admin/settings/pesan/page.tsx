@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import { EmptyState } from "@/components/ui/empty-state";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Select } from "@/components/ui/select";
@@ -63,7 +64,8 @@ function formatDisplayDate(dateStr: string) {
 }
 
 export default function AdminContactInboxPage() {
-  const { messages, updateMessageStatus, deleteMessage } = useSchoolData();
+  const { messages, updateMessageStatus, deleteMessage, isLoading } =
+    useSchoolData();
   const { toast } = useToast();
 
   const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null);
@@ -221,7 +223,34 @@ export default function AdminContactInboxPage() {
 
       {/* ── Messages List Container ─────────────────────────────────── */}
       <Card className="overflow-hidden">
-        {filtered.length === 0 ? (
+        {isLoading ? (
+          <div className="divide-y divide-border" aria-busy="true">
+            {[0, 1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="w-full p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-6"
+              >
+                <div className="flex items-start gap-3.5 min-w-0 flex-1">
+                  <div className="pt-1 shrink-0">
+                    <Skeleton className="h-2.5 w-2.5 rounded-full" />
+                  </div>
+                  <div className="space-y-1.5 min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <Skeleton className="h-4 w-28" />
+                      <Skeleton className="h-3 w-24" />
+                    </div>
+                    <Skeleton className="h-3.5 w-1/2" />
+                    <Skeleton className="h-3 w-3/4" />
+                  </div>
+                </div>
+                <div className="flex items-center sm:flex-col sm:items-end gap-2 shrink-0 pt-2 sm:pt-0">
+                  <Skeleton className="h-3 w-20" />
+                  <Skeleton className="h-5 w-24" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="p-8">
             <EmptyState
               icon={Inbox}

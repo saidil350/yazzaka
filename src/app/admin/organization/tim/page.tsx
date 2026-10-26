@@ -27,6 +27,7 @@ import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const PRESET_DEPARTMENTS = [
   "Taman Pendidikan Al-Qur'an (TPA)",
@@ -65,8 +66,15 @@ function normalizeDepartment(deptName: string): string {
 }
 
 export default function AdminTeamMembersPage() {
-  const { organization, sections, addMember, updateMember, deleteMember, updateSection } =
-    useSchoolData();
+  const {
+    organization,
+    sections,
+    addMember,
+    updateMember,
+    deleteMember,
+    updateSection,
+    isLoading,
+  } = useSchoolData();
   const { toast } = useToast();
 
   // Ambil konfigurasi seksi organisasi
@@ -324,7 +332,11 @@ export default function AdminTeamMembersPage() {
             <Users className="h-4 w-4 text-primary" />
             <span>Total Pengajar</span>
           </div>
-          <p className="text-2xl font-medium text-foreground">{organization.length}</p>
+          {isLoading ? (
+            <Skeleton className="h-8 w-12" />
+          ) : (
+            <p className="text-2xl font-medium text-foreground">{organization.length}</p>
+          )}
           <span className="text-[11px] text-muted-foreground">Seluruh unit yayasan</span>
         </Card>
 
@@ -333,7 +345,11 @@ export default function AdminTeamMembersPage() {
             <Building2 className="h-4 w-4 text-primary" />
             <span>TPA &amp; TKIT</span>
           </div>
-          <p className="text-2xl font-medium text-foreground">{countTpaTkit}</p>
+          {isLoading ? (
+            <Skeleton className="h-8 w-12" />
+          ) : (
+            <p className="text-2xl font-medium text-foreground">{countTpaTkit}</p>
+          )}
           <span className="text-[11px] text-muted-foreground">Pendidikan Usia Dini &amp; Quran</span>
         </Card>
 
@@ -342,7 +358,11 @@ export default function AdminTeamMembersPage() {
             <GraduationCap className="h-4 w-4 text-primary" />
             <span>PKBM &amp; Anak Shalih</span>
           </div>
-          <p className="text-2xl font-medium text-foreground">{countPkbmSekolah}</p>
+          {isLoading ? (
+            <Skeleton className="h-8 w-12" />
+          ) : (
+            <p className="text-2xl font-medium text-foreground">{countPkbmSekolah}</p>
+          )}
           <span className="text-[11px] text-muted-foreground">Sekolah &amp; Kesetaraan</span>
         </Card>
 
@@ -351,13 +371,40 @@ export default function AdminTeamMembersPage() {
             <Shield className="h-4 w-4 text-primary" />
             <span>Darul Quran &amp; Pimpinan</span>
           </div>
-          <p className="text-2xl font-medium text-foreground">{countDarulQuran}</p>
+          {isLoading ? (
+            <Skeleton className="h-8 w-12" />
+          ) : (
+            <p className="text-2xl font-medium text-foreground">{countDarulQuran}</p>
+          )}
           <span className="text-[11px] text-muted-foreground">Pesantren &amp; Yayasan</span>
         </Card>
       </div>
 
       {/* ── Pengaturan Header Seksi Publik ──────────── */}
       <Card className="p-6">
+        {isLoading ? (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between gap-2 pb-2 border-b border-border">
+              <Skeleton className="h-4 w-64" />
+              <Skeleton className="h-4 w-36" />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Skeleton className="h-3 w-24" />
+                <Skeleton className="h-9 w-full" />
+              </div>
+              <div className="sm:col-span-2 space-y-2">
+                <Skeleton className="h-3 w-28" />
+                <Skeleton className="h-9 w-full" />
+              </div>
+            </div>
+
+            <div className="flex justify-end pt-1">
+              <Skeleton className="h-8 w-36" />
+            </div>
+          </div>
+        ) : (
         <form onSubmit={handleSaveSectionHeader} className="space-y-4">
           <div className="flex items-center justify-between gap-2 pb-2 border-b border-border">
             <div className="flex items-center gap-2">
@@ -398,6 +445,7 @@ export default function AdminTeamMembersPage() {
             </Button>
           </div>
         </form>
+        )}
       </Card>
 
       {/* ── Toolbar: Filter & Pencarian ──────────────── */}

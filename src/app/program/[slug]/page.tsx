@@ -24,6 +24,16 @@ import { buildBreadcrumbJsonLd, JsonLd } from "@/lib/seo/structured-data";
 
 type Params = Promise<{ slug: string }>;
 
+// ISR on-demand: slug tidak di-pra-render saat build (array kosong — build tidak
+// butuh koneksi DB), melainkan dirender lalu di-cache pada request pertama dan
+// dipakai ulang sampai revalidasi (revalidate 60 dtk diwarisi dari root layout).
+// notFound() tetap menghasilkan 404 HTTP asli karena render on-demand bersifat
+// blocking sebelum streaming — JANGAN tambahkan loading.tsx untuk rute ini
+// karena membuat 404 ter-stream dengan status 200 (soft-404).
+export async function generateStaticParams() {
+  return [];
+}
+
 export async function generateMetadata({
   params,
 }: {

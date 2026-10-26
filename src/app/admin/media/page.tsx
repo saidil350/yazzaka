@@ -21,9 +21,10 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function AdminMediaPage() {
-  const { media, addMedia, deleteMedia } = useSchoolData();
+  const { media, addMedia, deleteMedia, isLoading } = useSchoolData();
   const { toast } = useToast();
 
   const [selectedType, setSelectedType] = useState<string>("all");
@@ -132,7 +133,28 @@ export default function AdminMediaPage() {
       </Tabs>
 
       {/* Media Grid or EmptyState */}
-      {filtered.length === 0 ? (
+      {isLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[0, 1, 2, 3].map((i) => (
+            <Card
+              key={i}
+              className="overflow-hidden flex flex-col justify-between"
+            >
+              <Skeleton className="h-44 w-full rounded-none" />
+              <div className="p-4 space-y-2">
+                <div className="space-y-1">
+                  <Skeleton className="h-3.5 w-3/4" />
+                  <Skeleton className="h-3 w-1/2" />
+                </div>
+                <div className="flex items-center justify-between pt-2 border-t border-border">
+                  <Skeleton className="h-3 w-20" />
+                  <Skeleton className="h-8 w-8" />
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      ) : filtered.length === 0 ? (
         <Card className="p-8">
           <EmptyState
             icon={ImageIcon}

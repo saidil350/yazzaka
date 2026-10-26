@@ -6,10 +6,11 @@ import { useToast } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Save } from "lucide-react";
 
 export default function AdminSocialMediaSettingsPage() {
-  const { settings, updateSettings } = useSchoolData();
+  const { settings, updateSettings, isLoading } = useSchoolData();
   const { toast } = useToast();
 
   const [instagram, setInstagram] = useState(settings.socialMedia.instagram);
@@ -45,6 +46,31 @@ export default function AdminSocialMediaSettingsPage() {
       toast("Gagal menyimpan tautan media sosial. Coba lagi.", "error");
     }
   };
+
+  // Form hanya dipasang setelah data awal tiba — mencegah edit nilai fallback
+  // seed selama sinkronisasi DB berjalan (belt-and-braces dengan re-sync di atas).
+  if (isLoading) {
+    return (
+      <div className="max-w-4xl mx-auto space-y-8" aria-busy="true">
+        <div className="space-y-2">
+          <Skeleton className="h-3 w-48" />
+          <Skeleton className="h-8 w-80" />
+          <Skeleton className="h-3 w-full max-w-lg" />
+        </div>
+        <Card className="p-6 space-y-6">
+          <Skeleton className="h-5 w-44" />
+          <div className="space-y-4">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <Skeleton key={i} className="h-16" />
+            ))}
+          </div>
+          <div className="flex justify-end pt-4 border-t border-border">
+            <Skeleton className="h-9 w-40" />
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
