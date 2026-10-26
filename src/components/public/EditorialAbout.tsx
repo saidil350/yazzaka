@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Quote, Sparkles, Compass, Image as ImageIcon } from "lucide-react";
+import { ArrowRight, Quote, Image as ImageIcon } from "lucide-react";
 
 export function EditorialAbout() {
   const { profile } = useSchoolData();
@@ -16,14 +16,11 @@ export function EditorialAbout() {
 
         {/* Section Title Header */}
         <div className="max-w-3xl space-y-2">
-          <Badge variant="secondary" className="gap-2">
-            <Sparkles className="h-3 w-3 text-yazzaka-teal-dark" />
-            <span>Sambutan Pimpinan &amp; Filosofi</span>
-          </Badge>
-          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
+          <Badge variant="secondary">Sambutan Pimpinan &amp; Filosofi</Badge>
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-foreground tracking-tight leading-tight">
             Membentuk Karakter Melalui Keteladanan, Adab, &amp; Kedalaman Ilmu
           </h2>
-          <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
             Pendidikan bukan sekadar transfer wawasan, melainkan proses menumbuhkan fitrah, mengasah kecerdasan, dan meneguhkan integritas moral.
           </p>
         </div>
@@ -31,10 +28,10 @@ export function EditorialAbout() {
         {/* Headspace Split Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
-          {/* Left Column: Principal Card with Speech Bubble */}
+          {/* Left Column: Principal Card */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="bg-white border-2 border-[#E8E2D8] rounded-3xl p-5 shadow-xs">
-              <div className="aspect-[16/10] relative overflow-hidden rounded-2xl border border-white shadow-sm bg-stone-200 mb-4">
+            <div className="bg-card border border-border rounded-lg p-5">
+              <div className="aspect-[16/10] relative overflow-hidden rounded-md bg-muted mb-4">
                 {profile.principal.photoUrl ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img
@@ -43,24 +40,20 @@ export function EditorialAbout() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-stone-400">
+                  <div className="w-full h-full flex items-center justify-center text-muted-foreground">
                     <ImageIcon className="h-8 w-8" />
                   </div>
                 )}
               </div>
 
               {/* Message Quote */}
-              <div className="relative bg-white rounded-xl p-4 border border-[#E8E2D8] shadow-xs">
-                <Quote className="h-5 w-5 text-yazzaka-teal/50 mb-1.5" />
-                <p className="text-stone-700 text-xs sm:text-sm italic leading-relaxed whitespace-pre-line font-medium">
-                  &ldquo;{profile.principal.welcomeMessage}&rdquo;
-                </p>
-                <div className="mt-2.5 pt-2.5 border-t border-stone-100 flex items-center justify-between">
-                  <span className="text-[11px] font-bold text-stone-500">{profile.principal.title}</span>
-                  <Badge variant="secondary">
-                    Pimpinan Pesantren
-                  </Badge>
-                </div>
+              <Quote className="h-4 w-4 text-muted-foreground mb-2" />
+              <p className="text-muted-foreground text-xs sm:text-sm italic leading-relaxed whitespace-pre-line">
+                &ldquo;{profile.principal.welcomeMessage}&rdquo;
+              </p>
+              <div className="mt-3 pt-3 border-t border-border">
+                <p className="text-xs font-semibold text-foreground">{profile.principal.name}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">{profile.principal.title}</p>
               </div>
             </div>
 
@@ -79,36 +72,28 @@ export function EditorialAbout() {
           {/* Right Column: Vision, Mission & Values */}
           <div className="lg:col-span-7 space-y-6">
 
-            {/* Vision Card — Neutral Stone Elegant */}
-            <div className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-5 sm:p-6 shadow-xs">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="h-7 w-7 rounded-full bg-[#1E2330] text-white flex items-center justify-center">
-                  <Compass className="h-3.5 w-3.5" />
-                </div>
-                <span className="text-xs font-bold uppercase tracking-wider text-stone-600">
-                  Visi Utama Lembaga
-                </span>
-              </div>
-              <p className="text-lg sm:text-xl font-bold text-[#1E2330] leading-snug">
+            {/* Vision */}
+            <div className="bg-card border border-border rounded-lg p-5 sm:p-6">
+              <span className="text-xs font-semibold text-muted-foreground block mb-2">
+                Visi Utama Lembaga
+              </span>
+              <p className="text-lg sm:text-xl font-bold text-foreground leading-snug">
                 &ldquo;{profile.vision}&rdquo;
               </p>
             </div>
 
             {/* Strategic Mission */}
             <div className="space-y-2.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500 block">
+              <span className="text-xs font-semibold text-muted-foreground block">
                 Misi Strategis Pendidikan
               </span>
-              <div className="grid grid-cols-1 gap-2">
+              <div className="bg-card border border-border rounded-lg divide-y divide-border">
                 {profile.mission.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3 rounded-xl bg-white border border-[#E8E2D8] flex items-start gap-3 transition-all hover:bg-muted/40"
-                  >
-                    <div className="h-6 w-6 rounded-full bg-yazzaka-teal-soft text-yazzaka-teal-dark border border-yazzaka-teal-border flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
-                      0{idx + 1}
-                    </div>
-                    <p className="text-xs sm:text-sm text-stone-700 font-medium leading-relaxed">
+                  <div key={idx} className="flex items-start gap-3 px-4 py-3">
+                    <span className="text-xs font-semibold text-muted-foreground tabular-nums pt-0.5 shrink-0">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                    <p className="text-xs sm:text-sm text-foreground leading-relaxed">
                       {item}
                     </p>
                   </div>
@@ -118,22 +103,22 @@ export function EditorialAbout() {
 
             {/* Core Values (Panca Jiwa) */}
             <div className="space-y-2.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500 block">
+              <span className="text-xs font-semibold text-muted-foreground block">
                 Pilar Karakter Santri
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {profile.values.slice(0, 3).map((val, idx) => (
                   <div
                     key={idx}
-                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-4 transition-all hover:-translate-y-0.5 hover:shadow-xs"
+                    className="bg-card border border-border rounded-lg p-4"
                   >
-                    <span className="text-[9px] font-extrabold uppercase tracking-widest text-yazzaka-teal-dark block mb-1">
-                      Pilar 0{idx + 1}
+                    <span className="text-xs text-muted-foreground block mb-1.5">
+                      Pilar {String(idx + 1).padStart(2, "0")}
                     </span>
-                    <h4 className="font-bold text-xs sm:text-sm text-[#1E2330] mb-1">
+                    <h4 className="text-sm font-semibold text-foreground mb-1">
                       {val.title}
                     </h4>
-                    <p className="text-[11px] text-stone-600 leading-relaxed font-medium">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
                       {val.description}
                     </p>
                   </div>
