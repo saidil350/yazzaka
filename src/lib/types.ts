@@ -72,9 +72,6 @@ export interface SchoolProfile {
     description: string;
   }[];
   branding: {
-    primaryColor: string;
-    accentColor: string;
-    secondaryColor: string;
     logoUrl: string;
     faviconUrl: string;
   };

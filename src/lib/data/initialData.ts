@@ -101,9 +101,6 @@ export const initialSchoolProfile: SchoolProfile = {
     },
   ],
   branding: {
-    primaryColor: "#0F2B48",
-    accentColor: "#FA6400",
-    secondaryColor: "#F4F6F8",
     logoUrl: "/yazzakka.png",
     faviconUrl: "/yazzakka.png",
   },

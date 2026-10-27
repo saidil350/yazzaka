@@ -112,7 +112,7 @@ export function AdminSidebar({
         { label: "Visi, Misi & Nilai", href: "/admin/organization/visi-misi" },
         { label: "Kontak & Lokasi", href: "/admin/settings/contact" },
         { label: "Media Sosial", href: "/admin/settings/social" },
-        { label: "Branding & Warna", href: "/admin/settings/general" },
+        { label: "Nama & Tagline", href: "/admin/settings/general" },
         {
           label: "Pesan Masuk",
           href: "/admin/settings/pesan",
