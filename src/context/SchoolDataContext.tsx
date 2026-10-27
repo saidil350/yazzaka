@@ -53,8 +53,7 @@ interface SchoolDataContextType {
 
   // Actions
   updateProfile: (data: Partial<SchoolProfile>) => Promise<void>;
-  updateBrandingColors: (primary: string, accent: string) => Promise<void>;
-  
+
   // Programs
   addProgram: (program: Omit<Program, "id">) => Promise<void>;
   updateProgram: (id: string, program: Partial<Program>) => Promise<void>;
@@ -232,23 +231,6 @@ export function SchoolDataProvider({
     };
   }, [addLog]);
 
-  // Apply Live Brand CSS Variables
-  const applyBrandingStyles = useCallback((primary: string, accent: string) => {
-    if (typeof document !== "undefined") {
-      document.documentElement.style.setProperty("--color-primary", primary);
-      document.documentElement.style.setProperty("--color-accent", accent);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (profile.branding) {
-      applyBrandingStyles(
-        profile.branding.primaryColor || "#0F2B48",
-        profile.branding.accentColor || "#D97706"
-      );
-    }
-  }, [profile.branding, applyBrandingStyles]);
-
   const apiCall = async (endpoint: string, method: string, body?: unknown) => {
     const res = await fetch(endpoint, {
       method,
@@ -275,12 +257,6 @@ export function SchoolDataProvider({
       // try/catch di halaman jadi dead code dan sukses palsu ditampilkan.
       throw e;
     }
-  };
-
-  const updateBrandingColors = async (primary: string, accent: string) => {
-    await updateProfile({
-      branding: { ...profile.branding, primaryColor: primary, accentColor: accent }
-    });
   };
 
   // Programs
@@ -467,7 +443,7 @@ export function SchoolDataProvider({
         profile, programs, achievements, articles, events, media,
         organization, testimonials, messages, settings, users, sections, logs,
         isLoading, error,
-        updateProfile, updateBrandingColors,
+        updateProfile,
         addProgram, updateProgram, deleteProgram,
         addAchievement, updateAchievement, deleteAchievement,
         addEvent, updateEvent, deleteEvent,
