@@ -11,6 +11,10 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Save, Plus, Trash2 } from "lucide-react";
 import { DEFAULT_FOUNDATION } from "@/lib/data/initialData";
+import type {
+  DonationBankAccount,
+  DonationPlatform,
+} from "@/lib/types";
 
 export default function AdminOrgProfilePage() {
   const { profile, updateProfile, isLoading } = useSchoolData();
@@ -35,6 +39,14 @@ export default function AdminOrgProfilePage() {
   const [chairman, setChairman] = useState(foundation.chairman);
   const [contactPerson, setContactPerson] = useState(foundation.contactPerson);
   const [foundationEmail, setFoundationEmail] = useState(foundation.email);
+
+  // Info donasi (rekening transfer & platform eksternal)
+  const [bankAccounts, setBankAccounts] = useState<DonationBankAccount[]>(
+    foundation.donation?.bankAccounts ?? []
+  );
+  const [platforms, setPlatforms] = useState<DonationPlatform[]>(
+    foundation.donation?.platforms ?? []
+  );
 
   // Principal
   const [principalName, setPrincipalName] = useState(profile.principal.name);
@@ -62,6 +74,8 @@ export default function AdminOrgProfilePage() {
     setChairman(f.chairman);
     setContactPerson(f.contactPerson);
     setFoundationEmail(f.email);
+    setBankAccounts(f.donation?.bankAccounts ?? []);
+    setPlatforms(f.donation?.platforms ?? []);
     setPrincipalName(profile.principal.name);
     setPrincipalTitle(profile.principal.title);
     setPrincipalPhoto(profile.principal.photoUrl);
@@ -89,6 +103,14 @@ export default function AdminOrgProfilePage() {
           chairman,
           contactPerson,
           email: foundationEmail,
+          donation: {
+            bankAccounts: bankAccounts.filter(
+              (a) => a.bankName.trim() !== "" || a.accountNumber.trim() !== ""
+            ),
+            platforms: platforms.filter(
+              (p) => p.label.trim() !== "" || p.url.trim() !== ""
+            ),
+          },
         },
         principal: {
           name: principalName,
@@ -322,6 +344,168 @@ export default function AdminOrgProfilePage() {
             >
               <Plus className="h-4 w-4" />
               Tambah Pendiri
+            </Button>
+          </div>
+        </Card>
+
+        {/* Informasi Donasi */}
+        <Card className="p-6 space-y-6">
+          <div>
+            <h3 className="text-base font-semibold text-foreground">
+              Informasi Donasi
+            </h3>
+            <p className="text-xs text-muted-foreground mt-1">
+              Tampil saat tombol Donasi di header situs publik diklik. Isi minimal satu
+              rekening atau platform untuk mengaktifkan tombol; jika semua kosong, tombol
+              disembunyikan.
+            </p>
+          </div>
+
+          {/* Rekening Transfer Bank */}
+          <div className="space-y-4">
+            <span className="text-xs font-medium text-muted-foreground block">
+              Rekening Transfer Bank
+            </span>
+            {bankAccounts.map((acc, idx) => (
+              <div
+                key={idx}
+                className="rounded-lg border border-border p-4 space-y-3 bg-card"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-muted-foreground">
+                    Rekening {idx + 1}
+                  </span>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-sm"
+                    onClick={() =>
+                      setBankAccounts(bankAccounts.filter((_, i) => i !== idx))
+                    }
+                    className="text-destructive hover:text-destructive"
+                    aria-label={`Hapus rekening ${idx + 1}`}
+                  >
+                    <Trash2 className="h-4 w-4" aria-hidden="true" />
+                  </Button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Input
+                    label="Nama Bank"
+                    value={acc.bankName}
+                    placeholder="Bank BSI"
+                    onChange={(e) =>
+                      setBankAccounts(
+                        bankAccounts.map((a, i) =>
+                          i === idx ? { ...a, bankName: e.target.value } : a
+                        )
+                      )
+                    }
+                  />
+                  <Input
+                    label="Nomor Rekening"
+                    value={acc.accountNumber}
+                    placeholder="7000123456"
+                    onChange={(e) =>
+                      setBankAccounts(
+                        bankAccounts.map((a, i) =>
+                          i === idx ? { ...a, accountNumber: e.target.value } : a
+                        )
+                      )
+                    }
+                  />
+                </div>
+                <Input
+                  label="Nama Pemilik Rekening"
+                  value={acc.accountHolder}
+                  placeholder="Yayasan Bina Iman Akhlak Yazzakka"
+                  onChange={(e) =>
+                    setBankAccounts(
+                      bankAccounts.map((a, i) =>
+                        i === idx ? { ...a, accountHolder: e.target.value } : a
+                      )
+                    )
+                  }
+                />
+              </div>
+            ))}
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() =>
+                setBankAccounts([
+                  ...bankAccounts,
+                  { bankName: "", accountNumber: "", accountHolder: "" },
+                ])
+              }
+            >
+              <Plus className="h-4 w-4" />
+              Tambah Rekening
+            </Button>
+          </div>
+
+          {/* Platform Donasi Eksternal */}
+          <div className="space-y-4">
+            <span className="text-xs font-medium text-muted-foreground block">
+              Platform Donasi Eksternal
+            </span>
+            {platforms.map((platform, idx) => (
+              <div
+                key={idx}
+                className="rounded-lg border border-border p-4 space-y-3 bg-card"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-muted-foreground">
+                    Platform {idx + 1}
+                  </span>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-sm"
+                    onClick={() =>
+                      setPlatforms(platforms.filter((_, i) => i !== idx))
+                    }
+                    className="text-destructive hover:text-destructive"
+                    aria-label={`Hapus platform ${idx + 1}`}
+                  >
+                    <Trash2 className="h-4 w-4" aria-hidden="true" />
+                  </Button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Input
+                    label="Nama Platform"
+                    value={platform.label}
+                    placeholder="Kitabisa"
+                    onChange={(e) =>
+                      setPlatforms(
+                        platforms.map((p, i) =>
+                          i === idx ? { ...p, label: e.target.value } : p
+                        )
+                      )
+                    }
+                  />
+                  <Input
+                    label="Tautan Donasi"
+                    type="url"
+                    value={platform.url}
+                    placeholder="https://kitabisa.com/campaign"
+                    onChange={(e) =>
+                      setPlatforms(
+                        platforms.map((p, i) =>
+                          i === idx ? { ...p, url: e.target.value } : p
+                        )
+                      )
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => setPlatforms([...platforms, { label: "", url: "" }])}
+            >
+              <Plus className="h-4 w-4" />
+              Tambah Platform
             </Button>
           </div>
         </Card>

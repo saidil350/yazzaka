@@ -19,6 +19,25 @@ export interface HeroContent {
   gallery: string[];
 }
 
+/** Satu rekening bank untuk donasi transfer. */
+export interface DonationBankAccount {
+  bankName: string;
+  accountNumber: string;
+  accountHolder: string;
+}
+
+/** Platform donasi eksternal (contoh: Kitabisa). */
+export interface DonationPlatform {
+  label: string;
+  url: string;
+}
+
+/** Info donasi yang tampil saat tombol Donasi di header situs publik diklik. */
+export interface DonationInfo {
+  bankAccounts: DonationBankAccount[];
+  platforms: DonationPlatform[];
+}
+
 export interface FoundationData {
   /** Nomor SK pengesahan dari Kemenkumham RI. */
   skNumber: string;
@@ -32,6 +51,8 @@ export interface FoundationData {
   contactPerson: string;
   /** Email resmi yayasan. */
   email: string;
+  /** Info donasi (opsional; kosong = tombol Donasi disembunyikan). */
+  donation?: DonationInfo;
 }
 
 export interface SchoolProfile {
