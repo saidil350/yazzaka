@@ -38,6 +38,7 @@ export const DEFAULT_FOUNDATION: FoundationData = {
   chairman: "Dr. Amri Fatmi, Lc., M.A.",
   contactPerson: "+62 853-6299-9090",
   email: "yayasanbinaimanakhlakyazzakka@gmail.com",
+  donation: { bankAccounts: [], platforms: [] },
 };
 
 export const initialSchoolProfile: SchoolProfile = {

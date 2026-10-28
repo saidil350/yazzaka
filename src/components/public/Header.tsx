@@ -175,6 +175,13 @@ export function Header() {
   // default tampil bila key belum ada di data.
   const showTopbar = sections.find((s) => s.key === "topbar")?.isEnabled ?? true;
 
+  // Tombol Donasi → halaman /donasi; tampil hanya bila ada rekening atau
+  // platform yang terisi via CMS (/admin/organization/profil → Informasi Donasi).
+  const donation = profile.foundation?.donation;
+  const hasDonationInfo =
+    (donation?.bankAccounts ?? []).some((a) => (a.accountNumber ?? "").trim() !== "") ||
+    (donation?.platforms ?? []).some((p) => (p.url ?? "").trim() !== "");
+
   return (
     <>
       {/* ── Top Announcement Sub-Bar ───────────── */}
@@ -329,6 +336,14 @@ export function Header() {
 
           {/* Action CTA & Mobile Hamburger */}
           <div className="flex items-center gap-2.5 shrink-0">
+            {hasDonationInfo && (
+              <Link
+                href="/donasi"
+                className="inline-flex items-center rounded-full bg-accent text-accent-foreground hover:bg-accent/90 px-3 py-1 text-xs font-bold transition-colors whitespace-nowrap"
+              >
+                Donasi
+              </Link>
+            )}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
