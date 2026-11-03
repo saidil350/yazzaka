@@ -2,7 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { useSchoolData } from "@/context/SchoolDataContext";
+import Image from "next/image";
+import type { Article } from "@/lib/news/types";
 import Autoplay from "embla-carousel-autoplay";
 import { Calendar, Newspaper, ArrowLeft, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -15,9 +16,12 @@ import {
 } from "@/components/ui/carousel";
 import { cn, formatDateIndonesian } from "@/lib/utils";
 
-export function NewsCarouselSection() {
-  const { articles } = useSchoolData();
+interface NewsCarouselSectionProps {
+  /** Artikel terbit terbaru dari server (published). */
+  articles: Article[];
+}
 
+export function NewsCarouselSection({ articles }: NewsCarouselSectionProps) {
   // Prioritaskan artikel berflag unggulan; bila kurang dari 2,
   // fallback ke daftar terbit terbaru (pengaman untuk fallback initialData).
   const published = articles.filter((a) => a.status === "published");
@@ -122,13 +126,14 @@ export function NewsCarouselSection() {
                     className="group block rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
                     <article className="flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors interactive-lift">
-                      <div className="aspect-[16/10] overflow-hidden bg-muted">
+                      <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                         {art.coverImage ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img
+                          <Image
                             src={art.coverImage}
                             alt={art.title}
-                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            fill
+                            sizes="(min-width:768px) 672px, 90vw"
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                         ) : (
                           <div

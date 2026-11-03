@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
-import { mapEvent } from "../../school-data/route";
+import { mapEvent } from "@/lib/data-mappers";
+import { revalidatePublicPages } from "@/lib/revalidate-public";
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -29,6 +30,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       return NextResponse.json({ error: "Event tidak ditemukan" }, { status: 404 });
     }
 
+    revalidatePublicPages();
     return NextResponse.json(mapEvent(result[0]));
   } catch (error) {
     console.error(`PUT /api/events/[id] error:`, error);
@@ -47,6 +49,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
       return NextResponse.json({ error: "Event tidak ditemukan" }, { status: 404 });
     }
 
+    revalidatePublicPages();
     return NextResponse.json({ success: true, id: result[0].id });
   } catch (error) {
     console.error(`DELETE /api/events/[id] error:`, error);

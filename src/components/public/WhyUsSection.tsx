@@ -1,7 +1,5 @@
-"use client";
-
 import React from "react";
-import { useSchoolData } from "@/context/SchoolDataContext";
+import type { SchoolProfile } from "@/lib/types";
 import {
   HeartHandshake,
   GraduationCap,
@@ -12,8 +10,12 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-export function WhyUsSection() {
-  const { profile } = useSchoolData();
+interface WhyUsSectionProps {
+  /** Profil sekolah dari server — sumber profile.values (Pilar Karakter). */
+  profile: SchoolProfile;
+}
+
+export function WhyUsSection({ profile }: WhyUsSectionProps) {
 
   const iconPalette = [
     {

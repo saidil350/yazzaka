@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
 import { LucideIcon, FolderOpen } from "lucide-react";
@@ -9,6 +7,9 @@ import { cn } from "@/lib/utils";
 /**
  * EmptyState — Compound Component Pattern & Explicit Variants
  * Supports flexible children composition as well as backward-compatible props.
+ * TANPA "use client": komponen murni presentational tanpa hook, sehingga bisa
+ * dirender dari server component (prop icon tidak boleh melewati batas server
+ * → client). Varian action.onClick hanya dipakai dari file yang memang client.
  */
 
 export interface EmptyStateProps {

@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { getDb } from "@/lib/db/neon";
-import { mapProgram } from "@/app/api/school-data/route";
+import { mapProgram } from "@/lib/data-mappers";
 import type { Program } from "@/lib/types";
 
 /**

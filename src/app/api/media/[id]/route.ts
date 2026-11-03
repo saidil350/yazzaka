@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { deleteNewsMedia } from "@/lib/news/service";
 import { requireUser, toErrorResponse } from "@/lib/news/api-helpers";
+import { revalidatePublicPages } from "@/lib/revalidate-public";
 
 /**
  * DELETE /api/media/[id] — hapus berkas dari library.
@@ -14,6 +15,7 @@ export async function DELETE(
     const user = await requireUser(request);
     const id = (await params).id;
     await deleteNewsMedia(id, user);
+    revalidatePublicPages();
     return NextResponse.json({ success: true, id });
   } catch (error) {
     return toErrorResponse(error, "Gagal menghapus media");

@@ -4,8 +4,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useSchoolData } from "@/context/SchoolDataContext";
 import { useActiveSection } from "@/lib/hooks/useActiveSection";
+import type { PageSectionConfig, SchoolProfile } from "@/lib/types";
 import {
   Menu,
   X,
@@ -60,8 +60,14 @@ const quickUnits = [
   { label: "Wakaf Pesantren 6.0", href: "/program/pesantren-peradaban-60", icon: Globe },
 ];
 
-export function Header() {
-  const { profile, sections } = useSchoolData();
+interface HeaderProps {
+  /** Profil sekolah dari server (layout (public)) — logo, akreditasi, WA, donasi. */
+  profile: SchoolProfile;
+  /** Konfigurasi seksi dari DB — dipakai untuk visibilitas topbar. */
+  sections: PageSectionConfig[];
+}
+
+export function Header({ profile, sections }: HeaderProps) {
   const pathname = usePathname();
 
   const [isScrolled, setIsScrolled] = useState(false);

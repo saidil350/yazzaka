@@ -1,17 +1,19 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { useSchoolData } from "@/context/SchoolDataContext";
+import Image from "next/image";
+import type { Article } from "@/lib/news/types";
 import { Calendar, Newspaper, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 import { formatDateIndonesian } from "@/lib/utils";
 
-export function NewsSection() {
-  const { articles } = useSchoolData();
+interface NewsSectionProps {
+  /** Artikel terbit terbaru dari server (sudah difilter status published). */
+  articles: Article[];
+}
 
+export function NewsSection({ articles }: NewsSectionProps) {
   // /api/school-data sudah memfilter published & mengurutkan terbaru,
   // filter di sini hanya pengaman untuk fallback initialData.
   const latest = articles
@@ -68,11 +70,12 @@ export function NewsSection() {
                 <article className="h-full flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors interactive-lift">
                   <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                     {art.coverImage ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
+                      <Image
                         src={art.coverImage}
                         alt={art.title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        fill
+                        sizes="(min-width:1024px) 380px, (min-width:768px) 45vw, 90vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (
                       <div

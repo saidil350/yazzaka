@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
-import { mapProgram } from "../../school-data/route";
+import { mapProgram } from "@/lib/data-mappers";
 import { revalidateProgramPages } from "../route";
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {

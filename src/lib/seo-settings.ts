@@ -7,6 +7,14 @@ export interface SeoSettings {
   metaDescription: string;
   ogImage: string;
   googleVerification?: string;
+  /** Tautan media sosial (jsonb website_settings.social_media); null bila kosong/gagal DB. */
+  socialMedia: {
+    instagram: string;
+    youtube: string;
+    facebook: string;
+    tiktok: string;
+    linkedin: string;
+  } | null;
 }
 
 /**
@@ -20,12 +28,13 @@ export const getSeoSettings = cache(async (): Promise<SeoSettings> => {
     metaDescription: initialWebsiteSettings.metaDescription,
     ogImage: initialWebsiteSettings.ogImage,
     googleVerification: initialWebsiteSettings.googleVerification,
+    socialMedia: initialWebsiteSettings.socialMedia ?? null,
   };
 
   try {
     const sql = getDb();
     const rows = await sql`
-      SELECT site_title, meta_description, og_image, google_verification
+      SELECT site_title, meta_description, og_image, google_verification, social_media
       FROM website_settings LIMIT 1
     `;
     const r = rows[0];
@@ -35,6 +44,7 @@ export const getSeoSettings = cache(async (): Promise<SeoSettings> => {
       metaDescription: (r.meta_description as string) || fallback.metaDescription,
       ogImage: (r.og_image as string) || fallback.ogImage,
       googleVerification: (r.google_verification as string) || undefined,
+      socialMedia: (r.social_media as SeoSettings["socialMedia"]) ?? null,
     };
   } catch (error) {
     console.error("getSeoSettings error:", error);

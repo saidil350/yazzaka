@@ -1,13 +1,18 @@
-"use client";
-
 import React from "react";
-import { useSchoolData } from "@/context/SchoolDataContext";
+import Image from "next/image";
+import type { SchoolProfile, Testimonial } from "@/lib/types";
 import { MessageSquareHeart, Star, Quote, MessageSquare, User } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 
-export function TestimonialsSection() {
-  const { testimonials, profile } = useSchoolData();
+interface TestimonialsSectionProps {
+  /** Testimoni dari server. */
+  testimonials: Testimonial[];
+  /** Profil untuk penyebutan nama lembaga di deskripsi. */
+  profile: SchoolProfile;
+}
+
+export function TestimonialsSection({ testimonials, profile }: TestimonialsSectionProps) {
 
   return (
     <section id="testimoni" className="py-14 lg:py-16 border-b border-border scroll-mt-24">
@@ -63,10 +68,11 @@ export function TestimonialsSection() {
 
                   <div className="pt-3.5 mt-3 border-t border-black/10 flex items-center gap-3">
                     {test.photoUrl ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
+                      <Image
                         src={test.photoUrl}
                         alt={test.name}
+                        width={40}
+                        height={40}
                         className="h-10 w-10 rounded-full object-cover border-2 border-white shadow-xs shrink-0"
                       />
                     ) : (

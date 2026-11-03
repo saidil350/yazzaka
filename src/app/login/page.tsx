@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { useToast } from "@/components/ui/toast";
+import { Providers } from "@/components/Providers";
+import { publicSans } from "@/lib/fonts-admin";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -21,6 +23,18 @@ import {
 } from "lucide-react";
 
 export default function LoginPage() {
+  // Halaman login memakai AuthContext + SchoolDataContext (logo CMS) —
+  // satu-satunya rute publik yang memasang Providers.
+  return (
+    <div className={publicSans.variable}>
+      <Providers>
+        <LoginForm />
+      </Providers>
+    </div>
+  );
+}
+
+function LoginForm() {
   const router = useRouter();
   const { isAuthenticated, isInitialized, loginWithCredentials } = useAuth();
   const { profile } = useSchoolData();
@@ -108,7 +122,7 @@ export default function LoginPage() {
       : "/yazzakka.png";
 
   return (
-    <div className="admin-scope min-h-screen bg-background flex flex-col justify-between text-[#1E2330] selection:bg-[#FFF0E5] selection:text-[#FA6400]">
+    <div className={`admin-scope ${publicSans.variable} min-h-screen bg-background flex flex-col justify-between text-[#1E2330] selection:bg-[#FFF0E5] selection:text-[#FA6400]`}>
       {/* ── Top Header Bar ────────────────────────────────────────── */}
       <header className="w-full border-b border-[#E8E2D8] bg-white/80 backdrop-blur-xs py-3 px-4 sm:px-8">
         <div className="max-w-5xl mx-auto flex items-center justify-between">

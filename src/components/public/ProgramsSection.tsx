@@ -1,16 +1,18 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { useSchoolData } from "@/context/SchoolDataContext";
+import Image from "next/image";
+import type { Program } from "@/lib/types";
 import { ArrowRight, Sparkles, CheckCircle2, Layers, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 
-export function ProgramsSection() {
-  const { programs } = useSchoolData();
+interface ProgramsSectionProps {
+  /** Semua program dari server — seksi memfilter published & mengurutkan. */
+  programs: Program[];
+}
 
+export function ProgramsSection({ programs }: ProgramsSectionProps) {
   const published = programs
     .filter((p) => p.status === "published")
     .sort((a, b) => a.orderIndex - b.orderIndex);
@@ -67,11 +69,12 @@ export function ProgramsSection() {
                     {/* Card Image Banner */}
                     <div className="relative aspect-[16/10] overflow-hidden bg-stone-200">
                       {prog.imageUrl ? (
-                        /* eslint-disable-next-line @next/next/no-img-element */
-                        <img
+                        <Image
                           src={prog.imageUrl}
                           alt={prog.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          fill
+                          sizes="(min-width:1024px) 380px, (min-width:768px) 45vw, 90vw"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-stone-400">

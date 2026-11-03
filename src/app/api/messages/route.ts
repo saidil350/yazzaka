@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
-import { mapMessage } from "../school-data/route";
+import { mapMessage } from "@/lib/data-mappers";
 import { generateId } from "@/lib/utils";
 import { getSessionUser, isSuperAdmin } from "@/lib/news/api-helpers";
 

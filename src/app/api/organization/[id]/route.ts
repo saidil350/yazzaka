@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
-import { mapMember } from "../../school-data/route";
+import { mapMember } from "@/lib/data-mappers";
+import { revalidatePublicPages } from "@/lib/revalidate-public";
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -27,6 +28,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       return NextResponse.json({ error: "Anggota tidak ditemukan" }, { status: 404 });
     }
 
+    revalidatePublicPages();
     return NextResponse.json(mapMember(result[0]));
   } catch (error) {
     console.error(`PUT /api/organization/[id] error:`, error);
@@ -45,6 +47,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
       return NextResponse.json({ error: "Anggota tidak ditemukan" }, { status: 404 });
     }
 
+    revalidatePublicPages();
     return NextResponse.json({ success: true, id: result[0].id });
   } catch (error) {
     console.error(`DELETE /api/organization/[id] error:`, error);

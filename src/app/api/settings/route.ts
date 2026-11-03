@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
-import { mapSettings } from "../school-data/route";
+import { mapSettings } from "@/lib/data-mappers";
+import { revalidatePublicPages } from "@/lib/revalidate-public";
 
 export async function GET() {
   try {
@@ -43,6 +44,7 @@ export async function PUT(request: Request) {
       );
     }
 
+    revalidatePublicPages();
     return NextResponse.json(mapSettings(result[0]));
   } catch (error) {
     console.error("PUT /api/settings error:", error);

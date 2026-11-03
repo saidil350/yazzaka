@@ -1,15 +1,20 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { useSchoolData } from "@/context/SchoolDataContext";
+import Image from "next/image";
+import type { Achievement, SchoolProfile } from "@/lib/types";
 import { ArrowRight, Trophy, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 
-export function AchievementsSection() {
-  const { achievements, profile } = useSchoolData();
+interface AchievementsSectionProps {
+  /** Prestasi dari server (urut tahun terbaru). */
+  achievements: Achievement[];
+  /** Profil untuk penyebutan nama lembaga di deskripsi. */
+  profile: SchoolProfile;
+}
+
+export function AchievementsSection({ achievements, profile }: AchievementsSectionProps) {
 
   return (
     <section id="prestasi" className="py-14 lg:py-16 border-b border-border scroll-mt-24">
@@ -61,11 +66,12 @@ export function AchievementsSection() {
                 className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shadow-xs"
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={ach.imageUrl}
                     alt={ach.title}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    fill
+                    sizes="(min-width:1024px) 290px, (min-width:768px) 45vw, 90vw"
+                    className="object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>
 

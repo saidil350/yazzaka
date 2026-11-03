@@ -1,11 +1,13 @@
-"use client";
-
 import React from "react";
-import { useSchoolData } from "@/context/SchoolDataContext";
+import type { SchoolProfile } from "@/lib/types";
 import { Calendar, Users, BookOpenCheck, GraduationCap } from "lucide-react";
 
-export function TrustStats() {
-  const { profile } = useSchoolData();
+interface TrustStatsProps {
+  /** Profil sekolah dari server — angka statistik ditampilkan darinya. */
+  profile: SchoolProfile;
+}
+
+export function TrustStats({ profile }: TrustStatsProps) {
 
   const stats = [
     {

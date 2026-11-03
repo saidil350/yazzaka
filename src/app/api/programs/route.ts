@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { getDb } from "@/lib/db/neon";
-import { mapProgram } from "../school-data/route";
+import { mapProgram } from "@/lib/data-mappers";
 import { generateId } from "@/lib/utils";
 
 /** Halaman publik program server-rendered — segarkan setelah mutasi. */
