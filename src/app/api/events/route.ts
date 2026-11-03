@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
-import { mapEvent } from "../school-data/route";
+import { mapEvent } from "@/lib/data-mappers";
+import { revalidatePublicPages } from "@/lib/revalidate-public";
 import { generateId } from "@/lib/utils";
 
 export async function GET() {
@@ -30,6 +31,7 @@ export async function POST(request: Request) {
       RETURNING *
     `;
 
+    revalidatePublicPages();
     return NextResponse.json(mapEvent(result[0]), { status: 201 });
   } catch (error) {
     console.error("POST /api/events error:", error);

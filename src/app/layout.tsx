@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Newsreader, Public_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Newsreader } from "next/font/google";
 import "./globals.css";
-import { Providers } from "@/components/Providers";
+import { ToastProvider } from "@/components/ui/toast";
 import { getSeoSettings, normalizeGoogleVerification } from "@/lib/seo-settings";
 import {
   buildOrganizationJsonLd,
@@ -10,8 +10,6 @@ import {
   getSiteUrl,
   JsonLd,
 } from "@/lib/seo/structured-data";
-import { getServerSections } from "@/lib/sections-server";
-import { getServerHero } from "@/lib/school-profile";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -22,12 +20,6 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 const newsreader = Newsreader({
   subsets: ["latin"],
   variable: "--font-newsreader",
-});
-
-// Font panel CMS — hanya direferensikan oleh .admin-scope di globals.css.
-const publicSans = Public_Sans({
-  subsets: ["latin"],
-  variable: "--font-public-sans",
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -78,14 +70,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Seksi dari DB ikut dirender awal agar status visibilitas (mis. topbar)
-  // sudah benar di HTML pertama — tidak menunggu fetch client.
-  const initialSections = await getServerSections();
-  // Kolase hero ikut dirender awal agar URL gambar sudah ada di HTML pertama
-  // dan browser mengunduhnya sejak awal — bukan menunggu fetch client lalu
-  // menampilkan empty-state.
-  const serverHero = await getServerHero();
-
   // Structured data organisasi — sekali per halaman, sumber school_profile.
   const facts = await getOrgFacts();
   const orgJsonLd = buildOrganizationJsonLd(facts);
@@ -95,7 +79,7 @@ export default async function RootLayout({
     <html
       lang="id"
       data-scroll-behavior="smooth"
-      className={`${plusJakartaSans.variable} ${newsreader.variable} ${publicSans.variable} font-sans scroll-smooth`}
+      className={`${plusJakartaSans.variable} ${newsreader.variable} font-sans scroll-smooth`}
       suppressHydrationWarning
     >
       <body
@@ -104,9 +88,9 @@ export default async function RootLayout({
       >
         <JsonLd data={orgJsonLd} />
         <JsonLd data={siteJsonLd} />
-        <Providers initialSections={initialSections} initialHero={serverHero}>
-          {children}
-        </Providers>
+        {/* Jalur publik dirender server penuh (lihat (public)/layout);
+            SchoolDataProvider hanya dipasang di admin & login. */}
+        <ToastProvider>{children}</ToastProvider>
       </body>
     </html>
   );

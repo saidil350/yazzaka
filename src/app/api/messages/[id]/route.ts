@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
-import { mapMessage } from "../../school-data/route";
+import { mapMessage } from "@/lib/data-mappers";
 import { getSessionUser, isSuperAdmin } from "@/lib/news/api-helpers";
 
 /** Pesan kontak memuat PII — hanya super_admin. */

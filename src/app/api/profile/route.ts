@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
-import { mapProfile } from "../school-data/route";
+import { mapProfile } from "@/lib/data-mappers";
+import { revalidatePublicPages } from "@/lib/revalidate-public";
 
 export async function GET() {
   try {
@@ -69,6 +70,7 @@ export async function PUT(request: Request) {
     // Re-fetch to get complete updated row
     const finalResult = await sql`SELECT * FROM school_profile WHERE id = 'profile-yazzaka' LIMIT 1`;
     
+    revalidatePublicPages();
     return NextResponse.json(mapProfile(finalResult[0]));
   } catch (error) {
     console.error("PUT /api/profile error:", error);

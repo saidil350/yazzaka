@@ -1,12 +1,17 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { useSchoolData } from "@/context/SchoolDataContext";
+import Image from "next/image";
+import type { HeroContent } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { DEFAULT_HERO } from "@/lib/data/initialData";
 import { BookOpen, Landmark, Image as ImageIcon } from "lucide-react";
+
+interface HeroSectionProps {
+  /** Konten hero (DEFAULT_HERO + hero DB) yang sudah digabung di beranda. */
+  hero: HeroContent;
+  /** Nama lembaga untuk teks alt gambar. */
+  schoolName: string;
+}
 
 /**
  * Satu kolom marquee vertikal untuk kolase galeri hero.
@@ -36,18 +41,17 @@ function CollageColumn({
           <div key={half} className="shrink-0" aria-hidden={half === 1 ? true : undefined}>
             {list.map((url, i) => (
               <div key={`${half}-${i}`} className="pb-3 sm:pb-4">
-                <div className="overflow-hidden rounded-lg border border-border bg-card">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-border bg-card">
+                  {/* Dua gambar teratas tiap kolase ada di viewport awal —
+                      muat berprioritas (preload); sisanya (termasuk salinan
+                      marquee) tetap lazy. */}
+                  <Image
                     src={url}
                     alt={`${altBase} (${i + 1})`}
-                    className="w-full aspect-[4/3] object-cover bg-muted"
-                    // Dua gambar teratas tiap kolase ada di viewport awal —
-                    // muat eager berprioritas tinggi; sisanya (termasuk salinan
-                    // marquee) tetap lazy.
-                    loading={half === 0 && i < 2 ? "eager" : "lazy"}
-                    fetchPriority={half === 0 && i < 2 ? "high" : "auto"}
-                    decoding="async"
+                    fill
+                    sizes="(min-width:1024px) 245px, 42vw"
+                    className="object-cover bg-muted"
+                    priority={half === 0 && i < 2}
                   />
                 </div>
               </div>
@@ -59,11 +63,7 @@ function CollageColumn({
   );
 }
 
-export function HeroSection() {
-  const { profile } = useSchoolData();
-  // hero di DB bersifat parsial (JSONB default '{}') — gabungkan dengan default
-  // agar seksi tetap tampil utuh sebelum konten diisi dari CMS.
-  const hero = { ...DEFAULT_HERO, ...profile.hero };
+export function HeroSection({ hero, schoolName }: HeroSectionProps) {
   // Item kosong (ditambahkan admin tapi belum diisi) dilewati agar tidak
   // merusak loop marquee maupun syarat minimal 2 gambar.
   const heroGallery = (hero.gallery ?? []).filter((url) => url.trim() !== "");
@@ -130,12 +130,12 @@ export function HeroSection() {
               >
                 <CollageColumn
                   items={heroGallery.filter((_, i) => i % 2 === 0)}
-                  altBase={`Aktivitas santri di ${profile.name}`}
+                  altBase={`Aktivitas santri di ${schoolName}`}
                   duration="36s"
                 />
                 <CollageColumn
                   items={heroGallery.filter((_, i) => i % 2 === 1)}
-                  altBase={`Aktivitas santri di ${profile.name}`}
+                  altBase={`Aktivitas santri di ${schoolName}`}
                   reverse
                   duration="46s"
                 />
@@ -146,12 +146,13 @@ export function HeroSection() {
               <div className="relative rounded-lg overflow-hidden border border-border bg-card shadow-sm">
                 <div className="aspect-[4/3] sm:aspect-[16/11] relative">
                   {hero.imageUrl ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
+                    <Image
                       src={hero.imageUrl}
-                      alt={`Aktivitas santri di ${profile.name}`}
-                      className="w-full h-full object-cover"
-                      loading="eager"
+                      alt={`Aktivitas santri di ${schoolName}`}
+                      fill
+                      priority
+                      sizes="(min-width:1024px) 500px, 90vw"
+                      className="object-cover"
                     />
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-muted text-muted-foreground">

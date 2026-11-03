@@ -1,9 +1,6 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useSchoolData } from "@/context/SchoolDataContext";
+import type { SchoolProfile, WebsiteSettings } from "@/lib/types";
 import {
   MapPin,
   Phone,
@@ -17,14 +14,16 @@ import {
   FacebookIcon,
 } from "@/components/public/SocialIcons";
 
-export function Footer() {
-  const { profile, settings } = useSchoolData();
-  // Tahun copyright dihitung di client agar tidak memicu hydration mismatch
-  // saat lintas tahun antara HTML ter-prerender dan browser.
-  const [year, setYear] = useState<number | null>(null);
-  useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
+interface FooterProps {
+  /** Profil sekolah dari server (layout (public)). */
+  profile: SchoolProfile;
+  /** Tautan media sosial dari website_settings (boleh null bila DB gagal). */
+  socialMedia: WebsiteSettings["socialMedia"] | null;
+}
+
+export function Footer({ profile, socialMedia }: FooterProps) {
+  // Tahun dihitung saat render server — komponen ini server component, tidak
+  // di-hidrasi, jadi tidak ada risiko hydration mismatch lintas tahun.
 
   return (
     <footer className="relative bg-[#FFFDF9] text-stone-700 pt-12 pb-10 rounded-t-[2.5rem] lg:rounded-t-[3.5rem] border-t-2 border-[#E8E2D8] overflow-hidden shadow-sm">
@@ -60,9 +59,9 @@ export function Footer() {
                 Media Sosial &amp; Kanal Dakwah:
               </span>
               <div className="flex items-center gap-2">
-                {settings?.socialMedia?.instagram && (
+                {socialMedia?.instagram && (
                   <a
-                    href={settings.socialMedia.instagram}
+                    href={socialMedia.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram Yazzakka"
@@ -71,9 +70,9 @@ export function Footer() {
                     <InstagramIcon className="h-4 w-4" />
                   </a>
                 )}
-                {settings?.socialMedia?.youtube && (
+                {socialMedia?.youtube && (
                   <a
-                    href={settings.socialMedia.youtube}
+                    href={socialMedia.youtube}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="YouTube Yazzakka"
@@ -82,9 +81,9 @@ export function Footer() {
                     <YoutubeIcon className="h-4 w-4" />
                   </a>
                 )}
-                {settings?.socialMedia?.facebook && (
+                {socialMedia?.facebook && (
                   <a
-                    href={settings.socialMedia.facebook}
+                    href={socialMedia.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Facebook Yazzakka"
@@ -204,7 +203,7 @@ export function Footer() {
         {/* ── Bottom Bar ─────────────────────────────────── */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500 font-medium">
           <p className="flex items-center gap-1.5 text-center sm:text-left">
-            <span>© {year ?? ""} {profile.name}. Berkhidmat untuk Umat.</span>
+            <span>© {new Date().getFullYear()} {profile.name}. Berkhidmat untuk Umat.</span>
           </p>
           <div className="flex items-center gap-5">
             <Link href="/login" className="text-stone-500 font-bold">

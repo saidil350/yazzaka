@@ -1,6 +1,30 @@
 import type { NextConfig } from "next";
 
+// Domain storage yang melayani foto konten: Neon Object Storage (produksi)
+// dan R2 bila env publiknya terisi. URL relatif /api/files/<key> tidak perlu
+// remotePatterns. Dibaca saat build — di Vercel env tersedia saat build.
+const imageRemotePatterns: {
+  protocol: "https";
+  hostname: string;
+  pathname: string;
+}[] = [{ protocol: "https", hostname: "**.aws.neon.tech", pathname: "/**" }];
+
+if (process.env.R2_PUBLIC_BASE_URL) {
+  try {
+    imageRemotePatterns.push({
+      protocol: "https",
+      hostname: new URL(process.env.R2_PUBLIC_BASE_URL).hostname,
+      pathname: "/**",
+    });
+  } catch {
+    // env tidak valid — lewati, optimasi tetap jalan untuk domain lain
+  }
+}
+
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: imageRemotePatterns,
+  },
   async redirects() {
     return [
       {

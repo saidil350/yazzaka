@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db/neon";
-import { mapMedia } from "../school-data/route";
+import { mapMedia } from "@/lib/data-mappers";
+import { revalidatePublicPages } from "@/lib/revalidate-public";
 import { mapNewsMediaRow } from "@/lib/news/mappers";
 import { generateId } from "@/lib/utils";
 import { requireUser, toErrorResponse } from "@/lib/news/api-helpers";
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
       RETURNING *
     `;
 
+    revalidatePublicPages();
     return NextResponse.json(mapMedia(result[0]), { status: 201 });
   } catch (error) {
     console.error("POST /api/media error:", error);

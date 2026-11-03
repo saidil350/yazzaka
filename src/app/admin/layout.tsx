@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { Providers } from "@/components/Providers";
+import { publicSans } from "@/lib/fonts-admin";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminTopbar } from "@/components/admin/AdminTopbar";
 
@@ -11,6 +13,18 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Panel admin adalah satu-satunya konsumen SchoolDataProvider (fetch client
+  // /api/school-data). Jalur publik dirender server penuh dan tidak memasangnya.
+  return (
+    <div className={publicSans.variable}>
+      <Providers>
+        <AdminShell>{children}</AdminShell>
+      </Providers>
+    </div>
+  );
+}
+
+function AdminShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { isAuthenticated, isInitialized } = useAuth();
   const [isMobileOpen, setIsMobileOpen] = useState(false);

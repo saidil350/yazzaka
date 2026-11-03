@@ -1,14 +1,17 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { useSchoolData } from "@/context/SchoolDataContext";
+import Image from "next/image";
+import type { SchoolProfile } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Quote, Image as ImageIcon } from "lucide-react";
 
-export function EditorialAbout() {
-  const { profile } = useSchoolData();
+interface EditorialAboutProps {
+  /** Profil sekolah dari server — sambutan pimpinan, visi, misi, nilai. */
+  profile: SchoolProfile;
+}
+
+export function EditorialAbout({ profile }: EditorialAboutProps) {
 
   return (
     <section id="tentang" className="py-14 lg:py-16 border-b border-border scroll-mt-24">
@@ -33,11 +36,12 @@ export function EditorialAbout() {
             <div className="bg-card border border-border rounded-lg p-5">
               <div className="aspect-[16/10] relative overflow-hidden rounded-md bg-muted mb-4">
                 {profile.principal.photoUrl ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
+                  <Image
                     src={profile.principal.photoUrl}
                     alt={profile.principal.name}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(min-width:1024px) 480px, 90vw"
+                    className="object-cover"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-muted-foreground">
