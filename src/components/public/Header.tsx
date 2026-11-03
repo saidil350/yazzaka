@@ -237,7 +237,7 @@ export function Header({ profile, sections }: HeaderProps) {
                 src={
                   profile.branding?.logoUrl && profile.branding.logoUrl !== "/logo-yazzaka.svg"
                     ? profile.branding.logoUrl
-                    : "/yazzakka.png"
+                    : "/yazzakka.webp"
                 }
                 alt={profile.name}
                 width={160}
@@ -394,7 +394,7 @@ export function Header({ profile, sections }: HeaderProps) {
                   src={
                     profile.branding?.logoUrl && profile.branding.logoUrl !== "/logo-yazzaka.svg"
                       ? profile.branding.logoUrl
-                      : "/yazzakka.png"
+                      : "/yazzakka.webp"
                   }
                   alt={profile.name}
                   width={140}

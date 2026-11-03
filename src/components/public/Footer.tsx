@@ -39,7 +39,7 @@ export function Footer({ profile, socialMedia }: FooterProps) {
                 src={
                   profile.branding?.logoUrl && profile.branding.logoUrl !== "/logo-yazzaka.svg"
                     ? profile.branding.logoUrl
-                    : "/yazzakka.png"
+                    : "/yazzakka.webp"
                 }
                 alt={profile.name}
                 width={180}
