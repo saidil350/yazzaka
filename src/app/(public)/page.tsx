@@ -30,7 +30,9 @@ async function getHomeData() {
       listPublishedPrograms(),
       listAchievements(),
       listTestimonials(),
-      listArticles({ status: ["published"], q: null, page: 1, pageSize: 12 }),
+      // 6 = maksimum yang dirender (carousel 6 slide + NewsSection ambil 3
+      // dari sana) — sisanya hanya membesarkan payload RSC halaman.
+      listArticles({ status: ["published"], q: null, page: 1, pageSize: 6 }),
     ]);
   return { profile, sections, programs, achievements, testimonials, articles: articlesResult.items };
 }
