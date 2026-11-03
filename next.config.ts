@@ -24,6 +24,15 @@ if (process.env.R2_PUBLIC_BASE_URL) {
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: imageRemotePatterns,
+    // AVIF lebih kecil dari WebP untuk foto konten; WebP tetap fallback.
+    formats: ["image/avif", "image/webp"],
+    // Output optimizer di-CDN-cache jangka panjang — URL sumber konten CMS
+    // stabil, jadi tidak ada risiko konten basi.
+    minimumCacheTTL: 2678400,
+    // Pangkas kandidat srcset: default Next sampai 3840w, padahal slot
+    // terbesar di situs ~1080px (srcset "Belum Ada Berita" 245px dulu).
+    deviceSizes: [360, 414, 640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [64, 96, 128, 256, 384, 512],
   },
   async redirects() {
     return [
