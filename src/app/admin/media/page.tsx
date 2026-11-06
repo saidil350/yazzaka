@@ -100,7 +100,7 @@ export default function AdminMediaPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
+          <span className="text-xs font-medium text-muted-foreground block mb-1">
             Media / Media Library
           </span>
           <h1 className="text-2xl sm:text-3xl font-semibold text-foreground">
@@ -185,7 +185,7 @@ export default function AdminMediaPage() {
                 ) : (
                   <div className="flex flex-col items-center gap-1 text-muted-foreground">
                     <FileText className="h-10 w-10 text-primary" aria-hidden="true" />
-                    <span className="text-[10px]">Dokumen PDF</span>
+                    <span className="text-xs">Dokumen PDF</span>
                   </div>
                 )}
 
@@ -199,7 +199,7 @@ export default function AdminMediaPage() {
                   <h4 className="font-semibold text-xs text-foreground line-clamp-1">
                     {item.fileName}
                   </h4>
-                  <p className="text-[10px] text-muted-foreground">
+                  <p className="text-xs text-muted-foreground">
                     {item.fileSize} • {item.uploadedAt}
                   </p>
                 </div>

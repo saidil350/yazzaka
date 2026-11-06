@@ -197,7 +197,7 @@ export function Header({ profile, sections }: HeaderProps) {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between text-xs">
           <div className="flex items-center gap-2.5">
-            <span className="hidden md:inline-flex items-center gap-1.5 text-stone-300 font-medium text-[11px]">
+            <span className="hidden md:inline-flex items-center gap-1.5 text-stone-300 font-medium text-xs">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               Akreditasi {profile.accreditation} · SK Kemenkumham {profile.npsn}
             </span>
@@ -208,7 +208,7 @@ export function Header({ profile, sections }: HeaderProps) {
               href={`https://wa.me/${profile.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-[11px] transition-all"
+              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-all"
             >
               <Phone className="h-2.5 w-2.5 text-emerald-400 shrink-0" aria-hidden="true" />
               <span>WhatsApp CS</span>
@@ -223,8 +223,8 @@ export function Header({ profile, sections }: HeaderProps) {
         className={[
           "sticky top-0 z-40 transition-all duration-200",
           isScrolled
-            ? "bg-background shadow-xs border-b border-[#E8E2D8]"
-            : "bg-background border-b border-[#E8E2D8]",
+            ? "bg-background shadow-xs border-b border-border"
+            : "bg-background border-b border-border",
         ].join(" ")}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
@@ -248,7 +248,7 @@ export function Header({ profile, sections }: HeaderProps) {
           </Link>
 
           {/* Desktop Structured Navigation (Clean & Ergonomic) */}
-          <nav aria-label="Navigasi utama" className="hidden lg:flex items-center gap-1 bg-[#F3EFE6] p-1 rounded-full border border-[#E8E2D8]">
+          <nav aria-label="Navigasi utama" className="hidden lg:flex items-center gap-1 bg-secondary p-1 rounded-full border border-border">
             {primaryNavLinks.map((link) => {
               const active = isLinkActive(link);
               return (
@@ -260,8 +260,8 @@ export function Header({ profile, sections }: HeaderProps) {
                   className={[
                     "px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 whitespace-nowrap",
                     active
-                      ? "bg-white text-stone-600 shadow-xs"
-                      : "text-stone-600 hover:bg-white",
+                      ? "bg-white text-foreground shadow-xs"
+                      : "text-muted-foreground hover:bg-white",
                   ].join(" ")}
                 >
                   {link.label}
@@ -279,21 +279,21 @@ export function Header({ profile, sections }: HeaderProps) {
                 className={[
                   "px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 whitespace-nowrap flex items-center gap-1 cursor-pointer",
                   isSecondaryActive || dropdownOpen
-                    ? "bg-white text-stone-600 shadow-xs"
-                    : "text-stone-600 hover:bg-white",
+                    ? "bg-white text-foreground shadow-xs"
+                    : "text-muted-foreground hover:bg-white",
                 ].join(" ")}
               >
                 <span>Informasi</span>
                 <ChevronDown
                   className={`h-3.5 w-3.5 transition-transform duration-200 ${
-                    dropdownOpen ? "rotate-180 text-stone-600" : "text-stone-400"
+                    dropdownOpen ? "rotate-180 text-muted-foreground" : "text-muted-foreground"
                   }`}
                 />
               </button>
 
               {/* Popover Dropdown Card */}
               {dropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl bg-white p-2 border-2 border-[#E8E2D8] shadow-xl z-50 animate-fade-in">
+                <div className="absolute right-0 top-full mt-2 w-64 rounded-lg bg-popover p-2 border border-border shadow-md z-50 animate-fade-in">
                   <div className="space-y-0.5">
                     {secondaryNavLinks.map((item) => {
                       const Icon = item.icon;
@@ -304,19 +304,17 @@ export function Header({ profile, sections }: HeaderProps) {
                           href={item.href}
                           onClick={() => setDropdownOpen(false)}
                           className={[
-                            "flex items-start gap-2.5 p-2.5 rounded-xl transition-all",
+                            "flex items-start gap-2.5 p-2.5 rounded-md transition-all",
                             isCurrent
-                              ? "bg-muted text-[#1E2330]"
-                              : "text-[#1E2330] hover:bg-muted/50",
+                              ? "bg-muted text-foreground"
+                              : "text-foreground hover:bg-muted/50",
                           ].join(" ")}
                         >
-                          <div
-                            className={`p-1.5 rounded-lg shrink-0 mt-0.5 ${
-                              isCurrent ? "bg-[#1E2330] text-white" : "bg-muted text-stone-600"
+                          <Icon
+                            className={`h-4 w-4 shrink-0 mt-0.5 ${
+                              isCurrent ? "text-foreground" : "text-muted-foreground"
                             }`}
-                          >
-                            <Icon className="h-4 w-4" />
-                          </div>
+                          />
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between gap-1">
                               <span className="text-xs font-bold truncate">{item.label}</span>
@@ -326,7 +324,7 @@ export function Header({ profile, sections }: HeaderProps) {
                                 </Badge>
                               )}
                             </div>
-                            <p className="text-[11px] text-stone-500 line-clamp-1 mt-0.5 font-medium">
+                            <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
                               {item.desc}
                             </p>
                           </div>
@@ -355,7 +353,7 @@ export function Header({ profile, sections }: HeaderProps) {
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label={mobileMenuOpen ? "Tutup menu" : "Buka menu navigasi"}
-              className="lg:hidden h-9 w-9 flex items-center justify-center rounded-full bg-[#F3EFE6] text-[#1E2330] border border-[#E8E2D8] hover:bg-white transition-all active:scale-95 cursor-pointer"
+              className="lg:hidden h-9 w-9 flex items-center justify-center rounded-full bg-secondary text-foreground border border-border hover:bg-background transition-all active:scale-95 cursor-pointer"
             >
               {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -375,7 +373,7 @@ export function Header({ profile, sections }: HeaderProps) {
         >
           {/* Backdrop with Fade Animation */}
           <div
-            className="absolute inset-0 bg-[#1E2330]/50 backdrop-blur-xs animate-fade-backdrop"
+            className="absolute inset-0 bg-foreground/50 backdrop-blur-xs animate-fade-backdrop"
             aria-hidden="true"
             onClick={() => setMobileMenuOpen(false)}
           />
@@ -384,10 +382,10 @@ export function Header({ profile, sections }: HeaderProps) {
           <div
             ref={mobileMenuRef}
             id="mobile-menu"
-            className="absolute inset-y-0 right-0 w-[min(320px,86vw)] bg-background flex flex-col overflow-y-auto border-l border-[#E8E2D8] shadow-2xl p-5 animate-slide-in-right"
+            className="absolute inset-y-0 right-0 w-[min(320px,86vw)] bg-background flex flex-col overflow-y-auto border-l border-border shadow-lg p-5 animate-slide-in-right"
           >
             {/* Drawer Header */}
-            <div className="flex items-center justify-between pb-3.5 border-b border-[#E8E2D8] shrink-0">
+            <div className="flex items-center justify-between pb-3.5 border-b border-border shrink-0">
               <div className="flex items-center gap-2">
                 <Image
                   src={
@@ -405,7 +403,7 @@ export function Header({ profile, sections }: HeaderProps) {
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
                 aria-label="Tutup menu"
-                className="h-8 w-8 flex items-center justify-center rounded-full bg-[#F3EFE6] text-stone-600 hover:text-black transition-all cursor-pointer"
+                className="h-8 w-8 flex items-center justify-center rounded-full bg-secondary text-muted-foreground hover:text-foreground transition-all cursor-pointer"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -415,7 +413,7 @@ export function Header({ profile, sections }: HeaderProps) {
             <nav className="flex-1 py-3 space-y-3">
               {/* Primary Section */}
               <div className="space-y-1">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-stone-400 px-3 block">
+                <span className="text-xs font-medium text-muted-foreground px-3 block">
                   Menu Utama
                 </span>
                 {primaryNavLinks.map((link) => {
@@ -430,10 +428,10 @@ export function Header({ profile, sections }: HeaderProps) {
                       }}
                       aria-current={active ? "page" : undefined}
                   className={[
-                    "flex items-center justify-between px-3.5 py-2 rounded-xl text-xs font-bold transition-all",
+                    "flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-bold transition-all",
                     active
                       ? "bg-[#00A0B0] text-white shadow-xs"
-                      : "text-stone-700 hover:bg-[#F3EFE6]",
+                      : "text-foreground hover:bg-secondary",
                   ].join(" ")}
                     >
                       <span>{link.label}</span>
@@ -443,8 +441,8 @@ export function Header({ profile, sections }: HeaderProps) {
               </div>
 
               {/* Informational Sub-Links */}
-              <div className="pt-2 border-t border-[#E8E2D8] space-y-1">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-stone-400 px-3 block">
+              <div className="pt-2 border-t border-border space-y-1">
+                <span className="text-xs font-medium text-muted-foreground px-3 block">
                   Warta &amp; Layanan
                 </span>
                 {secondaryNavLinks.map((item) => {
@@ -456,13 +454,13 @@ export function Header({ profile, sections }: HeaderProps) {
                       href={item.href}
                       onClick={() => setMobileMenuOpen(false)}
                       className={[
-                        "flex items-center gap-2.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all",
+                        "flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-xs font-bold transition-all",
                         isCurrent
-                          ? "bg-muted text-[#1E2330]"
-                          : "text-stone-700 hover:bg-[#F3EFE6]",
+                          ? "bg-muted text-foreground"
+                          : "text-foreground hover:bg-secondary",
                       ].join(" ")}
                     >
-                      <Icon className="h-3.5 w-3.5 text-stone-600 shrink-0" />
+                      <Icon className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                       <span className="truncate">{item.label}</span>
                     </Link>
                   );
@@ -470,8 +468,8 @@ export function Header({ profile, sections }: HeaderProps) {
               </div>
 
               {/* Quick Units Pills */}
-              <div className="pt-2 border-t border-[#E8E2D8] space-y-1">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-stone-400 px-3 block">
+              <div className="pt-2 border-t border-border space-y-1">
+                <span className="text-xs font-medium text-muted-foreground px-3 block">
                   6 Unit Pendidikan
                 </span>
                 <div className="grid grid-cols-1 gap-1 px-1">
@@ -482,9 +480,9 @@ export function Header({ profile, sections }: HeaderProps) {
                         key={u.href}
                         href={u.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold text-stone-600 hover:bg-white transition-colors"
+                        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:bg-muted transition-colors"
                       >
-                        <Icon className="h-3 w-3 text-stone-400" />
+                        <Icon className="h-3 w-3 text-muted-foreground" />
                         <span className="truncate">{u.label}</span>
                       </Link>
                     );
@@ -494,7 +492,7 @@ export function Header({ profile, sections }: HeaderProps) {
             </nav>
 
             {/* Drawer Footer Actions */}
-            <div className="pt-3.5 border-t border-[#E8E2D8] space-y-2 shrink-0">
+            <div className="pt-3.5 border-t border-border space-y-2 shrink-0">
               <a
                 href={`https://wa.me/${profile.whatsapp}?text=Assalamu'alaikum%20Admin%20Yazzakka`}
                 target="_blank"

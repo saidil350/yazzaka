@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Program } from "@/lib/types";
-import { ArrowRight, CheckCircle2, Sparkles, Layers, BookOpen } from "lucide-react";
+import { ArrowRight, CheckCircle2, Layers, BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -59,8 +59,7 @@ export default async function ProgramsDirectoryPage() {
       <section className="bg-background py-10 lg:py-14 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center">
-            <Badge variant="secondary" className="gap-2 mb-3">
-              <Sparkles className="h-3.5 w-3.5 text-yazzaka-teal-dark" />
+            <Badge variant="secondary" className="mb-3">
               <span>Unit Pendidikan &amp; Program Strategis</span>
             </Badge>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
@@ -96,7 +95,7 @@ export default async function ProgramsDirectoryPage() {
                     href={`/program/${prog.slug}`}
                     className="group block h-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
-                    <Card className="h-full overflow-hidden flex flex-col justify-between interactive-lift">
+                    <Card className="h-full overflow-hidden flex flex-col justify-between">
                       <div>
                         {/* Banner Image */}
                         <div className="relative aspect-[16/10] overflow-hidden bg-muted">

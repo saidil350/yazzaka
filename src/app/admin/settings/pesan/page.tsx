@@ -123,7 +123,7 @@ export default function AdminContactInboxPage() {
       {/* ── Page Header ────────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border pb-6">
         <div>
-          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
+          <span className="text-xs font-medium text-muted-foreground block mb-1">
             Website Settings / Pesan Masuk
           </span>
           <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
@@ -159,7 +159,7 @@ export default function AdminContactInboxPage() {
         >
           <span>Semua Pesan</span>
           <span
-            className={`px-1.5 py-0.5 rounded-md text-[10px] font-medium ${
+            className={`px-1.5 py-0.5 rounded-md text-xs font-medium ${
               filterStatus === "all"
                 ? "bg-muted text-foreground"
                 : "bg-background text-muted-foreground"
@@ -180,7 +180,7 @@ export default function AdminContactInboxPage() {
         >
           <span>Baru</span>
           <span
-            className={`px-1.5 py-0.5 rounded-md text-[10px] font-medium ${
+            className={`px-1.5 py-0.5 rounded-md text-xs font-medium ${
               countNew > 0
                 ? "bg-primary text-primary-foreground"
                 : "bg-background text-muted-foreground"
@@ -200,7 +200,7 @@ export default function AdminContactInboxPage() {
           }`}
         >
           <span>Dibaca</span>
-          <span className="px-1.5 py-0.5 rounded-md text-[10px] font-medium bg-background text-muted-foreground">
+          <span className="px-1.5 py-0.5 rounded-md text-xs font-medium bg-background text-muted-foreground">
             {countRead}
           </span>
         </button>
@@ -215,7 +215,7 @@ export default function AdminContactInboxPage() {
           }`}
         >
           <span>Sudah Dibalas</span>
-          <span className="px-1.5 py-0.5 rounded-md text-[10px] font-medium bg-background text-muted-foreground">
+          <span className="px-1.5 py-0.5 rounded-md text-xs font-medium bg-background text-muted-foreground">
             {countReplied}
           </span>
         </button>
@@ -340,7 +340,7 @@ export default function AdminContactInboxPage() {
 
                   {/* Right Column: Time & Status Badge */}
                   <div className="flex items-center sm:flex-col sm:items-end justify-between sm:justify-center gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-border">
-                    <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                       <Clock className="h-3 w-3 shrink-0" />
                       <span>{formatDisplayDate(msg.submittedAt)}</span>
                     </div>
@@ -416,7 +416,7 @@ export default function AdminContactInboxPage() {
             {/* Meta Grid Card */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-muted rounded-lg border border-border">
               <div className="space-y-0.5">
-                <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider block">
+                <span className="text-xs font-medium text-muted-foreground block">
                   Email
                 </span>
                 <span className="text-foreground font-medium break-all">
@@ -425,7 +425,7 @@ export default function AdminContactInboxPage() {
               </div>
 
               <div className="space-y-0.5">
-                <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider block">
+                <span className="text-xs font-medium text-muted-foreground block">
                   Nomor WhatsApp / Telp
                 </span>
                 <span className="text-foreground font-mono font-medium">
@@ -434,7 +434,7 @@ export default function AdminContactInboxPage() {
               </div>
 
               <div className="space-y-0.5">
-                <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider block">
+                <span className="text-xs font-medium text-muted-foreground block">
                   Waktu Pengiriman
                 </span>
                 <span className="text-foreground font-medium">
@@ -463,7 +463,7 @@ export default function AdminContactInboxPage() {
 
             {/* Subject Section */}
             <div className="space-y-1">
-              <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground block">
+              <span className="text-xs font-medium text-muted-foreground block">
                 Subjek Pertanyaan
               </span>
               <p className="text-base font-semibold text-foreground">
@@ -473,7 +473,7 @@ export default function AdminContactInboxPage() {
 
             {/* Message Body Card */}
             <div className="space-y-1.5">
-              <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground block">
+              <span className="text-xs font-medium text-muted-foreground block">
                 Isi Pesan
               </span>
               <div className="p-4 bg-card rounded-lg border border-border text-foreground whitespace-pre-line leading-relaxed text-xs sm:text-sm">

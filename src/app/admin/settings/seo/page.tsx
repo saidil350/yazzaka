@@ -76,7 +76,7 @@ export default function AdminSEOSettingsPage() {
     <div className="max-w-4xl mx-auto space-y-8">
       {/* ── Page Header ────────────────────────────────────────────── */}
       <div>
-        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
+        <span className="text-xs font-medium text-muted-foreground block mb-1">
           Website Settings / SEO Global
         </span>
         <h1 className="text-2xl sm:text-3xl font-semibold text-foreground">

@@ -308,7 +308,7 @@ export default function AdminTeamMembersPage() {
       {/* ── Page Header ─────────────────────────────── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
+          <span className="text-xs font-medium text-muted-foreground block mb-1">
             Konten Landing Page / Struktur Pendidik
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
@@ -337,7 +337,7 @@ export default function AdminTeamMembersPage() {
           ) : (
             <p className="text-2xl font-medium text-foreground">{organization.length}</p>
           )}
-          <span className="text-[11px] text-muted-foreground">Seluruh unit yayasan</span>
+          <span className="text-xs text-muted-foreground">Seluruh unit yayasan</span>
         </Card>
 
         <Card className="p-4">
@@ -350,7 +350,7 @@ export default function AdminTeamMembersPage() {
           ) : (
             <p className="text-2xl font-medium text-foreground">{countTpaTkit}</p>
           )}
-          <span className="text-[11px] text-muted-foreground">Pendidikan Usia Dini &amp; Quran</span>
+          <span className="text-xs text-muted-foreground">Pendidikan Usia Dini &amp; Quran</span>
         </Card>
 
         <Card className="p-4">
@@ -363,7 +363,7 @@ export default function AdminTeamMembersPage() {
           ) : (
             <p className="text-2xl font-medium text-foreground">{countPkbmSekolah}</p>
           )}
-          <span className="text-[11px] text-muted-foreground">Sekolah &amp; Kesetaraan</span>
+          <span className="text-xs text-muted-foreground">Sekolah &amp; Kesetaraan</span>
         </Card>
 
         <Card className="p-4">
@@ -376,7 +376,7 @@ export default function AdminTeamMembersPage() {
           ) : (
             <p className="text-2xl font-medium text-foreground">{countDarulQuran}</p>
           )}
-          <span className="text-[11px] text-muted-foreground">Pesantren &amp; Yayasan</span>
+          <span className="text-xs text-muted-foreground">Pesantren &amp; Yayasan</span>
         </Card>
       </div>
 
@@ -413,7 +413,7 @@ export default function AdminTeamMembersPage() {
                 Teks Judul &amp; Deskripsi Seksi Publik (Halaman Tentang Kami)
               </h3>
             </div>
-            <span className="text-[11px] text-success bg-success-bg px-2 py-0.5 rounded-md border border-success/20">
+            <span className="text-xs text-success bg-success-bg px-2 py-0.5 rounded-md border border-success/20">
               Tersinkronisasi ke Landing Page
             </span>
           </div>
@@ -518,7 +518,7 @@ export default function AdminTeamMembersPage() {
 
                 {/* Content */}
                 <div className="p-4 space-y-2">
-                  <span className="text-[10px] font-medium text-primary uppercase tracking-wider block truncate">
+                  <span className="text-xs font-medium text-primary block truncate">
                     {normalizeDepartment(m.department)}
                   </span>
                   <h4 className="font-semibold text-sm text-foreground leading-snug line-clamp-2 min-h-[2.5rem]">
@@ -528,11 +528,11 @@ export default function AdminTeamMembersPage() {
                     {m.roleTitle}
                   </p>
                   {m.qualifications && (
-                    <p className="text-[10px] text-muted-foreground italic bg-muted p-1.5 rounded-md border border-border line-clamp-2 font-medium">
+                    <p className="text-xs text-muted-foreground italic bg-muted p-1.5 rounded-md border border-border line-clamp-2 font-medium">
                       🎓 {m.qualifications}
                     </p>
                   )}
-                  <p className="text-[11px] text-muted-foreground line-clamp-2 pt-2 border-t border-border font-medium leading-relaxed">
+                  <p className="text-xs text-muted-foreground line-clamp-2 pt-2 border-t border-border font-medium leading-relaxed">
                     {m.bio}
                   </p>
                 </div>

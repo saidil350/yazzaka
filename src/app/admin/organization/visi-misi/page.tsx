@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Modal } from "@/components/ui/modal";
-import { Save, Plus, Trash2, Compass, Target, Sparkles, Edit2 } from "lucide-react";
+import { Save, Plus, Trash2, Compass, Target, Edit2 } from "lucide-react";
 
 export default function AdminVisionMissionPage() {
   const { profile, updateProfile, isLoading } = useSchoolData();
@@ -181,7 +181,7 @@ export default function AdminVisionMissionPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
-        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
+        <span className="text-xs font-medium text-muted-foreground block mb-1">
           Organization / Visi, Misi &amp; Nilai
         </span>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
@@ -195,7 +195,7 @@ export default function AdminVisionMissionPage() {
       {/* Vision */}
       <Card className="p-6">
         <form onSubmit={handleSaveVision} className="space-y-4">
-          <div className="flex items-center gap-2 font-semibold text-sm uppercase tracking-wide text-foreground">
+          <div className="flex items-center gap-2 font-semibold text-sm text-foreground">
             <Compass className="h-4 w-4 text-primary" />
             <span>Visi Lembaga</span>
           </div>
@@ -215,7 +215,7 @@ export default function AdminVisionMissionPage() {
 
       {/* Mission List */}
       <Card className="p-6 space-y-6">
-        <div className="flex items-center gap-2 font-semibold text-sm uppercase tracking-wide text-foreground">
+        <div className="flex items-center gap-2 font-semibold text-sm text-foreground">
           <Target className="h-4 w-4 text-primary" />
           <span>Butir-Butir Misi Strategis</span>
         </div>
@@ -264,8 +264,7 @@ export default function AdminVisionMissionPage() {
       {/* Values / Nilai Pokok (seksi Why Us) */}
       <Card className="p-6 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2 font-semibold text-sm uppercase tracking-wide text-foreground">
-            <Sparkles className="h-4 w-4 text-primary" />
+          <div className="flex items-center gap-2 font-semibold text-sm text-foreground">
             <span>Nilai Pokok / Keunggulan (Seksi Why Us)</span>
           </div>
           <Button size="sm" onClick={handleOpenAddValue} className="shrink-0">

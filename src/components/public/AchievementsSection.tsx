@@ -27,10 +27,10 @@ export function AchievementsSection({ achievements, profile }: AchievementsSecti
               <Trophy className="h-3 w-3 text-yazzaka-orange" />
               <span>Rekam Jejak Keberhasilan</span>
             </Badge>
-            <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold tracking-tight leading-tight">
               Prestasi Santri &amp; Siswa Unggulan
             </h2>
-            <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
+            <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
               Capaian membanggakan santri {profile.name} di ajang olimpiade sains nasional, musabaqah hifdzil Quran internasional, dan riset robotika.
             </p>
           </div>
@@ -63,9 +63,9 @@ export function AchievementsSection({ achievements, profile }: AchievementsSecti
             {achievements.slice(0, 4).map((ach) => (
               <div
                 key={ach.id}
-                className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shadow-xs"
+                className="bg-white border border-border rounded-lg overflow-hidden flex flex-col justify-between shadow-xs"
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
+                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                   <Image
                     src={ach.imageUrl}
                     alt={ach.title}
@@ -80,17 +80,17 @@ export function AchievementsSection({ achievements, profile }: AchievementsSecti
                     <Badge variant="secondary" className="mb-1.5">
                       {ach.category} • {ach.year}
                     </Badge>
-                    <h4 className="text-sm font-bold text-[#1E2330] leading-snug line-clamp-2">
+                    <h4 className="text-sm font-bold leading-snug line-clamp-2">
                       {ach.title}
                     </h4>
                   </div>
 
-                  <div className="pt-2 border-t border-stone-100 space-y-0.5">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-stone-800">
+                  <div className="pt-2 border-t border-border space-y-0.5">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
                       <Award className="h-3 w-3 text-amber-500" />
                       <span>{ach.studentName}</span>
                     </div>
-                    <p className="text-[10px] text-stone-500 line-clamp-1 font-medium">
+                    <p className="text-xs text-muted-foreground line-clamp-1">
                       {ach.competitionName}
                     </p>
                   </div>

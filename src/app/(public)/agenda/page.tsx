@@ -21,23 +21,23 @@ export default async function EventsPage() {
   return (
     <>
       {/* ── Headspace Warm Page Hero Banner ─────────── */}
-      <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-[#E8E2D8]">
+      <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
           <Badge variant="secondary" className="gap-2 mb-3">
             <Calendar className="h-3.5 w-3.5 text-yazzaka-orange" />
             <span>Kalender Akademik &amp; Kegiatan</span>
           </Badge>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
             Agenda &amp; Kegiatan Sekolah
           </h1>
-          <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
+          <p className="text-sm sm:text-base text-muted-foreground mt-3 leading-relaxed">
             Jadwal seminar parenting, wisuda tahfiz, haflah khotmil Quran, dan kegiatan kesiswaan.
           </p>
         </div>
       </section>
 
       {/* ── Content ─────────────────────────────────── */}
-      <section className="py-12 lg:py-14 bg-white border-b border-[#E8E2D8]">
+      <section className="py-12 lg:py-14 bg-white border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
           {/* Event List or EmptyState */}
@@ -52,10 +52,10 @@ export default async function EventsPage() {
               {events.map((evt) => (
                 <div
                   key={evt.id}
-                  className="bg-white rounded-3xl border-2 border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+                  className="bg-white rounded-lg border border-border overflow-hidden shadow-xs flex flex-col justify-between group"
                 >
                   <div>
-                    <div className="relative aspect-[16/10] overflow-hidden bg-stone-200">
+                    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                       {evt.coverImage ? (
                         <Image
                           src={evt.coverImage}
@@ -65,7 +65,7 @@ export default async function EventsPage() {
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-stone-400">
+                        <div className="w-full h-full flex items-center justify-center text-muted-foreground">
                           <Calendar className="h-8 w-8" />
                         </div>
                       )}
@@ -73,35 +73,35 @@ export default async function EventsPage() {
 
                     <div className="p-5 space-y-3">
                       <div className="flex items-center gap-3">
-                        <div className="bg-[#FFF0E5] text-[#FA6400] border border-[#FED7AA] px-3 py-1 rounded-xl text-center shrink-0">
-                          <span className="block text-[9px] font-bold uppercase">
+                        <div className="text-center shrink-0 pr-3 border-r border-border">
+                          <span className="block text-xs text-muted-foreground">
                             {new Date(`${evt.date}T00:00:00Z`).toLocaleDateString("id-ID", { month: "short", timeZone: "UTC" })}
                           </span>
-                          <span className="text-base font-black">
+                          <span className="text-base font-bold text-foreground">
                             {new Date(`${evt.date}T00:00:00Z`).getUTCDate()}
                           </span>
                         </div>
                         <div>
-                          <span className="text-xs text-stone-500 font-medium block">
+                          <span className="text-xs text-muted-foreground block">
                             {formatDateIndonesian(evt.date)}
                           </span>
-                          <span className="text-xs font-bold text-stone-700 flex items-center gap-1">
-                            <Clock className="h-3 w-3 text-stone-400" />
+                          <span className="text-xs font-bold text-foreground flex items-center gap-1">
+                            <Clock className="h-3 w-3 text-muted-foreground" />
                             {evt.time}
                           </span>
                         </div>
                       </div>
 
-                      <h2 className="text-base font-bold text-[#1E2330] leading-snug">
+                      <h2 className="text-base font-bold leading-snug">
                         {evt.title}
                       </h2>
 
-                      <p className="text-xs text-stone-600 leading-relaxed font-medium line-clamp-2">
+                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
                         {evt.description}
                       </p>
 
-                      <div className="pt-2 border-t border-stone-100 flex items-center gap-1.5 text-xs text-stone-600 font-medium">
-                        <MapPin className="h-3.5 w-3.5 text-[#FA6400] shrink-0" />
+                      <div className="pt-2 border-t border-border flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <MapPin className="h-3.5 w-3.5 text-yazzaka-orange shrink-0" />
                         <span className="truncate">{evt.location}</span>
                       </div>
                     </div>

@@ -125,7 +125,7 @@ export default function AdminHeroPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
-        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
+        <span className="text-xs font-medium text-muted-foreground block mb-1">
           Konten Landing Page / Hero Beranda
         </span>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
@@ -139,7 +139,7 @@ export default function AdminHeroPage() {
       <form onSubmit={handleSave} className="space-y-8">
         {/* Teks Hero */}
         <Card className="p-6 space-y-6">
-          <div className="flex items-center gap-2 font-semibold text-sm uppercase tracking-wide text-foreground">
+          <div className="flex items-center gap-2 font-semibold text-sm text-foreground">
             <Type className="h-4 w-4 text-primary" />
             <span>Teks Hero</span>
           </div>
@@ -170,7 +170,7 @@ export default function AdminHeroPage() {
 
         {/* Gambar Hero */}
         <Card className="p-6 space-y-6">
-          <div className="flex items-center gap-2 font-semibold text-sm uppercase tracking-wide text-foreground">
+          <div className="flex items-center gap-2 font-semibold text-sm text-foreground">
             <ImageIcon className="h-4 w-4 text-primary" />
             <span>Gambar Utama Hero</span>
           </div>
@@ -187,7 +187,7 @@ export default function AdminHeroPage() {
 
         {/* Galeri Kolase Hero */}
         <Card className="p-6 space-y-6">
-          <div className="flex items-center gap-2 font-semibold text-sm uppercase tracking-wide text-foreground">
+          <div className="flex items-center gap-2 font-semibold text-sm text-foreground">
             <Images className="h-4 w-4 text-primary" />
             <span>Galeri Kolase Hero</span>
           </div>

@@ -24,10 +24,10 @@ export function TestimonialsSection({ testimonials, profile }: TestimonialsSecti
             <MessageSquareHeart className="h-3.5 w-3.5 text-yazzaka-orange" />
             <span>Kisah Nyata &amp; Pengalaman</span>
           </Badge>
-          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold tracking-tight leading-tight">
             Kesan Hangat Wali Santri &amp; Alumni
           </h2>
-          <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
             Refleksi nyata keluarga besar {profile.name} tentang pertumbuhan adab, kemandirian karakter, dan daya saing akademik santri.
           </p>
         </div>
@@ -45,7 +45,7 @@ export function TestimonialsSection({ testimonials, profile }: TestimonialsSecti
               return (
                 <div
                   key={test.id}
-                  className="bg-white border-2 border-[#E8E2D8] rounded-3xl p-5 sm:p-6 flex flex-col justify-between shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+                  className="bg-white border border-border rounded-lg p-5 sm:p-6 flex flex-col justify-between shadow-xs"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -59,14 +59,14 @@ export function TestimonialsSection({ testimonials, profile }: TestimonialsSecti
                       </div>
                     </div>
 
-                    <Quote className="h-6 w-6 text-stone-300" />
+                    <Quote className="h-6 w-6 text-muted-foreground/40" />
 
-                    <p className="text-stone-800 text-xs sm:text-sm leading-relaxed italic font-medium">
+                    <p className="text-foreground text-xs sm:text-sm leading-relaxed italic">
                       &ldquo;{test.quote}&rdquo;
                     </p>
                   </div>
 
-                  <div className="pt-3.5 mt-3 border-t border-black/10 flex items-center gap-3">
+                  <div className="pt-3.5 mt-3 border-t border-border flex items-center gap-3">
                     {test.photoUrl ? (
                       <Image
                         src={test.photoUrl}
@@ -81,10 +81,10 @@ export function TestimonialsSection({ testimonials, profile }: TestimonialsSecti
                       </div>
                     )}
                     <div>
-                      <h4 className="font-bold text-xs sm:text-sm text-[#1E2330]">
+                      <h4 className="font-bold text-xs sm:text-sm">
                         {test.name}
                       </h4>
-                      <p className="text-[11px] text-stone-600 font-medium">
+                      <p className="text-xs text-muted-foreground">
                         {test.childName || (test.graduationYear ? `Alumni Angkatan ${test.graduationYear}` : "")}
                       </p>
                     </div>
