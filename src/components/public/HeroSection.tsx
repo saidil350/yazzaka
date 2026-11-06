@@ -93,13 +93,13 @@ export function HeroSection({ hero, schoolName }: HeroSectionProps) {
             {/* Proportional Friendly Headline */}
             <h1
               id="hero-heading"
-              className="text-3xl sm:text-4xl lg:text-[2.65rem] font-extrabold text-[#1E2330] tracking-tight leading-[1.2]"
+              className="text-3xl sm:text-4xl lg:text-[2.65rem] font-extrabold tracking-tight leading-[1.2]"
             >
               {hero.headline}
             </h1>
 
             {/* Welcoming Body copy */}
-            <p className="text-sm sm:text-base text-stone-600 leading-relaxed max-w-xl">
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl">
               {hero.body}
             </p>
 

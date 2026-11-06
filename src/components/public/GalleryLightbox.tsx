@@ -21,14 +21,14 @@ export function GalleryLightbox({ items }: { items: MediaItem[] }) {
         {items.map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-3xl border-2 border-[#E8E2D8] overflow-hidden shadow-xs hover:shadow-md transition-all group flex flex-col cursor-pointer"
+            className="bg-white rounded-lg border border-border overflow-hidden shadow-xs group flex flex-col cursor-pointer"
             onClick={() => {
               if (item.fileType === "image") {
                 setActiveLightbox(item.fileUrl);
               }
             }}
           >
-            <div className="relative aspect-[4/3] overflow-hidden bg-stone-200">
+            <div className="relative aspect-[4/3] overflow-hidden bg-muted">
               {item.fileType === "image" ? (
                 <Image
                   src={item.fileUrl}
@@ -38,18 +38,18 @@ export function GalleryLightbox({ items }: { items: MediaItem[] }) {
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               ) : (
-                <div className="w-full h-full flex flex-col items-center justify-center bg-stone-100 text-stone-700 p-6 text-center">
-                  <FileText className="h-10 w-10 text-[#FA6400] mb-2" />
+                <div className="w-full h-full flex flex-col items-center justify-center bg-muted text-foreground p-6 text-center">
+                  <FileText className="h-10 w-10 text-yazzaka-orange mb-2" />
                   <span className="text-xs font-bold">{item.fileName}</span>
                 </div>
               )}
             </div>
 
             <div className="p-4 bg-white flex items-center justify-between">
-              <p className="text-xs font-bold text-[#1E2330] truncate">
+              <p className="text-xs font-bold truncate">
                 {item.altText || item.fileName}
               </p>
-              <span className="text-[10px] font-semibold text-stone-400 uppercase">
+              <span className="text-xs text-muted-foreground">
                 {item.fileType}
               </span>
             </div>
@@ -63,7 +63,7 @@ export function GalleryLightbox({ items }: { items: MediaItem[] }) {
           className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setActiveLightbox(null)}
         >
-          <div className="relative max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl bg-white p-2">
+          <div className="relative max-w-4xl max-h-[90vh] overflow-hidden rounded-lg bg-white p-2">
             <button
               onClick={() => setActiveLightbox(null)}
               className="absolute top-4 right-4 z-10 bg-black/60 text-white p-2 rounded-full hover:bg-black transition-colors"

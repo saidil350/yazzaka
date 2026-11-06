@@ -117,7 +117,7 @@ export default function AdminTestimonialsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
+          <span className="text-xs font-medium text-muted-foreground block mb-1">
             Content / Testimoni &amp; Ulasan
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
@@ -226,7 +226,7 @@ export default function AdminTestimonialsPage() {
                   <h4 className="font-semibold text-xs sm:text-sm text-foreground">
                     {test.name}
                   </h4>
-                  <p className="text-[11px] text-muted-foreground font-medium">
+                  <p className="text-xs text-muted-foreground font-medium">
                     {test.childName || (test.graduationYear ? `Alumni ${test.graduationYear}` : "")}
                   </p>
                 </div>

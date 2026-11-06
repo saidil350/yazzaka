@@ -207,7 +207,7 @@ export default function AdminProgramsCrudPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
+          <span className="text-xs font-medium text-muted-foreground block mb-1">
             Content / Program Pendidikan
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
@@ -305,7 +305,7 @@ export default function AdminProgramsCrudPage() {
                           className="h-12 w-16 object-cover rounded-md shrink-0 border border-border bg-muted"
                         />
                         <div>
-                          <span className="text-[10px] font-medium uppercase text-muted-foreground block">
+                          <span className="text-xs font-medium text-muted-foreground block">
                             {prog.category}
                           </span>
                           <h4 className="font-semibold text-sm text-foreground leading-snug">
@@ -396,7 +396,7 @@ export default function AdminProgramsCrudPage() {
           <div className="bg-muted rounded-lg p-4 sm:p-5 border border-border space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border">
               <BookOpen className="w-4 h-4 text-primary" />
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground">
+              <h3 className="text-xs font-semibold text-foreground">
                 Informasi Utama
               </h3>
             </div>
@@ -441,7 +441,7 @@ export default function AdminProgramsCrudPage() {
           <div className="bg-muted rounded-lg p-4 sm:p-5 border border-border space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border">
               <ImageIcon className="w-4 h-4 text-primary" />
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground">
+              <h3 className="text-xs font-semibold text-foreground">
                 Media &amp; Banner Visual
               </h3>
             </div>
@@ -460,7 +460,7 @@ export default function AdminProgramsCrudPage() {
           <div className="bg-muted rounded-lg p-4 sm:p-5 border border-border space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border">
               <FileText className="w-4 h-4 text-primary" />
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground">
+              <h3 className="text-xs font-semibold text-foreground">
                 Deskripsi Program
               </h3>
             </div>
@@ -488,7 +488,7 @@ export default function AdminProgramsCrudPage() {
           {/* Section 4: Keunggulan & Target Capaian (Point-by-Point Dynamic List) */}
           <div className="bg-muted rounded-lg p-4 sm:p-5 border border-border space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground">
+              <h3 className="text-xs font-semibold text-foreground">
                 Keunggulan &amp; Target Capaian Santri
               </h3>
             </div>
@@ -504,7 +504,7 @@ export default function AdminProgramsCrudPage() {
                     </Badge>
                   </label>
                 </div>
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-xs text-muted-foreground">
                   Tambahkan keunggulan kurikulum atau fasilitas pendukung per poin.
                 </p>
 
@@ -556,7 +556,7 @@ export default function AdminProgramsCrudPage() {
                     </Badge>
                   </label>
                 </div>
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-xs text-muted-foreground">
                   Target kompetensi kelulusan yang dicapai santri setelah program selesai.
                 </p>
 

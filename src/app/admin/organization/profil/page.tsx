@@ -185,7 +185,7 @@ export default function AdminOrgProfilePage() {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       <div>
-        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
+        <span className="text-xs font-medium text-muted-foreground block mb-1">
           Organization / Profil Lembaga
         </span>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
@@ -238,7 +238,7 @@ export default function AdminOrgProfilePage() {
 
           {/* Statistics Key Numbers */}
           <div className="pt-4 border-t border-border">
-            <h4 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-4 block">
+            <h4 className="text-xs font-medium text-muted-foreground mb-4 block">
               Metrik Kunci Sekolah (Tampil di Trust Section)
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">

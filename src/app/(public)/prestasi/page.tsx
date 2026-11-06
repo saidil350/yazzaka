@@ -24,23 +24,23 @@ export default async function AchievementsPage() {
   return (
     <>
       {/* ── Headspace Warm Page Hero Banner ─────────── */}
-      <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-[#E8E2D8]">
+      <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
           <Badge variant="secondary" className="gap-2 mb-3">
             <Trophy className="h-3.5 w-3.5 text-yazzaka-orange" />
             <span>Rekam Jejak Keberhasilan</span>
           </Badge>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
             Prestasi &amp; Penghargaan Santri
           </h1>
-          <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
+          <p className="text-sm sm:text-base text-muted-foreground mt-3 leading-relaxed">
             Apresiasi capaian santri {safeProfile.name} di ajang olimpiade sains nasional, kejuaraan robotik internasional, dan musabaqah tahfiz.
           </p>
         </div>
       </section>
 
       {/* ── Content ─────────────────────────────────── */}
-      <section className="py-12 lg:py-14 bg-white border-b border-[#E8E2D8]">
+      <section className="py-12 lg:py-14 bg-white border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
           {/* Grid or EmptyState */}
@@ -55,9 +55,9 @@ export default async function AchievementsPage() {
               {achievements.map((ach) => (
                 <div
                   key={ach.id}
-                  className="bg-white border-2 border-[#E8E2D8] rounded-2xl overflow-hidden flex flex-col justify-between hover:shadow-md transition-all shadow-xs"
+                  className="bg-white border border-border rounded-lg overflow-hidden flex flex-col justify-between shadow-xs"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                     {ach.imageUrl ? (
                       <Image
                         src={ach.imageUrl}
@@ -67,7 +67,7 @@ export default async function AchievementsPage() {
                         className="object-cover transition-transform duration-500 hover:scale-105"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-stone-400">
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground">
                         <Trophy className="h-8 w-8" />
                       </div>
                     )}
@@ -78,17 +78,17 @@ export default async function AchievementsPage() {
                       <Badge variant="secondary" className="mb-1.5">
                         {ach.category} • {ach.year}
                       </Badge>
-                      <h3 className="text-sm font-bold text-[#1E2330] leading-snug line-clamp-2">
+                      <h3 className="text-sm font-bold leading-snug line-clamp-2">
                         {ach.title}
                       </h3>
                     </div>
 
-                    <div className="pt-2.5 border-t border-stone-100 space-y-0.5">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-stone-800">
+                    <div className="pt-2.5 border-t border-border space-y-0.5">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
                         <Award className="h-3.5 w-3.5 text-amber-500 shrink-0" />
                         <span>{ach.studentName}</span>
                       </div>
-                      <p className="text-[11px] text-stone-500 line-clamp-1 font-medium">
+                      <p className="text-xs text-muted-foreground line-clamp-1">
                         {ach.competitionName}
                       </p>
                     </div>

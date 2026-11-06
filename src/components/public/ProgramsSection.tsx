@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Program } from "@/lib/types";
-import { ArrowRight, Sparkles, CheckCircle2, Layers, Image as ImageIcon } from "lucide-react";
+import { ArrowRight, CheckCircle2, Layers, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -24,14 +24,13 @@ export function ProgramsSection({ programs }: ProgramsSectionProps) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="max-w-2xl space-y-2">
-            <Badge variant="secondary" className="gap-2">
-              <Sparkles className="h-3 w-3 text-yazzaka-teal-dark" />
+            <Badge variant="secondary">
               <span>Unit Pendidikan &amp; Program Strategis</span>
             </Badge>
-            <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold tracking-tight leading-tight">
               Lembaga Pendidikan &amp; Pembinaan
             </h2>
-            <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
+            <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
               Menaungi pendidikan usia dini, tahfiz Al-Qur&apos;an, kesetaraan masyarakat, hingga perintisan Pesantren Peradaban 6.0.
             </p>
           </div>
@@ -63,11 +62,11 @@ export function ProgramsSection({ programs }: ProgramsSectionProps) {
               return (
                 <div
                   key={prog.id}
-                  className="interactive-lift rounded-[1.25rem] border border-[#E8E2D8] overflow-hidden flex flex-col justify-between group shadow-xs bg-white"
+                  className="rounded-lg border border-border overflow-hidden flex flex-col justify-between group shadow-xs bg-white"
                 >
                   <div>
                     {/* Card Image Banner */}
-                    <div className="relative aspect-[16/10] overflow-hidden bg-stone-200">
+                    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                       {prog.imageUrl ? (
                         <Image
                           src={prog.imageUrl}
@@ -77,7 +76,7 @@ export function ProgramsSection({ programs }: ProgramsSectionProps) {
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-stone-400">
+                        <div className="w-full h-full flex items-center justify-center text-muted-foreground">
                           <ImageIcon className="h-8 w-8" />
                         </div>
                       )}
@@ -85,23 +84,23 @@ export function ProgramsSection({ programs }: ProgramsSectionProps) {
 
                     {/* Body Content */}
                     <div className="p-5 space-y-3">
-                      <h3 className="text-base sm:text-lg font-bold text-[#1E2330] leading-snug">
+                      <h3 className="text-base sm:text-lg font-bold leading-snug">
                         {prog.title}
                       </h3>
-                      <p className="text-xs text-stone-600 leading-relaxed font-medium line-clamp-3">
+                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
                         {prog.shortDesc}
                       </p>
 
                       {/* Bullet Features */}
                       {prog.features && prog.features.length > 0 && (
-                        <div className="pt-3 border-t border-stone-100 space-y-1.5">
-                          <span className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider block">
+                        <div className="pt-3 border-t border-border space-y-1.5">
+                          <span className="text-xs font-medium text-muted-foreground block">
                             Fokus &amp; Capaian:
                           </span>
                           {prog.features.slice(0, 3).map((feat, fIdx) => (
                             <div
                               key={fIdx}
-                              className="flex items-center gap-2 text-xs text-stone-700 font-semibold"
+                              className="flex items-center gap-2 text-xs text-foreground font-semibold"
                             >
                               <CheckCircle2 className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
                               <span className="line-clamp-1">{feat}</span>
@@ -116,11 +115,8 @@ export function ProgramsSection({ programs }: ProgramsSectionProps) {
                   <div className="p-5 pt-0">
                     <Link href={`/program/${prog.slug}`}>
                       <Button
-                        variant={isSpecialWakaf ? "default" : "outline"}
-                        className={[
-                          "w-full justify-between font-bold text-xs h-10",
-                          isSpecialWakaf ? "bg-[#FA6400] hover:bg-[#E05A00] text-white shadow-xs" : "",
-                        ].join(" ")}
+                        variant={isSpecialWakaf ? "accent" : "outline"}
+                        className="w-full justify-between font-bold text-xs h-10"
                       >
                         <span>{isSpecialWakaf ? "Pelajari Info Wakaf & Masterplan" : "Rincian Lebih Lanjut"}</span>
                         <ArrowRight className="h-3.5 w-3.5 ml-1" />

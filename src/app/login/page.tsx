@@ -122,19 +122,19 @@ function LoginForm() {
       : "/yazzakka.png";
 
   return (
-    <div className={`admin-scope ${publicSans.variable} min-h-screen bg-background flex flex-col justify-between text-[#1E2330] selection:bg-[#FFF0E5] selection:text-[#FA6400]`}>
+    <div className={`admin-scope ${publicSans.variable} min-h-screen bg-background flex flex-col justify-between selection:bg-[#FFF0E5] selection:text-[#FA6400]`}>
       {/* ── Top Header Bar ────────────────────────────────────────── */}
-      <header className="w-full border-b border-[#E8E2D8] bg-white/80 backdrop-blur-xs py-3 px-4 sm:px-8">
+      <header className="w-full border-b border-border bg-white/80 backdrop-blur-xs py-3 px-4 sm:px-8">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-stone-600 hover:text-[#FA6400] transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400] rounded-lg px-2 py-1"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-[#FA6400] transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400] rounded-lg px-2 py-1"
           >
             <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" />
             <span>Kembali ke Situs Publik</span>
           </Link>
-          <div className="flex items-center gap-1.5 text-[11px] font-medium text-stone-500">
-            <Shield className="h-3.5 w-3.5 text-stone-400" />
+          <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+            <Shield className="h-3.5 w-3.5 text-muted-foreground" />
             <span>Akses Terbatas untuk Staf</span>
           </div>
         </div>
@@ -144,9 +144,9 @@ function LoginForm() {
       <main className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
         <div className="w-full max-w-md">
           {/* Card Form Container */}
-          <div className="bg-white border border-[#E8E2D8] rounded-2xl shadow-xs p-6 sm:p-8 space-y-6">
+          <div className="bg-white border border-border rounded-lg shadow-xs p-6 sm:p-8 space-y-6">
             {/* 1. Brand Identity */}
-            <div className="text-center space-y-3 pb-2 border-b border-[#F3EFE6]">
+            <div className="text-center space-y-3 pb-2 border-b border-border">
               <div className="flex justify-center">
                 <Image
                   src={logoSrc}
@@ -162,10 +162,10 @@ function LoginForm() {
                 <Badge variant="secondary" className="mb-1.5">
                   Content Management System
                 </Badge>
-                <h1 className="text-xl sm:text-2xl font-extrabold text-[#1E2330] tracking-tight">
+                <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
                   Masuk ke Panel CMS
                 </h1>
-                <p className="text-xs text-stone-500 font-medium mt-1 leading-relaxed">
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                   Pusat administrasi konten dan publikasi informasi {profile?.name || "Yayasan Yazzakka Aceh"}
                 </p>
               </div>
@@ -176,12 +176,12 @@ function LoginForm() {
               <div
                 role="alert"
                 aria-live="assertive"
-                className="flex items-start gap-3 p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-xs leading-relaxed"
+                className="flex items-start gap-3 p-3.5 bg-danger-bg border border-danger/20 rounded-lg text-foreground text-xs leading-relaxed"
               >
-                <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
+                <AlertCircle className="h-4 w-4 shrink-0 text-danger mt-0.5" />
                 <div className="flex-1">
-                  <p className="font-semibold text-rose-900">Gagal Masuk</p>
-                  <p className="mt-0.5 text-rose-700">{errorMessage}</p>
+                  <p className="font-semibold">Gagal Masuk</p>
+                  <p className="mt-0.5 text-foreground/80">{errorMessage}</p>
                 </div>
               </div>
             )}
@@ -192,15 +192,15 @@ function LoginForm() {
               <div className="space-y-1.5">
                 <label
                   htmlFor="cms-login-email"
-                  className="block text-xs font-bold text-[#1E2330]"
+                  className="block text-xs font-bold"
                 >
                   Alamat Email Staf
-                  <span className="ml-1 text-rose-500" aria-label="wajib diisi">
+                  <span className="ml-1 text-danger" aria-label="wajib diisi">
                     *
                   </span>
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-muted-foreground">
                     <Mail className="h-4 w-4" />
                   </div>
                   <input
@@ -213,7 +213,7 @@ function LoginForm() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="nama@yazzakka.sch.id"
-                    className="flex h-10 w-full rounded-xl border border-[#E8E2D8] bg-white pl-10 pr-3.5 py-2 text-sm font-medium text-[#1E2330] placeholder:text-stone-400 transition-colors focus:outline-none focus:border-muted-foreground/40 disabled:bg-muted/50 disabled:cursor-not-allowed"
+                    className="flex h-10 w-full rounded-xl border border-border bg-white pl-10 pr-3.5 py-2 text-sm font-medium text-foreground placeholder:text-muted-foreground transition-colors focus:outline-none focus:border-muted-foreground/40 disabled:bg-muted/50 disabled:cursor-not-allowed"
                   />
                 </div>
               </div>
@@ -223,16 +223,16 @@ function LoginForm() {
                 <div className="flex items-center justify-between">
                   <label
                     htmlFor="cms-login-password"
-                    className="block text-xs font-bold text-[#1E2330]"
+                    className="block text-xs font-bold"
                   >
                     Kata Sandi
-                    <span className="ml-1 text-rose-500" aria-label="wajib diisi">
+                    <span className="ml-1 text-danger" aria-label="wajib diisi">
                       *
                     </span>
                   </label>
                 </div>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-muted-foreground">
                     <Lock className="h-4 w-4" />
                   </div>
                   <input
@@ -245,14 +245,14 @@ function LoginForm() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Masukkan kata sandi akun"
-                    className="flex h-10 w-full rounded-xl border border-[#E8E2D8] bg-white pl-10 pr-10 py-2 text-sm font-medium text-[#1E2330] placeholder:text-stone-400 transition-colors focus:outline-none focus:border-muted-foreground/40 disabled:bg-muted/50 disabled:cursor-not-allowed"
+                    className="flex h-10 w-full rounded-xl border border-border bg-white pl-10 pr-10 py-2 text-sm font-medium text-foreground placeholder:text-muted-foreground transition-colors focus:outline-none focus:border-muted-foreground/40 disabled:bg-muted/50 disabled:cursor-not-allowed"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
                     disabled={isSubmitting}
                     aria-label={showPassword ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-stone-400 hover:text-stone-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400] rounded-r-xl"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400] rounded-r-xl"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -281,17 +281,17 @@ function LoginForm() {
           </div>
 
           {/* 4. Supporting Information */}
-          <div className="mt-6 text-center space-y-2 text-xs text-stone-500">
+          <div className="mt-6 text-center space-y-2 text-xs text-muted-foreground">
             <p>
               Kendala akses akun? Hubungi Administrator TI di{" "}
               <a
                 href={`mailto:${profile?.email || "info@yazzakka.sch.id"}`}
-                className="font-semibold text-stone-700 hover:text-[#FA6400] underline underline-offset-2"
+                className="font-semibold text-foreground hover:text-[#FA6400] underline underline-offset-2"
               >
                 {profile?.email || "info@yazzakka.sch.id"}
               </a>
             </p>
-            <p className="text-[11px] text-stone-400">
+            <p className="text-xs text-muted-foreground">
               Hak Cipta © {year ?? ""} {profile?.name || "Yayasan Yazzakka Aceh"}. Seluruh hak cipta dilindungi.
             </p>
           </div>

@@ -23,19 +23,19 @@ export default async function DonasiPage() {
   return (
     <>
       {/* ── Page Hero Banner ─────────── */}
-      <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-[#E8E2D8]">
+      <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
             Salurkan Donasi
           </h1>
-          <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed font-medium">
+          <p className="text-sm sm:text-base text-muted-foreground mt-3 leading-relaxed">
             Setiap donasi Anda mendukung operasional dan program pendidikan {profile?.name ?? "Yayasan Yazzakka"}.
           </p>
         </div>
       </section>
 
       {/* ── Content ─────────────────────────────────── */}
-      <section className="py-12 lg:py-14 bg-white border-b border-[#E8E2D8]">
+      <section className="py-12 lg:py-14 bg-white border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {bankAccounts.length === 0 && platforms.length === 0 ? (
             <EmptyState
@@ -57,7 +57,7 @@ export default async function DonasiPage() {
                       Salin nomor rekening dan lakukan transfer dari bank mana pun.
                     </p>
                   </div>
-                  <div className="rounded-lg border border-[#E8E2D8] bg-white divide-y divide-[#E8E2D8]">
+                  <div className="rounded-lg border border-border bg-white divide-y divide-border">
                     {bankAccounts.map((account, idx) => {
                       const bankLabel =
                         (account.bankName ?? "").trim() || `Rekening ${idx + 1}`;

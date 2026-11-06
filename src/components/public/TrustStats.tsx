@@ -49,7 +49,7 @@ export function TrustStats({ profile }: TrustStatsProps) {
             return (
               <div
                 key={idx}
-                className="bg-card border border-border rounded-lg p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-md flex flex-col"
+                className="bg-card border border-border rounded-lg p-5 flex flex-col"
               >
                 <span className="text-xs font-semibold text-muted-foreground">
                   {stat.label}

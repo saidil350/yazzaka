@@ -73,7 +73,7 @@ export default function AdminHomepageSectionsPage() {
     <div className="max-w-5xl mx-auto space-y-8">
       {/* Header */}
       <div>
-        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
+        <span className="text-xs font-medium text-muted-foreground block mb-1">
           Pages / Beranda
         </span>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
@@ -102,7 +102,7 @@ export default function AdminHomepageSectionsPage() {
                   <h3 className="font-semibold text-sm text-foreground">
                     {sec.title}
                   </h3>
-                  <span className="text-[10px] font-mono text-muted-foreground">
+                  <span className="text-xs font-mono text-muted-foreground">
                     ({sec.key})
                   </span>
                 </div>

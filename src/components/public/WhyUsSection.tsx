@@ -85,7 +85,7 @@ export function WhyUsSection({ profile }: WhyUsSectionProps) {
         ];
 
   return (
-    <section id="keunggulan" className="py-14 lg:py-16 text-stone-800 border-b border-border scroll-mt-24">
+    <section id="keunggulan" className="py-14 lg:py-16 border-b border-border scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
         {/* Section Header */}
@@ -94,10 +94,10 @@ export function WhyUsSection({ profile }: WhyUsSectionProps) {
             <Landmark className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
             <span>Mengapa Memilih {profile.name}?</span>
           </Badge>
-          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold tracking-tight leading-tight">
             Keunggulan &amp; Nilai Pokok Lembaga
           </h2>
-          <p className="text-stone-600 text-sm sm:text-base leading-relaxed font-medium">
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
             Memadukan bimbingan ulama, penguatan karakter tauhid &amp; adab, serta ekosistem belajar yang ramah anak, berjenjang, dan menyenangkan.
           </p>
         </div>
@@ -109,24 +109,24 @@ export function WhyUsSection({ profile }: WhyUsSectionProps) {
             return (
               <div
                 key={idx}
-                className="bg-white border border-[#E8E2D8] rounded-lg p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-md flex flex-col justify-between group"
+                className="bg-white border border-border rounded-lg p-6 flex flex-col justify-between group"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="h-11 w-11 border-l-2 border-yazzaka-teal text-[#1E2330] flex items-center justify-center">
+                    <div className="h-11 w-11 border-l-2 border-yazzaka-teal flex items-center justify-center">
                       <Icon className="h-5 w-5" strokeWidth={1.7} />
                     </div>
-                    <span className="text-[11px] font-extrabold px-2 py-1 text-stone-400">
+                    <span className="text-xs font-medium text-muted-foreground">
                       Poin {adv.num}
                     </span>
                   </div>
 
                   <div className="space-y-2">
-                    <h3 className="text-base sm:text-lg font-bold text-[#1E2330] leading-snug">
+                    <h3 className="text-base sm:text-lg font-bold leading-snug">
                       {adv.title}
                     </h3>
 
-                    <p className="text-stone-600 text-xs sm:text-sm leading-relaxed font-medium">
+                    <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                       {adv.description}
                     </p>
                   </div>

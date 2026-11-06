@@ -43,7 +43,7 @@ export function ScrollToTop() {
         onClick={scrollToTop}
         aria-label="Kembali ke atas halaman"
         title="Kembali ke atas"
-        className="relative group h-12 w-12 rounded-full bg-[#1E2330] text-white flex items-center justify-center shadow-lg hover:shadow-xl hover:bg-[#FA6400] transition-all duration-300 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400] focus-visible:ring-offset-2"
+        className="relative group h-12 w-12 rounded-full bg-foreground text-background flex items-center justify-center shadow-md hover:bg-yazzaka-orange transition-all duration-300 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-yazzaka-orange focus-visible:ring-offset-2"
       >
         {/* Circular Progress Ring */}
         <svg
@@ -62,7 +62,7 @@ export function ScrollToTop() {
             cx="22"
             cy="22"
             r={radius}
-            className="text-[#FA6400] group-hover:text-white stroke-current transition-all duration-150"
+            className="text-yazzaka-orange group-hover:text-white stroke-current transition-all duration-150"
             strokeWidth="2.5"
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}

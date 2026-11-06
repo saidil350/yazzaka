@@ -7,12 +7,11 @@ import {
   ArrowRight,
   CheckCircle2,
   MessageCircle,
-  Sparkles,
   Heart,
   Building2,
   ShieldCheck,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   getProgramBySlug,
@@ -91,11 +90,11 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
       <main className="flex-1">
 
         {/* ── Headspace Warm Page Hero Banner ─────────── */}
-        <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-[#E8E2D8]">
+        <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
             <Link
               href="/program"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-600 hover:underline mb-3"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:underline mb-3"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               <span>Kembali ke Direktori Unit Pendidikan</span>
@@ -110,25 +109,25 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
               </Badge>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1E2330] tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
               {program.title}
             </h1>
-            <p className="text-sm sm:text-base text-stone-600 mt-2 leading-relaxed font-medium">
+            <p className="text-sm sm:text-base text-muted-foreground mt-2 leading-relaxed">
               {program.shortDesc}
             </p>
           </div>
         </section>
 
         {/* ── Content Details ─────────────────────────── */}
-        <section className="py-12 lg:py-14 bg-white border-b border-[#E8E2D8]">
+        <section className="py-12 lg:py-14 bg-white border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
 
               {/* Left Main (8 cols; full width saat tanpa sidebar wakaf) */}
               <div className={`${isWakaf ? "lg:col-span-8" : "lg:col-span-12"} space-y-6`}>
 
-                <div className="rounded-3xl overflow-hidden border-2 border-[#E8E2D8] bg-white p-2 shadow-xs">
-                  <div className="aspect-video relative overflow-hidden rounded-2xl bg-stone-200">
+                <div className="rounded-lg overflow-hidden border border-border bg-white p-2 shadow-xs">
+                  <div className="aspect-video relative overflow-hidden rounded-md bg-muted">
                     {program.imageUrl ? (
                       <Image
                         src={program.imageUrl}
@@ -139,30 +138,30 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                         className="object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-stone-400">
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground">
                         <Building2 className="h-8 w-8" />
                       </div>
                     )}
                   </div>
                 </div>
 
-                <div className="space-y-3 text-sm text-stone-700 leading-relaxed font-medium">
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-[#1E2330]">
+                <div className="space-y-3 text-sm text-foreground leading-relaxed">
+                  <h2 className="text-xl sm:text-2xl font-extrabold">
                     {isWakaf ? "Latar Belakang & Visi Pesantren Peradaban 6.0" : "Deskripsi & Metodologi Pembinaan"}
                   </h2>
-                  <p className="whitespace-pre-line leading-relaxed text-stone-600">
+                  <p className="whitespace-pre-line leading-relaxed text-muted-foreground">
                     {program.fullDesc}
                   </p>
                 </div>
 
                 {/* Features list */}
-                <div className="bg-white p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-3 shadow-xs">
-                  <h3 className="text-base font-bold text-[#1E2330]">
+                <div className="bg-white p-6 rounded-lg border border-border space-y-3 shadow-xs">
+                  <h3 className="text-base font-bold">
                     {isWakaf ? "Pilar Strategis Pembangunan:" : "Target Capaian & Keunggulan Khusus:"}
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {(program.features ?? []).map((feat, idx) => (
-                      <div key={idx} className="flex items-start gap-2 text-xs text-stone-700 font-semibold">
+                      <div key={idx} className="flex items-start gap-2 text-xs text-foreground font-semibold">
                         <CheckCircle2 className="h-4 w-4 text-yazzaka-teal-dark shrink-0 mt-0.5" />
                         <span>{feat}</span>
                       </div>
@@ -172,14 +171,14 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
 
                 {/* Target Competencies */}
                 {program.targetCompetencies && program.targetCompetencies.length > 0 && (
-                  <div className="bg-white border-[#E8E2D8] border-2 p-6 rounded-3xl space-y-3 shadow-xs">
-                    <h3 className="text-base font-bold text-[#1E2330]">
+                  <div className="bg-white border border-border p-6 rounded-lg space-y-3 shadow-xs">
+                    <h3 className="text-base font-bold">
                       {isWakaf ? "Dampak Peradaban & Kemaslahatan Umat:" : "Kompetensi Kelulusan Santri:"}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {program.targetCompetencies.map((comp, idx) => (
-                        <div key={idx} className="flex items-start gap-2 text-xs text-stone-800 font-semibold">
-                          <Sparkles className="h-4 w-4 text-yazzaka-teal-dark shrink-0 mt-0.5" />
+                        <div key={idx} className="flex items-start gap-2 text-xs text-foreground font-semibold">
+                          <CheckCircle2 className="h-4 w-4 text-yazzaka-teal-dark shrink-0 mt-0.5" />
                           <span>{comp}</span>
                         </div>
                       ))}
@@ -189,14 +188,14 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
 
                 {/* Special Callout for Wakaf */}
                 {isWakaf && (
-                  <div className="bg-[#FFF9F2] p-6 rounded-3xl border-2 border-[#FED7AA] space-y-3 shadow-xs">
+                  <div className="bg-yazzaka-orange-soft p-6 rounded-lg border border-border space-y-3 shadow-xs">
                     <div className="flex items-center gap-2">
-                      <Heart className="h-5 w-5 fill-[#FA6400] text-[#FA6400]" />
-                      <h3 className="text-base font-bold text-[#1E2330]">
+                      <Heart className="h-5 w-5 fill-yazzaka-orange text-yazzaka-orange" />
+                      <h3 className="text-base font-bold">
                         Salurkan Wakaf Jariyah Pembangunan
                       </h3>
                     </div>
-                    <p className="text-xs text-stone-600 leading-relaxed font-medium">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
                       Pembangunan Pesantren Peradaban 6.0 di Cot Rheng, Pidie, membuka pintu amal jariyah bagi kaum muslimin. Setiap rupiah wakaf yang Anda salurkan akan mengalirkan pahala tak terputus bagi lahirnya kader ulama dan pemimpin peradaban Islam.
                     </p>
                     <div className="pt-2 flex flex-wrap gap-3">
@@ -204,7 +203,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                         href={`https://wa.me/${profile.whatsapp}?text=Assalamu'alaikum%20Admin%20Yazzakka,%20saya%20ingin%20berkonsultasi%20mengenai%20Wakaf%20Pesantren%20Peradaban%206.0`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FA6400] text-white font-bold text-xs hover:bg-[#E05A00] transition-colors shadow-xs"
+                        className={buttonVariants({ variant: "accent" })}
                       >
                         <MessageCircle className="h-4 w-4" />
                         <span>Konfirmasi Wakaf via WhatsApp</span>
@@ -218,14 +217,14 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
               {/* Right Sidebar (4 cols) — hanya untuk program wakaf */}
               {isWakaf && (
                 <div className="lg:col-span-4 space-y-4">
-                  <div className="bg-white p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-4 shadow-xs">
-                    <span className="text-xs font-medium text-stone-500 block">
+                  <div className="bg-white p-6 rounded-lg border border-border space-y-4 shadow-xs">
+                    <span className="text-xs font-medium text-muted-foreground block">
                       Layanan Wakaf &amp; Kemitraan
                     </span>
-                    <h3 className="text-base font-bold text-[#1E2330]">
+                    <h3 className="text-base font-bold">
                       Dukung Pembangunan Pesantren
                     </h3>
-                    <p className="text-xs text-stone-600 font-medium leading-relaxed">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
                       Konsultasikan akad wakaf tunai, pembebasan lahan, atau program kemitraan dakwah bersama pimpinan yayasan.
                     </p>
 
@@ -250,9 +249,9 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                       </a>
                     </div>
 
-                    <div className="pt-3 border-t border-[#E8E2D8] space-y-1.5 text-[11px] text-stone-500 font-medium">
+                    <div className="pt-3 border-t border-border space-y-1.5 text-xs text-muted-foreground">
                       <div className="flex items-center gap-1.5">
-                        <Building2 className="h-3.5 w-3.5 text-stone-400 shrink-0" />
+                        <Building2 className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                         <span>{profile.address}, Sigli</span>
                       </div>
                       <div className="flex items-center gap-1.5">
@@ -274,16 +273,16 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-[#1E2330]">
+                  <h2 className="text-xl sm:text-2xl font-extrabold">
                     Unit Pendidikan &amp; Program Lainnya
                   </h2>
-                  <p className="text-xs sm:text-sm text-stone-600 font-medium">
+                  <p className="text-xs sm:text-sm text-muted-foreground">
                     Jelajahi jenjang pendidikan dan program pembinaan lainnya di {profile.name}
                   </p>
                 </div>
                 <Link
                   href="/program"
-                  className="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-stone-600 hover:underline"
+                  className="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-muted-foreground hover:underline"
                 >
                   <span>Lihat Semua Unit</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -295,21 +294,21 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                   <Link
                     key={p.id}
                     href={`/program/${p.slug}`}
-                    className="bg-white border-2 border-[#E8E2D8] rounded-2xl p-4 space-y-2.5 flex flex-col justify-between group shadow-xs transition-all"
+                    className="bg-white border border-border rounded-lg p-4 space-y-2.5 flex flex-col justify-between group shadow-xs"
                   >
                     <div className="space-y-2">
                       <Badge variant="secondary">
                         {p.category}
                       </Badge>
-                      <h3 className="text-xs font-bold text-[#1E2330] line-clamp-2">
+                      <h3 className="text-xs font-bold line-clamp-2">
                         {p.title}
                       </h3>
-                      <p className="text-[11px] text-stone-500 line-clamp-2 font-medium">
+                      <p className="text-xs text-muted-foreground line-clamp-2">
                         {p.shortDesc}
                       </p>
                     </div>
 
-                    <span className="text-[11px] font-bold text-stone-600 inline-flex items-center gap-1 pt-2">
+                    <span className="text-xs font-bold text-muted-foreground inline-flex items-center gap-1 pt-2">
                       <span>Pelajari</span>
                       <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
                     </span>

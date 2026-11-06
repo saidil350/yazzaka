@@ -141,7 +141,7 @@ export default function AdminEventsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
+          <span className="text-xs font-medium text-muted-foreground block mb-1">
             Content / Kegiatan &amp; Agenda
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
@@ -235,7 +235,7 @@ export default function AdminEventsPage() {
                   <TableRow key={evt.id}>
                     <TableCell className="p-4 sm:px-6">
                       <div>
-                        <span className="text-[10px] font-medium uppercase text-muted-foreground block mb-0.5">
+                        <span className="text-xs font-medium text-muted-foreground block mb-0.5">
                           {evt.category}
                         </span>
                         <h4 className="font-semibold text-sm text-foreground leading-snug">

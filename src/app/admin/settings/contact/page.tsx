@@ -97,7 +97,7 @@ export default function AdminContactSettingsPage() {
     <div className="max-w-4xl mx-auto space-y-8">
       {/* ── Page Header ─────────────────────────────── */}
       <div>
-        <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground block mb-1">
+        <span className="text-xs font-medium text-muted-foreground block mb-1">
           Website Settings / Kontak Resmi
         </span>
         <h1 className="text-2xl sm:text-3xl font-semibold text-foreground">
@@ -122,7 +122,7 @@ export default function AdminContactSettingsPage() {
           <div className="space-y-5">
             {/* Hotline */}
             <div className="space-y-1.5">
-              <label htmlFor="input-phone" className="text-xs font-medium uppercase tracking-wider text-foreground flex items-center gap-2 block">
+              <label htmlFor="input-phone" className="text-xs font-medium text-foreground flex items-center gap-2 block">
                 <Phone className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
                 Nomor Telepon Kantor
               </label>
@@ -141,7 +141,7 @@ export default function AdminContactSettingsPage() {
             {/* WhatsApp */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <label htmlFor="input-whatsapp" className="text-xs font-medium uppercase tracking-wider text-foreground flex items-center gap-2">
+                <label htmlFor="input-whatsapp" className="text-xs font-medium text-foreground flex items-center gap-2">
                   <MessageCircle className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
                   WhatsApp Admisi SPMB
                 </label>
@@ -171,7 +171,7 @@ export default function AdminContactSettingsPage() {
 
             {/* Email */}
             <div className="space-y-1.5">
-              <label htmlFor="input-email" className="text-xs font-medium uppercase tracking-wider text-foreground flex items-center gap-2 block">
+              <label htmlFor="input-email" className="text-xs font-medium text-foreground flex items-center gap-2 block">
                 <Mail className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
                 Alamat Email Resmi
               </label>
