@@ -10,15 +10,14 @@ import {
   Menu,
   X,
   Phone,
-  Sparkles,
   ChevronDown,
   Image as ImageIcon,
   MapPin,
   BookOpen,
+  School,
   GraduationCap,
-  Heart,
-  Award,
-  Globe,
+  BookOpenText,
+  Landmark,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -53,11 +52,11 @@ const secondaryNavLinks: { label: string; href: string; desc: string; icon: Reac
 
 const quickUnits = [
   { label: "TPA Yazzakka", href: "/program/tpa-yazzakka", icon: BookOpen },
-  { label: "TKIT Yazzakka", href: "/program/tkit-yazzakka", icon: Sparkles },
-  { label: "Sekolah Anak Shalih", href: "/program/sekolah-anak-shalih", icon: Heart },
+  { label: "TKIT Yazzakka", href: "/program/tkit-yazzakka", icon: BookOpen },
+  { label: "Sekolah Anak Shalih", href: "/program/sekolah-anak-shalih", icon: School },
   { label: "PKBM Yazzakka", href: "/program/pkbm-yazzakka", icon: GraduationCap },
-  { label: "Darul Quran (Tahfiz)", href: "/program/darul-quran-yazzakka", icon: Award },
-  { label: "Wakaf Pesantren 6.0", href: "/program/pesantren-peradaban-60", icon: Globe },
+  { label: "Darul Quran (Tahfiz)", href: "/program/darul-quran-yazzakka", icon: BookOpenText },
+  { label: "Wakaf Pesantren 6.0", href: "/program/pesantren-peradaban-60", icon: Landmark },
 ];
 
 interface HeaderProps {
