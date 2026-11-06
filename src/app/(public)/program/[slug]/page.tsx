@@ -95,7 +95,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
             <Link
               href="/program"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FA6400] hover:underline mb-3"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-600 hover:underline mb-3"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               <span>Kembali ke Direktori Unit Pendidikan</span>
@@ -173,7 +173,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                 {/* Target Competencies */}
                 {program.targetCompetencies && program.targetCompetencies.length > 0 && (
                   <div className="bg-white border-[#E8E2D8] border-2 p-6 rounded-3xl space-y-3 shadow-xs">
-                    <h3 className="text-base font-bold text-yazzaka-teal-dark">
+                    <h3 className="text-base font-bold text-[#1E2330]">
                       {isWakaf ? "Dampak Peradaban & Kemaslahatan Umat:" : "Kompetensi Kelulusan Santri:"}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -219,7 +219,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
               {isWakaf && (
                 <div className="lg:col-span-4 space-y-4">
                   <div className="bg-white p-6 rounded-3xl border-2 border-[#E8E2D8] space-y-4 shadow-xs">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#FA6400] block">
+                    <span className="text-xs font-medium text-stone-500 block">
                       Layanan Wakaf &amp; Kemitraan
                     </span>
                     <h3 className="text-base font-bold text-[#1E2330]">
@@ -283,7 +283,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                 </div>
                 <Link
                   href="/program"
-                  className="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-[#FA6400] hover:underline"
+                  className="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-stone-600 hover:underline"
                 >
                   <span>Lihat Semua Unit</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -309,7 +309,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                       </p>
                     </div>
 
-                    <span className="text-[11px] font-bold text-[#FA6400] inline-flex items-center gap-1 pt-2">
+                    <span className="text-[11px] font-bold text-stone-600 inline-flex items-center gap-1 pt-2">
                       <span>Pelajari</span>
                       <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
                     </span>
