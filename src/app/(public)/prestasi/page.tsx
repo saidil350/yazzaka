@@ -34,7 +34,7 @@ export default async function AchievementsPage() {
             Prestasi &amp; Penghargaan Santri
           </h1>
           <p className="text-sm sm:text-base text-muted-foreground mt-3 leading-relaxed">
-            Apresiasi capaian santri {safeProfile.name} di ajang olimpiade sains nasional, kejuaraan robotik internasional, dan musabaqah tahfiz.
+            Capaian santri {safeProfile.name} di ajang olimpiade sains, musabaqah hifdzil Quran, dan robotika.
           </p>
         </div>
       </section>

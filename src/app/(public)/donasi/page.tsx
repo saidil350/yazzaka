@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Donasi",
   description:
-    "Salurkan donasi untuk operasional dan program pendidikan Yayasan Bina Iman Akhlak Yazzakka — transfer bank atau platform donasi online.",
+    "Salurkan donasi untuk operasional dan program pendidikan Yayasan Bina Iman Akhlak Yazzakka melalui transfer bank atau platform donasi online.",
   alternates: { canonical: "/donasi" },
 };
 
@@ -99,7 +99,7 @@ export default async function DonasiPage() {
                       Donasi Online
                     </h2>
                     <p className="text-xs text-muted-foreground mt-1">
-                      Salurkan donasi melalui platform berikut — terbuka di tab baru.
+                      Salurkan donasi melalui platform berikut (terbuka di tab baru).
                     </p>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">

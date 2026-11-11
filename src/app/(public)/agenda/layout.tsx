@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     template: "%s | Yazzakka Aceh",
   },
   description:
-    "Jadwal agenda dan kegiatan terkini Yayasan Yazzakka Aceh — kajian, pengajian, dan event pendidikan Islam di Sigli, Kabupaten Pidie, Aceh.",
+    "Jadwal agenda dan kegiatan terkini Yayasan Yazzakka Aceh: kajian, pengajian, dan event pendidikan Islam di Sigli, Kabupaten Pidie, Aceh.",
   alternates: { canonical: "/agenda" },
   openGraph: {
     title: "Agenda Kegiatan",

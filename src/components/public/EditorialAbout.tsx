@@ -24,7 +24,7 @@ export function EditorialAbout({ profile }: EditorialAboutProps) {
             Membentuk Karakter Melalui Keteladanan, Adab, &amp; Kedalaman Ilmu
           </h2>
           <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-            Pendidikan bukan sekadar transfer wawasan, melainkan proses menumbuhkan fitrah, mengasah kecerdasan, dan meneguhkan integritas moral.
+            Pendidikan adalah proses menumbuhkan fitrah, mengasah kecerdasan, dan meneguhkan integritas moral.
           </p>
         </div>
 

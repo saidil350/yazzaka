@@ -31,7 +31,7 @@ export function AchievementsSection({ achievements, profile }: AchievementsSecti
               Prestasi Santri &amp; Siswa Unggulan
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-              Capaian membanggakan santri {profile.name} di ajang olimpiade sains nasional, musabaqah hifdzil Quran internasional, dan riset robotika.
+              Capaian santri {profile.name} di ajang olimpiade sains, musabaqah hifdzil Quran, dan robotika.
             </p>
           </div>
 

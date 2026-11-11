@@ -118,7 +118,7 @@ export default async function AboutPage() {
   const sectionTitle = teamSection?.title || "Pimpinan & Dewan Asatidz";
   const sectionSubtitle =
     teamSection?.subtitle ||
-    "Pendidik berdedikasi tinggi yang memadukan kedalaman tradisi keilmuan Islam dan kompetensi sains modern.";
+    "Pendidik yang memadukan kedalaman tradisi keilmuan Islam dan kompetensi sains modern.";
 
   const sortedMembers = [...organization].sort(
     (a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0)
@@ -136,7 +136,7 @@ export default async function AboutPage() {
             Tentang {safeProfile.name}
           </h1>
           <p className="text-sm sm:text-base text-muted-foreground mt-3 leading-relaxed">
-            Sejarah dedikasi mencetak generasi muslim berilmu amaliah, beramal ilmiah, dan berakhlakul karimah sejak tahun {safeProfile.establishedYear}.
+            Sejak tahun {safeProfile.establishedYear}, kami mencetak generasi muslim berilmu amaliah, beramal ilmiah, dan berakhlakul karimah.
           </p>
         </div>
       </section>
@@ -156,7 +156,7 @@ export default async function AboutPage() {
               <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
                 <p>{safeProfile.description}</p>
                 <p>
-                  Didirikan dengan tekad melahirkan generasi santri yang tidak hanya hafal Al-Qur&apos;an secara mutqin dan menguasai literatur kitab kuning, namun juga memiliki kecakapan sains, teknologi, dan kepemimpinan untuk menjawab tantangan zaman.
+                  Didirikan untuk melahirkan generasi santri yang hafal Al-Qur&apos;an secara mutqin, menguasai literatur kitab kuning, sekaligus cakap sains, teknologi, dan kepemimpinan.
                 </p>
               </div>
 
