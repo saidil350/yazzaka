@@ -215,5 +215,5 @@ export const initialSections: PageSectionConfig[] = [
   { id: "sec-6", key: "berita", title: "Warta & Berita", subtitle: "Artikel dan kabar terkini sekolah", isEnabled: true, orderIndex: 7 },
   { id: "sec-7", key: "achievements", title: "Prestasi Siswa", subtitle: "Catatan kejuaraan tingkat nasional", isEnabled: false, orderIndex: 8 },
   { id: "sec-8", key: "testimonials", title: "Testimoni", subtitle: "Kesan wali murid dan kiprah alumni", isEnabled: true, orderIndex: 9 },
-  { id: "sec-team", key: "organization", title: "Pimpinan & Dewan Asatidz", subtitle: "Pendidik berdedikasi tinggi yang memadukan kedalaman tradisi keilmuan Islam dan kompetensi sains modern.", isEnabled: true, orderIndex: 10 },
+  { id: "sec-team", key: "organization", title: "Pimpinan & Dewan Asatidz", subtitle: "Pendidik yang memadukan kedalaman tradisi keilmuan Islam dan kompetensi sains modern.", isEnabled: true, orderIndex: 10 },
 ];
