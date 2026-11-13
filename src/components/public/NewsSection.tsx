@@ -29,7 +29,7 @@ export function NewsSection({ articles }: NewsSectionProps) {
           <div className="max-w-2xl space-y-2">
             <Badge variant="secondary" className="gap-2">
               <Newspaper className="h-3 w-3 text-yazzaka-teal-dark" />
-              <span>Warta &amp; Kabar Terkini</span>
+              <span>Kabar Terkini</span>
             </Badge>
             <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold text-foreground tracking-tight leading-tight">
               Berita &amp; Publikasi Terbaru
@@ -45,7 +45,7 @@ export function NewsSection({ articles }: NewsSectionProps) {
               size="default"
               className="font-bold text-xs h-9 px-4 shrink-0 shadow-xs"
             >
-              <span>Indeks Warta Lengkap</span>
+              <span>Indeks Berita Lengkap</span>
               <ArrowRight className="h-3.5 w-3.5 ml-1" />
             </Button>
           </Link>
@@ -57,7 +57,7 @@ export function NewsSection({ articles }: NewsSectionProps) {
             icon={Newspaper}
             title="Belum Ada Berita"
             description="Artikel dan pengumuman akan tampil di sini setelah dipublikasikan."
-            action={{ label: "Buka Indeks Warta", href: "/berita" }}
+            action={{ label: "Buka Indeks Berita", href: "/berita" }}
           />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

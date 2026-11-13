@@ -81,7 +81,7 @@ export function NewsCarouselSection({ articles }: NewsCarouselSectionProps) {
           <div className="max-w-2xl space-y-2">
             <Badge variant="secondary" className="gap-2">
               <Newspaper className="h-3 w-3 text-yazzaka-teal-dark" />
-              <span>Warta Pilihan</span>
+              <span>Kabar Pilihan</span>
             </Badge>
             <h2
               id="berita-unggulan-heading"

@@ -12,12 +12,12 @@ import { formatDateIndonesian } from "@/lib/utils";
 import { PAGE_SIZE_DEFAULT } from "@/lib/news/types";
 
 export const metadata: Metadata = {
-  title: "Berita & Warta",
+  title: "Berita",
   description:
     "Dokumentasi kegiatan santri, wawasan pendidikan islami, capaian prestasi, dan informasi resmi pesantren.",
   alternates: { canonical: "/berita" },
   openGraph: {
-    title: "Berita & Warta",
+    title: "Berita",
     description:
       "Dokumentasi kegiatan santri, wawasan pendidikan islami, capaian prestasi, dan informasi resmi pesantren.",
     type: "website",
@@ -86,10 +86,10 @@ async function BeritaHero() {
       <div className="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
         <Badge variant="secondary" className="gap-2 mb-3">
           <Newspaper className="size-3.5" aria-hidden="true" />
-          <span>Warta &amp; Kabar Terkini</span>
+          <span>Kabar Terkini</span>
         </Badge>
         <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-4xl">
-          Warta &amp; Publikasi {schoolName}
+          Berita &amp; Publikasi {schoolName}
         </h1>
         <p className="mt-3 text-sm font-medium leading-relaxed text-muted-foreground sm:text-base">
           Dokumentasi kegiatan santri, wawasan pendidikan islami, capaian
@@ -142,7 +142,7 @@ async function ArticleGrid({
         title="Tidak Ada Artikel Ditemukan"
         description={
           searchQuery
-            ? `Tidak ditemukan warta dengan kata kunci "${searchQuery}".`
+            ? `Tidak ditemukan berita dengan kata kunci "${searchQuery}".`
             : "Belum ada artikel yang dipublikasikan."
         }
         action={
