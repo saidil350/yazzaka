@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { ImageUpload } from "@/components/ui/image-upload";
-import { Save, Plus, Trash2, Image as ImageIcon, Type, Images, ArrowUp, ArrowDown } from "lucide-react";
+import { Save, Plus, Trash2, ArrowUp, ArrowDown } from "lucide-react";
 import { DEFAULT_HERO } from "@/lib/data/initialData";
 
 export default function AdminHeroPage() {
@@ -140,7 +140,6 @@ export default function AdminHeroPage() {
         {/* Teks Hero */}
         <Card className="p-6 space-y-6">
           <div className="flex items-center gap-2 font-semibold text-sm text-foreground">
-            <Type className="h-4 w-4 text-primary" />
             <span>Teks Hero</span>
           </div>
 
@@ -171,7 +170,6 @@ export default function AdminHeroPage() {
         {/* Gambar Hero */}
         <Card className="p-6 space-y-6">
           <div className="flex items-center gap-2 font-semibold text-sm text-foreground">
-            <ImageIcon className="h-4 w-4 text-primary" />
             <span>Gambar Utama Hero</span>
           </div>
 
@@ -188,7 +186,6 @@ export default function AdminHeroPage() {
         {/* Galeri Kolase Hero */}
         <Card className="p-6 space-y-6">
           <div className="flex items-center gap-2 font-semibold text-sm text-foreground">
-            <Images className="h-4 w-4 text-primary" />
             <span>Galeri Kolase Hero</span>
           </div>
 

@@ -79,8 +79,7 @@ export function NewsCarouselSection({ articles }: NewsCarouselSectionProps) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="max-w-2xl space-y-2">
-            <Badge variant="secondary" className="gap-2">
-              <Newspaper className="h-3 w-3 text-yazzaka-teal-dark" />
+            <Badge variant="secondary">
               <span>Kabar Pilihan</span>
             </Badge>
             <h2

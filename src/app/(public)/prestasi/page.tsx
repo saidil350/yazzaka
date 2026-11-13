@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Trophy, Award } from "lucide-react";
+import { Trophy } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { getPublicProfile, listAchievements } from "@/lib/public-data";
@@ -26,8 +26,7 @@ export default async function AchievementsPage() {
       {/* ── Headspace Warm Page Hero Banner ─────────── */}
       <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
-          <Badge variant="secondary" className="gap-2 mb-3">
-            <Trophy className="h-3.5 w-3.5 text-yazzaka-orange" />
+          <Badge variant="secondary" className="mb-3">
             <span>Rekam Jejak Keberhasilan</span>
           </Badge>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
@@ -85,7 +84,6 @@ export default async function AchievementsPage() {
 
                     <div className="pt-2.5 border-t border-border space-y-0.5">
                       <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
-                        <Award className="h-3.5 w-3.5 text-amber-500 shrink-0" />
                         <span>{ach.studentName}</span>
                       </div>
                       <p className="text-xs text-muted-foreground line-clamp-1">

@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Achievement, SchoolProfile } from "@/lib/types";
-import { ArrowRight, Trophy, Award } from "lucide-react";
+import { ArrowRight, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -23,8 +23,7 @@ export function AchievementsSection({ achievements, profile }: AchievementsSecti
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="max-w-2xl space-y-2">
-            <Badge variant="secondary" className="gap-2">
-              <Trophy className="h-3 w-3 text-yazzaka-orange" />
+            <Badge variant="secondary">
               <span>Rekam Jejak Keberhasilan</span>
             </Badge>
             <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold tracking-tight leading-tight">
@@ -87,7 +86,6 @@ export function AchievementsSection({ achievements, profile }: AchievementsSecti
 
                   <div className="pt-2 border-t border-border space-y-0.5">
                     <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
-                      <Award className="h-3 w-3 text-amber-500" />
                       <span>{ach.studentName}</span>
                     </div>
                     <p className="text-xs text-muted-foreground line-clamp-1">

@@ -4,7 +4,7 @@ import Image from "next/image";
 import type { HeroContent } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Landmark, Image as ImageIcon } from "lucide-react";
+import { BookOpen, Image as ImageIcon } from "lucide-react";
 
 interface HeroSectionProps {
   /** Konten hero (DEFAULT_HERO + hero DB) yang sudah digabung di beranda. */
@@ -85,8 +85,7 @@ export function HeroSection({ hero, schoolName }: HeroSectionProps) {
           <div className="lg:col-span-7 space-y-4 sm:space-y-5 hero-stagger">
 
             {/* Pill Eyebrow */}
-            <Badge variant="secondary" className="gap-2">
-              <Landmark className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
+            <Badge variant="secondary">
               <span>{hero.eyebrow}</span>
             </Badge>
 

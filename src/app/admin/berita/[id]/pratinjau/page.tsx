@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Eye } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { RenderDoc } from "@/components/news/render-doc";
 import { getArticleById, getAttachments } from "@/lib/news/service";
@@ -31,7 +31,6 @@ export default async function AdminBeritaPreviewPage({
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-muted/40 p-4">
         <div className="flex items-center gap-3">
           <Badge variant={article.status === "published" ? "default" : "secondary"}>
-            <Eye className="size-3" aria-hidden="true" />
             Pratinjau — {NEWS_STATUS_LABEL[article.status]}
           </Badge>
           {article.status !== "published" ? (

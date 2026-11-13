@@ -94,7 +94,7 @@ export default function AdminHomepageSectionsPage() {
             }`}
           >
             <div className="flex items-center gap-4">
-              <span className="h-8 w-8 rounded-md bg-primary/10 text-primary border border-primary/20 font-medium text-xs flex items-center justify-center shrink-0">
+              <span className="text-xs font-semibold text-muted-foreground tabular-nums shrink-0">
                 {String(idx + 1).padStart(2, "0")}
               </span>
               <div>

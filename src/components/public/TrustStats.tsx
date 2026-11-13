@@ -14,7 +14,7 @@ export function TrustStats({ profile }: TrustStatsProps) {
       icon: Calendar,
       label: "Tahun Berdiri",
       value: `${profile.establishedYear}`,
-      suffix: " M",
+      suffix: "",
       desc: `Berdiri ${profile.establishedYear}, berkiprah mencetak kader pemimpin`,
     },
     {
@@ -35,7 +35,7 @@ export function TrustStats({ profile }: TrustStatsProps) {
       icon: GraduationCap,
       label: "Tenaga Pendidik",
       value: `${profile.teacherCount}`,
-      suffix: " Asatidz",
+      suffix: "",
       desc: "Alumnus universitas ternama dalam & luar negeri",
     },
   ];
@@ -60,9 +60,11 @@ export function TrustStats({ profile }: TrustStatsProps) {
                     <span className="text-3xl font-extrabold text-foreground tracking-tight">
                       {stat.value}
                     </span>
-                    <span className="text-sm font-bold text-yazzaka-teal-dark">
-                      {stat.suffix}
-                    </span>
+                    {stat.suffix && (
+                      <span className="text-sm font-bold text-yazzaka-teal-dark">
+                        {stat.suffix}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground mt-1.5 leading-normal">

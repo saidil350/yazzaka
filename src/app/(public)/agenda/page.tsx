@@ -23,8 +23,7 @@ export default async function EventsPage() {
       {/* ── Headspace Warm Page Hero Banner ─────────── */}
       <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
-          <Badge variant="secondary" className="gap-2 mb-3">
-            <Calendar className="h-3.5 w-3.5 text-yazzaka-orange" />
+          <Badge variant="secondary" className="mb-3">
             <span>Kalender Akademik &amp; Kegiatan</span>
           </Badge>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">

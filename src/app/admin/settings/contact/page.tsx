@@ -8,13 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Phone,
-  Save,
-  MessageCircle,
-  Mail,
-  ExternalLink,
-} from "lucide-react";
+import { Save, ExternalLink } from "lucide-react";
 
 export default function AdminContactSettingsPage() {
   const { profile, updateProfile, isLoading } = useSchoolData();
@@ -104,7 +98,7 @@ export default function AdminContactSettingsPage() {
           Informasi Kontak Lembaga
         </h1>
         <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-          Kelola nomor hotline, WhatsApp admisi, email resmi, alamat fisik, dan
+          Kelola nomor hotline, WhatsApp sekretariat, email resmi, alamat fisik, dan
           sematan peta Google Maps sekolah.
         </p>
       </div>
@@ -123,7 +117,6 @@ export default function AdminContactSettingsPage() {
             {/* Hotline */}
             <div className="space-y-1.5">
               <label htmlFor="input-phone" className="text-xs font-medium text-foreground flex items-center gap-2 block">
-                <Phone className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
                 Nomor Telepon Kantor
               </label>
               <Input
@@ -142,8 +135,7 @@ export default function AdminContactSettingsPage() {
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <label htmlFor="input-whatsapp" className="text-xs font-medium text-foreground flex items-center gap-2">
-                  <MessageCircle className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
-                  WhatsApp Admisi SPMB
+                  WhatsApp Sekretariat
                 </label>
                 {cleanWaNumber && (
                   <a
@@ -172,7 +164,6 @@ export default function AdminContactSettingsPage() {
             {/* Email */}
             <div className="space-y-1.5">
               <label htmlFor="input-email" className="text-xs font-medium text-foreground flex items-center gap-2 block">
-                <Mail className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
                 Alamat Email Resmi
               </label>
               <Input

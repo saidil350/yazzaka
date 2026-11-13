@@ -14,8 +14,6 @@ import {
   BookOpen,
   Tag,
   Globe,
-  Image as ImageIcon,
-  FileText,
   CheckCircle2,
   Info,
 } from "lucide-react";
@@ -395,7 +393,6 @@ export default function AdminProgramsCrudPage() {
           {/* Section 1: Informasi Utama */}
           <div className="bg-muted rounded-lg p-4 sm:p-5 border border-border space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border">
-              <BookOpen className="w-4 h-4 text-primary" />
               <h3 className="text-xs font-semibold text-foreground">
                 Informasi Utama
               </h3>
@@ -440,7 +437,6 @@ export default function AdminProgramsCrudPage() {
           {/* Section 2: Media Banner */}
           <div className="bg-muted rounded-lg p-4 sm:p-5 border border-border space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border">
-              <ImageIcon className="w-4 h-4 text-primary" />
               <h3 className="text-xs font-semibold text-foreground">
                 Media &amp; Banner Visual
               </h3>
@@ -459,7 +455,6 @@ export default function AdminProgramsCrudPage() {
           {/* Section 3: Deskripsi Program */}
           <div className="bg-muted rounded-lg p-4 sm:p-5 border border-border space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border">
-              <FileText className="w-4 h-4 text-primary" />
               <h3 className="text-xs font-semibold text-foreground">
                 Deskripsi Program
               </h3>
@@ -511,7 +506,7 @@ export default function AdminProgramsCrudPage() {
                 <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
                   {featuresList.map((feat, idx) => (
                     <div key={idx} className="flex items-center gap-2 group">
-                      <span className="h-7 w-7 rounded-full bg-muted border border-border text-muted-foreground font-medium text-xs flex items-center justify-center shrink-0">
+                      <span className="w-5 text-center text-xs font-semibold text-muted-foreground tabular-nums shrink-0">
                         {idx + 1}
                       </span>
                       <Input
@@ -563,7 +558,7 @@ export default function AdminProgramsCrudPage() {
                 <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
                   {competenciesList.map((comp, idx) => (
                     <div key={idx} className="flex items-center gap-2 group">
-                      <span className="h-7 w-7 rounded-full bg-muted border border-border text-muted-foreground font-medium text-xs flex items-center justify-center shrink-0">
+                      <span className="w-5 text-center text-xs font-semibold text-muted-foreground tabular-nums shrink-0">
                         {idx + 1}
                       </span>
                       <Input

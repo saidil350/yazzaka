@@ -107,8 +107,7 @@ export function Footer({ profile, socialMedia }: FooterProps) {
 
           {/* Col 2: 6 Educational Units (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-sm font-semibold flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-yazzaka-teal-dark"></span>
+            <h4 className="text-sm font-semibold">
               <span>Unit Pendidikan &amp; Program</span>
             </h4>
             <ul className="space-y-2 text-xs text-muted-foreground">
@@ -153,8 +152,7 @@ export function Footer({ profile, socialMedia }: FooterProps) {
 
           {/* Col 3: Profile & Information (2 cols) */}
           <div className="lg:col-span-2 space-y-3">
-            <h4 className="text-sm font-semibold flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-yazzaka-teal-dark"></span>
+            <h4 className="text-sm font-semibold">
               <span>Informasi &amp; Berita</span>
             </h4>
             <ul className="space-y-2 text-xs text-muted-foreground">
@@ -172,8 +170,7 @@ export function Footer({ profile, socialMedia }: FooterProps) {
 
           {/* Col 4: Secretariat & Contact (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-sm font-semibold flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-yazzaka-teal-dark"></span>
+            <h4 className="text-sm font-semibold">
               <span>Sekretariat Yayasan</span>
             </h4>
             <div className="space-y-2.5 text-xs text-muted-foreground leading-relaxed">

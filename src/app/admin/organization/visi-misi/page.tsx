@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Modal } from "@/components/ui/modal";
-import { Save, Plus, Trash2, Compass, Target, Edit2 } from "lucide-react";
+import { Save, Plus, Trash2, Edit2 } from "lucide-react";
 
 export default function AdminVisionMissionPage() {
   const { profile, updateProfile, isLoading } = useSchoolData();
@@ -196,7 +196,6 @@ export default function AdminVisionMissionPage() {
       <Card className="p-6">
         <form onSubmit={handleSaveVision} className="space-y-4">
           <div className="flex items-center gap-2 font-semibold text-sm text-foreground">
-            <Compass className="h-4 w-4 text-primary" />
             <span>Visi Lembaga</span>
           </div>
           <Textarea
@@ -216,7 +215,6 @@ export default function AdminVisionMissionPage() {
       {/* Mission List */}
       <Card className="p-6 space-y-6">
         <div className="flex items-center gap-2 font-semibold text-sm text-foreground">
-          <Target className="h-4 w-4 text-primary" />
           <span>Butir-Butir Misi Strategis</span>
         </div>
 
@@ -227,7 +225,7 @@ export default function AdminVisionMissionPage() {
               className="flex items-start justify-between gap-3 p-4 rounded-lg bg-muted border border-border text-xs sm:text-sm text-foreground font-medium"
             >
               <div className="flex items-start gap-3">
-                <span className="h-6 w-6 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center shrink-0 mt-0.5">
+                <span className="text-xs font-semibold text-muted-foreground tabular-nums shrink-0 mt-0.5">
                   {idx + 1}
                 </span>
                 <span className="leading-relaxed">{item}</span>
@@ -289,7 +287,7 @@ export default function AdminVisionMissionPage() {
                 className="flex items-start justify-between gap-3 p-4 rounded-lg bg-muted border border-border text-xs sm:text-sm text-foreground"
               >
                 <div className="flex items-start gap-3">
-                  <span className="h-6 w-6 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="text-xs font-semibold text-muted-foreground tabular-nums shrink-0 mt-0.5">
                     {idx + 1}
                   </span>
                   <div className="space-y-1">
