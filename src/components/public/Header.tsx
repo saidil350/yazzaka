@@ -31,7 +31,7 @@ const primaryNavLinks: NavLinkItem[] = [
   { label: "Beranda", href: "/", sectionId: "beranda" },
   { label: "Tentang", href: "/tentang-kami", sectionId: "tentang" },
   { label: "Program", href: "/program", sectionId: "program" },
-  { label: "Warta & Berita", href: "/berita" },
+  { label: "Berita", href: "/berita" },
   { label: "Kontak", href: "/kontak" },
 ];
 
@@ -269,7 +269,7 @@ export function Header({ profile, sections }: HeaderProps) {
               );
             })}
 
-            {/* Informasi & Warta Dropdown Menu */}
+            {/* Informasi Dropdown Menu */}
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
@@ -443,7 +443,7 @@ export function Header({ profile, sections }: HeaderProps) {
               {/* Informational Sub-Links */}
               <div className="pt-2 border-t border-border space-y-1">
                 <span className="text-xs font-medium text-muted-foreground px-3 block">
-                  Warta &amp; Layanan
+                  Informasi &amp; Layanan
                 </span>
                 {secondaryNavLinks.map((item) => {
                   const isCurrent = pathname === item.href || pathname.startsWith(item.href + "/");

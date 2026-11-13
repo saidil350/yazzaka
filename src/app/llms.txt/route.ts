@@ -24,7 +24,7 @@ Kontak: telepon ${facts.phone}, email ${facts.email}, WhatsApp https://wa.me/${f
 - [Beranda](${siteUrl}/): profil singkat, program unggulan, berita terbaru, dan agenda kegiatan.
 - [Tentang Kami](${siteUrl}/tentang-kami): profil lengkap yayasan, visi-misi, nilai, pimpinan, data legalitas, dan dewan asatidz.
 - [Program](${siteUrl}/program): daftar unit pendidikan — TPA, TKIT, Sekolah Anak Shalih, PKBM, Darul Quran, dan wakaf Pesantren Peradaban 6.0.
-- [Berita](${siteUrl}/berita): warta dan artikel kegiatan santri serta pengumuman resmi.
+- [Berita](${siteUrl}/berita): berita dan artikel kegiatan santri serta pengumuman resmi.
 - [Agenda](${siteUrl}/agenda): jadwal kegiatan dan event mendatang.
 - [Galeri](${siteUrl}/galeri): dokumentasi foto kegiatan.
 - [Prestasi](${siteUrl}/prestasi): rekap capaian santri.

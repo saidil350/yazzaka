@@ -155,14 +155,14 @@ export function Footer({ profile, socialMedia }: FooterProps) {
           <div className="lg:col-span-2 space-y-3">
             <h4 className="text-sm font-semibold flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-yazzaka-teal-dark"></span>
-              <span>Informasi &amp; Warta</span>
+              <span>Informasi &amp; Berita</span>
             </h4>
             <ul className="space-y-2 text-xs text-muted-foreground">
               <li>
                 <Link href="/tentang-kami">Profil &amp; Visi Yayasan</Link>
               </li>
               <li>
-                <Link href="/berita">Warta &amp; Kajian Dakwah</Link>
+                <Link href="/berita">Berita &amp; Kajian Dakwah</Link>
               </li>
               <li>
                 <Link href="/galeri">Dokumentasi Foto</Link>
