@@ -71,7 +71,6 @@ export default function AdminDashboardOverview() {
       value: articles.length,
       unit: "Artikel",
       desc: "Status published; termasuk draft dilihat di modul Berita",
-      icon: Newspaper,
       href: "/admin/berita",
     },
     {
@@ -79,7 +78,6 @@ export default function AdminDashboardOverview() {
       value: testimonials.length,
       unit: "Ulasan Terbit",
       desc: "Kesan wali santri & alumni",
-      icon: Quote,
       href: "/admin/content/testimoni",
     },
   ];
@@ -195,7 +193,6 @@ export default function AdminDashboardOverview() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {landingKpis.map((kpi) => {
-            const Icon = kpi.icon;
             return (
               <Link
                 key={kpi.href}
@@ -208,7 +205,6 @@ export default function AdminDashboardOverview() {
                     <CardDescription className="text-sm">
                       {kpi.title}
                     </CardDescription>
-                    <Icon className="size-4 text-muted-foreground shrink-0" aria-hidden="true" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-semibold text-foreground tabular-nums tracking-tight">

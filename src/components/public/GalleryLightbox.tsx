@@ -44,15 +44,6 @@ export function GalleryLightbox({ items }: { items: MediaItem[] }) {
                 </div>
               )}
             </div>
-
-            <div className="p-4 bg-white flex items-center justify-between">
-              <p className="text-xs font-bold truncate">
-                {item.altText || item.fileName}
-              </p>
-              <span className="text-xs text-muted-foreground">
-                {item.fileType}
-              </span>
-            </div>
           </div>
         ))}
       </div>
@@ -73,7 +64,7 @@ export function GalleryLightbox({ items }: { items: MediaItem[] }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={activeLightbox}
-              alt="Preview Galeri"
+              alt="Pratinjau foto"
               className="max-h-[85vh] w-auto object-contain rounded-xl"
             />
           </div>

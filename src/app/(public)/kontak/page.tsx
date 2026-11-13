@@ -21,7 +21,7 @@ import type { SchoolProfile, WebsiteSettings } from "@/lib/types";
 export const metadata: Metadata = {
   title: "Kontak & Sekretariat",
   description:
-    "Hubungi Yayasan Bina Iman Akhlak Yazzakka — alamat sekretariat Sigli, telepon, WhatsApp, email, dan peta lokasi.",
+    "Hubungi Yayasan Bina Iman Akhlak Yazzakka: alamat sekretariat Sigli, telepon, WhatsApp, email, dan peta lokasi.",
   alternates: { canonical: "/kontak" },
 };
 
@@ -82,7 +82,7 @@ export default async function ContactPage() {
                   <div className="flex items-start gap-3">
                     <MessageCircle className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-bold block">WhatsApp Admisi:</span>
+                      <span className="font-bold block">WhatsApp Sekretariat:</span>
                       <a
                         href={`https://wa.me/${safeProfile.whatsapp}`}
                         target="_blank"

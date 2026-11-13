@@ -453,10 +453,10 @@ export default function AdminContactInboxPage() {
                     )
                   }
                 >
-                  <option value="new">🔴 Baru (New)</option>
-                  <option value="read">⚪ Sudah Dibaca (Read)</option>
-                  <option value="replied">🟢 Sudah Dibalas (Replied)</option>
-                  <option value="archived">🟡 Diarsipkan (Archived)</option>
+                  <option value="new">Baru (New)</option>
+                  <option value="read">Sudah Dibaca (Read)</option>
+                  <option value="replied">Sudah Dibalas (Replied)</option>
+                  <option value="archived">Diarsipkan (Archived)</option>
                 </Select>
               </div>
             </div>

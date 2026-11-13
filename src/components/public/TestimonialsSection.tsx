@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import type { SchoolProfile, Testimonial } from "@/lib/types";
-import { MessageSquareHeart, Star, Quote, MessageSquare, User } from "lucide-react";
+import { Star, MessageSquare, User } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 
@@ -20,8 +20,7 @@ export function TestimonialsSection({ testimonials, profile }: TestimonialsSecti
 
         {/* Section Header */}
         <div className="max-w-3xl space-y-2">
-          <Badge variant="secondary" className="gap-2">
-            <MessageSquareHeart className="h-3.5 w-3.5 text-yazzaka-orange" />
+          <Badge variant="secondary">
             <span>Kisah Nyata &amp; Pengalaman</span>
           </Badge>
           <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold tracking-tight leading-tight">
@@ -58,8 +57,6 @@ export function TestimonialsSection({ testimonials, profile }: TestimonialsSecti
                         ))}
                       </div>
                     </div>
-
-                    <Quote className="h-6 w-6 text-muted-foreground/40" />
 
                     <p className="text-foreground text-xs sm:text-sm leading-relaxed italic">
                       &ldquo;{test.quote}&rdquo;

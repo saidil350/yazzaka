@@ -84,8 +84,7 @@ async function BeritaHero() {
   return (
     <section className="border-b border-border bg-card py-10 lg:py-14">
       <div className="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-        <Badge variant="secondary" className="gap-2 mb-3">
-          <Newspaper className="size-3.5" aria-hidden="true" />
+        <Badge variant="secondary" className="mb-3">
           <span>Kabar Terkini</span>
         </Badge>
         <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-4xl">

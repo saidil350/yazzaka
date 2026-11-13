@@ -27,13 +27,13 @@ export default async function GalleryPage() {
       <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
           <Badge variant="secondary" className="mb-3">
-            <span>Dokumentasi Visual &amp; Multimedia</span>
+            <span>Dokumentasi Foto</span>
           </Badge>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
             Galeri Kegiatan {safeProfile.name}
           </h1>
           <p className="text-sm sm:text-base text-muted-foreground mt-3 leading-relaxed">
-            Merekam dinamika keseharian santri, suasana pembelajaran di kelas, keasrian lingkungan sekolah, dan kebersamaan ukhuwah.
+            Foto kegiatan santri, suasana belajar di kelas, dan lingkungan sekolah.
           </p>
         </div>
       </section>

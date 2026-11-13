@@ -90,8 +90,7 @@ export function WhyUsSection({ profile }: WhyUsSectionProps) {
 
         {/* Section Header */}
         <div className="max-w-3xl space-y-2">
-          <Badge variant="secondary" className="gap-2">
-            <Landmark className="h-3.5 w-3.5 text-yazzaka-teal-dark" strokeWidth={1.8} />
+          <Badge variant="secondary">
             <span>Mengapa Memilih {profile.name}?</span>
           </Badge>
           <h2 className="text-2xl sm:text-3xl lg:text-3xl font-extrabold tracking-tight leading-tight">
@@ -112,17 +111,13 @@ export function WhyUsSection({ profile }: WhyUsSectionProps) {
                 className="bg-white border border-border rounded-lg p-6 flex flex-col justify-between group"
               >
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="h-11 w-11 border-l-2 border-yazzaka-teal flex items-center justify-center">
-                      <Icon className="h-5 w-5" strokeWidth={1.7} />
-                    </div>
-                    <span className="text-xs font-medium text-muted-foreground">
-                      Poin {adv.num}
-                    </span>
-                  </div>
+                  <span className="text-xs font-medium text-muted-foreground">
+                    Poin {adv.num}
+                  </span>
 
                   <div className="space-y-2">
-                    <h3 className="text-base sm:text-lg font-bold leading-snug">
+                    <h3 className="flex items-center gap-2 text-base sm:text-lg font-bold leading-snug">
+                      <Icon className="h-4 w-4 text-yazzaka-teal-dark shrink-0" strokeWidth={1.8} />
                       {adv.title}
                     </h3>
 

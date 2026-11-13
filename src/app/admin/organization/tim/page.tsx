@@ -12,11 +12,7 @@ import {
   Search,
   ArrowUp,
   ArrowDown,
-  GraduationCap,
-  Building2,
-  Shield,
   Save,
-  Sliders,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -329,7 +325,6 @@ export default function AdminTeamMembersPage() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
-            <Users className="h-4 w-4 text-primary" />
             <span>Total Pengajar</span>
           </div>
           {isLoading ? (
@@ -342,7 +337,6 @@ export default function AdminTeamMembersPage() {
 
         <Card className="p-4">
           <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
-            <Building2 className="h-4 w-4 text-primary" />
             <span>TPA &amp; TKIT</span>
           </div>
           {isLoading ? (
@@ -355,7 +349,6 @@ export default function AdminTeamMembersPage() {
 
         <Card className="p-4">
           <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
-            <GraduationCap className="h-4 w-4 text-primary" />
             <span>PKBM &amp; Anak Shalih</span>
           </div>
           {isLoading ? (
@@ -368,7 +361,6 @@ export default function AdminTeamMembersPage() {
 
         <Card className="p-4">
           <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
-            <Shield className="h-4 w-4 text-primary" />
             <span>Darul Quran &amp; Pimpinan</span>
           </div>
           {isLoading ? (
@@ -408,7 +400,6 @@ export default function AdminTeamMembersPage() {
         <form onSubmit={handleSaveSectionHeader} className="space-y-4">
           <div className="flex items-center justify-between gap-2 pb-2 border-b border-border">
             <div className="flex items-center gap-2">
-              <Sliders className="h-4 w-4 text-primary" />
               <h3 className="font-semibold text-sm text-foreground">
                 Teks Judul &amp; Deskripsi Seksi Publik (Halaman Tentang Kami)
               </h3>
@@ -529,7 +520,7 @@ export default function AdminTeamMembersPage() {
                   </p>
                   {m.qualifications && (
                     <p className="text-xs text-muted-foreground italic bg-muted p-1.5 rounded-md border border-border line-clamp-2 font-medium">
-                      🎓 {m.qualifications}
+                      {m.qualifications}
                     </p>
                   )}
                   <p className="text-xs text-muted-foreground line-clamp-2 pt-2 border-t border-border font-medium leading-relaxed">

@@ -4,7 +4,7 @@ import Image from "next/image";
 import type { SchoolProfile } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Quote, Image as ImageIcon } from "lucide-react";
+import { ArrowRight, Image as ImageIcon } from "lucide-react";
 
 interface EditorialAboutProps {
   /** Profil sekolah dari server — sambutan pimpinan, visi, misi, nilai. */
@@ -51,7 +51,6 @@ export function EditorialAbout({ profile }: EditorialAboutProps) {
               </div>
 
               {/* Message Quote */}
-              <Quote className="h-4 w-4 text-muted-foreground mb-2" />
               <p className="text-muted-foreground text-xs sm:text-sm italic leading-relaxed whitespace-pre-line">
                 &ldquo;{profile.principal.welcomeMessage}&rdquo;
               </p>

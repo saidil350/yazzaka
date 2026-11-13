@@ -197,8 +197,7 @@ export function Header({ profile, sections }: HeaderProps) {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between text-xs">
           <div className="flex items-center gap-2.5">
-            <span className="hidden md:inline-flex items-center gap-1.5 text-stone-300 font-medium text-xs">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span className="hidden md:inline-flex items-center text-stone-300 font-medium text-xs">
               Akreditasi {profile.accreditation} · SK Kemenkumham {profile.npsn}
             </span>
           </div>
