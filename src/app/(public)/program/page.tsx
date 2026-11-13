@@ -15,6 +15,13 @@ export const metadata: Metadata = {
   description:
     "Direktori unit pendidikan Yazzakka: TPA, TKIT, Sekolah Anak Shalih, PKBM, Darul Quran tahfiz 30 juz, hingga wakaf Pesantren Peradaban 6.0.",
   alternates: { canonical: "/program" },
+  openGraph: {
+    title: "Program & Unit Pendidikan",
+    description:
+      "Direktori unit pendidikan Yazzakka: TPA, TKIT, Sekolah Anak Shalih, PKBM, Darul Quran tahfiz 30 juz, hingga wakaf Pesantren Peradaban 6.0.",
+    type: "website",
+    url: "/program",
+  },
 };
 
 const getUnitBadge = (prog: Program) => {
@@ -59,14 +66,11 @@ export default async function ProgramsDirectoryPage() {
       <section className="bg-background py-10 lg:py-14 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center">
-            <Badge variant="secondary" className="mb-3">
-              <span>Unit Pendidikan &amp; Program Strategis</span>
-            </Badge>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
               Struktur Pendidikan {safeProfile.name}
             </h1>
             <p className="text-sm sm:text-base text-muted-foreground mt-3 leading-relaxed">
-              Menaungi {published.length} unit pendidikan formal, non-formal, tahfiz intensif Al-Qur&apos;an, serta program strategis di {safeProfile.city}, {safeProfile.province}.
+              Menaungi {published.length} unit pendidikan formal, non-formal, tahfiz intensif Al-Qur&apos;an, serta wakaf pembangunan Pesantren Peradaban 6.0 di {safeProfile.city}, {safeProfile.province}.
             </p>
           </div>
         </div>
