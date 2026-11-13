@@ -25,6 +25,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ListPagination } from "@/components/admin/list-pagination";
+
+const EVENTS_PAGE_SIZE = 9;
 
 export default function AdminEventsPage() {
   const { events, addEvent, updateEvent, deleteEvent, isLoading } =
@@ -33,6 +36,7 @@ export default function AdminEventsPage() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
 
   // Form states
   const [title, setTitle] = useState("");
@@ -123,6 +127,13 @@ export default function AdminEventsPage() {
   };
 
   const [eventToDelete, setEventToDelete] = useState<SchoolEvent | null>(null);
+
+  const totalEventPages = Math.max(1, Math.ceil(events.length / EVENTS_PAGE_SIZE));
+  const safeEventPage = Math.min(page, totalEventPages);
+  const pageEvents = events.slice(
+    (safeEventPage - 1) * EVENTS_PAGE_SIZE,
+    safeEventPage * EVENTS_PAGE_SIZE
+  );
 
   const handleConfirmDelete = async () => {
     if (!eventToDelete) return;
@@ -231,7 +242,7 @@ export default function AdminEventsPage() {
                 </tr>
               </TableHeader>
               <TableBody>
-                {events.map((evt) => (
+                {pageEvents.map((evt) => (
                   <TableRow key={evt.id}>
                     <TableCell className="p-4 sm:px-6">
                       <div>
@@ -288,6 +299,14 @@ export default function AdminEventsPage() {
           </div>
         )}
       </Card>
+
+      {/* Paginasi */}
+      <ListPagination
+        page={safeEventPage}
+        totalPages={totalEventPages}
+        onChangePage={setPage}
+        isLoading={isLoading}
+      />
 
       {/* Modal */}
       <Modal

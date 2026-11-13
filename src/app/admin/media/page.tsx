@@ -22,12 +22,16 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ImageUpload } from "@/components/ui/image-upload";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ListPagination } from "@/components/admin/list-pagination";
+
+const MEDIA_PAGE_SIZE = 12;
 
 export default function AdminMediaPage() {
   const { media, addMedia, deleteMedia, isLoading } = useSchoolData();
   const { toast } = useToast();
 
   const [selectedType, setSelectedType] = useState<string>("all");
+  const [page, setPage] = useState(1);
   const [modalOpen, setModalOpen] = useState(false);
 
   // Form states
@@ -95,6 +99,21 @@ export default function AdminMediaPage() {
     return m.fileType === selectedType;
   });
 
+  const totalMediaPages = Math.max(
+    1,
+    Math.ceil(filtered.length / MEDIA_PAGE_SIZE)
+  );
+  const safeMediaPage = Math.min(page, totalMediaPages);
+  const pageMedia = filtered.slice(
+    (safeMediaPage - 1) * MEDIA_PAGE_SIZE,
+    safeMediaPage * MEDIA_PAGE_SIZE
+  );
+
+  const handleTypeChange = (value: string) => {
+    setSelectedType(value);
+    setPage(1);
+  };
+
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Header */}
@@ -118,7 +137,7 @@ export default function AdminMediaPage() {
       </div>
 
       {/* Filter Tabs */}
-      <Tabs value={selectedType} onValueChange={setSelectedType}>
+      <Tabs value={selectedType} onValueChange={handleTypeChange}>
         <TabsList>
           <TabsTrigger value="all">
             Semua Format ({media.length})
@@ -169,7 +188,7 @@ export default function AdminMediaPage() {
         </Card>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filtered.map((item) => (
+          {pageMedia.map((item) => (
             <Card
               key={item.id}
               className="overflow-hidden flex flex-col justify-between"
@@ -231,6 +250,14 @@ export default function AdminMediaPage() {
           ))}
         </div>
       )}
+
+      {/* Paginasi */}
+      <ListPagination
+        page={safeMediaPage}
+        totalPages={totalMediaPages}
+        onChangePage={setPage}
+        isLoading={isLoading}
+      />
 
       {/* Upload / Add Media Modal */}
       <Modal
