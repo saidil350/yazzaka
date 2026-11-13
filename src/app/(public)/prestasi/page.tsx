@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Trophy } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
+import { PaginationNav } from "@/components/public/pagination-nav";
 import { getPublicProfile, listAchievements } from "@/lib/public-data";
 import { initialSchoolProfile } from "@/lib/data/initialData";
 import type { SchoolProfile } from "@/lib/types";
@@ -14,12 +15,36 @@ export const metadata: Metadata = {
   alternates: { canonical: "/prestasi" },
 };
 
-export default async function AchievementsPage() {
+const ACHIEVEMENTS_PAGE_SIZE = 8;
+
+type SearchParams = Promise<{ page?: string }>;
+
+export default async function AchievementsPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const { page } = await searchParams;
+  const currentPage = Math.max(1, Number(page ?? "1") || 1);
+
   const [profile, achievements] = await Promise.all([
     getPublicProfile(),
     listAchievements(),
   ]);
   const safeProfile: SchoolProfile = profile ?? initialSchoolProfile;
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(achievements.length / ACHIEVEMENTS_PAGE_SIZE)
+  );
+  const safePage = Math.min(currentPage, totalPages);
+  const pageAchievements = achievements.slice(
+    (safePage - 1) * ACHIEVEMENTS_PAGE_SIZE,
+    safePage * ACHIEVEMENTS_PAGE_SIZE
+  );
+
+  const buildAchievementsPageHref = (p: number) =>
+    p > 1 ? `/prestasi?page=${p}` : "/prestasi";
 
   return (
     <>
@@ -50,8 +75,9 @@ export default async function AchievementsPage() {
               description="Belum ada rekaman prestasi santri yang dipublikasikan."
             />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-              {achievements.map((ach) => (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              {pageAchievements.map((ach) => (
                 <div
                   key={ach.id}
                   className="bg-white border border-border rounded-lg overflow-hidden flex flex-col justify-between shadow-xs"
@@ -93,7 +119,15 @@ export default async function AchievementsPage() {
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+
+              <PaginationNav
+                currentPage={safePage}
+                totalPages={totalPages}
+                buildHref={buildAchievementsPageHref}
+                ariaLabel="Navigasi halaman prestasi"
+              />
+            </>
           )}
 
         </div>

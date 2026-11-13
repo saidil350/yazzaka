@@ -6,6 +6,7 @@ import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
+import { PaginationNav } from "@/components/public/pagination-nav";
 import { listPublishedEvents } from "@/lib/public-data";
 
 export const metadata: Metadata = {
@@ -15,8 +16,29 @@ export const metadata: Metadata = {
   alternates: { canonical: "/agenda" },
 };
 
-export default async function EventsPage() {
+const EVENTS_PAGE_SIZE = 9;
+
+type SearchParams = Promise<{ page?: string }>;
+
+export default async function EventsPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const { page } = await searchParams;
+  const currentPage = Math.max(1, Number(page ?? "1") || 1);
+
   const events = await listPublishedEvents();
+
+  const totalPages = Math.max(1, Math.ceil(events.length / EVENTS_PAGE_SIZE));
+  const safePage = Math.min(currentPage, totalPages);
+  const pageEvents = events.slice(
+    (safePage - 1) * EVENTS_PAGE_SIZE,
+    safePage * EVENTS_PAGE_SIZE
+  );
+
+  const buildEventsPageHref = (p: number) =>
+    p > 1 ? `/agenda?page=${p}` : "/agenda";
 
   return (
     <>
@@ -47,8 +69,9 @@ export default async function EventsPage() {
               description="Saat ini belum ada jadwal agenda kegiatan."
             />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {events.map((evt) => (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {pageEvents.map((evt) => (
                 <div
                   key={evt.id}
                   className="bg-white rounded-lg border border-border overflow-hidden shadow-xs flex flex-col justify-between group"
@@ -140,7 +163,15 @@ export default async function EventsPage() {
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+
+              <PaginationNav
+                currentPage={safePage}
+                totalPages={totalPages}
+                buildHref={buildEventsPageHref}
+                ariaLabel="Navigasi halaman agenda"
+              />
+            </>
           )}
 
         </div>

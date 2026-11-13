@@ -16,6 +16,9 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Select } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ListPagination } from "@/components/admin/list-pagination";
+
+const TESTIMONIALS_PAGE_SIZE = 9;
 
 export default function AdminTestimonialsPage() {
   const { testimonials, addTestimonial, updateTestimonial, deleteTestimonial, isLoading } =
@@ -24,6 +27,7 @@ export default function AdminTestimonialsPage() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
 
   // Form states
   const [name, setName] = useState("");
@@ -99,6 +103,16 @@ export default function AdminTestimonialsPage() {
   };
 
   const [testimonialToDelete, setTestimonialToDelete] = useState<Testimonial | null>(null);
+
+  const totalTestimonialPages = Math.max(
+    1,
+    Math.ceil(testimonials.length / TESTIMONIALS_PAGE_SIZE)
+  );
+  const safeTestimonialPage = Math.min(page, totalTestimonialPages);
+  const pageTestimonials = testimonials.slice(
+    (safeTestimonialPage - 1) * TESTIMONIALS_PAGE_SIZE,
+    safeTestimonialPage * TESTIMONIALS_PAGE_SIZE
+  );
 
   const handleConfirmDelete = async () => {
     if (!testimonialToDelete) return;
@@ -179,7 +193,7 @@ export default function AdminTestimonialsPage() {
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((test) => (
+          {pageTestimonials.map((test) => (
             <Card
               key={test.id}
               className="p-6 flex flex-col justify-between space-y-4"
@@ -235,6 +249,14 @@ export default function AdminTestimonialsPage() {
           ))}
         </div>
       )}
+
+      {/* Paginasi */}
+      <ListPagination
+        page={safeTestimonialPage}
+        totalPages={totalTestimonialPages}
+        onChangePage={setPage}
+        isLoading={isLoading}
+      />
 
       {/* Modal */}
       <Modal

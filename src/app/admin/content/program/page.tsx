@@ -36,6 +36,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ListPagination } from "@/components/admin/list-pagination";
+
+const PROGRAMS_PAGE_SIZE = 9;
 
 export default function AdminProgramsCrudPage() {
   const { programs, addProgram, updateProgram, deleteProgram, isLoading } =
@@ -44,6 +47,7 @@ export default function AdminProgramsCrudPage() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
 
   // Form states
   const [title, setTitle] = useState("");
@@ -188,6 +192,16 @@ export default function AdminProgramsCrudPage() {
 
   const [programToDelete, setProgramToDelete] = useState<Program | null>(null);
 
+  const totalProgramPages = Math.max(
+    1,
+    Math.ceil(programs.length / PROGRAMS_PAGE_SIZE)
+  );
+  const safeProgramPage = Math.min(page, totalProgramPages);
+  const pagePrograms = programs.slice(
+    (safeProgramPage - 1) * PROGRAMS_PAGE_SIZE,
+    safeProgramPage * PROGRAMS_PAGE_SIZE
+  );
+
   const handleConfirmDelete = async () => {
     if (!programToDelete) return;
     try {
@@ -292,7 +306,7 @@ export default function AdminProgramsCrudPage() {
                 </tr>
               </TableHeader>
               <TableBody>
-                {programs.map((prog) => (
+                {pagePrograms.map((prog) => (
                   <TableRow key={prog.id}>
                     <TableCell className="p-4 sm:px-6">
                       <div className="flex items-center gap-3 max-w-sm">
@@ -355,6 +369,14 @@ export default function AdminProgramsCrudPage() {
           </div>
         )}
       </Card>
+
+      {/* Paginasi */}
+      <ListPagination
+        page={safeProgramPage}
+        totalPages={totalProgramPages}
+        onChangePage={setPage}
+        isLoading={isLoading}
+      />
 
       {/* Modal Form */}
       <Modal

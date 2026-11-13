@@ -25,6 +25,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ListPagination } from "@/components/admin/list-pagination";
+
+const ACHIEVEMENTS_PAGE_SIZE = 9;
 
 export default function AdminAchievementsPage() {
   const { achievements, addAchievement, updateAchievement, deleteAchievement, isLoading } =
@@ -33,6 +36,7 @@ export default function AdminAchievementsPage() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
 
   // Form states
   const [title, setTitle] = useState("");
@@ -130,6 +134,16 @@ export default function AdminAchievementsPage() {
   };
 
   const [achievementToDelete, setAchievementToDelete] = useState<Achievement | null>(null);
+
+  const totalAchievementPages = Math.max(
+    1,
+    Math.ceil(achievements.length / ACHIEVEMENTS_PAGE_SIZE)
+  );
+  const safeAchievementPage = Math.min(page, totalAchievementPages);
+  const pageAchievements = achievements.slice(
+    (safeAchievementPage - 1) * ACHIEVEMENTS_PAGE_SIZE,
+    safeAchievementPage * ACHIEVEMENTS_PAGE_SIZE
+  );
 
   const handleConfirmDelete = async () => {
     if (!achievementToDelete) return;
@@ -240,7 +254,7 @@ export default function AdminAchievementsPage() {
                 </tr>
               </TableHeader>
               <TableBody>
-                {achievements.map((ach) => (
+                {pageAchievements.map((ach) => (
                   <TableRow key={ach.id}>
                     <TableCell className="p-4 sm:px-6">
                       <div className="flex items-center gap-3 max-w-sm">
@@ -300,6 +314,14 @@ export default function AdminAchievementsPage() {
           </div>
         )}
       </Card>
+
+      {/* Paginasi */}
+      <ListPagination
+        page={safeAchievementPage}
+        totalPages={totalAchievementPages}
+        onChangePage={setPage}
+        isLoading={isLoading}
+      />
 
       {/* Modal */}
       <Modal

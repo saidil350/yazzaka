@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Suspense } from "react";
-import { Calendar, ChevronLeft, ChevronRight, Clock, Newspaper, Search } from "lucide-react";
+import { Calendar, ChevronRight, Clock, Newspaper, Search } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PaginationNav } from "@/components/public/pagination-nav";
 import { listArticles } from "@/lib/news/service";
 import { getSchoolProfile } from "@/lib/school-profile";
 import { formatDateIndonesian } from "@/lib/utils";
@@ -125,11 +126,11 @@ async function ArticleGrid({
     pageSize: PAGE_SIZE_DEFAULT,
   });
 
-  const buildPageHref = (overrides: Record<string, string | null>) => {
+  // Query pencarian dipertahankan saat pindah halaman.
+  const buildBeritaPageHref = (p: number) => {
     const params = new URLSearchParams();
-    const merged = { q: searchQuery, ...overrides };
-    if (merged.q) params.set("q", merged.q);
-    if (overrides.page) params.set("page", overrides.page);
+    if (searchQuery) params.set("q", searchQuery);
+    if (p > 1) params.set("page", String(p));
     const qs = params.toString();
     return qs ? `/berita?${qs}` : "/berita";
   };
@@ -227,49 +228,12 @@ async function ArticleGrid({
       </div>
 
       {/* Paginasi */}
-      {result.totalPages > 1 ? (
-        <nav
-          aria-label="Navigasi halaman berita"
-          className="flex items-center justify-center gap-2"
-        >
-          {currentPage > 1 ? (
-            <Link
-              href={buildPageHref({ page: String(currentPage - 1) })}
-              className="inline-flex size-9 items-center justify-center rounded-md border border-border bg-card text-foreground transition-colors hover:bg-muted"
-              aria-label="Halaman sebelumnya"
-            >
-              <ChevronLeft className="size-4" aria-hidden="true" />
-            </Link>
-          ) : null}
-          {Array.from({ length: result.totalPages }, (_, i) => i + 1).map(
-            (p) => (
-              <Link
-                key={p}
-                href={buildPageHref({ page: String(p) })}
-                aria-current={p === currentPage ? "page" : undefined}
-                aria-label={`Halaman ${p}`}
-                className={[
-                  "inline-flex size-9 items-center justify-center rounded-md border text-sm font-medium transition-colors",
-                  p === currentPage
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border bg-card text-foreground hover:bg-muted",
-                ].join(" ")}
-              >
-                {p}
-              </Link>
-            )
-          )}
-          {currentPage < result.totalPages ? (
-            <Link
-              href={buildPageHref({ page: String(currentPage + 1) })}
-              className="inline-flex size-9 items-center justify-center rounded-md border border-border bg-card text-foreground transition-colors hover:bg-muted"
-              aria-label="Halaman berikutnya"
-            >
-              <ChevronRight className="size-4" aria-hidden="true" />
-            </Link>
-          ) : null}
-        </nav>
-      ) : null}
+      <PaginationNav
+        currentPage={currentPage}
+        totalPages={result.totalPages}
+        buildHref={buildBeritaPageHref}
+        ariaLabel="Navigasi halaman berita"
+      />
     </>
   );
 }

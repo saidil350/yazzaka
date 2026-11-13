@@ -3,6 +3,7 @@ import { Image as ImageIcon } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { GalleryLightbox } from "@/components/public/GalleryLightbox";
+import { PaginationNav } from "@/components/public/pagination-nav";
 import { getPublicProfile, listGalleryMedia } from "@/lib/public-data";
 import { initialSchoolProfile } from "@/lib/data/initialData";
 import type { SchoolProfile } from "@/lib/types";
@@ -14,12 +15,33 @@ export const metadata: Metadata = {
   alternates: { canonical: "/galeri" },
 };
 
-export default async function GalleryPage() {
+const GALLERY_PAGE_SIZE = 12;
+
+type SearchParams = Promise<{ page?: string }>;
+
+export default async function GalleryPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const { page } = await searchParams;
+  const currentPage = Math.max(1, Number(page ?? "1") || 1);
+
   const [profile, media] = await Promise.all([
     getPublicProfile(),
     listGalleryMedia(),
   ]);
   const safeProfile: SchoolProfile = profile ?? initialSchoolProfile;
+
+  const totalPages = Math.max(1, Math.ceil(media.length / GALLERY_PAGE_SIZE));
+  const safePage = Math.min(currentPage, totalPages);
+  const pageMedia = media.slice(
+    (safePage - 1) * GALLERY_PAGE_SIZE,
+    safePage * GALLERY_PAGE_SIZE
+  );
+
+  const buildGalleryPageHref = (p: number) =>
+    p > 1 ? `/galeri?page=${p}` : "/galeri";
 
   return (
     <>
@@ -48,7 +70,15 @@ export default async function GalleryPage() {
               description="Belum ada berkas media galeri yang dipublikasikan."
             />
           ) : (
-            <GalleryLightbox items={media} />
+            <>
+              <GalleryLightbox items={pageMedia} />
+              <PaginationNav
+                currentPage={safePage}
+                totalPages={totalPages}
+                buildHref={buildGalleryPageHref}
+                ariaLabel="Navigasi halaman galeri"
+              />
+            </>
           )}
         </div>
       </section>
