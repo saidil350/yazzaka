@@ -51,6 +51,15 @@ export const auth = betterAuth({
     enabled: true,
     window: 60,
     max: 10,
+    // "memory" (default) hanya hidup per-instansi serverless Vercel —
+    // brute force bisa melewatinya dengan menabur trafik lintas instansi.
+    // "database" membagikan counter antar instansi lewat Neon.
+    storage: "database",
+    // get-session dipanggil setiap navigasi panel admin; limit global 10/
+    // menit akan mengunci pengguna sah, jadi diberi jatah sendiri.
+    customRules: {
+      "/get-session": { window: 60, max: 120 },
+    },
   },
   advanced: {
     cookiePrefix: "yazzaka",

@@ -19,6 +19,8 @@ export function ContactForm() {
   const [phone, setPhone] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  // Honeypot anti-bot: field tersembunyi yang manusia tidak pernah isi.
+  const [website, setWebsite] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,17 +36,26 @@ export function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, subject, message }),
+        body: JSON.stringify({ name, email, phone, subject, message, website }),
       });
-      if (!res.ok) throw new Error(`API Error: ${res.status}`);
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error || `API Error: ${res.status}`);
+      }
       setName("");
       setEmail("");
       setPhone("");
       setSubject("");
       setMessage("");
+      setWebsite("");
       toast("Pesan Anda berhasil dikirim ke sekretariat Yazzakka! Kami akan segera merespons.", "success");
-    } catch {
-      toast("Maaf, pesan gagal terkirim. Silakan coba lagi atau hubungi kami via WhatsApp.", "error");
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : "";
+      if (detail.includes("Terlalu banyak pesan")) {
+        toast(detail, "error");
+      } else {
+        toast("Maaf, pesan gagal terkirim. Silakan coba lagi atau hubungi kami via WhatsApp.", "error");
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -103,6 +114,21 @@ export function ContactForm() {
         onChange={(e) => setMessage(e.target.value)}
         className="bg-white"
       />
+
+      {/* Honeypot anti-bot — tersembunyi dari manusia, terisi oleh bot.
+          tabIndex -1 + aria-hidden agar tidak mengganggu navigasi keyboard. */}
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="contact-website">Website</label>
+        <input
+          id="contact-website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+        />
+      </div>
 
       <Button
         type="submit"

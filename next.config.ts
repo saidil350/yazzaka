@@ -46,7 +46,50 @@ const nextConfig: NextConfig = {
     ];
   },
   async headers() {
+    // Header keamanan berlaku global. CSP hanya di produksi — di dev ia
+    // mengganggu HMR/overlay Next (ws://, inline eval) dan tidak menguji
+    // apa pun karena kontennya sama dengan produksi.
+    const securityHeaders = [
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      // Situs tidak pernah disematkan di situs lain (anti clickjacking).
+      { key: "X-Frame-Options", value: "DENY" },
+      {
+        key: "Permissions-Policy",
+        value: "camera=(), microphone=(), geolocation=(), payment=()",
+      },
+      { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+    ];
+
+    if (process.env.NODE_ENV === "production") {
+      securityHeaders.push({
+        key: "Content-Security-Policy",
+        value: [
+          // Next menyuntikkan script bootstrap inline — 'unsafe-inline'
+          // tetap memblokir script eksternal pihak ketiga.
+          "script-src 'self' 'unsafe-inline'",
+          "style-src 'self' 'unsafe-inline'",
+          // Gambar CMS bisa berada di bucket Neon/R2 atau URL eksternal
+          // yang didaftarkan admin, jadi https: diperbolehkan.
+          "img-src 'self' data: blob: https:",
+          "font-src 'self' data:",
+          "connect-src 'self'",
+          // Embed peta Google di /kontak.
+          "frame-src https://www.google.com https://maps.google.com",
+          "frame-ancestors 'none'",
+          "object-src 'none'",
+          "base-uri 'self'",
+          "form-action 'self'",
+          "upgrade-insecure-requests",
+        ].join("; "),
+      });
+    }
+
     return [
+      {
+        source: "/:path*",
+        headers: securityHeaders,
+      },
       {
         // Area privat tidak boleh terindeks mesin pencari maupun AI crawler.
         source: "/:path(admin|login|api)/:path*",
