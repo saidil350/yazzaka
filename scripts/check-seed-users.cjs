@@ -32,8 +32,13 @@ async function main() {
   
   if (existing.length === 0) {
     console.log('\n⚠️  Tidak ada pengguna. Membuat super_admin pertama...');
+    const seedPassword = process.env.CMS_SEED_PASSWORD;
+    if (!seedPassword || seedPassword.length < 8) {
+      console.error('✗ Database kosong dan CMS_SEED_PASSWORD tidak diset (min. 8 karakter).');
+      process.exit(1);
+    }
     const id = `usr-seed-${Date.now()}`;
-    const passwordHash = hashPassword('***REMOVED***');
+    const passwordHash = hashPassword(seedPassword);
     const result = await sql`
       INSERT INTO users (id, name, email, role, password_hash)
       VALUES (${id}, 'Super Admin', 'admin@yazzakka.id', 'super_admin', ${passwordHash})
@@ -41,9 +46,7 @@ async function main() {
     `;
     console.log('\n✅ Pengguna seeder berhasil dibuat:');
     console.log(JSON.stringify(result[0], null, 2));
-    console.log('\n📋 Kredensial login:');
-    console.log('   Email   : admin@yazzakka.id');
-    console.log('   Password: ***REMOVED***');
+    console.log('   Password diambil dari CMS_SEED_PASSWORD (tidak dicetak).');
   } else {
     console.log('\n✅ Database sudah memiliki pengguna. Tidak perlu seed.');
   }

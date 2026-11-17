@@ -20,11 +20,14 @@
 
 ## 1. Daftar Akun
 
-| # | Nama | Email | Role | Password (dev) | Keterangan |
-|---|------|-------|------|----------------|------------|
-| 1 | Super Admin Yazzaka | `admin@yazzakka.sch.id` | `super_admin` | `***REMOVED***` | Akses penuh semua modul |
-| 2 | Editor Konten | `editor@yazzakka.sch.id` | `editor` | `***REMOVED***` | Konten saja, tidak bisa settings/organization |
-| 3 | Staf PPDB | `spmb@yazzakka.sch.id` | `admission_staff` | `***REMOVED***` | **Usang (2026-10-25)** — fitur PPDB dihapus; akun masih bisa login tapi tidak ada modul PPDB lagi |
+| # | Nama | Email | Role | Password | Keterangan |
+|---|------|-------|------|----------|------------|
+| 1 | Super Admin Yazzaka | `admin@yazzakka.sch.id` | `super_admin` | *(di password manager)* | Akses penuh semua modul |
+| 2 | Editor Konten | `editor@yazzakka.sch.id` | `editor` | *(di password manager)* | Konten saja, tidak bisa settings/organization |
+| 3 | Staf PPDB | `spmb@yazzakka.sch.id` | `admission_staff` | *(di password manager)* | **Usang (2026-10-25)** — fitur PPDB dihapus; akun masih bisa login tapi tidak ada modul PPDB lagi |
+
+> Password TIDAK disimpan di file ini (repo bersifat publik — lihat peringatan di atas).
+> Reset password super_admin: `node scripts/reset-admin-password.cjs --all-super-admins --env-file .env.staging.local` dengan env `CMS_SEED_PASSWORD`.
 
 ### Matriks Hak Akses (RBAC — divalidasi server-side di `src/proxy.ts`)
 
@@ -102,7 +105,7 @@ http://localhost:3000/admin/users      → khusus super_admin/admin
 # 1. Login simpan cookie
 curl -c cookies.txt -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"editor@yazzakka.sch.id","password":"***REMOVED***"}'
+  -d '{"email":"editor@yazzakka.sch.id","password":"<password-akun-editor>"}'
 
 # 2. Editor mencoba mutasi settings -> HARUS 403
 curl -b cookies.txt -X PUT http://localhost:3000/api/settings \

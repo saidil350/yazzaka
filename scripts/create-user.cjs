@@ -21,19 +21,34 @@ function hashPassword(password) {
 }
 
 async function main() {
+  // Password WAJIB lewat env CMS_SEED_PASSWORD atau argumen kedua —
+  // tidak pernah di-hardcode di skrip ini dan tidak dicetak ke console.
+  const password = process.env.CMS_SEED_PASSWORD || process.argv[2];
+
+  if (!password || password.length < 8) {
+    console.error(
+      '✗ Password wajib diisi (min. 8 karakter). Gunakan:\n' +
+      '    CMS_SEED_PASSWORD=<password> node scripts/create-user.cjs\n' +
+      '  atau: node scripts/create-user.cjs <password>'
+    );
+    process.exit(1);
+  }
+
   const sql = neon(process.env.DATABASE_URL);
-  
+
   const newUser = {
     name: 'Admin Yazzaka',
     email: 'admin.baru@yazzakka.sch.id',
     role: 'super_admin',
-    password: '***REMOVED***'
   };
 
-  const id = `usr-${Date.now()}-${randomBytes(3).toString('hex')}`;
-  const passwordHash = hashPassword(newUser.password);
+  const id = `usr-${Date.now()}-${randomBytes(12).toString('hex')}`;
+  const passwordHash = hashPassword(password);
 
   // Hapus jika sudah pernah dibuat sebelumnya agar idempotent
+  // (termasuk baris turunan Better Auth agar tidak ada jejak lama).
+  await sql`DELETE FROM "session" WHERE "userId" IN (SELECT id FROM users WHERE lower(email) = ${newUser.email.toLowerCase()})`;
+  await sql`DELETE FROM "account" WHERE "userId" IN (SELECT id FROM users WHERE lower(email) = ${newUser.email.toLowerCase()})`;
   await sql`DELETE FROM users WHERE lower(email) = ${newUser.email.toLowerCase()}`;
 
   const result = await sql`
@@ -42,8 +57,16 @@ async function main() {
     RETURNING id, name, email, role, created_at
   `;
 
+  // Credential Better Auth: hash disalin ke tabel account agar bisa login
+  // (selaras dengan POST /api/users).
+  await sql`
+    INSERT INTO "account" ("id", "accountId", "providerId", "userId", "password", "createdAt", "updatedAt")
+    VALUES (${'acct-' + randomBytes(12).toString('hex')}, ${id}, 'credential', ${id}, ${passwordHash}, now(), now())
+  `;
+
   console.log('SUCCESS:');
-  console.log(JSON.stringify({ ...result[0], plainPassword: newUser.password }, null, 2));
+  console.log(JSON.stringify(result[0], null, 2));
+  console.log(`✓ Pengguna dibuat dengan password dari CMS_SEED_PASSWORD (tidak dicetak).`);
 }
 
 main().catch(err => {

@@ -55,7 +55,11 @@ async function migrate() {
     console.log(`✓ ${removed.length} baris legacy tanpa hash dihapus`);
   }
 
-  const password = process.env.CMS_SEED_PASSWORD || "***REMOVED***";
+  const password = process.env.CMS_SEED_PASSWORD;
+  if (!password || password.length < 8) {
+    console.error("✗ CMS_SEED_PASSWORD wajib diset (min. 8 karakter) untuk seed akun awal.");
+    process.exit(1);
+  }
   const hash = hashPassword(password);
 
   const users = [
