@@ -77,7 +77,7 @@ export default function AdminSEOSettingsPage() {
       {/* ── Page Header ────────────────────────────────────────────── */}
       <div>
         <span className="text-xs font-medium text-muted-foreground block mb-1">
-          Website Settings / SEO Global
+          Pengaturan
         </span>
         <h1 className="text-2xl sm:text-3xl font-semibold text-foreground">
           Pengaturan Mesin Pencari (SEO) &amp; Metadata

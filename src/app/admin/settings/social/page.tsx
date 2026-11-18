@@ -77,7 +77,7 @@ export default function AdminSocialMediaSettingsPage() {
       {/* ── Page Header ────────────────────────────────────────────── */}
       <div>
         <span className="text-xs font-medium text-muted-foreground block mb-1">
-          Website Settings / Social Media
+          Pengaturan
         </span>
         <h1 className="text-2xl sm:text-3xl font-semibold text-foreground">
           Tautan Akun Media Sosial Resmi

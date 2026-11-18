@@ -163,7 +163,7 @@ export default function AdminAchievementsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <span className="text-xs font-medium text-muted-foreground block mb-1">
-            Content / Prestasi &amp; Piagam
+            Konten Situs
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
             Manajemen Prestasi Siswa &amp; Santri

@@ -153,7 +153,7 @@ export default function AdminEventsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <span className="text-xs font-medium text-muted-foreground block mb-1">
-            Content / Kegiatan &amp; Agenda
+            Konten Situs
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
             Manajemen Agenda &amp; Acara

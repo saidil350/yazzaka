@@ -55,6 +55,8 @@ export default function AdminDashboardOverview() {
     sections,
     messages,
     articles,
+    programs,
+    events,
     toggleSection,
     isLoading,
   } = useSchoolData();
@@ -74,18 +76,35 @@ export default function AdminDashboardOverview() {
   }
 
   // KPI Utama yang secara langsung terhubung ke Landing Page
+  const publishedArticles = articles.filter(
+    (a) => a.status === "published"
+  ).length;
   const landingKpis = [
     {
       title: "Berita Terpublikasi",
-      value: articles.length,
+      value: publishedArticles,
       unit: "Artikel",
-      desc: "Status published; termasuk draft dilihat di modul Berita",
+      desc: "Draft & arsip dikelola di modul Berita",
       href: "/admin/berita",
+    },
+    {
+      title: "Program Pendidikan",
+      value: programs.length,
+      unit: "Program",
+      desc: "Tampil di halaman /program",
+      href: "/admin/content/program",
+    },
+    {
+      title: "Agenda & Kegiatan",
+      value: events.length,
+      unit: "Agenda",
+      desc: "Tampil di halaman /agenda",
+      href: "/admin/content/kegiatan",
     },
     {
       title: "Testimoni Publik",
       value: testimonials.length,
-      unit: "Ulasan Terbit",
+      unit: "Ulasan",
       desc: "Kesan wali santri & alumni",
       href: "/admin/content/testimoni",
     },
@@ -200,7 +219,7 @@ export default function AdminDashboardOverview() {
         <h2 id="kpi-section-heading" className="sr-only">
           Statistik Konten Landing Page
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {landingKpis.map((kpi) => {
             return (
               <Link
@@ -507,9 +526,9 @@ function DashboardSkeleton() {
         <Skeleton className="h-9 w-44 rounded-md shrink-0" />
       </div>
 
-      {/* Kartu metrik utama (2 KPI) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {Array.from({ length: 2 }).map((_, i) => (
+      {/* Kartu metrik utama (4 KPI) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {Array.from({ length: 4 }).map((_, i) => (
           <Card key={i}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <Skeleton className="h-4 w-40" />

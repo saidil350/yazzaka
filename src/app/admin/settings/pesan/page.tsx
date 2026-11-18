@@ -124,7 +124,7 @@ export default function AdminContactInboxPage() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border pb-6">
         <div>
           <span className="text-xs font-medium text-muted-foreground block mb-1">
-            Website Settings / Pesan Masuk
+            Kotak Masuk
           </span>
           <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
             Kotak Pesan &amp; Konsultasi

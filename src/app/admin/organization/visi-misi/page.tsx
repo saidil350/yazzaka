@@ -182,7 +182,7 @@ export default function AdminVisionMissionPage() {
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
         <span className="text-xs font-medium text-muted-foreground block mb-1">
-          Organization / Visi, Misi &amp; Nilai
+          Profil Lembaga
         </span>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
           Visi, Misi &amp; Nilai Lembaga

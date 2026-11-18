@@ -186,7 +186,7 @@ export default function AdminOrgProfilePage() {
     <div className="max-w-5xl mx-auto space-y-8">
       <div>
         <span className="text-xs font-medium text-muted-foreground block mb-1">
-          Organization / Profil Lembaga
+          Profil Lembaga
         </span>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
           Profil Resmi & Identitas Sekolah

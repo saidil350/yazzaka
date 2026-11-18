@@ -130,7 +130,7 @@ export default function AdminHeroPage() {
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
         <span className="text-xs font-medium text-muted-foreground block mb-1">
-          Konten Landing Page / Hero Beranda
+          Beranda &amp; Media
         </span>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
           Hero Beranda

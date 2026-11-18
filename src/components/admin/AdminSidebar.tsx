@@ -1,19 +1,29 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import {
   LayoutDashboard,
-  Layers,
+  Images,
   Image as ImageIcon,
-  Settings,
-  Users,
-  ChevronRight,
+  Inbox,
+  School,
+  Award,
+  CalendarDays,
+  MessageSquareQuote,
   SlidersHorizontal,
+  Building2,
+  Target,
+  UsersRound,
+  Type,
+  MapPin,
+  Share2,
+  Search,
+  Users,
   PanelLeftClose,
   PanelLeftOpen,
   Newspaper,
@@ -29,6 +39,20 @@ export interface AdminSidebarProps {
   onToggleCollapse?: () => void;
 }
 
+interface NavItem {
+  label: string;
+  href: string;
+  icon: React.ElementType;
+  badge?: string;
+  roles?: string[];
+}
+
+interface NavSection {
+  label: string;
+  roles: string[];
+  items: NavItem[];
+}
+
 export function AdminSidebar({
   isMobileOpen,
   onMobileClose,
@@ -36,104 +60,90 @@ export function AdminSidebar({
   onToggleCollapse,
 }: AdminSidebarProps) {
   const pathname = usePathname();
-  const router = useRouter();
   const { role } = useAuth();
   const { messages, profile } = useSchoolData();
 
   const newMessagesCount = messages.filter((m) => m.status === "new").length;
 
-  const [openSubmenu, setOpenSubmenu] = useState<string | null>(() => {
-    if (pathname.includes("/admin/content") || pathname.includes("/admin/organization/tim")) return "content";
-    if (pathname.includes("/admin/settings") || pathname.includes("/admin/organization")) return "settings";
-    return null;
-  });
+  const isAllowed = (itemRoles?: string[]) =>
+    !itemRoles || role === "super_admin" || itemRoles.includes(role);
 
-  const toggleSubmenu = (menuKey: string) => {
-    setOpenSubmenu(openSubmenu === menuKey ? null : menuKey);
-  };
-
-  const navGroups: Array<{
-    type: "single" | "group";
-    key?: string;
+  // Item tunggal di paling atas — akses paling sering dipakai.
+  const primaryItems: Array<{
     title: string;
-    href?: string;
-    icon?: React.ElementType;
+    href: string;
+    icon: React.ElementType;
     roles: string[];
-    items?: Array<{ label: string; href: string; badge?: string; roles?: string[] }>;
+    badge?: string;
   }> = [
     {
-      type: "single",
       title: "Dashboard",
       href: "/admin",
       icon: LayoutDashboard,
       roles: ["super_admin", "editor"],
     },
     {
-      type: "single",
-      title: "Tata Letak Beranda",
-      href: "/admin/pages/beranda",
-      icon: SlidersHorizontal,
+      title: "Kotak Masuk",
+      href: "/admin/settings/pesan",
+      icon: Inbox,
+      roles: ["super_admin"],
+      badge: newMessagesCount > 0 ? `${newMessagesCount}` : undefined,
+    },
+  ];
+
+  // Seksi menu selalu terlihat (tanpa submenu lipat) — item dikelompokkan
+  // per fungsi agar mudah dipindai. Seksi dengan roles super_admin hilang
+  // untuk editor beserta seluruh isinya.
+  const navSections: NavSection[] = [
+    {
+      label: "Konten Situs",
       roles: ["super_admin", "editor"],
+      items: [
+        { label: "Berita & Artikel", href: "/admin/berita", icon: Newspaper },
+        { label: "Program Pendidikan", href: "/admin/content/program", icon: School },
+        { label: "Prestasi Santri", href: "/admin/content/pengumuman", icon: Award },
+        { label: "Agenda & Kegiatan", href: "/admin/content/kegiatan", icon: CalendarDays },
+        { label: "Testimoni Wali & Alumni", href: "/admin/content/testimoni", icon: MessageSquareQuote },
+      ],
     },
     {
-      type: "single",
-      title: "Berita & Artikel",
-      href: "/admin/berita",
-      icon: Newspaper,
-      roles: ["super_admin", "editor"],
-    },
-    {
-      type: "group",
-      key: "content",
-      title: "Konten Landing Page",
-      icon: Layers,
+      label: "Beranda & Media",
       roles: ["super_admin", "editor"],
       items: [
         // Hero disimpan di school_profile via /api/profile — mutasi hanya
         // untuk super_admin (lihat ADMIN_ONLY_MUTATION_PREFIXES di src/proxy.ts).
-        { label: "Hero Beranda", href: "/admin/content/hero", roles: ["super_admin"] },
-        { label: "Program Pendidikan", href: "/admin/content/program" },
-        { label: "Prestasi Santri", href: "/admin/content/pengumuman" },
-        { label: "Agenda & Kegiatan", href: "/admin/content/kegiatan" },
-        // Data tim tersimpan via /api/organization — mutasi super_admin-only
-        // (ADMIN_ONLY_MUTATION_PREFIXES di src/proxy.ts + gate halaman).
-        { label: "Pimpinan & Dewan Asatidz", href: "/admin/organization/tim", roles: ["super_admin"] },
-        { label: "Testimoni Wali & Alumni", href: "/admin/content/testimoni" },
+        { label: "Hero Beranda", href: "/admin/content/hero", icon: Images, roles: ["super_admin"] },
+        { label: "Tata Letak Beranda", href: "/admin/pages/beranda", icon: SlidersHorizontal },
+        { label: "Media Library", href: "/admin/media", icon: ImageIcon },
       ],
     },
     {
-      type: "group",
-      key: "settings",
-      title: "Identitas & Kontak",
-      icon: Settings,
+      label: "Profil Lembaga",
       roles: ["super_admin"],
       items: [
-        { label: "Profil & Slogan", href: "/admin/organization/profil" },
-        { label: "Visi, Misi & Nilai", href: "/admin/organization/visi-misi" },
-        { label: "Kontak & Lokasi", href: "/admin/settings/contact" },
-        { label: "Media Sosial", href: "/admin/settings/social" },
-        { label: "Nama & Tagline", href: "/admin/settings/general" },
-        {
-          label: "Pesan Masuk",
-          href: "/admin/settings/pesan",
-          badge: newMessagesCount > 0 ? `${newMessagesCount}` : undefined,
-        },
-        { label: "SEO Global", href: "/admin/settings/seo" },
+        { label: "Profil & Slogan", href: "/admin/organization/profil", icon: Building2 },
+        { label: "Visi, Misi & Nilai", href: "/admin/organization/visi-misi", icon: Target },
+        // Data tim tersimpan via /api/organization — mutasi super_admin-only
+        // (ADMIN_ONLY_MUTATION_PREFIXES di src/proxy.ts + gate halaman).
+        { label: "Pimpinan & Dewan Asatidz", href: "/admin/organization/tim", icon: UsersRound },
       ],
     },
     {
-      type: "single",
-      title: "Media Library",
-      href: "/admin/media",
-      icon: ImageIcon,
-      roles: ["super_admin", "editor"],
+      label: "Pengaturan",
+      roles: ["super_admin"],
+      items: [
+        { label: "Nama & Tagline", href: "/admin/settings/general", icon: Type },
+        { label: "Kontak & Lokasi", href: "/admin/settings/contact", icon: MapPin },
+        { label: "Media Sosial", href: "/admin/settings/social", icon: Share2 },
+        { label: "SEO Global", href: "/admin/settings/seo", icon: Search },
+      ],
     },
     {
-      type: "single",
-      title: "Manajemen Pengguna",
-      href: "/admin/users",
-      icon: Users,
+      label: "Administrasi",
       roles: ["super_admin"],
+      items: [
+        { label: "Manajemen Pengguna", href: "/admin/users", icon: Users },
+      ],
     },
   ];
 
@@ -190,149 +200,117 @@ export function AdminSidebar({
     <nav
       aria-label="Menu Utama CMS"
       className={cn(
-        "flex-1 py-3 space-y-1 overflow-y-auto overflow-x-hidden",
+        "flex-1 py-3 overflow-y-auto overflow-x-hidden",
         collapsed ? "px-2" : "px-3"
       )}
     >
-      {navGroups.map((group) => {
-        const isAllowed = role === "super_admin" || group.roles.includes(role);
-        if (!isAllowed) return null;
+      {/* Item tunggal: Dashboard & Kotak Masuk */}
+      <div className={cn("space-y-1", collapsed && "flex flex-col items-center")}>
+        {primaryItems
+          .filter((item) => isAllowed(item.roles))
+          .map((item) => {
+            const isActive = pathname === item.href;
+            const Icon = item.icon;
 
-        // Item tunggal
-        if (group.type === "single") {
-          const isActive = pathname === group.href;
-          const Icon = group.icon!;
-
-          return (
-            <Link
-              key={group.href}
-              href={group.href!}
-              onClick={onNavigate}
-              aria-current={isActive ? "page" : undefined}
-              title={collapsed ? group.title : undefined}
-              className={cn(
-                "flex items-center rounded-md text-sm font-medium transition-colors group",
-                collapsed ? "justify-center h-11 w-11 mx-auto" : "gap-3 px-3 py-2 w-full",
-                isActive
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-card"
-              )}
-            >
-              <Icon
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={onNavigate}
+                aria-current={isActive ? "page" : undefined}
+                title={collapsed ? item.title : undefined}
                 className={cn(
-                  "size-4 shrink-0",
+                  "relative flex items-center rounded-md text-sm font-medium transition-colors group",
+                  collapsed
+                    ? "justify-center h-11 w-11 mx-auto"
+                    : "gap-3 px-3 py-2 w-full",
                   isActive
-                    ? "text-primary-foreground"
-                    : "text-muted-foreground group-hover:text-foreground"
-                )}
-              />
-              {!collapsed && <span>{group.title}</span>}
-            </Link>
-          );
-        }
-
-        // Grup dengan sub-item yang dapat dilipat
-        const isGroupOpen = openSubmenu === group.key;
-        const Icon = group.icon!;
-        // Item dapat membatasi role sendiri (mis. Hero Beranda hanya super_admin)
-        const visibleItems = group.items?.filter((item) => {
-          if (!("roles" in item) || !item.roles) return true;
-          return role === "super_admin" || item.roles.includes(role);
-        });
-        const hasActiveChild = visibleItems?.some(
-          (item) => pathname === item.href || pathname.startsWith(item.href + "/")
-        );
-
-        // Mode collapse desktop: ikon saja
-        if (collapsed) {
-          return (
-            <div key={group.key} className="space-y-1 flex flex-col items-center">
-              <button
-                type="button"
-                onClick={() => {
-                  if (onToggleCollapse) onToggleCollapse();
-                  setOpenSubmenu(group.key!);
-                }}
-                title={`${group.title} (Klik untuk buka)`}
-                aria-label={group.title}
-                className={cn(
-                  "flex items-center justify-center h-11 w-11 rounded-md text-sm font-medium transition-colors group cursor-pointer",
-                  hasActiveChild
-                    ? "text-primary bg-primary/10"
+                    ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground hover:bg-card"
                 )}
               >
                 <Icon
                   className={cn(
                     "size-4 shrink-0",
-                    hasActiveChild ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
+                    isActive
+                      ? "text-primary-foreground"
+                      : "text-muted-foreground group-hover:text-foreground"
                   )}
                 />
-              </button>
-            </div>
-          );
-        }
-
-        // Mode lebar penuh
-        return (
-          <div key={group.key} className="space-y-0.5">
-            <button
-              type="button"
-              onClick={() => toggleSubmenu(group.key!)}
-              aria-expanded={isGroupOpen}
-              className={cn(
-                "w-full flex items-center justify-between px-3 py-2 rounded-md text-sm font-medium",
-                "transition-colors cursor-pointer group",
-                hasActiveChild
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-card"
-              )}
-            >
-              <span className="flex items-center gap-3">
-                <Icon
-                  className={cn(
-                    "size-4 shrink-0",
-                    hasActiveChild ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
-                  )}
-                />
-                <span>{group.title}</span>
-              </span>
-              <ChevronRight
-                className={cn(
-                  "size-4 text-muted-foreground transition-transform shrink-0",
-                  isGroupOpen && "rotate-90"
+                {!collapsed && <span>{item.title}</span>}
+                {item.badge && !collapsed && (
+                  <Badge className="ml-auto h-5 min-w-5 rounded-full px-1.5 tabular-nums shrink-0">
+                    {item.badge}
+                  </Badge>
                 )}
-              />
-            </button>
+                {item.badge && collapsed && (
+                  <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-xs font-semibold text-primary-foreground tabular-nums">
+                    {item.badge}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+      </div>
 
-            {isGroupOpen && (
-              <div className="ml-4 pl-3 border-l border-border py-1 space-y-0.5">
-                {visibleItems?.map((item) => {
-                  const isActive = pathname === item.href;
+      {/* Seksi konten dengan label kategori — semua item langsung terlihat */}
+      {navSections.map((section) => {
+        if (!isAllowed(section.roles)) return null;
+        const visibleItems = section.items.filter((item) => isAllowed(item.roles));
+        if (visibleItems.length === 0) return null;
+
+        return (
+          <div key={section.label} className="pt-4">
+            {!collapsed && (
+              <p className="text-xs font-medium text-muted-foreground px-3 pb-1">
+                {section.label}
+              </p>
+            )}
+            <div className={cn("space-y-0.5", collapsed && "flex flex-col items-center")}>
+              {visibleItems.map((item) => {
+                const isActive = pathname === item.href;
+                const Icon = item.icon;
+
+                if (collapsed) {
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
                       onClick={onNavigate}
                       aria-current={isActive ? "page" : undefined}
+                      title={item.label}
+                      aria-label={item.label}
                       className={cn(
-                        "flex items-center justify-between rounded-md px-3 py-1.5 text-sm transition-colors",
+                        "flex items-center justify-center h-11 w-11 rounded-md text-sm font-medium transition-colors",
                         isActive
-                          ? "bg-primary/10 text-primary font-medium"
-                          : "text-muted-foreground hover:text-foreground hover:bg-card font-normal"
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:text-foreground hover:bg-card"
                       )}
                     >
-                      <span className="truncate">{item.label}</span>
-                      {item.badge && (
-                        <Badge className="ml-2 h-5 min-w-5 rounded-full px-1.5 tabular-nums shrink-0">
-                          {item.badge}
-                        </Badge>
-                      )}
+                      <Icon className="size-4 shrink-0" />
                     </Link>
                   );
-                })}
-              </div>
-            )}
+                }
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={onNavigate}
+                    aria-current={isActive ? "page" : undefined}
+                    className={cn(
+                      "flex items-center gap-3 rounded-md px-3 py-1.5 text-sm transition-colors",
+                      isActive
+                        ? "bg-primary/10 text-primary font-medium"
+                        : "text-muted-foreground hover:text-foreground hover:bg-card font-normal"
+                    )}
+                  >
+                    <Icon className="size-4 shrink-0" />
+                    <span className="truncate">{item.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         );
       })}

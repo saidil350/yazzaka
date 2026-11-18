@@ -25,6 +25,37 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+// Label breadcrumb per segmen path — beberapa rute berbeda penamaannya
+// dari segmen URL-nya (mis. /admin/content/pengumuman adalah halaman
+// Prestasi Santri), jadi jangan menebak dari nama segmen. Segmen yang
+// berupa id (uuid/cuid/angka) dilewati.
+const BREADCRUMB_LABELS: Record<string, string> = {
+  content: "Konten Situs",
+  berita: "Berita & Artikel",
+  baru: "Tulis Berita",
+  edit: "Edit Berita",
+  pratinjau: "Pratinjau",
+  program: "Program Pendidikan",
+  pengumuman: "Prestasi Santri",
+  kegiatan: "Agenda & Kegiatan",
+  testimoni: "Testimoni",
+  hero: "Hero Beranda",
+  pages: "Halaman",
+  beranda: "Tata Letak Beranda",
+  media: "Media Library",
+  organization: "Profil Lembaga",
+  profil: "Profil & Slogan",
+  "visi-misi": "Visi, Misi & Nilai",
+  tim: "Pimpinan & Dewan Asatidz",
+  settings: "Pengaturan",
+  general: "Nama & Tagline",
+  contact: "Kontak & Lokasi",
+  social: "Media Sosial",
+  seo: "SEO Global",
+  pesan: "Pesan Masuk",
+  users: "Manajemen Pengguna",
+};
+
 export function AdminTopbar({
   onToggleMobileSidebar,
 }: {
@@ -38,11 +69,23 @@ export function AdminTopbar({
   const newMessages = messages.filter((m) => m.status === "new").length;
   const isSuperAdmin = role === "super_admin";
 
-  const crumbs = pathname
-    .replace("/admin", "")
-    .split("/")
-    .filter(Boolean)
-    .map((p) => p.charAt(0).toUpperCase() + p.slice(1).replace(/-/g, " "));
+  const segments = pathname.replace("/admin", "").split("/").filter(Boolean);
+  const lastIdx = segments.length - 1;
+  const crumbs = segments
+    .filter((p, idx) => {
+      // Segmen id bukan halaman — lewati: numerik murni, uuid/cuid (≥ 20
+      // char), atau segmen tengah yang tidak ada di peta label (mis. id
+      // pendek seperti "art-1" di /admin/berita/art-1/edit).
+      if (/^\d+$/.test(p)) return false;
+      if (p.length >= 20) return false;
+      if (idx !== lastIdx && !(p in BREADCRUMB_LABELS)) return false;
+      return true;
+    })
+    .map(
+      (p) =>
+        BREADCRUMB_LABELS[p] ??
+        p.charAt(0).toUpperCase() + p.slice(1).replace(/-/g, " ")
+    );
 
   const handleLogout = async () => {
     await logout();

@@ -178,6 +178,9 @@ export default function AdminUsersManagementPage() {
       {/* Header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
+          <span className="text-xs font-medium text-muted-foreground block mb-1">
+            Administrasi
+          </span>
           <h1 className="text-2xl font-semibold text-foreground">
             Manajemen Pengguna
           </h1>

@@ -58,7 +58,7 @@ export default function AdminGeneralSettingsPage() {
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
         <span className="text-xs font-medium text-muted-foreground block mb-1">
-          Website Settings / General
+          Pengaturan
         </span>
         <h1 className="text-2xl sm:text-3xl font-semibold text-foreground">
           Pengaturan Umum

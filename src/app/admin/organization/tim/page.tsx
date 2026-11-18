@@ -305,7 +305,7 @@ export default function AdminTeamMembersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <span className="text-xs font-medium text-muted-foreground block mb-1">
-            Konten Landing Page / Struktur Pendidik
+            Profil Lembaga
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
             Manajemen Pimpinan &amp; Dewan Asatidz

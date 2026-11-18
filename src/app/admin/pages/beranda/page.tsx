@@ -77,7 +77,7 @@ export default function AdminHomepageSectionsPage() {
       {/* Header */}
       <div>
         <span className="text-xs font-medium text-muted-foreground block mb-1">
-          Pages / Beranda
+          Beranda &amp; Media
         </span>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
           Manajemen Tata Letak Beranda (Homepage)

@@ -183,7 +183,7 @@ export default function AdminBeritaPage() {
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs text-muted-foreground">Konten</p>
+          <p className="text-xs text-muted-foreground">Konten Situs</p>
           <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
             Berita &amp; Artikel
           </h1>
