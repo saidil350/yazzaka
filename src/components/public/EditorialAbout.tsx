@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { SchoolProfile } from "@/lib/types";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Image as ImageIcon } from "lucide-react";
 
@@ -60,15 +60,12 @@ export function EditorialAbout({ profile }: EditorialAboutProps) {
               </div>
             </div>
 
-            <Link href="/tentang-kami" className="inline-block">
-              <Button
-                variant="outline"
-                size="default"
-                className="font-bold text-xs h-9 px-4"
-              >
-                <span>Baca Profil Lengkap Lembaga</span>
-                <ArrowRight className="h-3.5 w-3.5 ml-1" />
-              </Button>
+            <Link
+              href="/tentang-kami"
+              className={buttonVariants({ variant: "outline", size: "default" }) + " font-bold text-xs h-9 px-4 inline-flex items-center"}
+            >
+              <span>Baca Profil Lengkap Lembaga</span>
+              <ArrowRight className="h-3.5 w-3.5 ml-1" aria-hidden="true" />
             </Link>
           </div>
 

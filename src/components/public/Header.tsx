@@ -83,6 +83,8 @@ export function Header({ profile, sections }: HeaderProps) {
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const drawerTriggerRef = useRef<HTMLElement | null>(null);
 
   // Hook Scrollspy untuk deteksi seksi aktif saat di halaman beranda
   const sectionIds = ["beranda", "statistik", "tentang", "program", "keunggulan", "prestasi", "testimoni"];
@@ -101,9 +103,17 @@ export function Header({ profile, sections }: HeaderProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Kunci scroll saat drawer mobile terbuka
+  // Kunci scroll saat drawer mobile terbuka + pindahkan fokus ke drawer,
+  // kembalikan fokus ke pemicu saat ditutup.
   useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    if (mobileMenuOpen) {
+      drawerTriggerRef.current = document.activeElement as HTMLElement | null;
+      document.body.style.overflow = "hidden";
+      mobileMenuRef.current?.focus();
+    } else {
+      document.body.style.overflow = "";
+      drawerTriggerRef.current?.focus();
+    }
     return () => {
       document.body.style.overflow = "";
     };
@@ -192,22 +202,22 @@ export function Header({ profile, sections }: HeaderProps) {
       {/* ── Top Announcement Sub-Bar ───────────── */}
       {showTopbar && (
       <div
-        className="bg-[#262B35] text-[#FAF6EE] border-b border-white/10 relative z-50"
+        className="bg-foreground text-background border-b border-white/10 relative z-50"
         role="banner"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between text-xs">
           <div className="flex items-center gap-2.5">
-            <span className="hidden md:inline-flex items-center text-stone-300 font-medium text-xs">
+            <span className="hidden md:inline-flex items-center text-background/70 font-medium text-xs">
               Akreditasi {profile.accreditation} · SK Kemenkumham {profile.npsn}
             </span>
           </div>
 
-          <div className="flex items-center gap-3 text-stone-300">
+          <div className="flex items-center gap-3 text-background/70">
             <a
               href={`https://wa.me/${profile.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-all"
+              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-colors"
             >
               <Phone className="h-2.5 w-2.5 text-emerald-400 shrink-0" aria-hidden="true" />
               <span>WhatsApp CS</span>
@@ -220,7 +230,7 @@ export function Header({ profile, sections }: HeaderProps) {
       {/* ── Main Sticky Header ──────── */}
       <header
         className={[
-          "sticky top-0 z-40 transition-all duration-200",
+          "sticky top-0 z-40 transition-shadow duration-200",
           isScrolled
             ? "bg-background shadow-xs border-b border-border"
             : "bg-background border-b border-border",
@@ -257,7 +267,7 @@ export function Header({ profile, sections }: HeaderProps) {
                   onClick={(e) => handleNavClick(e, link)}
                   aria-current={active ? "page" : undefined}
                   className={[
-                    "px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 whitespace-nowrap",
+                    "px-3 py-1 rounded-full text-xs font-bold transition-colors duration-150 whitespace-nowrap",
                     active
                       ? "bg-white text-foreground shadow-xs"
                       : "text-muted-foreground hover:bg-white",
@@ -275,8 +285,9 @@ export function Header({ profile, sections }: HeaderProps) {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 aria-expanded={dropdownOpen}
                 aria-haspopup="true"
+                aria-controls="informasi-dropdown"
                 className={[
-                  "px-3 py-1 rounded-full text-xs font-bold transition-all duration-150 whitespace-nowrap flex items-center gap-1 cursor-pointer",
+                  "px-3 py-1 rounded-full text-xs font-bold transition-colors duration-150 whitespace-nowrap flex items-center gap-1 cursor-pointer",
                   isSecondaryActive || dropdownOpen
                     ? "bg-white text-foreground shadow-xs"
                     : "text-muted-foreground hover:bg-white",
@@ -284,6 +295,7 @@ export function Header({ profile, sections }: HeaderProps) {
               >
                 <span>Informasi</span>
                 <ChevronDown
+                  aria-hidden="true"
                   className={`h-3.5 w-3.5 transition-transform duration-200 ${
                     dropdownOpen ? "rotate-180 text-muted-foreground" : "text-muted-foreground"
                   }`}
@@ -292,7 +304,7 @@ export function Header({ profile, sections }: HeaderProps) {
 
               {/* Popover Dropdown Card */}
               {dropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-64 rounded-lg bg-popover p-2 border border-border shadow-md z-50 animate-fade-in">
+                <div id="informasi-dropdown" className="absolute right-0 top-full mt-2 w-64 rounded-lg bg-popover p-2 border border-border shadow-md z-50 animate-fade-in">
                   <div className="space-y-0.5">
                     {secondaryNavLinks.map((item) => {
                       const Icon = item.icon;
@@ -303,13 +315,14 @@ export function Header({ profile, sections }: HeaderProps) {
                           href={item.href}
                           onClick={() => setDropdownOpen(false)}
                           className={[
-                            "flex items-start gap-2.5 p-2.5 rounded-md transition-all",
+                            "flex items-start gap-2.5 p-2.5 rounded-md transition-colors",
                             isCurrent
                               ? "bg-muted text-foreground"
                               : "text-foreground hover:bg-muted/50",
                           ].join(" ")}
                         >
                           <Icon
+                            aria-hidden="true"
                             className={`h-4 w-4 shrink-0 mt-0.5 ${
                               isCurrent ? "text-foreground" : "text-muted-foreground"
                             }`}
@@ -352,9 +365,9 @@ export function Header({ profile, sections }: HeaderProps) {
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label={mobileMenuOpen ? "Tutup menu" : "Buka menu navigasi"}
-              className="lg:hidden h-9 w-9 flex items-center justify-center rounded-full bg-secondary text-foreground border border-border hover:bg-background transition-all active:scale-95 cursor-pointer"
+              className="lg:hidden h-9 w-9 flex items-center justify-center rounded-full bg-secondary text-foreground border border-border hover:bg-background transition-colors active:scale-95 cursor-pointer"
             >
-              {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+              {mobileMenuOpen ? <X className="h-4 w-4" aria-hidden="true" /> : <Menu className="h-4 w-4" aria-hidden="true" />}
             </button>
           </div>
         </div>
@@ -381,7 +394,8 @@ export function Header({ profile, sections }: HeaderProps) {
           <div
             ref={mobileMenuRef}
             id="mobile-menu"
-            className="absolute inset-y-0 right-0 w-[min(320px,86vw)] bg-background flex flex-col overflow-y-auto border-l border-border shadow-lg p-5 animate-slide-in-right"
+            tabIndex={-1}
+            className="absolute inset-y-0 right-0 w-[min(320px,86vw)] bg-background flex flex-col overflow-y-auto overscroll-contain border-l border-border shadow-lg p-5 animate-slide-in-right focus:outline-none"
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between pb-3.5 border-b border-border shrink-0">
@@ -402,9 +416,9 @@ export function Header({ profile, sections }: HeaderProps) {
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
                 aria-label="Tutup menu"
-                className="h-8 w-8 flex items-center justify-center rounded-full bg-secondary text-muted-foreground hover:text-foreground transition-all cursor-pointer"
+                className="h-8 w-8 flex items-center justify-center rounded-full bg-secondary text-muted-foreground hover:text-foreground transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
               >
-                <X className="h-4 w-4" />
+                <X className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
 
@@ -427,9 +441,9 @@ export function Header({ profile, sections }: HeaderProps) {
                       }}
                       aria-current={active ? "page" : undefined}
                   className={[
-                    "flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-bold transition-all",
+                    "flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-bold transition-colors",
                     active
-                      ? "bg-[#00A0B0] text-white shadow-xs"
+                      ? "bg-yazzaka-teal text-white shadow-xs"
                       : "text-foreground hover:bg-secondary",
                   ].join(" ")}
                     >
@@ -453,13 +467,13 @@ export function Header({ profile, sections }: HeaderProps) {
                       href={item.href}
                       onClick={() => setMobileMenuOpen(false)}
                       className={[
-                        "flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-xs font-bold transition-all",
+                        "flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-xs font-bold transition-colors",
                         isCurrent
                           ? "bg-muted text-foreground"
                           : "text-foreground hover:bg-secondary",
                       ].join(" ")}
                     >
-                      <Icon className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                      <Icon className="h-3.5 w-3.5 text-muted-foreground shrink-0" aria-hidden="true" />
                       <span className="truncate">{item.label}</span>
                     </Link>
                   );
@@ -481,7 +495,7 @@ export function Header({ profile, sections }: HeaderProps) {
                         onClick={() => setMobileMenuOpen(false)}
                         className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:bg-muted transition-colors"
                       >
-                        <Icon className="h-3 w-3 text-muted-foreground" />
+                        <Icon className="h-3 w-3 text-muted-foreground" aria-hidden="true" />
                         <span className="truncate">{u.label}</span>
                       </Link>
                     );
@@ -498,7 +512,7 @@ export function Header({ profile, sections }: HeaderProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-1.5 w-full h-9 rounded-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-800 font-bold text-xs transition-colors"
               >
-                <Phone className="h-3.5 w-3.5 text-emerald-600" />
+                <Phone className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />
                 <span>Konsultasi WhatsApp</span>
               </a>
             </div>

@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { HeroContent } from "@/lib/types";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Image as ImageIcon } from "lucide-react";
 
@@ -104,15 +104,12 @@ export function HeroSection({ hero, schoolName }: HeroSectionProps) {
 
             {/* Pill Action CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
-              <Link href="/tentang-kami">
-                <Button
-                  variant="outline"
-                  size="default"
-                  className="font-bold text-xs sm:text-sm h-11 px-6 w-full sm:w-auto"
-                >
-                  <BookOpen className="h-4 w-4 text-yazzaka-teal-dark" />
-                  <span>Jelajahi Profil</span>
-                </Button>
+              <Link
+                href="/tentang-kami"
+                className={buttonVariants({ variant: "outline", size: "default" }) + " font-bold text-xs sm:text-sm h-11 px-6 w-full sm:w-auto inline-flex items-center"}
+              >
+                <BookOpen className="h-4 w-4 text-yazzaka-teal-dark" aria-hidden="true" />
+                <span>Jelajahi Profil</span>
               </Link>
             </div>
           </div>

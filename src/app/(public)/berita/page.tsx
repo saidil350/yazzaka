@@ -61,7 +61,7 @@ export default async function BeritaPage({
                 type="search"
                 name="q"
                 defaultValue={searchQuery}
-                placeholder="Cari artikel..."
+                placeholder="Cari artikel…"
                 aria-label="Cari artikel"
                 className="h-9 w-full rounded-md border border-input bg-card pl-9 pr-3 text-xs font-medium outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-muted-foreground/40"
               />
@@ -142,7 +142,7 @@ async function ArticleGrid({
         title="Tidak Ada Artikel Ditemukan"
         description={
           searchQuery
-            ? `Tidak ditemukan berita dengan kata kunci "${searchQuery}".`
+            ? `Tidak ditemukan berita dengan kata kunci “${searchQuery}”.`
             : "Belum ada artikel yang dipublikasikan."
         }
         action={

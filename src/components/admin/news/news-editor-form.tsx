@@ -234,7 +234,7 @@ export function NewsEditorForm({
         <Input
           label="Judul Berita"
           required
-          placeholder="cth: Kegiatan Pesantren Ramadan 2026"
+          placeholder="cth: Kegiatan Pesantren Ramadan 2026…"
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);
@@ -259,7 +259,7 @@ export function NewsEditorForm({
         <Textarea
           label="Ringkasan (opsional)"
           rows={3}
-          placeholder="Ringkasan singkat yang tampil di daftar berita dan hasil pencarian."
+          placeholder="Ringkasan singkat yang tampil di daftar berita dan hasil pencarian…"
           value={excerpt ?? ""}
           onChange={(e) => {
             setExcerpt(e.target.value);
@@ -308,6 +308,8 @@ export function NewsEditorForm({
             <img
               src={cover.fileUrl}
               alt={cover.altText ?? "Sampul berita"}
+              width={640}
+              height={360}
               className="aspect-video w-full max-w-md rounded-md border border-border object-cover"
             />
             <div className="flex gap-2">
@@ -430,7 +432,7 @@ export function NewsEditorForm({
         <h2 className="text-sm font-semibold text-foreground">SEO &amp; Opsi</h2>
         <Input
           label="Judul SEO (opsional)"
-          placeholder="Judul khusus untuk hasil pencarian Google"
+          placeholder="Judul khusus untuk hasil pencarian Google…"
           value={seoTitle}
           onChange={(e) => {
             setSeoTitle(e.target.value);
@@ -440,7 +442,7 @@ export function NewsEditorForm({
         <Textarea
           label="Deskripsi SEO (opsional)"
           rows={2}
-          placeholder="Deskripsi meta untuk mesin pencari (maks. 300 karakter)."
+          placeholder="Deskripsi meta untuk mesin pencari (maks. 300 karakter)…"
           value={seoDescription}
           onChange={(e) => {
             setSeoDescription(e.target.value);

@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useSchoolData } from "@/context/SchoolDataContext";
 import { Menu, Bell, LogOut, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Breadcrumb,
@@ -58,11 +58,11 @@ export function AdminTopbar({
       <div className="flex items-center gap-3 min-w-0">
         <button
           type="button"
-          onClick={onToggleMobileSidebar}
+          onClick={() => onToggleMobileSidebar?.()}
           aria-label="Buka/tutup sidebar navigasi"
           className="lg:hidden size-9 inline-flex items-center justify-center rounded-md border border-border bg-card text-muted-foreground hover:bg-muted hover:text-foreground transition-colors cursor-pointer shrink-0"
         >
-          <Menu className="size-4" />
+          <Menu className="size-4" aria-hidden="true" />
         </button>
 
         <Breadcrumb>
@@ -104,16 +104,14 @@ export function AdminTopbar({
           <Link
             href="/admin/settings/pesan"
             aria-label={newMessages > 0 ? `${newMessages} pesan baru` : "Kotak pesan masuk"}
-            className="relative"
+            className="relative inline-flex size-9 items-center justify-center rounded-md text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
           >
-            <Button variant="ghost" size="icon">
-              <Bell className="size-4" />
-              {newMessages > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-xs font-semibold text-primary-foreground tabular-nums">
-                  {newMessages}
-                </span>
-              )}
-            </Button>
+            <Bell className="size-4" aria-hidden="true" />
+            {newMessages > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-xs font-semibold text-primary-foreground tabular-nums">
+                {newMessages}
+              </span>
+            )}
           </Link>
         )}
 
@@ -138,7 +136,7 @@ export function AdminTopbar({
                   {role.replace("_", " ")}
                 </p>
               </div>
-              <ChevronDown className="hidden sm:block size-3.5 text-muted-foreground shrink-0" />
+              <ChevronDown className="hidden sm:block size-3.5 text-muted-foreground shrink-0" aria-hidden="true" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
@@ -152,7 +150,7 @@ export function AdminTopbar({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout}>
-              <LogOut />
+              <LogOut aria-hidden="true" />
               Keluar
             </DropdownMenuItem>
           </DropdownMenuContent>

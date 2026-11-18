@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { LucideIcon, FolderOpen } from "lucide-react";
-import { Button } from "./button";
+import { Button, buttonVariants } from "./button";
 import { cn } from "@/lib/utils";
 
 /**
@@ -73,11 +73,9 @@ export function EmptyState({
         {action && (
           <EmptyStateActions className="mt-3">
             {action.href ? (
-              <Link href={action.href}>
-                <Button size="sm" variant="outline" className="text-xs h-8">
-                  {action.icon && <action.icon className="h-3.5 w-3.5" />}
-                  <span>{action.label}</span>
-                </Button>
+              <Link href={action.href} className={buttonVariants({ variant: "outline", size: "sm" }) + " text-xs h-8 inline-flex items-center"}>
+                {action.icon && <action.icon className="h-3.5 w-3.5" aria-hidden="true" />}
+                <span>{action.label}</span>
               </Link>
             ) : (
               <Button
@@ -113,11 +111,9 @@ export function EmptyState({
       {action && (
         <EmptyStateActions className="mt-5">
           {action.href ? (
-            <Link href={action.href}>
-              <Button size="default" className="text-xs h-9 px-5">
-                {action.icon && <action.icon className="h-3.5 w-3.5" />}
-                <span>{action.label}</span>
-              </Button>
+            <Link href={action.href} className={buttonVariants({ variant: "default", size: "default" }) + " text-xs h-9 px-5 inline-flex items-center"}>
+              {action.icon && <action.icon className="h-3.5 w-3.5" aria-hidden="true" />}
+              <span>{action.label}</span>
             </Link>
           ) : (
             <Button
@@ -152,7 +148,7 @@ export function EmptyStateIcon({
         className
       )}
     >
-      <Icon className={size === "sm" ? "h-5 w-5" : "h-6 w-6"} />
+      <Icon className={size === "sm" ? "h-5 w-5" : "h-6 w-6"} aria-hidden="true" />
     </div>
   );
 }

@@ -51,9 +51,9 @@ export function TestimonialsSection({ testimonials, profile }: TestimonialsSecti
                       <Badge variant="secondary">
                         {test.role}
                       </Badge>
-                      <div className="flex items-center gap-0.5 text-amber-500">
+                      <div className="flex items-center gap-0.5 text-amber-500" aria-label="Rating 5 dari 5">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-3 w-3 fill-amber-400 text-amber-400" />
+                          <Star key={i} className="h-3 w-3 fill-amber-400 text-amber-400" aria-hidden="true" />
                         ))}
                       </div>
                     </div>
@@ -74,16 +74,18 @@ export function TestimonialsSection({ testimonials, profile }: TestimonialsSecti
                       />
                     ) : (
                       <div className="h-10 w-10 rounded-full bg-muted border-2 border-white shadow-xs shrink-0 flex items-center justify-center text-muted-foreground">
-                        <User className="h-4 w-4" />
+                        <User className="h-4 w-4" aria-hidden="true" />
                       </div>
                     )}
                     <div>
                       <h4 className="font-bold text-xs sm:text-sm">
                         {test.name}
                       </h4>
-                      <p className="text-xs text-muted-foreground">
-                        {test.childName || (test.graduationYear ? `Alumni Angkatan ${test.graduationYear}` : "")}
-                      </p>
+                      {test.childName || test.graduationYear ? (
+                        <p className="text-xs text-muted-foreground">
+                          {test.childName || `Alumni Angkatan ${test.graduationYear}`}
+                        </p>
+                      ) : null}
                     </div>
                   </div>
                 </div>

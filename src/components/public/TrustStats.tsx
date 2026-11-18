@@ -57,7 +57,7 @@ export function TrustStats({ profile }: TrustStatsProps) {
                 <div className="flex items-center gap-2.5 mt-3">
                   <Icon className="h-4 w-4 text-yazzaka-teal-dark shrink-0" strokeWidth={1.8} aria-hidden="true" />
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-extrabold text-foreground tracking-tight">
+                    <span className="text-3xl font-extrabold text-foreground tracking-tight tabular-nums">
                       {stat.value}
                     </span>
                     {stat.suffix && (

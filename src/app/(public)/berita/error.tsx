@@ -18,13 +18,13 @@ export default function BeritaError({
   }, [error]);
 
   return (
-    <main className="flex flex-1 items-center justify-center py-16">
+    <div className="flex flex-1 items-center justify-center py-16">
       <EmptyState
         icon={AlertCircle}
         title="Terjadi Kesalahan"
         description="Berita tidak dapat dimuat saat ini. Silakan coba lagi."
         action={{ label: "Muat Ulang", onClick: () => reset() }}
       />
-    </main>
+    </div>
   );
 }

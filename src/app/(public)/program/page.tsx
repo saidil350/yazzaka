@@ -88,7 +88,9 @@ export default async function ProgramsDirectoryPage() {
               description="Belum ada program pendidikan yang dipublikasikan."
             />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <>
+              <h2 className="sr-only">Daftar Unit Pendidikan</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {published.map((prog) => {
                 const badgeInfo = getUnitBadge(prog);
                 const isSpecialWakaf = prog.category?.toLowerCase().includes("wakaf") || prog.slug.includes("peradaban");
@@ -165,7 +167,8 @@ export default async function ProgramsDirectoryPage() {
                   </Link>
                 );
               })}
-            </div>
+              </div>
+            </>
           )}
 
         </div>

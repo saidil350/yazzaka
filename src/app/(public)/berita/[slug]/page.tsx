@@ -104,7 +104,7 @@ export default async function BeritaDetailPage({ params }: { params: Params }) {
     <>
       <JsonLd data={articleJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
-      <main className="flex-1">
+      <div className="flex-1">
         <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <Link
             href="/berita"
@@ -202,7 +202,7 @@ export default async function BeritaDetailPage({ params }: { params: Params }) {
             </section>
           ) : null}
         </article>
-      </main>
+      </div>
     </>
   );
 }

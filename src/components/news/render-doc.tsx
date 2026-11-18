@@ -42,13 +42,17 @@ function ImageNode({ node }: { node: TiptapNode }) {
 
   return (
     <figure className="my-6">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={safeSrc}
-        alt={alt}
-        className="w-full rounded-lg border border-border object-cover"
-        loading="lazy"
-      />
+      {/* Dimensi asli gambar tak diketahui saat render — dibungkus kotak
+          aspek 16:9 dengan object-cover agar tidak menimbulkan CLS. */}
+      <div className="aspect-video overflow-hidden rounded-lg border border-border bg-muted">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={safeSrc}
+          alt={alt}
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
+      </div>
       {caption ? (
         <figcaption className="mt-2 text-center text-xs text-muted-foreground">
           {caption}

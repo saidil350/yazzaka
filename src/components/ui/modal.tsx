@@ -1,13 +1,16 @@
+"use client";
+
 import * as React from "react";
 import { use } from "react";
+import { Dialog as DialogPrimitive } from "radix-ui";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * Modal / Dialog — Compound Component Pattern & React 19 Standard
- * - Native <dialog> semantics with role="dialog" + aria-modal
- * - Shared ModalContext for seamless composition
- * - Supports both Compound usage (<Modal.Header>, <Modal.Body>, etc.) & Legacy Props
+ * Modal / Dialog — Compound Component Pattern, built on Radix Dialog.
+ * - Focus trap, Escape, outside-click, scroll-lock & aria otomatis dari Radix
+ * - Shared ModalContext untuk komposisi compound (<Modal.Header>, dst.)
+ * - Mendukung compound usage & legacy props (title/description/footer)
  */
 
 interface ModalContextType {
@@ -42,88 +45,76 @@ export function Modal({
   const titleId = React.useId();
   const descId = React.useId();
 
-  React.useEffect(() => {
-    if (!isOpen) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
-
-  const maxWidthClass: Record<string, string> = {
-    sm: "max-w-sm",
-    md: "max-w-md",
-    lg: "max-w-lg",
-    xl: "max-w-xl",
-    "2xl": "max-w-2xl",
-    "3xl": "max-w-3xl",
-    "4xl": "max-w-4xl",
-    "5xl": "max-w-5xl",
-    "6xl": "max-w-6xl",
-    full: "max-w-[95vw]",
-  };
-
   const isLegacyProps = title !== undefined;
 
   return (
     <ModalContext.Provider value={{ onClose, titleId, descId }}>
-      <div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
-        aria-modal="true"
-        role="dialog"
-        aria-labelledby={titleId}
-        aria-describedby={description ? descId : undefined}
+      <DialogPrimitive.Root
+        open={isOpen}
+        onOpenChange={(open) => {
+          if (!open) onClose();
+        }}
       >
-        {/* Backdrop */}
-        <div
-          className="fixed inset-0 bg-black/50 transition-opacity"
-          aria-hidden="true"
-          onClick={onClose}
-        />
-
-        {/* Panel */}
-        <div
-          className={cn(
-            "relative z-10 w-full flex flex-col max-h-[88vh]",
-            "bg-card rounded-lg",
-            "border border-border",
-            "shadow-lg",
-            maxWidthClass[maxWidth] ?? "max-w-lg",
-            className
-          )}
-        >
-          {isLegacyProps ? (
-            <>
-              <ModalHeader>
-                <div className="space-y-0.5 pr-6">
-                  <ModalTitle>{title}</ModalTitle>
-                  {description && (
-                    <ModalDescription>{description}</ModalDescription>
-                  )}
-                </div>
-                <ModalClose />
-              </ModalHeader>
-              <ModalBody>{children}</ModalBody>
-              {footer && <ModalFooter>{footer}</ModalFooter>}
-            </>
-          ) : (
-            children
-          )}
-        </div>
-      </div>
+        <DialogPrimitive.Portal>
+          <DialogPrimitive.Overlay
+            className="fixed inset-0 z-50 bg-black/50"
+            aria-hidden="true"
+          />
+          <DialogPrimitive.Content
+            className={cn(
+              "fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6",
+              "focus:outline-none"
+            )}
+            aria-labelledby={titleId}
+            aria-describedby={description ? descId : undefined}
+          >
+            <div
+              className={cn(
+                "relative w-full flex flex-col max-h-[88vh]",
+                "bg-card rounded-lg",
+                "border border-border",
+                "shadow-lg",
+                maxWidthClass[maxWidth] ?? "max-w-lg",
+                className
+              )}
+            >
+              {isLegacyProps ? (
+                <>
+                  <ModalHeader>
+                    <div className="space-y-0.5 pr-6">
+                      <ModalTitle>{title}</ModalTitle>
+                      {description && (
+                        <ModalDescription>{description}</ModalDescription>
+                      )}
+                    </div>
+                    <ModalClose />
+                  </ModalHeader>
+                  <ModalBody>{children}</ModalBody>
+                  {footer && <ModalFooter>{footer}</ModalFooter>}
+                </>
+              ) : (
+                children
+              )}
+            </div>
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Portal>
+      </DialogPrimitive.Root>
     </ModalContext.Provider>
   );
 }
+
+const maxWidthClass: Record<string, string> = {
+  sm: "max-w-sm",
+  md: "max-w-md",
+  lg: "max-w-lg",
+  xl: "max-w-xl",
+  "2xl": "max-w-2xl",
+  "3xl": "max-w-3xl",
+  "4xl": "max-w-4xl",
+  "5xl": "max-w-5xl",
+  "6xl": "max-w-6xl",
+  full: "max-w-[95vw]",
+};
 
 export function ModalHeader({
   children,
@@ -153,12 +144,12 @@ export function ModalTitle({
 }) {
   const ctx = use(ModalContext);
   return (
-    <h2
+    <DialogPrimitive.Title
       id={ctx?.titleId}
       className={cn("text-lg font-semibold text-foreground leading-none tracking-tight", className)}
     >
       {children}
-    </h2>
+    </DialogPrimitive.Title>
   );
 }
 
@@ -171,12 +162,12 @@ export function ModalDescription({
 }) {
   const ctx = use(ModalContext);
   return (
-    <p
+    <DialogPrimitive.Description
       id={ctx?.descId}
       className={cn("text-sm text-muted-foreground leading-relaxed", className)}
     >
       {children}
-    </p>
+    </DialogPrimitive.Description>
   );
 }
 
@@ -189,10 +180,8 @@ export function ModalClose({
 }) {
   const ctx = use(ModalContext);
   return (
-    <button
-      type="button"
-      onClick={onClick || ctx?.onClose}
-      autoFocus
+    <DialogPrimitive.Close
+      onClick={onClick}
       aria-label="Tutup dialog"
       className={cn(
         "h-8 w-8 rounded-md flex items-center justify-center shrink-0 mt-0.5",
@@ -204,8 +193,8 @@ export function ModalClose({
         className
       )}
     >
-      <X className="h-4 w-4" />
-    </button>
+      <X className="h-4 w-4" aria-hidden="true" />
+    </DialogPrimitive.Close>
   );
 }
 
@@ -217,7 +206,12 @@ export function ModalBody({
   className?: string;
 }) {
   return (
-    <div className={cn("overflow-y-auto px-6 py-5 flex-1 min-h-0", className)}>
+    <div
+      className={cn(
+        "overflow-y-auto px-6 py-5 flex-1 min-h-0 overscroll-contain",
+        className
+      )}
+    >
       {children}
     </div>
   );

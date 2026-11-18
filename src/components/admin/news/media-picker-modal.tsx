@@ -146,6 +146,8 @@ export function MediaPickerModal({
                   <img
                     src={media.fileUrl}
                     alt={media.altText ?? media.fileName}
+                    width={240}
+                    height={112}
                     className="h-28 w-full object-cover"
                     loading="lazy"
                   />

@@ -34,6 +34,7 @@ export function ImageUpload({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [previewError, setPreviewError] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const urlInputId = React.useId();
 
   React.useEffect(() => {
     setPreviewError(false);
@@ -128,7 +129,10 @@ export function ImageUpload({
       {/* Header & Mode Switcher */}
       <div className="flex items-center justify-between">
         {label && (
-          <label className="text-sm font-medium text-foreground flex items-center gap-1">
+          <label
+            htmlFor={mode === "url" && !value ? urlInputId : undefined}
+            className="text-sm font-medium text-foreground flex items-center gap-1"
+          >
             {label}
             {required && <span className="text-destructive">*</span>}
           </label>
@@ -137,6 +141,7 @@ export function ImageUpload({
         <div className="inline-flex p-0.5 rounded-md bg-muted border border-border text-xs font-medium">
           <button
             type="button"
+            aria-pressed={mode === "upload"}
             onClick={() => setMode("upload")}
             className={`px-2.5 py-1 rounded-sm transition-colors cursor-pointer flex items-center gap-1.5 ${
               mode === "upload"
@@ -144,11 +149,12 @@ export function ImageUpload({
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <Upload className="h-3 w-3" />
+            <Upload className="h-3 w-3" aria-hidden="true" />
             <span>Upload / Drag &amp; Drop</span>
           </button>
           <button
             type="button"
+            aria-pressed={mode === "url"}
             onClick={() => setMode("url")}
             className={`px-2.5 py-1 rounded-sm transition-colors cursor-pointer flex items-center gap-1.5 ${
               mode === "url"
@@ -156,7 +162,7 @@ export function ImageUpload({
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <LinkIcon className="h-3 w-3" />
+            <LinkIcon className="h-3 w-3" aria-hidden="true" />
             <span>Tautan URL</span>
           </button>
         </div>
@@ -173,25 +179,25 @@ export function ImageUpload({
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={value}
-              alt="Preview"
-              className="h-20 w-28 object-cover rounded-md border border-border bg-white shrink-0"
+              alt="Pratinjau gambar yang dipilih"
+              className="h-20 w-28 object-cover rounded-md border border-border bg-card shrink-0"
               onError={() => setPreviewError(true)}
             />
           )}
           <div className="flex-1 min-w-0 pr-2">
             {previewError ? (
               <div className="flex items-center gap-1.5 text-xs font-medium text-destructive mb-1">
-                <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+                <AlertCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                 <span>Gambar tidak dapat dimuat — periksa tautan atau unggah ulang.</span>
               </div>
             ) : (
               <div className="flex items-center gap-1.5 text-xs font-medium text-success mb-1">
-                <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
+                <CheckCircle2 className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                 <span>Gambar Siap Digunakan</span>
               </div>
             )}
             <p className="text-xs text-muted-foreground truncate font-mono bg-muted px-2 py-1 rounded-md border border-border">
-              {value.startsWith("data:") ? `Data Gambar Lokal (${value.substring(0, 30)}...)` : value}
+              {value.startsWith("data:") ? `Data Gambar Lokal (${value.substring(0, 30)}…)` : value}
             </p>
           </div>
           <button
@@ -201,7 +207,7 @@ export function ImageUpload({
             title="Hapus Gambar"
             aria-label="Hapus gambar"
           >
-            <X className="h-4 w-4" />
+            <X className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
       ) : (
@@ -209,10 +215,19 @@ export function ImageUpload({
         <div>
           {mode === "upload" ? (
             <div
+              role="button"
+              tabIndex={0}
+              aria-label={`Unggah gambar: tarik-lepas, Enter untuk pilih berkas (maksimal ${maxSizeMB} MB)`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  fileInputRef.current?.click();
+                }
+              }}
               className={`relative border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
                 isDragging
                   ? "border-ring bg-muted"
@@ -223,6 +238,7 @@ export function ImageUpload({
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
+                aria-label="Pilih file gambar"
                 className="hidden"
                 onChange={handleFileInputChange}
               />
@@ -234,19 +250,19 @@ export function ImageUpload({
                   : "bg-card text-muted-foreground border border-border"
               }`}
             >
-              <Upload className="h-5 w-5" />
+              <Upload className="h-5 w-5" aria-hidden="true" />
             </div>
             <div>
               <p className="text-xs sm:text-sm font-medium text-foreground">
                 {isUploading
-                  ? "Mengunggah gambar..."
+                  ? "Mengunggah gambar…"
                   : (
                     <>
                       Tarik &amp; lepas gambar ke sini, atau <span className="text-primary underline">pilih berkas</span>
                     </>
                   )}
               </p>
-              <p className="text-xs text-muted-foreground mt-0.5">
+              <p className="text-xs text-muted-foreground mt-0.5 tabular-nums">
                 Mendukung JPG, PNG, WEBP, GIF (Maksimal {maxSizeMB} MB)
               </p>
             </div>
@@ -256,9 +272,10 @@ export function ImageUpload({
             <div className="space-y-1.5">
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-foreground">
-                  <ImageIcon className="h-4 w-4" />
+                  <ImageIcon className="h-4 w-4" aria-hidden="true" />
                 </div>
                 <input
+                  id={urlInputId}
                   type="url"
                   value={value}
                   onChange={(e) => {
@@ -266,10 +283,12 @@ export function ImageUpload({
                     onChange(e.target.value);
                   }}
                   placeholder={placeholder}
+                  aria-label="Tautan URL gambar"
+                  aria-describedby={`${urlInputId}-helper`}
                   className="w-full h-9 pl-9 pr-3 rounded-md border border-input bg-card text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:border-muted-foreground/40 shadow-xs"
                 />
               </div>
-              <p className="text-xs text-muted-foreground">
+              <p id={`${urlInputId}-helper`} className="text-xs text-muted-foreground">
                 Tempelkan URL gambar publik yang sudah tersedia di internet, atau gunakan tab unggah.
               </p>
             </div>
@@ -279,8 +298,8 @@ export function ImageUpload({
 
       {/* Error Feedback */}
       {errorMsg && (
-        <div className="flex items-center gap-1.5 text-xs text-destructive font-medium mt-1">
-          <AlertCircle className="h-3.5 w-3.5 shrink-0" />
+        <div role="alert" className="flex items-center gap-1.5 text-xs text-destructive font-medium mt-1">
+          <AlertCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
           <span>{errorMsg}</span>
         </div>
       )}

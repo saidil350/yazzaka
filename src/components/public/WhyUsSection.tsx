@@ -117,7 +117,7 @@ export function WhyUsSection({ profile }: WhyUsSectionProps) {
 
                   <div className="space-y-2">
                     <h3 className="flex items-center gap-2 text-base sm:text-lg font-bold leading-snug">
-                      <Icon className="h-4 w-4 text-yazzaka-teal-dark shrink-0" strokeWidth={1.8} />
+                      <Icon className="h-4 w-4 text-yazzaka-teal-dark shrink-0" strokeWidth={1.8} aria-hidden="true" />
                       {adv.title}
                     </h3>
 

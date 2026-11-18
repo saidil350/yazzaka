@@ -88,7 +88,7 @@ export default async function EventsPage({
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                          <Calendar className="h-8 w-8" />
+                          <Calendar className="h-8 w-8" aria-hidden="true" />
                         </div>
                       )}
                     </div>

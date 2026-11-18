@@ -70,7 +70,7 @@ export default async function DonasiPage() {
                             <p className="text-sm font-semibold text-foreground">
                               {bankLabel}
                             </p>
-                            <p className="font-mono text-base text-foreground break-all mt-0.5">
+                            <p className="font-mono text-base text-foreground break-all mt-0.5 tabular-nums">
                               {account.accountNumber}
                             </p>
                             {(account.accountHolder ?? "").trim() !== "" && (

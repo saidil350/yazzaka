@@ -5,6 +5,7 @@ import { Pencil, Plus, Trash2 } from "lucide-react";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import type { NewsCategory } from "@/lib/news/types";
 
 /**
@@ -27,6 +28,7 @@ export function CategoryManagerModal({
   const [editingName, setEditingName] = React.useState("");
   const [isSaving, setIsSaving] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = React.useState<NewsCategory | null>(null);
 
   const request = async (url: string, method: string, body?: unknown) => {
     setIsSaving(true);
@@ -64,6 +66,7 @@ export function CategoryManagerModal({
   };
 
   const handleDelete = async (category: NewsCategory) => {
+    setDeleteTarget(null);
     await request(`/api/categories/${category.id}`, "DELETE");
   };
 
@@ -79,7 +82,7 @@ export function CategoryManagerModal({
         </Button>
       }
     >
-      <div className="space-y-4">
+      <div className="space-y-4" aria-live="polite">
         {error ? (
           <p role="alert" className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
             {error}
@@ -95,7 +98,8 @@ export function CategoryManagerModal({
         >
           <Input
             label="Kategori baru"
-            placeholder="cth: Kegiatan Ramadhan"
+            name="kategori-baru"
+            placeholder="cth: Kegiatan Ramadhan…"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
           />
@@ -148,7 +152,7 @@ export function CategoryManagerModal({
                     aria-label={`Hapus ${category.name}`}
                     title="Hapus"
                     className="text-destructive hover:text-destructive"
-                    onClick={() => void handleDelete(category)}
+                    onClick={() => setDeleteTarget(category)}
                   >
                     <Trash2 className="size-4" aria-hidden="true" />
                   </Button>
@@ -158,6 +162,17 @@ export function CategoryManagerModal({
           ))}
         </ul>
       </div>
+
+      <ConfirmDialog
+        isOpen={deleteTarget !== null}
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={() => {
+          if (deleteTarget) void handleDelete(deleteTarget);
+        }}
+        title={`Hapus kategori "${deleteTarget?.name ?? ""}"?`}
+        description="Kategori yang dihapus tidak dapat dikembalikan. Server menolak penghapusan bila kategori masih dipakai artikel."
+        confirmLabel="Hapus Kategori"
+      />
     </Modal>
   );
 }

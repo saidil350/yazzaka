@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Achievement, SchoolProfile } from "@/lib/types";
 import { ArrowRight, Trophy } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 
@@ -34,15 +34,12 @@ export function AchievementsSection({ achievements, profile }: AchievementsSecti
             </p>
           </div>
 
-          <Link href="/prestasi">
-            <Button
-              variant="outline"
-              size="default"
-              className="font-bold text-xs h-9 px-4 shrink-0"
-            >
-              <span>Lihat Semua Prestasi</span>
-              <ArrowRight className="h-3.5 w-3.5 ml-1" />
-            </Button>
+          <Link
+            href="/prestasi"
+            className={buttonVariants({ variant: "outline", size: "default" }) + " font-bold text-xs h-9 px-4 shrink-0 inline-flex items-center"}
+          >
+            <span>Lihat Semua Prestasi</span>
+            <ArrowRight className="h-3.5 w-3.5 ml-1" aria-hidden="true" />
           </Link>
         </div>
 
@@ -70,7 +67,7 @@ export function AchievementsSection({ achievements, profile }: AchievementsSecti
                     alt={ach.title}
                     fill
                     sizes="(min-width:1024px) 290px, (min-width:768px) 45vw, 90vw"
-                    className="object-cover transition-transform duration-500 hover:scale-105"
+                    className="object-cover"
                   />
                 </div>
 

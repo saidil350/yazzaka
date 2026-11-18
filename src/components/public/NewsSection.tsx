@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Article } from "@/lib/news/types";
 import { Calendar, Newspaper, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 import { formatDateIndonesian } from "@/lib/utils";
@@ -38,15 +38,12 @@ export function NewsSection({ articles }: NewsSectionProps) {
             </p>
           </div>
 
-          <Link href="/berita">
-            <Button
-              variant="outline"
-              size="default"
-              className="font-bold text-xs h-9 px-4 shrink-0 shadow-xs"
-            >
-              <span>Indeks Berita Lengkap</span>
-              <ArrowRight className="h-3.5 w-3.5 ml-1" />
-            </Button>
+          <Link
+            href="/berita"
+            className={buttonVariants({ variant: "outline", size: "default" }) + " font-bold text-xs h-9 px-4 shrink-0 shadow-xs inline-flex items-center"}
+          >
+            <span>Indeks Berita Lengkap</span>
+            <ArrowRight className="h-3.5 w-3.5 ml-1" aria-hidden="true" />
           </Link>
         </div>
 

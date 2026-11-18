@@ -29,7 +29,7 @@ export default async function PublicLayout({
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header profile={safeProfile} sections={sections} />
-      <main className="flex-1">{children}</main>
+      <main id="main-content" className="flex-1">{children}</main>
       <Footer profile={safeProfile} socialMedia={seo.socialMedia} />
     </div>
   );

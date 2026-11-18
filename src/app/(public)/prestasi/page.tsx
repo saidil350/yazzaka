@@ -76,6 +76,7 @@ export default async function AchievementsPage({
             />
           ) : (
             <>
+              <h2 className="sr-only">Daftar Prestasi</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
               {pageAchievements.map((ach) => (
                 <div
@@ -89,11 +90,11 @@ export default async function AchievementsPage({
                         alt={ach.title}
                         fill
                         sizes="(min-width:1024px) 290px, (min-width:768px) 45vw, 90vw"
-                        className="object-cover transition-transform duration-500 hover:scale-105"
+                        className="object-cover transition-transform duration-500 motion-reduce:transform-none"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                        <Trophy className="h-8 w-8" />
+                        <Trophy className="h-8 w-8" aria-hidden="true" />
                       </div>
                     )}
                   </div>

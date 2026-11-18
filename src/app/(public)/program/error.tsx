@@ -17,13 +17,13 @@ export default function ProgramError({
   }, [error]);
 
   return (
-    <main className="flex flex-1 items-center justify-center py-16">
+    <div className="flex flex-1 items-center justify-center py-16">
         <EmptyState
           icon={AlertCircle}
           title="Terjadi Kesalahan"
           description="Halaman program tidak dapat dimuat saat ini. Silakan coba lagi."
           action={{ label: "Muat Ulang", onClick: () => reset() }}
         />
-    </main>
+    </div>
   );
 }

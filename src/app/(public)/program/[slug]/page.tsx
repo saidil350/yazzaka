@@ -87,7 +87,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
   return (
     <>
       <JsonLd data={breadcrumbJsonLd} />
-      <main className="flex-1">
+      <div className="flex-1">
 
         {/* ── Headspace Warm Page Hero Banner ─────────── */}
         <section className="relative overflow-hidden bg-background py-10 lg:py-14 border-b border-border">
@@ -96,7 +96,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
               href="/program"
               className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:underline mb-3"
             >
-              <ArrowLeft className="h-3.5 w-3.5" />
+              <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Kembali ke Direktori Unit Pendidikan</span>
             </Link>
 
@@ -205,7 +205,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                         rel="noopener noreferrer"
                         className={buttonVariants({ variant: "accent" })}
                       >
-                        <MessageCircle className="h-4 w-4" />
+                        <MessageCircle className="h-4 w-4" aria-hidden="true" />
                         <span>Konfirmasi Wakaf via WhatsApp</span>
                       </a>
                     </div>
@@ -229,34 +229,33 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
                     </p>
 
                     <div className="space-y-2 pt-2">
-                      <Link href="/kontak" className="block">
-                        <Button className="w-full justify-center font-bold text-xs h-10 shadow-xs">
-                          <span>Hubungi Sekretariat Wakaf</span>
-                          <ArrowRight className="h-3.5 w-3.5 ml-1" />
-                        </Button>
+                      <Link
+                        href="/kontak"
+                        className={buttonVariants({ variant: "default" }) + " w-full justify-center font-bold text-xs h-10 shadow-xs inline-flex items-center"}
+                      >
+                        <span>Hubungi Sekretariat Wakaf</span>
+                        <ArrowRight className="h-3.5 w-3.5 ml-1" aria-hidden="true" />
                       </Link>
 
                       <a
                         href={`https://wa.me/${profile.whatsapp}?text=Assalamu'alaikum,%20saya%20ingin%20bertanya%20mengenai%20${encodeURIComponent(program.title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block"
+                        className={buttonVariants({ variant: "outline" }) + " w-full justify-center text-xs h-9 font-bold inline-flex items-center"}
                       >
-                        <Button variant="outline" className="w-full justify-center text-xs h-9 font-bold">
-                          <MessageCircle className="h-3.5 w-3.5 text-yazzaka-teal-dark mr-1.5" />
-                          <span>Chat WhatsApp Sekretariat</span>
-                        </Button>
+                        <MessageCircle className="h-3.5 w-3.5 text-yazzaka-teal-dark mr-1.5" aria-hidden="true" />
+                        <span>Chat WhatsApp Sekretariat</span>
                       </a>
                     </div>
 
                     <div className="pt-3 border-t border-border space-y-1.5 text-xs text-muted-foreground">
                       <div className="flex items-center gap-1.5">
-                        <Building2 className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
-                        <span>{profile.address}, Sigli</span>
+                        <Building2 className="h-3.5 w-3.5 text-muted-foreground shrink-0" aria-hidden="true" />
+                        <span>{profile.address}{profile.city ? `, ${profile.city}` : ""}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <ShieldCheck className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" />
-                        <span>SK Kemenkumham: {profile.npsn}</span>
+                        <ShieldCheck className="h-3.5 w-3.5 text-yazzaka-teal-dark shrink-0" aria-hidden="true" />
+                        <span>SK Kemenkumham: {profile.skNumber || profile.npsn}</span>
                       </div>
                     </div>
                   </div>
@@ -319,7 +318,7 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
           </section>
         )}
 
-      </main>
+      </div>
     </>
   );
 }

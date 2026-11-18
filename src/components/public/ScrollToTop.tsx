@@ -23,9 +23,12 @@ export function ScrollToTop() {
   }, []);
 
   const scrollToTop = () => {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: prefersReducedMotion ? "auto" : "smooth",
     });
   };
 
@@ -72,7 +75,7 @@ export function ScrollToTop() {
         </svg>
 
         {/* Icon with subtle bounce on hover */}
-        <ArrowUp className="h-5 w-5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+        <ArrowUp className="h-5 w-5 group-hover:-translate-y-0.5 transition-transform duration-200" aria-hidden="true" />
       </button>
     </div>
   );

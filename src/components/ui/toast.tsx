@@ -45,22 +45,24 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           <div
             key={t.id}
             className={cn(
-              "pointer-events-auto flex items-center justify-between gap-3 rounded-lg border border-border bg-card p-4 shadow-lg text-sm font-medium text-card-foreground transition-all",
+              "pointer-events-auto flex items-center justify-between gap-3 rounded-lg border border-border bg-card p-4 shadow-lg text-sm font-medium text-card-foreground transition-colors",
               t.type === "error" && "border-destructive/40"
             )}
+            role="status"
+            aria-live={t.type === "error" ? "assertive" : "polite"}
           >
             <div className="flex items-center gap-3">
-              {t.type === "success" && <CheckCircle2 className="h-4 w-4 text-success shrink-0" />}
-              {t.type === "error" && <AlertCircle className="h-4 w-4 text-destructive shrink-0" />}
-              {t.type === "info" && <Info className="h-4 w-4 text-primary shrink-0" />}
+              {t.type === "success" && <CheckCircle2 className="h-4 w-4 text-success shrink-0" aria-hidden="true" />}
+              {t.type === "error" && <AlertCircle className="h-4 w-4 text-destructive shrink-0" aria-hidden="true" />}
+              {t.type === "info" && <Info className="h-4 w-4 text-primary shrink-0" aria-hidden="true" />}
               <span>{t.message}</span>
             </div>
             <button
               onClick={() => removeToast(t.id)}
               aria-label="Tutup notifikasi"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 rounded-sm transition-colors"
             >
-              <X className="h-4 w-4" />
+              <X className="h-4 w-4" aria-hidden="true" />
             </button>
           </div>
         ))}

@@ -45,21 +45,26 @@ export interface ProgramPageProfile {
   name: string;
   whatsapp: string;
   address: string;
+  city: string;
   npsn: string;
+  skNumber: string;
 }
 
 export const getProgramPageProfile = cache(
   async (): Promise<ProgramPageProfile> => {
     const sql = getDb();
     const rows = await sql`
-      SELECT name, whatsapp, address, npsn FROM school_profile LIMIT 1
+      SELECT name, whatsapp, address, city, npsn, foundation FROM school_profile LIMIT 1
     `;
     const r = rows[0];
+    const foundation = (r?.foundation ?? {}) as { skNumber?: string };
     return {
       name: (r?.name as string) || "Yazzakka",
       whatsapp: (r?.whatsapp as string) || "",
       address: (r?.address as string) || "",
+      city: (r?.city as string) || "",
       npsn: (r?.npsn as string) || "",
+      skNumber: foundation.skNumber || "",
     };
   }
 );

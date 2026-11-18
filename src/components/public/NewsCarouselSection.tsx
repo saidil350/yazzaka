@@ -53,10 +53,12 @@ export function NewsCarouselSection({ articles }: NewsCarouselSectionProps) {
 
   // Auto slide: interval 7 detik, pause saat hover (lanjut otomatis saat
   // mouse pergi), interaksi manual hanya me-reset timer — dan dinonaktifkan
-  // total bagi pengguna dengan prefers-reduced-motion.
-  const reducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // total bagi pengguna dengan prefers-reduced-motion. matchMedia dibaca di
+  // effect (bukan saat render) agar hasilnya tidak memicu hydration mismatch.
+  const [reducedMotion, setReducedMotion] = React.useState(false);
+  React.useEffect(() => {
+    setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
   const plugins = React.useMemo(
     () =>
       reducedMotion

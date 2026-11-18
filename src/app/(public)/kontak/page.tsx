@@ -62,7 +62,7 @@ export default async function ContactPage() {
 
                 <div className="space-y-3.5 text-xs sm:text-sm text-foreground">
                   <div className="flex items-start gap-3">
-                    <MapPin className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                    <MapPin className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
                       <span className="font-bold block">Alamat Sekretariat &amp; Sekolah:</span>
                       <p className="mt-0.5 leading-relaxed text-muted-foreground">
@@ -72,22 +72,24 @@ export default async function ContactPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <Phone className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                    <Phone className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
                       <span className="font-bold block">Telepon Kantor:</span>
-                      <p className="mt-0.5 text-muted-foreground">{safeProfile.phone}</p>
+                      <a href={`tel:${safeProfile.phone.replace(/[^+\d]/g, "")}`} className="mt-0.5 text-muted-foreground hover:underline tabular-nums block">
+                        {safeProfile.phone}
+                      </a>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <MessageCircle className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <MessageCircle className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
                       <span className="font-bold block">WhatsApp Sekretariat:</span>
                       <a
                         href={`https://wa.me/${safeProfile.whatsapp}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-emerald-700 font-bold hover:underline mt-0.5 block"
+                        className="text-emerald-700 font-bold hover:underline mt-0.5 block tabular-nums"
                       >
                         +{safeProfile.whatsapp}
                       </a>
@@ -95,15 +97,17 @@ export default async function ContactPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <Mail className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                    <Mail className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
                       <span className="font-bold block">Email Resmi:</span>
-                      <p className="mt-0.5 text-muted-foreground">{safeProfile.email}</p>
+                      <a href={`mailto:${safeProfile.email}`} className="mt-0.5 text-muted-foreground hover:underline block break-all">
+                        {safeProfile.email}
+                      </a>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <Clock className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                    <Clock className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
                       <span className="font-bold block">Jam Pelayanan:</span>
                       <p className="mt-0.5 text-muted-foreground">Senin - Sabtu: 08:00 - 15:30 WIB</p>
@@ -118,31 +122,43 @@ export default async function ContactPage() {
                     Media Sosial Resmi:
                   </span>
                   <div className="flex items-center gap-2.5">
-                    <a
-                      href={socialMedia?.instagram || "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2.5 rounded-lg bg-white border border-border text-foreground hover:text-pink-600 hover:border-pink-200 transition-colors shadow-xs"
-                    >
-                      <InstagramIcon className="h-4 w-4" />
-                    </a>
-                    <a
-                      href={socialMedia?.youtube || "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2.5 rounded-lg bg-white border border-border text-foreground hover:text-red-600 hover:border-red-200 transition-colors shadow-xs"
-                    >
-                      <YoutubeIcon className="h-4 w-4" />
-                    </a>
-                    <a
-                      href={socialMedia?.facebook || "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2.5 rounded-lg bg-white border border-border text-foreground hover:text-blue-600 hover:border-blue-200 transition-colors shadow-xs"
-                    >
-                      <FacebookIcon className="h-4 w-4" />
-                    </a>
+                    {socialMedia?.instagram && (
+                      <a
+                        href={socialMedia.instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Instagram resmi"
+                        className="p-2.5 rounded-lg bg-card border border-border text-foreground hover:bg-muted transition-colors shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                      >
+                        <InstagramIcon className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    )}
+                    {socialMedia?.youtube && (
+                      <a
+                        href={socialMedia.youtube}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="YouTube resmi"
+                        className="p-2.5 rounded-lg bg-card border border-border text-foreground hover:bg-muted transition-colors shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                      >
+                        <YoutubeIcon className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    )}
+                    {socialMedia?.facebook && (
+                      <a
+                        href={socialMedia.facebook}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Facebook resmi"
+                        className="p-2.5 rounded-lg bg-card border border-border text-foreground hover:bg-muted transition-colors shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                      >
+                        <FacebookIcon className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    )}
                   </div>
+                  {!socialMedia?.instagram && !socialMedia?.youtube && !socialMedia?.facebook && (
+                    <p className="text-xs text-muted-foreground">Belum ada media sosial yang terdaftar.</p>
+                  )}
                 </div>
               </div>
 

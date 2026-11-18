@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Program } from "@/lib/types";
 import { ArrowRight, CheckCircle2, Layers, Image as ImageIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 
@@ -35,15 +35,12 @@ export function ProgramsSection({ programs }: ProgramsSectionProps) {
             </p>
           </div>
 
-          <Link href="/program">
-            <Button
-              variant="outline"
-              size="default"
-              className="font-bold text-xs h-9 px-4 shrink-0 shadow-xs"
-            >
-              <span>Lihat Detail Semua Unit</span>
-              <ArrowRight className="h-3.5 w-3.5 ml-1" />
-            </Button>
+          <Link
+            href="/program"
+            className={buttonVariants({ variant: "outline", size: "default" }) + " font-bold text-xs h-9 px-4 shrink-0 shadow-xs inline-flex items-center"}
+          >
+            <span>Lihat Detail Semua Unit</span>
+            <ArrowRight className="h-3.5 w-3.5 ml-1" aria-hidden="true" />
           </Link>
         </div>
 
@@ -113,14 +110,16 @@ export function ProgramsSection({ programs }: ProgramsSectionProps) {
 
                   {/* Footer Action Button */}
                   <div className="p-5 pt-0">
-                    <Link href={`/program/${prog.slug}`}>
-                      <Button
-                        variant={isSpecialWakaf ? "accent" : "outline"}
-                        className="w-full justify-between font-bold text-xs h-10"
-                      >
-                        <span>{isSpecialWakaf ? "Pelajari Info Wakaf & Masterplan" : "Rincian Lebih Lanjut"}</span>
-                        <ArrowRight className="h-3.5 w-3.5 ml-1" />
-                      </Button>
+                    <Link
+                      href={`/program/${prog.slug}`}
+                      className={
+                        buttonVariants({
+                          variant: isSpecialWakaf ? "accent" : "outline",
+                        }) + " w-full justify-between font-bold text-xs h-10 inline-flex items-center"
+                      }
+                    >
+                      <span>{isSpecialWakaf ? "Pelajari Info Wakaf & Masterplan" : "Rincian Lebih Lanjut"}</span>
+                      <ArrowRight className="h-3.5 w-3.5 ml-1" aria-hidden="true" />
                     </Link>
                   </div>
                 </div>
