@@ -208,7 +208,7 @@ export function TiptapEditor({
   const btnDisabled = !editor || disabled;
 
   return (
-    <div className="overflow-hidden rounded-lg border border-input bg-card">
+    <div className="overflow-hidden rounded-lg border border-input bg-card focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/50">
       <div
         role="toolbar"
         aria-label="Toolbar format teks"

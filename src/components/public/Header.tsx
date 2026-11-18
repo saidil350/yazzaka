@@ -354,7 +354,7 @@ export function Header({ profile, sections }: HeaderProps) {
             {hasDonationInfo && (
               <Link
                 href="/donasi"
-                className="inline-flex items-center rounded-full bg-accent text-accent-foreground hover:bg-accent/90 px-3 py-1 text-xs font-bold transition-colors whitespace-nowrap"
+                className="inline-flex items-center rounded-full bg-accent text-accent-foreground hover:bg-yazzaka-orange-dark px-3 py-1 text-xs font-bold transition-colors whitespace-nowrap"
               >
                 Donasi
               </Link>
@@ -443,7 +443,7 @@ export function Header({ profile, sections }: HeaderProps) {
                   className={[
                     "flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-bold transition-colors",
                     active
-                      ? "bg-yazzaka-teal text-white shadow-xs"
+                      ? "bg-yazzaka-teal-dark text-white shadow-xs"
                       : "text-foreground hover:bg-secondary",
                   ].join(" ")}
                     >

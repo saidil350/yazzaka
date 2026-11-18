@@ -87,7 +87,7 @@ function AdminShell({ children }: { children: React.ReactNode }) {
         <AdminTopbar
           onToggleMobileSidebar={() => setIsMobileOpen((prev) => !prev)}
         />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto overflow-x-hidden">
+        <main id="main-content" className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto overflow-x-hidden">
           {children}
         </main>
       </div>

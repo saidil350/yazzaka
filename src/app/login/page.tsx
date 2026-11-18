@@ -122,13 +122,13 @@ function LoginForm() {
       : "/yazzakka.png";
 
   return (
-    <div className={`admin-scope ${publicSans.variable} min-h-screen bg-background flex flex-col justify-between selection:bg-[#FFF0E5] selection:text-[#FA6400]`}>
+    <div className={`admin-scope ${publicSans.variable} min-h-screen bg-background flex flex-col justify-between selection:bg-[#FFF0E5] selection:text-foreground`}>
       {/* ── Top Header Bar ────────────────────────────────────────── */}
       <header className="w-full border-b border-border bg-white/80 backdrop-blur-xs py-3 px-4 sm:px-8">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-[#FA6400] transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400] rounded-lg px-2 py-1"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FA6400] rounded-lg px-2 py-1"
           >
             <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" />
             <span>Kembali ke Situs Publik</span>
@@ -141,7 +141,7 @@ function LoginForm() {
       </header>
 
       {/* ── Main Content Area ─────────────────────────────────────── */}
-      <main className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <main id="main-content" className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
         <div className="w-full max-w-md">
           {/* Card Form Container */}
           <div className="bg-white border border-border rounded-lg shadow-xs p-6 sm:p-8 space-y-6">
@@ -286,7 +286,7 @@ function LoginForm() {
               Kendala akses akun? Hubungi Administrator TI di{" "}
               <a
                 href={`mailto:${profile?.email || "info@yazzakka.sch.id"}`}
-                className="font-semibold text-foreground hover:text-[#FA6400] underline underline-offset-2"
+                className="font-semibold text-foreground hover:text-primary underline underline-offset-2"
               >
                 {profile?.email || "info@yazzakka.sch.id"}
               </a>
