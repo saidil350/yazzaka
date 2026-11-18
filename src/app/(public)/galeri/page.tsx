@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Image as ImageIcon } from "lucide-react";
+import { Suspense } from "react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { GalleryLightbox } from "@/components/public/GalleryLightbox";
 import { PaginationNav } from "@/components/public/pagination-nav";
+import { GalleryGridSkeleton } from "@/components/public/page-skeletons";
 import { getPublicProfile, listGalleryMedia } from "@/lib/public-data";
 import { initialSchoolProfile } from "@/lib/data/initialData";
 import type { SchoolProfile } from "@/lib/types";
@@ -27,18 +29,11 @@ export default async function GalleryPage({
   const { page } = await searchParams;
   const currentPage = Math.max(1, Number(page ?? "1") || 1);
 
-  const [profile, media] = await Promise.all([
-    getPublicProfile(),
-    listGalleryMedia(),
-  ]);
+  // Profil di-dedupe dengan bacaan (public)/layout via React cache — hero
+  // render di shell tanpa menunggu; grid galeri mengalir lewat <Suspense>
+  // dengan fallback skeleton (pola /berita, tanpa loading.tsx).
+  const profile = await getPublicProfile();
   const safeProfile: SchoolProfile = profile ?? initialSchoolProfile;
-
-  const totalPages = Math.max(1, Math.ceil(media.length / GALLERY_PAGE_SIZE));
-  const safePage = Math.min(currentPage, totalPages);
-  const pageMedia = media.slice(
-    (safePage - 1) * GALLERY_PAGE_SIZE,
-    safePage * GALLERY_PAGE_SIZE
-  );
 
   const buildGalleryPageHref = (p: number) =>
     p > 1 ? `/galeri?page=${p}` : "/galeri";
@@ -63,25 +58,50 @@ export default async function GalleryPage({
       {/* ── Content ─────────────────────────────────── */}
       <section className="py-12 lg:py-14 bg-white border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          {media.length === 0 ? (
-            <EmptyState
-              icon={ImageIcon}
-              title="Tidak Ada Media Ditemukan"
-              description="Belum ada berkas media galeri yang dipublikasikan."
-            />
-          ) : (
-            <>
-              <GalleryLightbox items={pageMedia} />
-              <PaginationNav
-                currentPage={safePage}
-                totalPages={totalPages}
-                buildHref={buildGalleryPageHref}
-                ariaLabel="Navigasi halaman galeri"
-              />
-            </>
-          )}
+          <Suspense fallback={<GalleryGridSkeleton />}>
+            <GalleryGrid currentPage={currentPage} buildHref={buildGalleryPageHref} />
+          </Suspense>
         </div>
       </section>
+    </>
+  );
+}
+
+async function GalleryGrid({
+  currentPage,
+  buildHref,
+}: {
+  currentPage: number;
+  buildHref: (p: number) => string;
+}) {
+  const media = await listGalleryMedia();
+
+  const totalPages = Math.max(1, Math.ceil(media.length / GALLERY_PAGE_SIZE));
+  const safePage = Math.min(currentPage, totalPages);
+  const pageMedia = media.slice(
+    (safePage - 1) * GALLERY_PAGE_SIZE,
+    safePage * GALLERY_PAGE_SIZE
+  );
+
+  if (media.length === 0) {
+    return (
+      <EmptyState
+        icon={ImageIcon}
+        title="Tidak Ada Media Ditemukan"
+        description="Belum ada berkas media galeri yang dipublikasikan."
+      />
+    );
+  }
+
+  return (
+    <>
+      <GalleryLightbox items={pageMedia} />
+      <PaginationNav
+        currentPage={safePage}
+        totalPages={totalPages}
+        buildHref={buildHref}
+        ariaLabel="Navigasi halaman galeri"
+      />
     </>
   );
 }

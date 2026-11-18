@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Card,
@@ -55,6 +56,7 @@ export default function AdminDashboardOverview() {
     messages,
     articles,
     toggleSection,
+    isLoading,
   } = useSchoolData();
   const { role } = useAuth();
 
@@ -63,6 +65,13 @@ export default function AdminDashboardOverview() {
 
   const unreadMessages = messages.filter((m) => m.status === "new");
   const recentMessages = messages.slice(0, 5);
+
+  // Data konteks belum selesai dimuat — tampilkan skeleton berbentuk
+  // dashboard alih-alih angka 0 / daftar kosong (pola sama dengan daftar
+  // admin lain).
+  if (isLoading) {
+    return <DashboardSkeleton />;
+  }
 
   // KPI Utama yang secara langsung terhubung ke Landing Page
   const landingKpis = [
@@ -475,6 +484,131 @@ export default function AdminDashboardOverview() {
                   <ChevronRight aria-hidden="true" />
                 </Button>
               </Link>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Skeleton berbentuk dashboard saat SchoolDataContext masih memuat dari DB —
+// menyamai struktur 4 blok utama (header, KPI, kontrol seksi + pesan, modul
+// + identitas) agar tidak ada lompatan layout saat konten asli menggantikan.
+function DashboardSkeleton() {
+  return (
+    <div className="space-y-8 max-w-6xl mx-auto pb-12">
+      {/* Header halaman */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-6">
+        <div className="space-y-2">
+          <Skeleton className="h-7 w-72" />
+          <Skeleton className="h-4 w-full max-w-xl" />
+        </div>
+        <Skeleton className="h-9 w-44 rounded-md shrink-0" />
+      </div>
+
+      {/* Kartu metrik utama (2 KPI) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {Array.from({ length: 2 }).map((_, i) => (
+          <Card key={i}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <Skeleton className="h-4 w-40" />
+            </CardHeader>
+            <CardContent className="space-y-2.5">
+              <Skeleton className="h-8 w-24" />
+              <Skeleton className="h-3 w-3/4" />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Kolom kiri: visibilitas seksi + pesan masuk */}
+        <div className="lg:col-span-7 space-y-6">
+          <Card>
+            <CardHeader className="pb-4 space-y-2">
+              <Skeleton className="h-5 w-56" />
+              <Skeleton className="h-3 w-full max-w-sm" />
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="divide-y divide-border">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center justify-between gap-4 px-6 py-3"
+                  >
+                    <div className="space-y-1.5 min-w-0 flex-1">
+                      <Skeleton className="h-4 w-40" />
+                      <Skeleton className="h-3 w-24" />
+                    </div>
+                    <Skeleton className="h-6 w-11 rounded-full" />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-4 space-y-2">
+              <Skeleton className="h-5 w-48" />
+              <Skeleton className="h-3 w-full max-w-xs" />
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="divide-y divide-border">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="p-4 sm:px-6 space-y-2">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-2/3" />
+                    <Skeleton className="h-3 w-1/2" />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Kolom kanan: pintasan modul + profil & legalitas */}
+        <div className="lg:col-span-5 space-y-6">
+          <Card>
+            <CardHeader className="pb-2 space-y-2">
+              <Skeleton className="h-5 w-44" />
+              <Skeleton className="h-3 w-full max-w-xs" />
+            </CardHeader>
+            <CardContent className="p-2 pt-0">
+              <div className="space-y-1">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 rounded-md px-3 py-2.5"
+                  >
+                    <Skeleton className="size-4" />
+                    <div className="space-y-1.5 flex-1">
+                      <Skeleton className="h-4 w-40" />
+                      <Skeleton className="h-3 w-20" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-3 space-y-2">
+              <Skeleton className="h-5 w-52" />
+              <Skeleton className="h-3 w-full max-w-sm" />
+            </CardHeader>
+            <CardContent className="space-y-4 pt-0">
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-2/3" />
+              </div>
+              <Skeleton className="h-px w-full" />
+              <div className="grid grid-cols-2 gap-4">
+                <Skeleton className="h-10 w-full" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              <Skeleton className="h-9 w-full rounded-md" />
             </CardContent>
           </Card>
         </div>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -13,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { OtherProgramsSkeleton } from "@/components/public/page-skeletons";
 import {
   getProgramBySlug,
   getProgramPageProfile,
@@ -69,12 +71,12 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
     getProgramPageProfile(),
   ]);
 
-  // Draft / slug tak dikenal → 404 HTTP asli.
+  // Draft / slug tak dikenal → 404 HTTP asli. Cek ini HARUS blocking sebelum
+  // JSX return — notFound() di dalam/mash-setelah boundary Suspense hanya
+  // menghasilkan soft-404 (stream sudah dimulai dengan status 200).
   if (!program) {
     notFound();
   }
-
-  const otherPrograms = await listOtherPublishedPrograms(program.slug, 4);
 
   const isWakaf = program.slug === "pesantren-peradaban-60";
 
@@ -267,58 +269,78 @@ export default async function ProgramDetailPage({ params }: { params: Params }) 
         </section>
 
         {/* ── Other Programs & Units ──────────────────── */}
-        {otherPrograms.length > 0 && (
-          <section className="py-12 border-b border-border">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl space-y-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-xl sm:text-2xl font-extrabold">
-                    Unit Pendidikan &amp; Program Lainnya
-                  </h2>
-                  <p className="text-xs sm:text-sm text-muted-foreground">
-                    Jelajahi jenjang pendidikan dan program pembinaan lainnya di {profile.name}
-                  </p>
-                </div>
-                <Link
-                  href="/program"
-                  className="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-muted-foreground hover:underline"
-                >
-                  <span>Lihat Semua Unit</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {otherPrograms.map((p) => (
-                  <Link
-                    key={p.id}
-                    href={`/program/${p.slug}`}
-                    className="bg-white border border-border rounded-lg p-4 space-y-2.5 flex flex-col justify-between group shadow-xs"
-                  >
-                    <div className="space-y-2">
-                      <Badge variant="secondary">
-                        {p.category}
-                      </Badge>
-                      <h3 className="text-xs font-bold line-clamp-2">
-                        {p.title}
-                      </h3>
-                      <p className="text-xs text-muted-foreground line-clamp-2">
-                        {p.shortDesc}
-                      </p>
-                    </div>
-
-                    <span className="text-xs font-bold text-muted-foreground inline-flex items-center gap-1 pt-2">
-                      <span>Pelajari</span>
-                      <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+        {/* Streaming: data sekunder setelah cek 404 — mengalir lewat
+        <Suspense> tanpa memengaruhi status 404 di atas. */}
+        <Suspense fallback={<OtherProgramsSkeleton />}>
+          <OtherProgramsSection programSlug={program.slug} schoolName={profile.name} />
+        </Suspense>
 
       </div>
     </>
+  );
+}
+
+async function OtherProgramsSection({
+  programSlug,
+  schoolName,
+}: {
+  programSlug: string;
+  schoolName: string;
+}) {
+  const otherPrograms = await listOtherPublishedPrograms(programSlug, 4);
+
+  if (otherPrograms.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="py-12 border-b border-border">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-extrabold">
+              Unit Pendidikan &amp; Program Lainnya
+            </h2>
+            <p className="text-xs sm:text-sm text-muted-foreground">
+              Jelajahi jenjang pendidikan dan program pembinaan lainnya di {schoolName}
+            </p>
+          </div>
+          <Link
+            href="/program"
+            className="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-muted-foreground hover:underline"
+          >
+            <span>Lihat Semua Unit</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {otherPrograms.map((p) => (
+            <Link
+              key={p.id}
+              href={`/program/${p.slug}`}
+              className="bg-white border border-border rounded-lg p-4 space-y-2.5 flex flex-col justify-between group shadow-xs"
+            >
+              <div className="space-y-2">
+                <Badge variant="secondary">
+                  {p.category}
+                </Badge>
+                <h3 className="text-xs font-bold line-clamp-2">
+                  {p.title}
+                </h3>
+                <p className="text-xs text-muted-foreground line-clamp-2">
+                  {p.shortDesc}
+                </p>
+              </div>
+
+              <span className="text-xs font-bold text-muted-foreground inline-flex items-center gap-1 pt-2">
+                <span>Pelajari</span>
+                <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

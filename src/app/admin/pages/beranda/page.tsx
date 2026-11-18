@@ -69,6 +69,9 @@ export default function AdminHomepageSectionsPage() {
     }
   };
 
+  // Sengaja TANPA gate isLoading: seed sections dari context adalah data
+  // asli dari server (anti-kedip, fail-closed) — gate hanya menutup data
+  // yang sudah benar dengan skeleton.
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       {/* Header */}

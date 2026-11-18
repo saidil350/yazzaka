@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Users, Image as ImageIcon } from "lucide-react";
+import { Suspense } from "react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { OrganizationMember } from "@/lib/types";
+import { MemberGridSkeleton } from "@/components/public/page-skeletons";
 import { DEFAULT_FOUNDATION } from "@/lib/data/initialData";
 import { getPublicProfile, listOrganizationMembers } from "@/lib/public-data";
 import { getServerSections } from "@/lib/sections-server";
@@ -104,9 +106,11 @@ function MemberCard({ member }: MemberCardProps) {
 }
 
 export default async function AboutPage() {
-  const [profile, organization, sections] = await Promise.all([
+  // Profil + sections di-dedupe dengan bacaan (public)/layout via React
+  // cache — seluruh seksi profil render di shell; hanya grid tim yang
+  // mengalir lewat <Suspense> (pola /berita, tanpa loading.tsx).
+  const [profile, sections] = await Promise.all([
     getPublicProfile(),
-    listOrganizationMembers(),
     getServerSections(),
   ]);
   const safeProfile: SchoolProfile = profile ?? initialSchoolProfile;
@@ -119,10 +123,6 @@ export default async function AboutPage() {
   const sectionSubtitle =
     teamSection?.subtitle ||
     "Pendidik yang memadukan kedalaman tradisi keilmuan Islam dan kompetensi sains modern.";
-
-  const sortedMembers = [...organization].sort(
-    (a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0)
-  );
 
   return (
     <>
@@ -372,22 +372,38 @@ export default async function AboutPage() {
             </div>
           </div>
 
-          {sortedMembers.length === 0 ? (
-            <EmptyState>
-              <EmptyState.Icon icon={Users} />
-              <EmptyState.Title>Struktur Pengajar Sedang Diperbarui</EmptyState.Title>
-              <EmptyState.Description>Profil pimpinan dan dewan asatidz akan segera dimuat dari sistem.</EmptyState.Description>
-            </EmptyState>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {sortedMembers.map((lead) => (
-                <MemberCard key={lead.id} member={lead} />
-              ))}
-            </div>
-          )}
+          <Suspense fallback={<MemberGridSkeleton />}>
+            <TeamMemberGrid />
+          </Suspense>
 
         </div>
       </section>
     </>
+  );
+}
+
+async function TeamMemberGrid() {
+  const organization = await listOrganizationMembers();
+
+  const sortedMembers = [...organization].sort(
+    (a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0)
+  );
+
+  if (sortedMembers.length === 0) {
+    return (
+      <EmptyState>
+        <EmptyState.Icon icon={Users} />
+        <EmptyState.Title>Struktur Pengajar Sedang Diperbarui</EmptyState.Title>
+        <EmptyState.Description>Profil pimpinan dan dewan asatidz akan segera dimuat dari sistem.</EmptyState.Description>
+      </EmptyState>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {sortedMembers.map((lead) => (
+        <MemberCard key={lead.id} member={lead} />
+      ))}
+    </div>
   );
 }

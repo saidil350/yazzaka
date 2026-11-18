@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { cache, Suspense } from "react";
 import { Program } from "@/lib/types";
 import { ArrowRight, CheckCircle2, Layers, BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/empty-state";
+import { PageHeroSkeleton } from "@/components/public/page-skeletons";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getPublicProfile, listPublishedPrograms } from "@/lib/public-data";
 import { initialSchoolProfile } from "@/lib/data/initialData";
 import type { SchoolProfile } from "@/lib/types";
@@ -49,130 +52,178 @@ const getUnitBadge = (prog: Program) => {
   return { tag: prog.category || "Program Unggulan", variant: "secondary" as const };
 };
 
-export default async function ProgramsDirectoryPage() {
+// Streaming: profil + daftar program diambil lewat React cache() — dibagikan
+// oleh hero (butuh jumlah unit) dan grid tanpa query dobel; keduanya mengalir
+// lewat <Suspense> dengan fallback skeleton berbentuk seksi. Pola sama dengan
+// /berita — TIDAK ada loading.tsx (konvensi skeleton publik repo).
+const getProgramDirectory = cache(async () => {
   const [profile, programs] = await Promise.all([
     getPublicProfile(),
     listPublishedPrograms(),
   ]);
+  return { profile, programs };
+});
+
+export default async function ProgramsDirectoryPage() {
+  return (
+    <>
+      {/* ── Page Hero ────────────────────────────────── */}
+      <Suspense fallback={<PageHeroSkeleton />}>
+        <ProgramDirectoryHero />
+      </Suspense>
+
+      {/* ── Directory Grid ──────────────────────────── */}
+      <section className="py-12 lg:py-14 bg-card border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <Suspense fallback={<DirectoryGridSkeleton />}>
+            <ProgramDirectoryGrid />
+          </Suspense>
+        </div>
+      </section>
+    </>
+  );
+}
+
+async function ProgramDirectoryHero() {
+  const { profile, programs } = await getProgramDirectory();
   const safeProfile: SchoolProfile = profile ?? initialSchoolProfile;
+  const publishedCount = programs.filter((p) => p.status === "published").length;
+
+  return (
+    <section className="bg-background py-10 lg:py-14 border-b border-border">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto text-center">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
+            Struktur Pendidikan {safeProfile.name}
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-3 leading-relaxed">
+            Menaungi {publishedCount} unit pendidikan formal, non-formal, tahfiz intensif Al-Qur&apos;an, serta wakaf pembangunan Pesantren Peradaban 6.0 di {safeProfile.city}, {safeProfile.province}.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+async function ProgramDirectoryGrid() {
+  const { programs } = await getProgramDirectory();
 
   const published = programs
     .filter((p) => p.status === "published")
     .sort((a, b) => a.orderIndex - b.orderIndex);
 
+  // Programs Cards Grid or EmptyState
+  if (published.length === 0) {
+    return (
+      <EmptyState
+        icon={Layers}
+        title="Tidak Ada Program Ditemukan"
+        description="Belum ada program pendidikan yang dipublikasikan."
+      />
+    );
+  }
+
   return (
     <>
-      {/* ── Page Hero ────────────────────────────────── */}
-      <section className="bg-background py-10 lg:py-14 border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto text-center">
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-              Struktur Pendidikan {safeProfile.name}
-            </h1>
-            <p className="text-sm sm:text-base text-muted-foreground mt-3 leading-relaxed">
-              Menaungi {published.length} unit pendidikan formal, non-formal, tahfiz intensif Al-Qur&apos;an, serta wakaf pembangunan Pesantren Peradaban 6.0 di {safeProfile.city}, {safeProfile.province}.
-            </p>
+      <h2 className="sr-only">Daftar Unit Pendidikan</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {published.map((prog) => {
+          const badgeInfo = getUnitBadge(prog);
+          const isSpecialWakaf = prog.category?.toLowerCase().includes("wakaf") || prog.slug.includes("peradaban");
+
+          return (
+            <Link
+              key={prog.id}
+              href={`/program/${prog.slug}`}
+              className="group block h-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <Card className="h-full overflow-hidden flex flex-col justify-between">
+                <div>
+                  {/* Banner Image */}
+                  <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+                    {prog.imageUrl ? (
+                      <Image
+                        src={prog.imageUrl}
+                        alt={prog.title}
+                        fill
+                        sizes="(min-width:1024px) 380px, (min-width:768px) 45vw, 90vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                        <BookOpen className="h-8 w-8" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content Body */}
+                  <div className="p-5 space-y-3">
+                    <Badge variant={badgeInfo.variant}>
+                      {badgeInfo.tag}
+                    </Badge>
+
+                    <CardTitle className="text-lg font-bold text-foreground tracking-tight leading-snug">
+                      {prog.title}
+                    </CardTitle>
+
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                      {prog.shortDesc}
+                    </p>
+
+                    {/* Features */}
+                    {prog.features && prog.features.length > 0 && (
+                      <div className="pt-3 border-t border-border space-y-2">
+                        <span className="text-xs font-medium text-muted-foreground block">
+                          Fokus &amp; Capaian
+                        </span>
+                        {prog.features.slice(0, 3).map((feat, fIdx) => (
+                          <div
+                            key={fIdx}
+                            className="flex items-center gap-2 text-sm text-foreground font-medium"
+                          >
+                            <CheckCircle2 className="h-4 w-4 text-yazzaka-teal-dark shrink-0" />
+                            <span className="line-clamp-1">{feat}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Action Footer */}
+                <div className="px-5 pb-5">
+                  <div className="flex items-center justify-between gap-2 border-t border-border pt-4 text-sm font-semibold text-foreground">
+                    <span>
+                      {isSpecialWakaf ? "Detail Wakaf & Masterplan" : "Rincian Kurikulum"}
+                    </span>
+                    <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
+                  </div>
+                </div>
+              </Card>
+            </Link>
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
+// Fallback grid: kartu banner 16/10 + badge + judul + deskripsi — tanpa baris
+// features (jumlahnya variatif per kartu), tinggi kartu tetap mendekati aslinya.
+function DirectoryGridSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="overflow-hidden rounded-lg border border-border bg-card">
+          <Skeleton className="aspect-[16/10] w-full rounded-none" />
+          <div className="p-5 space-y-3">
+            <Skeleton className="h-6 w-28 rounded-md" />
+            <Skeleton className="h-5 w-4/5" />
+            <Skeleton className="h-3 w-full" />
+            <Skeleton className="h-3 w-3/4" />
           </div>
         </div>
-      </section>
-
-      {/* ── Directory Grid ──────────────────────────── */}
-      <section className="py-12 lg:py-14 bg-card border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-
-          {/* Programs Cards Grid or EmptyState */}
-          {published.length === 0 ? (
-            <EmptyState
-              icon={Layers}
-              title="Tidak Ada Program Ditemukan"
-              description="Belum ada program pendidikan yang dipublikasikan."
-            />
-          ) : (
-            <>
-              <h2 className="sr-only">Daftar Unit Pendidikan</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {published.map((prog) => {
-                const badgeInfo = getUnitBadge(prog);
-                const isSpecialWakaf = prog.category?.toLowerCase().includes("wakaf") || prog.slug.includes("peradaban");
-
-                return (
-                  <Link
-                    key={prog.id}
-                    href={`/program/${prog.slug}`}
-                    className="group block h-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  >
-                    <Card className="h-full overflow-hidden flex flex-col justify-between">
-                      <div>
-                        {/* Banner Image */}
-                        <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-                          {prog.imageUrl ? (
-                            <Image
-                              src={prog.imageUrl}
-                              alt={prog.title}
-                              fill
-                              sizes="(min-width:1024px) 380px, (min-width:768px) 45vw, 90vw"
-                              className="object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                              <BookOpen className="h-8 w-8" />
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Content Body */}
-                        <div className="p-5 space-y-3">
-                          <Badge variant={badgeInfo.variant}>
-                            {badgeInfo.tag}
-                          </Badge>
-
-                          <CardTitle className="text-lg font-bold text-foreground tracking-tight leading-snug">
-                            {prog.title}
-                          </CardTitle>
-
-                          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-                            {prog.shortDesc}
-                          </p>
-
-                          {/* Features */}
-                          {prog.features && prog.features.length > 0 && (
-                            <div className="pt-3 border-t border-border space-y-2">
-                              <span className="text-xs font-medium text-muted-foreground block">
-                                Fokus &amp; Capaian
-                              </span>
-                              {prog.features.slice(0, 3).map((feat, fIdx) => (
-                                <div
-                                  key={fIdx}
-                                  className="flex items-center gap-2 text-sm text-foreground font-medium"
-                                >
-                                  <CheckCircle2 className="h-4 w-4 text-yazzaka-teal-dark shrink-0" />
-                                  <span className="line-clamp-1">{feat}</span>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Action Footer */}
-                      <div className="px-5 pb-5">
-                        <div className="flex items-center justify-between gap-2 border-t border-border pt-4 text-sm font-semibold text-foreground">
-                          <span>
-                            {isSpecialWakaf ? "Detail Wakaf & Masterplan" : "Rincian Kurikulum"}
-                          </span>
-                          <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
-                        </div>
-                      </div>
-                    </Card>
-                  </Link>
-                );
-              })}
-              </div>
-            </>
-          )}
-
-        </div>
-      </section>
-    </>
+      ))}
+    </div>
   );
 }

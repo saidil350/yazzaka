@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Trophy } from "lucide-react";
+import { Suspense } from "react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
 import { PaginationNav } from "@/components/public/pagination-nav";
+import { AchievementGridSkeleton } from "@/components/public/page-skeletons";
 import { getPublicProfile, listAchievements } from "@/lib/public-data";
 import { initialSchoolProfile } from "@/lib/data/initialData";
 import type { SchoolProfile } from "@/lib/types";
@@ -27,21 +29,11 @@ export default async function AchievementsPage({
   const { page } = await searchParams;
   const currentPage = Math.max(1, Number(page ?? "1") || 1);
 
-  const [profile, achievements] = await Promise.all([
-    getPublicProfile(),
-    listAchievements(),
-  ]);
+  // Profil di-dedupe dengan bacaan (public)/layout via React cache — hero
+  // render di shell tanpa menunggu; grid prestasi mengalir lewat <Suspense>
+  // dengan fallback skeleton (pola /berita, tanpa loading.tsx).
+  const profile = await getPublicProfile();
   const safeProfile: SchoolProfile = profile ?? initialSchoolProfile;
-
-  const totalPages = Math.max(
-    1,
-    Math.ceil(achievements.length / ACHIEVEMENTS_PAGE_SIZE)
-  );
-  const safePage = Math.min(currentPage, totalPages);
-  const pageAchievements = achievements.slice(
-    (safePage - 1) * ACHIEVEMENTS_PAGE_SIZE,
-    safePage * ACHIEVEMENTS_PAGE_SIZE
-  );
 
   const buildAchievementsPageHref = (p: number) =>
     p > 1 ? `/prestasi?page=${p}` : "/prestasi";
@@ -66,73 +58,101 @@ export default async function AchievementsPage({
       {/* ── Content ─────────────────────────────────── */}
       <section className="py-12 lg:py-14 bg-white border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-
-          {/* Grid or EmptyState */}
-          {achievements.length === 0 ? (
-            <EmptyState
-              icon={Trophy}
-              title="Tidak Ada Prestasi Ditemukan"
-              description="Belum ada rekaman prestasi santri yang dipublikasikan."
+          <Suspense fallback={<AchievementGridSkeleton />}>
+            <AchievementList
+              currentPage={currentPage}
+              buildHref={buildAchievementsPageHref}
             />
-          ) : (
-            <>
-              <h2 className="sr-only">Daftar Prestasi</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-              {pageAchievements.map((ach) => (
-                <div
-                  key={ach.id}
-                  className="bg-white border border-border rounded-lg overflow-hidden flex flex-col justify-between shadow-xs"
-                >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                    {ach.imageUrl ? (
-                      <Image
-                        src={ach.imageUrl}
-                        alt={ach.title}
-                        fill
-                        sizes="(min-width:1024px) 290px, (min-width:768px) 45vw, 90vw"
-                        className="object-cover transition-transform duration-500 motion-reduce:transform-none"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                        <Trophy className="h-8 w-8" aria-hidden="true" />
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
-                    <div>
-                      <Badge variant="secondary" className="mb-1.5">
-                        {ach.category} • {ach.year}
-                      </Badge>
-                      <h3 className="text-sm font-bold leading-snug line-clamp-2">
-                        {ach.title}
-                      </h3>
-                    </div>
-
-                    <div className="pt-2.5 border-t border-border space-y-0.5">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
-                        <span>{ach.studentName}</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground line-clamp-1">
-                        {ach.competitionName}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              </div>
-
-              <PaginationNav
-                currentPage={safePage}
-                totalPages={totalPages}
-                buildHref={buildAchievementsPageHref}
-                ariaLabel="Navigasi halaman prestasi"
-              />
-            </>
-          )}
-
+          </Suspense>
         </div>
       </section>
+    </>
+  );
+}
+
+async function AchievementList({
+  currentPage,
+  buildHref,
+}: {
+  currentPage: number;
+  buildHref: (p: number) => string;
+}) {
+  const achievements = await listAchievements();
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(achievements.length / ACHIEVEMENTS_PAGE_SIZE)
+  );
+  const safePage = Math.min(currentPage, totalPages);
+  const pageAchievements = achievements.slice(
+    (safePage - 1) * ACHIEVEMENTS_PAGE_SIZE,
+    safePage * ACHIEVEMENTS_PAGE_SIZE
+  );
+
+  if (achievements.length === 0) {
+    return (
+      <EmptyState
+        icon={Trophy}
+        title="Tidak Ada Prestasi Ditemukan"
+        description="Belum ada rekaman prestasi santri yang dipublikasikan."
+      />
+    );
+  }
+
+  return (
+    <>
+      <h2 className="sr-only">Daftar Prestasi</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        {pageAchievements.map((ach) => (
+          <div
+            key={ach.id}
+            className="bg-white border border-border rounded-lg overflow-hidden flex flex-col justify-between shadow-xs"
+          >
+            <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+              {ach.imageUrl ? (
+                <Image
+                  src={ach.imageUrl}
+                  alt={ach.title}
+                  fill
+                  sizes="(min-width:1024px) 290px, (min-width:768px) 45vw, 90vw"
+                  className="object-cover transition-transform duration-500 motion-reduce:transform-none"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                  <Trophy className="h-8 w-8" aria-hidden="true" />
+                </div>
+              )}
+            </div>
+
+            <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
+              <div>
+                <Badge variant="secondary" className="mb-1.5">
+                  {ach.category} • {ach.year}
+                </Badge>
+                <h3 className="text-sm font-bold leading-snug line-clamp-2">
+                  {ach.title}
+                </h3>
+              </div>
+
+              <div className="pt-2.5 border-t border-border space-y-0.5">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                  <span>{ach.studentName}</span>
+                </div>
+                <p className="text-xs text-muted-foreground line-clamp-1">
+                  {ach.competitionName}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <PaginationNav
+        currentPage={safePage}
+        totalPages={totalPages}
+        buildHref={buildHref}
+        ariaLabel="Navigasi halaman prestasi"
+      />
     </>
   );
 }

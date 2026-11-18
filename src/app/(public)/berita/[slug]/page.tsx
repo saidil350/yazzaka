@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import {
   ArrowLeft,
   Calendar,
@@ -11,6 +12,7 @@ import {
   User,
 } from "lucide-react";
 import { RenderDoc } from "@/components/news/render-doc";
+import { AttachmentsSkeleton } from "@/components/public/page-skeletons";
 import { getArticleBySlug, getAttachments } from "@/lib/news/service";
 import { getSchoolProfile } from "@/lib/school-profile";
 import {
@@ -69,11 +71,12 @@ export default async function BeritaDetailPage({ params }: { params: Params }) {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
 
+  // Cek 404 HARUS blocking sebelum JSX return — notFound() setelah boundary
+  // Suspense mengalir hanya menghasilkan soft-404 (stream sudah dimulai
+  // dengan status 200).
   if (!article || article.status !== "published") {
     notFound();
   }
-
-  const attachments = await getAttachments(article.id);
 
   const [profile] = await Promise.all([getSchoolProfile()]);
   const schoolName = profile?.name || "Yazzakka";
@@ -170,39 +173,53 @@ export default async function BeritaDetailPage({ params }: { params: Params }) {
             ) : null}
           </div>
 
-          {attachments.length > 0 ? (
-            <section className="mt-10 rounded-lg border border-border bg-card p-5">
-              <h2 className="text-sm font-semibold text-foreground">
-                Lampiran Dokumen
-              </h2>
-              <ul className="mt-3 space-y-2">
-                {attachments.map((file) => (
-                  <li key={file.id}>
-                    <a
-                      href={file.fileUrl}
-                      className="flex items-center gap-3 rounded-md border border-border bg-background p-3 text-sm transition-colors hover:bg-muted"
-                      {...(/^https?:/i.test(file.fileUrl)
-                        ? { target: "_blank", rel: "noopener noreferrer" }
-                        : {})}
-                    >
-                      <FileText className="size-4 shrink-0 text-primary" aria-hidden="true" />
-                      <span className="min-w-0 flex-1 truncate font-medium text-foreground">
-                        {file.fileName}
-                      </span>
-                      <span className="shrink-0 text-xs text-muted-foreground">
-                        {file.sizeBytes
-                          ? `${(file.sizeBytes / (1024 * 1024)).toFixed(1)} MB`
-                          : ""}
-                      </span>
-                      <Download className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ) : null}
+          {/* Streaming: lampiran = data sekunder setelah cek 404 — mengalir
+          lewat <Suspense> tanpa memengaruhi status 404 di atas. */}
+          <Suspense fallback={<AttachmentsSkeleton />}>
+            <AttachmentsSection articleId={article.id} />
+          </Suspense>
         </article>
       </div>
     </>
+  );
+}
+
+async function AttachmentsSection({ articleId }: { articleId: string }) {
+  const attachments = await getAttachments(articleId);
+
+  if (attachments.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="mt-10 rounded-lg border border-border bg-card p-5">
+      <h2 className="text-sm font-semibold text-foreground">
+        Lampiran Dokumen
+      </h2>
+      <ul className="mt-3 space-y-2">
+        {attachments.map((file) => (
+          <li key={file.id}>
+            <a
+              href={file.fileUrl}
+              className="flex items-center gap-3 rounded-md border border-border bg-background p-3 text-sm transition-colors hover:bg-muted"
+              {...(/^https?:/i.test(file.fileUrl)
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
+            >
+              <FileText className="size-4 shrink-0 text-primary" aria-hidden="true" />
+              <span className="min-w-0 flex-1 truncate font-medium text-foreground">
+                {file.fileName}
+              </span>
+              <span className="shrink-0 text-xs text-muted-foreground">
+                {file.sizeBytes
+                  ? `${(file.sizeBytes / (1024 * 1024)).toFixed(1)} MB`
+                  : ""}
+              </span>
+              <Download className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

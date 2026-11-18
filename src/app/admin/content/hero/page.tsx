@@ -122,6 +122,10 @@ export default function AdminHeroPage() {
     });
   };
 
+  // Sengaja TANPA gate isLoading: seed profile dari context sudah memuat
+  // initialHero asli dari server (anti-kedip) — gate hanya menutup data yang
+  // sudah benar dengan skeleton. Sinkronisasi form saat fetch landing ditangani
+  // useEffect + lastSyncedRef di bawah.
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
