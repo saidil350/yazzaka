@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Users, Image as ImageIcon } from "lucide-react";
+import { Users, UserRound, Image as ImageIcon } from "lucide-react";
 import { Suspense } from "react";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge } from "@/components/ui/badge";
@@ -78,7 +78,7 @@ function MemberCard({ member }: MemberCardProps) {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-            <ImageIcon className="h-8 w-8" />
+            <UserRound className="h-10 w-10" aria-hidden="true" />
           </div>
         )}
       </div>

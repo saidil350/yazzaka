@@ -110,8 +110,8 @@ export default async function ContactPage() {
                     <Clock className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
                       <span className="font-bold block">Jam Pelayanan:</span>
-                      <p className="mt-0.5 text-muted-foreground">Senin - Sabtu: 08:00 - 15:30 WIB</p>
-                      <p className="text-xs text-muted-foreground">Ahad / Hari Libur Nasional: Tutup</p>
+                      <p className="mt-0.5 text-muted-foreground">Senin - Jumat: 08:00 - 15:30 WIB</p>
+                      <p className="text-xs text-muted-foreground">Sabtu, Ahad / Hari Libur Nasional: Tutup</p>
                     </div>
                   </div>
                 </div>
