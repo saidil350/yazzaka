@@ -116,59 +116,65 @@ export function NewsCarouselSection({ articles }: NewsCarouselSectionProps) {
           </div>
         </div>
 
-        {/* Karousel artikel — satu artikel per slide (slider) */}
-        <Carousel opts={{ loop: true }} plugins={plugins} setApi={setApi} className="w-full">
+        {/* Karousel artikel — responsif: 1 kartu (mobile), 2 (sm), 3 (lg) */}
+        <Carousel
+          opts={{ loop: true, align: "start" }}
+          plugins={plugins}
+          setApi={setApi}
+          className="w-full"
+        >
           <CarouselContent>
             {pool.map((art) => (
-              <CarouselItem key={art.id} className="basis-full">
-                <div className="mx-auto max-w-2xl">
-                  <Link
-                    href={`/berita/${art.slug}`}
-                    className="group block rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  >
-                    <article className="flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors interactive-lift">
-                      <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-                        {art.coverImage ? (
-                          <Image
-                            src={art.coverImage}
-                            alt={art.title}
-                            fill
-                            sizes="(min-width:768px) 672px, 90vw"
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
-                        ) : (
-                          <div
-                            className="flex h-full w-full items-center justify-center bg-primary/5"
-                            aria-hidden="true"
-                          >
-                            <Newspaper className="size-10 text-primary/40" />
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="p-5 flex flex-col gap-2.5">
-                        <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-muted-foreground">
-                          <Badge variant="secondary">{art.category}</Badge>
-                          <span className="flex items-center gap-1">
-                            <Calendar className="size-3" aria-hidden="true" />
-                            {formatDateIndonesian(art.publishedDate)}
-                          </span>
-                          {art.readTime ? <span>{art.readTime}</span> : null}
+              <CarouselItem
+                key={art.id}
+                className="basis-full sm:basis-1/2 lg:basis-1/3"
+              >
+                <Link
+                  href={`/berita/${art.slug}`}
+                  className="group block h-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  <article className="flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors interactive-lift">
+                    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+                      {art.coverImage ? (
+                        <Image
+                          src={art.coverImage}
+                          alt={art.title}
+                          fill
+                          sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 90vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div
+                          className="flex h-full w-full items-center justify-center bg-primary/5"
+                          aria-hidden="true"
+                        >
+                          <Newspaper className="size-10 text-primary/40" />
                         </div>
+                      )}
+                    </div>
 
-                        <h3 className="text-lg sm:text-xl font-bold leading-snug tracking-tight text-foreground line-clamp-2">
-                          {art.title}
-                        </h3>
-
-                        {art.excerpt ? (
-                          <p className="text-sm font-medium leading-relaxed text-muted-foreground line-clamp-2">
-                            {art.excerpt}
-                          </p>
-                        ) : null}
+                    <div className="p-5 flex flex-col gap-2.5">
+                      <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-muted-foreground">
+                        <Badge variant="secondary">{art.category}</Badge>
+                        <span className="flex items-center gap-1">
+                          <Calendar className="size-3" aria-hidden="true" />
+                          {formatDateIndonesian(art.publishedDate)}
+                        </span>
+                        {art.readTime ? <span>{art.readTime}</span> : null}
                       </div>
-                    </article>
-                  </Link>
-                </div>
+
+                      <h3 className="text-lg font-bold leading-snug tracking-tight text-foreground line-clamp-2">
+                        {art.title}
+                      </h3>
+
+                      {art.excerpt ? (
+                        <p className="text-sm font-medium leading-relaxed text-muted-foreground line-clamp-2">
+                          {art.excerpt}
+                        </p>
+                      ) : null}
+                    </div>
+                  </article>
+                </Link>
               </CarouselItem>
             ))}
           </CarouselContent>
